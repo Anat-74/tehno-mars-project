@@ -6,6 +6,10 @@ useSeoMeta({
    ogDescription: 'Страница товара'
 })
 
+definePageMeta({
+   layout: 'users'
+})
+
 const userStore = useUserStore()
 
 const route = useRoute()

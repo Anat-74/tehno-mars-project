@@ -29,7 +29,8 @@ export default defineNuxtConfig({
       'pinia-plugin-persistedstate/nuxt',
       '@nuxtjs/i18n',
       '@nuxtjs/color-mode',
-      '@nuxtjs/html-validator'
+      '@nuxtjs/html-validator',
+      '@nuxtjs/strapi'
    ],
    app: {
       head: {
