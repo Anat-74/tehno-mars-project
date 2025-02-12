@@ -1,0 +1,16 @@
+{
+   "homeTitle": "Хатняя лакальная",
+
+      "nav": {
+         "home": "Галоўная",
+         "about_us": "Пра нас",
+         "services": "Нашы паслугі",
+         "info": "Інфармацыя",
+         "contacts": "Кантакты",
+         "profile": "Профіль",
+         "profile_title": "Сардэчна запрашаем",
+         "profile_login": "Уваход / Рэгістрацыя",
+         "profile_orders": "Мае замовы",
+         "profile_exit": "Вынахад"
+      }
+}
