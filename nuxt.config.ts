@@ -21,7 +21,6 @@ export default defineNuxtConfig({
       omitLineBreaks: false
     }
    },
-
    modules: [
       '@nuxt/image',
       '@nuxt/icon',
@@ -30,7 +29,6 @@ export default defineNuxtConfig({
       '@nuxtjs/i18n',
       '@nuxtjs/color-mode',
       '@nuxtjs/html-validator',
-      '@nuxtjs/strapi'
    ],
    app: {
       head: {
@@ -58,6 +56,10 @@ export default defineNuxtConfig({
       defaultLocale: 'ru'
    },
    image: {
+      // domains: ['localhost'],
+      strapi: {
+         baseURL: process.env.STRAPI_URL || 'http://localhost:1337'
+       },
       screens: {
          'xs': 320,
          'sm': 479.98,

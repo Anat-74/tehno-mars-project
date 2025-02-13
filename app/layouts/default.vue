@@ -42,10 +42,8 @@ const { isAccount, isContacts } = useVisibilityProvider()
 
    <footer class="footer">
       <div class="footer__container">
+         <Test />
          <ScrollToTop />
-         <Loading v-if="userStore.isLoading" />
-
-         <Footer v-if="!userStore.isLoading" />
    </div>
    </footer>
 </template>
