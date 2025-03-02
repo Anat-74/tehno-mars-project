@@ -6,63 +6,6 @@ useSeoMeta({
    ogDescription: 'Страница корзины сайта'
 })
 
-// const userStore = useUserStore()
-
-// interface ElType {
-//   id: number;
-// }
-
-// let selectedArray = ref<ElType[]>([])
-
-// onMounted(() => {
-//    setTimeout(() => userStore.isLoading = false, 200)
-// })
-
-// const totalPriceComputed = computed(() => {
-//    let price = 0
-//    userStore.cart.forEach(prod => {
-//       price += prod.price
-//    })
-//    return price / 100
-// })
-
-//Альтернативный вариант
-// const totalPriceComputed = computed(() => {
-//   const totalPrice = userStore.cart.reduce((acc, item) => {
-//    return acc+=item.price
-//    },0)
-//    return totalPrice / 100
-// })
-
-// const selectedRadioFunc = (el: ElType): void => {
-//    if (!selectedArray.value.length) {
-//       selectedArray.value.push(el)
-//       return
-//    }
-//    selectedArray.value.forEach((item, index) => {
-//       if (el.id !== item.id) {
-//          selectedArray.value.push(el)
-//       } else {
-//          selectedArray.value.splice(index, 1)
-//       }
-//    })
-// }
-
-// const goToCheckout = () => {
-//    let ids: number[] = []
-//    userStore.checkout = []
-
-//    selectedArray.value.forEach(item => ids.push(item.id))
-
-//    let res = userStore.cart.filter((item) => {
-//       return ids.indexOf(item.id) != -1
-//    })
-
-//    res.forEach(item => userStore.checkout.push(toRaw(item)))
-
-//    return navigateTo('/checkout')
-// }
-
 const products = [
    { id: 1, title: "Title 1", description: "This is a description", url: "https://img.freepik.com/free-photo/top-view-circular-food-frame_23-2148725042.jpg?ga=GA1.1.239409238.1713800473&semt=ais_hybrid", price: 15899 },
    { id: 2, title: "Title 2", description: "This is a description", url: "https://img.freepik.com/free-photo/pancake-with-caviar-tea_1398-3625.jpg?ga=GA1.1.239409238.1713800473&semt=ais_hybrid", price: 8949 },

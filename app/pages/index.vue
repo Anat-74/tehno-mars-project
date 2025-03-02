@@ -25,7 +25,7 @@ const products = [
       <section class="home">
          <h1>{{$t('homeTitle')}}</h1>
          <div class="home__columns">
-         <Product 
+         <ProductCard 
          v-if="products"
          v-for="product in products"
          :key="product.id"

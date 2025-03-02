@@ -1,42 +1,92 @@
+<!-- <script setup>
+const { find } = useStrapi()
+const config = useRuntimeConfig()
 
- <template>
-   <div>
-     <h1>Продукты</h1>
-     <ul v-if="products && products.data">
-       <li v-for="product in products.data" :key="product.id">
-         <h2>{{ product.Name }}</h2>
-         <p>Цена: {{ product.Price }} руб.</p>
+const { data: products, pending, error } = useAsyncData('products',
+  async () => await find('products', {
+     populate: '*'
+  })
+)
 
-           <NuxtImg
-             :src="`http://localhost:1337${product.Image[0]?.url}`"
-             :alt="product.Name"
-            format="webp"
-            width="244"
-           />
-           <p>{{ product.Description }}</p>
-           <div v-if="product.category">
-           <h3>Категория: {{ product.category.Name }}</h3>
-           <p>{{ product.category.Description[0]?.children[0]?.text }}</p>
-         </div>
-       </li>
-     </ul>
-     <p v-else>Загрузка данных...</p>
-   </div>
- </template>
- 
- <script setup lang="ts">
-  import type { ProductsResponse } from '../types/types'
- const { data: products, error } = await useAsyncData('products', async () => {
-   try {
-     return await $fetch<ProductsResponse>('http://localhost:1337/api/products?populate=*')
-   } catch (e) {
-     console.error('Ошибка при загрузке продуктов:', e)
-     return null
-    }
- })
- if (error.value) {
-   console.error('Ошибка:', error.value)
-}
-console.log(products)
+onMounted(() => {
+   console.log('products (client):', products.value)
+})
 
- </script>
+</script>
+
+<template>
+  <div>
+   <Loader v-if="pending" />
+    <Test v-if="products?.data">
+      <li v-for="product in products.data" 
+      :key="product.id"
+      >
+        <h3>{{ product.name }}</h3>
+        
+        <p>Цена: {{ product.price }}</p>
+        
+        <NuxtImg
+          v-if="product.image?.[0]?.url"
+          :src="`${config.public.strapi.url}${product.image[0].url}`"
+          :alt="product.name"
+          format="webp"
+          width="122"
+        />
+      </li>
+    </Test>
+    <div v-else-if="error">Error: {{ error.message }}</div>
+  </div>
+</template> -->
+
+//===========================================================================================
+
+
+<script setup lang="ts">
+import type { ProductsResponse } from "../types/types";
+const { find } = useStrapi()
+const config = useRuntimeConfig()
+
+const { data: products, status, error } = useAsyncData(
+  'products',
+  async () => {
+    const response = await find('products', { populate: '*' })
+    return response as ProductsResponse;
+  }
+)
+
+onMounted(() => {
+  console.log('Products data:', products.value)
+  console.log('First product:', products.value?.data?.[0])
+})
+</script>
+
+<template>
+  <div>
+    <Loader v-if="status === 'pending'" />
+    <ul v-else-if="products?.data?.length">
+      <Test v-for="product in products.data" 
+      :key="product.id"
+      :id="product.id"
+      :name="product.name"
+      :price="product.price"
+      :description="product.description"
+      :url="`${config.public.strapi.url}${product.image[0]?.url}`"
+      >
+      </Test>
+    </ul>
+    
+    <div v-else-if="error">Error: {{ error.message }}</div>
+  </div>
+
+  <CartTest />
+</template>
+
+
+
+
+
+
+
+
+
+

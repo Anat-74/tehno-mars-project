@@ -42,7 +42,7 @@ const { isAccount, isContacts } = useVisibilityProvider()
 
    <footer class="footer">
       <div class="footer__container">
-         <Test />
+         <CategoriesSection />
          <ScrollToTop />
    </div>
    </footer>

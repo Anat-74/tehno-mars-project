@@ -15,7 +15,7 @@ export default defineNuxtConfig({
         deep: true
       }
     }
-  },
+   },
   unhead: {
     renderSSRHeadOptions: {
       omitLineBreaks: false
@@ -29,7 +29,9 @@ export default defineNuxtConfig({
       '@nuxtjs/i18n',
       '@nuxtjs/color-mode',
       '@nuxtjs/html-validator',
+      '@nuxtjs/strapi'
    ],
+   ssr: true,
    app: {
       head: {
          title: 'TechnoMars',
@@ -38,6 +40,22 @@ export default defineNuxtConfig({
           }
       }
    },
+   runtimeConfig: {
+      strapi: {
+         url: process.env.NUXT_STRAPI_URL,
+         token: process.env.NUXT_STRAPI_TOKEN,
+         prefix: '/api',
+         admin: '/admin',
+         version: 'v5',
+         cookie: {},
+         cookieName: 'strapi_jwt'
+      },
+      public: {
+        strapi: {
+          url: process.env.NUXT_PUBLIC_STRAPI_URL
+        }
+      }
+    },
    i18n: {
       lazy: true,
       strategy: 'prefix_except_default',
@@ -57,9 +75,9 @@ export default defineNuxtConfig({
    },
    image: {
       // domains: ['localhost'],
-      strapi: {
-         baseURL: process.env.STRAPI_URL || 'http://localhost:1337'
-       },
+      // strapi: {
+      //    baseURL:process.env.NUXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'
+      //  },
       screens: {
          'xs': 320,
          'sm': 479.98,

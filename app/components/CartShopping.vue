@@ -1,10 +1,14 @@
+<script setup lang="ts">
+const cartStre = useCartStore()
+</script>
+
 <template>
-<div>
+<div >
 <NuxtLink
 class="cart-link"
    to="/cartshopping"
    >
-   <span class="cart-link__price">0</span>
+   <span class="cart-link__price">{{ cartStre.totalPrice }}</span>
    <Icon
    name="carbon:shopping-cart"
    width="30"
