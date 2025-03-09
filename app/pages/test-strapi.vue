@@ -1,46 +1,3 @@
-<!-- <script setup>
-const { find } = useStrapi()
-const config = useRuntimeConfig()
-
-const { data: products, pending, error } = useAsyncData('products',
-  async () => await find('products', {
-     populate: '*'
-  })
-)
-
-onMounted(() => {
-   console.log('products (client):', products.value)
-})
-
-</script>
-
-<template>
-  <div>
-   <Loader v-if="pending" />
-    <Test v-if="products?.data">
-      <li v-for="product in products.data" 
-      :key="product.id"
-      >
-        <h3>{{ product.name }}</h3>
-        
-        <p>Цена: {{ product.price }}</p>
-        
-        <NuxtImg
-          v-if="product.image?.[0]?.url"
-          :src="`${config.public.strapi.url}${product.image[0].url}`"
-          :alt="product.name"
-          format="webp"
-          width="122"
-        />
-      </li>
-    </Test>
-    <div v-else-if="error">Error: {{ error.message }}</div>
-  </div>
-</template> -->
-
-//===========================================================================================
-
-
 <script setup lang="ts">
 import type { ProductsResponse } from "../types/types";
 const { find } = useStrapi()
@@ -77,8 +34,6 @@ onMounted(() => {
     
     <div v-else-if="error">Error: {{ error.message }}</div>
   </div>
-
-  <CartTest />
 </template>
 
 

@@ -6,16 +6,23 @@ useSeoMeta({
    ogDescription: 'Страница корзины сайта'
 })
 
-const products = [
-   { id: 1, title: "Title 1", description: "This is a description", url: "https://img.freepik.com/free-photo/top-view-circular-food-frame_23-2148725042.jpg?ga=GA1.1.239409238.1713800473&semt=ais_hybrid", price: 15899 },
-   { id: 2, title: "Title 2", description: "This is a description", url: "https://img.freepik.com/free-photo/pancake-with-caviar-tea_1398-3625.jpg?ga=GA1.1.239409238.1713800473&semt=ais_hybrid", price: 8949 },
-]
+
+const cartStore = useCartStore()
+
+onMounted(() => {
+  cartStore.loadCart();
+})
+
+// const products = [
+//    { id: 1, title: "Title 1", description: "This is a description", url: "https://img.freepik.com/free-photo/top-view-circular-food-frame_23-2148725042.jpg?ga=GA1.1.239409238.1713800473&semt=ais_hybrid", price: 15899 },
+//    { id: 2, title: "Title 2", description: "This is a description", url: "https://img.freepik.com/free-photo/pancake-with-caviar-tea_1398-3625.jpg?ga=GA1.1.239409238.1713800473&semt=ais_hybrid", price: 8949 },
+// ]
 </script>
 
 <template>
    <section class="cart-page">
       <div 
-      v-if="false"
+      v-if="cartStore.totalItems === 0"
       class="cart-page__no-product-items"
       >
          <NuxtImg
@@ -26,27 +33,16 @@ const products = [
       width="444"
       />
       <span class="cart-page__text">Товаров пока нет(</span>
-
-      <NuxtLink
-      v-if="true"
-      to="/auth"
-      class="cart-page__link"
-      >Войти
-      </NuxtLink>
    </div>
 
    <div 
    v-else
    class="cart-page__cart-items">
    <div>
-   <h2 class="cart-page__title">
-      Корзина (0)
-</h2>
-<p class="cart-page__descr">
-   Приветственная сделка только на 1 товар
-</p>
+      <h2>Корзина</h2>
 <div class="cart-page__cart-item-body">
-   <CartItem
+   <CartTest />
+   <!-- <CartItem
    v-for="product in products"
    :key="product.id"
    :id="product.id"
@@ -55,27 +51,28 @@ const products = [
    :url="product.url"
    :price="product.price"
    @selectedRadio-="selectedRadioFunc"
-   />
+   /> -->
 </div>
 </div>
 
 <div>
 <div class="cart-page__summary">
-   <span class="cart-page__headline">Краткое содержание</span>
    <span class="cart-page__total">Итого
       <Icon 
       class="icon-bel-ruble"
       name="my-icon:icon-by-regular" />
-      <b>{{ totalPriceComputed }}</b>
+      <b>{{ cartStore.totalPrice }}</b>
    </span>
    <UButton
-   @click="goToCheckout"
+   @click=""
    size="large"
-   label="Проверить"
+   label="Оформить"
    role="link"
    />
 </div>
 </div>
+
+<OrderForm />
 </div>
    </section>
 </template>

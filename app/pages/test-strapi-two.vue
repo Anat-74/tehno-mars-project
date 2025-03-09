@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { useStrapiAuth, useStrapiUser } from '@nuxtjs/strapi'
 
 const { login: strapiLogin, logout: strapiLogout } = useStrapiAuth()
-const { user } = useStrapiUser()
+const user = useStrapiUser()
 const cartStore = useCartStore()
 
 const isLoading = reactive({

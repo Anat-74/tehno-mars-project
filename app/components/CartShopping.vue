@@ -1,5 +1,8 @@
 <script setup lang="ts">
-const cartStre = useCartStore()
+const cartStore = useCartStore()
+onMounted(() => {
+  cartStore.loadCart();
+})
 </script>
 
 <template>
@@ -8,7 +11,7 @@ const cartStre = useCartStore()
 class="cart-link"
    to="/cartshopping"
    >
-   <span class="cart-link__price">{{ cartStre.totalPrice }}</span>
+   <span class="cart-link__price">{{ cartStore.totalItems }}</span>
    <Icon
    name="carbon:shopping-cart"
    width="30"

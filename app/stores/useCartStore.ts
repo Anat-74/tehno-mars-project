@@ -12,14 +12,13 @@ type CartItem = {
 
 export const useCartStore = defineStore('cart', () => {
    const items = ref<CartItem[]>([])
-   const isAuthenticated = ref(false)
 
    const totalItems = computed(() => 
       items.value.reduce((total, item) => total + item.quantity, 0)
    )
 
    const totalPrice = computed(() => {
-      const total = items.value.reduce((total, item) => total + item.product.price * item.quantity, 0)
+     const total = items.value.reduce((total, item) => total + item.product.price * item.quantity, 0)
       return total.toFixed(2)
    })
 
@@ -42,7 +41,7 @@ export const useCartStore = defineStore('cart', () => {
    const updateQuantity = (productId: string | number, quantity: number) => {
       const item = items.value.find(item => item.product.id === productId)
       if (item) {
-         item.quantity = quantity
+         item.quantity = Math.max(1, Math.round(quantity))
          saveCart()
       }
    }
@@ -52,41 +51,22 @@ export const useCartStore = defineStore('cart', () => {
       saveCart()
    }
 
-   const saveCartToServer = async () => {
-      if (isAuthenticated.value) {
-        await api.saveCart(items.value);
-      }
-    }
-  
-    const loadCartFromServer = async () => {
-      if (isAuthenticated.value) {
-        const savedCart = await api.loadCart();
-        items.value = savedCart;
-      }
-    }
-   
-   const syncCart = async () => {
-      if (isAuthenticated.value) {
-        await loadCartFromServer();
-      } else {
-        const savedCart = localStorage.getItem('cart');
-        if (savedCart) {
+   const saveCart = () => {
+      localStorage.setItem('cart', JSON.stringify(items.value))
+   }
+
+   const loadCart = () => {
+      if (typeof window === 'undefined') return; // Для SSR
+      const savedCart = localStorage.getItem('cart');
+      if (savedCart) {
+        try {
           items.value = JSON.parse(savedCart);
+        } catch (e) {
+          console.error("Ошибка загрузки:", e);
+          localStorage.removeItem('cart');
         }
       }
     }
-
-   const saveCart = () => {
-      if (isAuthenticated) {
-         saveCartToServer()
-      } else {
-         localStorage.setItem('cart', JSON.stringify(items.value))
-      }
-   } 
-
-   watch(isAuthenticated, syncCart)
-   watch(items, saveCart, {deep: true})
-
    return {
       items,
       totalItems,
@@ -95,6 +75,6 @@ export const useCartStore = defineStore('cart', () => {
       removeFromCart,
       updateQuantity,
       clearCart,
-      syncCart
+      loadCart
     }
 })

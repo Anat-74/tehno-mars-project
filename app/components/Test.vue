@@ -11,14 +11,14 @@ const props = defineProps<PropsProducts>();
 const cartStore = useCartStore()
 
 const addToCart = () => {
-   const product = {
-   id: props.id,
+   const product = { //типизировать
+    id: props.id,
     name: props.name,
     price: props.price,
     description: props.description,
     image: props.url
    }
-   cartStore.addToCart(product, 1)
+   cartStore.addToCart(product)
 }
 </script>
 
