@@ -1,18 +1,4 @@
 <script setup lang="ts">
-useSeoMeta({
-   title: 'Товар',
-   ogTitle: 'Товар',
-   description: 'Страница товара',
-   ogDescription: 'Страница товара'
-})
-
-definePageMeta({
-   layout: 'users'
-})
-
-const userStore = useUserStore()
-
-const route = useRoute()
 
 let currentImage = ref('')
 const images = ref([
@@ -63,34 +49,6 @@ onMounted(() => {
    <div class="item__content">
       <h2 class="item__title">Title</h2>
       <p class="item__descr">Description section</p>
-      <span class="item__star">
-         <Icon name="fluent:star-20-regular" />
-      </span>
-      <div class="item__stars">
-         <Icon name="fluent:star-20-regular" />
-         <Icon name="fluent:star-20-regular" />
-         <Icon name="fluent:star-20-regular" />
-         <Icon name="fluent:star-20-regular" />
-         <Icon name="fluent:star-20-regular" />
-      </div>
-      <span class="item__price">
-         <Icon
-         class="icon-bel-ruble" 
-         name="my-icon:icon-by-regular" />
-         {{ priceComputed }}
-      </span>
-      <UButton
-      v-if="isInCart"
-      label="Добавлено"
-      name-class="add-to-cart"
-      :disabled="isInCart"
-      />
-   <UButton
-   v-else
-   label="Добавить в корзину"
-   name-class="add-to-cart"
-   @click="addToCart()"
-   />
    </div>
 </section>
 </template>
