@@ -23,26 +23,27 @@ export type Image = {
    url: string;
  }
  
- export type Category = {
-   id: number;
-   documentId: string;
-   name: string;
-   createdAt: string;
-   updatedAt: string;
-   publishedAt: string;
- }
+//  export type Category = {
+//    id: number;
+//    documentId: string;
+//    name: string;
+//    createdAt: string;
+//    updatedAt: string;
+//    publishedAt: string;
+//  }
  
  export type Product = {
    id: number;
    documentId: string;
    name: string;
    description: string;
+   uid: string;
    price: number;
    createdAt: string;
    updatedAt: string;
    publishedAt: string;
    image: Image[];
-   category: Category;
+   // category: Category;
  }
  
  export type ProductsResponse = {

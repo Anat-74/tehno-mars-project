@@ -29,29 +29,6 @@ onMounted(() => {
 })
 })
 
-const isInCart = computed(() => {
-   let res = false
-   userStore.cart.forEach(prod => {
-      if (route.params.id === prod.id) {
-         res = true
-      }
-   })
-   return res
-})
-// проверить вариант с reduce
-
-// const isInCart = computed(() => {
-//    const res = userStore.cart.reduce((acc, prod) => route.params.id === prod.id ? true : acc, false)
-//    return res
-// })
-
-const priceComputed = computed(() => {
-   return '122.45'
-})
-
-const addToCart = () => {
-   alert('ADDED')
-}
 </script>
 
 <template>
