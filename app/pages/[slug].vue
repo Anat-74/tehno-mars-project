@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { Product } from "../types/types";
 const { find } = useStrapi()
 const route = useRoute()
 const config = useRuntimeConfig()
@@ -7,7 +8,7 @@ const cartStore = useCartStore()
 const currentImage = useState<string | null>('currentImage', () => null)
 
 const { data: product, error, status } = await useAsyncData('product', async () => {
-    const response = await find('products', {
+    const response = await find<Product>('products', {
        filters: {slug: route.params.slug},
       populate: '*'
     })
@@ -17,7 +18,7 @@ const { data: product, error, status } = await useAsyncData('product', async () 
   }
 
      const productData = response.data[0]
-     const firstImage = productData.image?.[0]?.url
+     const firstImage = productData?.image?.[0]?.url
 
      if (firstImage) {
       currentImage.value = `${config.public.strapi.url}${firstImage}`
@@ -25,24 +26,23 @@ const { data: product, error, status } = await useAsyncData('product', async () 
       return productData
 })
 
-const addToCart = (product: any) => {
+const addToCart = (product: Product) => {
   const productData = {
     id: product.id,
     name: product.name,
-    description: product.description || '', // Убедитесь, что description есть
-    image: product.image?.[0]?.url || '',  // Используем первое изображение
-    price: product.price || 0,             // Убедитесь, что price есть
-    category: product.category?.name || '' // Убедитесь, что category есть
+    description: product.description || '',
+    image: product.image?.[0]?.url || '',
+    price: product.price || 0,
+    category: product.category?.name || '' 
   }
-
-  cartStore.addToCart(productData) // Добавляем 1 единицу товара
+  cartStore.addToCart(productData)
 }
 
 const isActive = (imgUrl: string) => 
   computed(() => currentImage.value === `${config.public.strapi.url}${imgUrl}`)
 
 onMounted(() => {
-   console.log('Продукт:', product.value)
+   console.debug('Продукт:', product.value)
 })
 
 </script> 

@@ -3,7 +3,7 @@ interface PropsProducts {
    id?: number | string
    name?: string
    price?: number
-   url?: string
+   image?: string
    description?: string
    category?: string
    slug?: string
@@ -20,7 +20,7 @@ const props = defineProps<PropsProducts>();
 //     description: props.description,
 //     category: props.category,
 //     slug: props.slug,
-//     url: props.url
+//     image: props.image
 //    }
 //    cartStore.addToCart(product)
 // }
@@ -32,7 +32,7 @@ const props = defineProps<PropsProducts>();
     <span>Цена: {{ price }} ₽</span>
    <p>Описание: {{ description }}</p>
     <NuxtImg
-          :src="url"
+          :src="image"
           :alt="name"
           format="webp"
           width="122"

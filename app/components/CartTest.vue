@@ -10,7 +10,6 @@ console.log('cart',cartStore.items)
 
 <template>
   <div>
-
     <ul>
       <li v-for="item in cartStore.items" :key="item.product.id">
          <h2>{{ item.product.category }}</h2>

@@ -7,7 +7,7 @@ const { data: products, status, error } = useAsyncData(
   'products',
   async () => {
     const response = await find('products', { populate: '*' })
-    return response
+    return response as ProductsResponse
   }
 )
 
@@ -29,7 +29,7 @@ onMounted(() => {
       :description="product.description"
       :category="product.category.name"
       :slug="product.slug"
-      :url="`${config.public.strapi.url}${product.image[0]?.url}`"
+      :image="`${config.public.strapi.url}${product.image[0]?.url}`"
       >
       </Test>
     </ul>
