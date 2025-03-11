@@ -20,7 +20,7 @@ const addToCart = () => {
     description: props.description,
     category: props.category,
     slug: props.slug,
-    image: props.url
+    url: props.url
    }
    cartStore.addToCart(product)
 }

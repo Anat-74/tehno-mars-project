@@ -5,6 +5,7 @@ onMounted(() => {
   cartStore.loadCart();
 })
 
+console.log('cart',cartStore.items)
 </script>
 
 <template>
@@ -16,7 +17,7 @@ onMounted(() => {
         <p>Цена: {{ item.product.price }} ₽</p>
         <p>Количество: {{ item.quantity }}</p>
         <NuxtImg
-          :src="item.product.image"
+          :src="item.product.url"
           :alt="item.product.name"
           format="webp"
           width="122"

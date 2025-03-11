@@ -2,21 +2,19 @@
 const { find } = useStrapi()
 const route = useRoute()
 const config = useRuntimeConfig()
-const cartStore = useCartStore()
 
 const currentImage = useState<string | null>('currentImage', () => null)
 
-const { data: product } = await useAsyncData('product', async () => {
-  try {
+const { data: product, error, status } = await useAsyncData('product', async () => {
     const response = await find('products', {
-       filters: {
-          slug: route.params.slug
-   },
+       filters: {slug: route.params.slug},
       populate: '*'
     })
 
-     if (!response.data || response.data.length === 0)
-     throw new Error('Продукт не найден')
+    if (!response.data || response.data.length === 0) {
+    throw createError({ statusCode: 404, message: 'Продукт не найден' })
+  }
+
      const productData = response.data[0]
      const firstImage = productData.image?.[0]?.url
 
@@ -24,10 +22,6 @@ const { data: product } = await useAsyncData('product', async () => {
       currentImage.value = `${config.public.strapi.url}${firstImage}`
     }
       return productData
-  } catch (e) {
-    console.error('Ошибка:', e)
-    throw createError({ statusCode: 404, message: 'Продукт не найден' })
-  }
 })
 
 const isActive = (imgUrl: string) => 
@@ -40,6 +34,7 @@ onMounted(() => {
 </script> 
 
 <template>
+   <Loader v-if="status === 'pending'" />
    <div v-if="product">
      <h1>Name: {{ product.name }}</h1>
      <p>UID: {{ product.slug }}</p>
@@ -75,11 +70,8 @@ onMounted(() => {
         />
       </div>
      </div>
-     <p>{{ product.description }}</p>
    </div>
-   <div v-else>
-     Продукт не найден.
-   </div>
+   <div v-else-if="error">Error: {{ error.message }}</div>
  </template>
 
  <style lang="scss" scoped>
