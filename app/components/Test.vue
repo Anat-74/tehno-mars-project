@@ -10,20 +10,20 @@ interface PropsProducts {
 }
 const props = defineProps<PropsProducts>();
 
-const cartStore = useCartStore()
+// const cartStore = useCartStore()
 
-const addToCart = () => {
-   const product = { //типизировать
-    id: props.id,
-    name: props.name,
-    price: props.price,
-    description: props.description,
-    category: props.category,
-    slug: props.slug,
-    url: props.url
-   }
-   cartStore.addToCart(product)
-}
+// const addToCart = () => {
+//    const product = { //типизировать
+//     id: props.id,
+//     name: props.name,
+//     price: props.price,
+//     description: props.description,
+//     category: props.category,
+//     slug: props.slug,
+//     url: props.url
+//    }
+//    cartStore.addToCart(product)
+// }
 </script>
 
 <template>
@@ -37,7 +37,7 @@ const addToCart = () => {
           format="webp"
           width="122"
         />
-        <button @click="addToCart">addToCart</button>
+        <!-- <button @click="addToCart">addToCart</button> -->
         <h4>{{ category }}</h4>
         <NuxtLink
         :to="`/${slug}`"

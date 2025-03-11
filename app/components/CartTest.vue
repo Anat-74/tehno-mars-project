@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const cartStore = useCartStore()
-
+const config = useRuntimeConfig()
 onMounted(() => {
   cartStore.loadCart();
 })
@@ -13,11 +13,13 @@ console.log('cart',cartStore.items)
 
     <ul>
       <li v-for="item in cartStore.items" :key="item.product.id">
+         <h2>{{ item.product.category }}</h2>
         <h3>{{ item.product.name }}</h3>
         <p>Цена: {{ item.product.price }} ₽</p>
         <p>Количество: {{ item.quantity }}</p>
+        <p>{{ item.product.description }}</p>
         <NuxtImg
-          :src="item.product.url"
+          :src="`${config.public.strapi.url}${item.product.image}`"
           :alt="item.product.name"
           format="webp"
           width="122"

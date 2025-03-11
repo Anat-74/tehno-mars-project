@@ -2,6 +2,7 @@
 const { find } = useStrapi()
 const route = useRoute()
 const config = useRuntimeConfig()
+const cartStore = useCartStore()
 
 const currentImage = useState<string | null>('currentImage', () => null)
 
@@ -23,6 +24,19 @@ const { data: product, error, status } = await useAsyncData('product', async () 
     }
       return productData
 })
+
+const addToCart = (product: any) => {
+  const productData = {
+    id: product.id,
+    name: product.name,
+    description: product.description || '', // Убедитесь, что description есть
+    image: product.image?.[0]?.url || '',  // Используем первое изображение
+    price: product.price || 0,             // Убедитесь, что price есть
+    category: product.category?.name || '' // Убедитесь, что category есть
+  }
+
+  cartStore.addToCart(productData) // Добавляем 1 единицу товара
+}
 
 const isActive = (imgUrl: string) => 
   computed(() => currentImage.value === `${config.public.strapi.url}${imgUrl}`)
@@ -69,6 +83,7 @@ onMounted(() => {
           class="thumbnail__img"
         />
       </div>
+      <button @click="addToCart(product)">addToCart</button>
      </div>
    </div>
    <div v-else-if="error">Error: {{ error.message }}</div>

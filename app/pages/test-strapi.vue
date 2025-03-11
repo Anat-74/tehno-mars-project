@@ -2,7 +2,6 @@
 import type { ProductsResponse } from "../types/types";
 const { find } = useStrapi()
 const config = useRuntimeConfig()
-const cartStore = useCartStore()
 
 const { data: products, status, error } = useAsyncData(
   'products',
