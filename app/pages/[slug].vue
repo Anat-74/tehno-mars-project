@@ -2,13 +2,16 @@
 const { find } = useStrapi()
 const route = useRoute()
 const config = useRuntimeConfig()
+const cartStore = useCartStore()
 
 const currentImage = useState<string | null>('currentImage', () => null)
 
 const { data: product } = await useAsyncData('product', async () => {
   try {
     const response = await find('products', {
-      filters: { uid: route.params.uid },
+       filters: {
+          slug: route.params.slug
+   },
       populate: '*'
     })
 
@@ -33,12 +36,13 @@ const isActive = (imgUrl: string) =>
 onMounted(() => {
    console.log('Продукт:', product.value)
 })
+
 </script> 
 
 <template>
    <div v-if="product">
      <h1>Name: {{ product.name }}</h1>
-     <p>UID: {{ product.uid }}</p>
+     <p>UID: {{ product.slug }}</p>
 
      <div v-if="currentImage" class="main-image">
       <NuxtImg 
@@ -71,6 +75,7 @@ onMounted(() => {
         />
       </div>
      </div>
+     <p>{{ product.description }}</p>
    </div>
    <div v-else>
      Продукт не найден.

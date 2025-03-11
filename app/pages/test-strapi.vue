@@ -28,7 +28,7 @@ onMounted(() => {
       :price="product.price"
       :description="product.description"
       :category="product.category.name"
-      :uid="product.uid"
+      :slug="product.slug"
       :url="`${config.public.strapi.url}${product.image[0]?.url}`"
       >
       </Test>
