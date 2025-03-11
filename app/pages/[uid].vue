@@ -5,8 +5,7 @@ const config = useRuntimeConfig()
 
 const currentImage = useState<string | null>('currentImage', () => null)
 
-
-const { data: product, error } = await useAsyncData('product', async () => {
+const { data: product } = await useAsyncData('product', async () => {
   try {
     const response = await find('products', {
       filters: { uid: route.params.uid },
@@ -58,7 +57,7 @@ onMounted(() => {
         v-for="(img, index) in product.image" 
         :key="img.id"
         class="thumbnail"
-        :class="{ 'thumbnail--active': isActive(img.url).value }"
+        :class="{ 'thumbnail--active': isActive(img.url).value         }"
         @mouseover="currentImage = `${config.public.strapi.url}${img.url}`"
         @click="currentImage = `${config.public.strapi.url}${img.url}`"
       >
@@ -66,7 +65,7 @@ onMounted(() => {
           :src="`${config.public.strapi.url}${img.url}`"
           :alt="`${product.name} - Image ${index + 1}`"
           format="webp"
-          width="90"
+          width="80"
           loading="lazy"
           class="thumbnail__img"
         />
@@ -104,7 +103,7 @@ onMounted(() => {
 }
 
 .thumbnail:hover {
-  transform: scale(1.05);
+  transform: scale(.9);
 }
 
 .thumbnail--active {

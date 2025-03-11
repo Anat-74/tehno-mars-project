@@ -5,6 +5,7 @@ interface PropsProducts {
    price?: number
    url?: string
    description?: string
+   category?: number | string
    uid?: string
 }
 const props = defineProps<PropsProducts>();
@@ -17,6 +18,7 @@ const addToCart = () => {
     name: props.name,
     price: props.price,
     description: props.description,
+    category: props.category,
     uid: props.uid,
     image: props.url
    }
@@ -36,6 +38,7 @@ const addToCart = () => {
           width="122"
         />
         <button @click="addToCart">addToCart</button>
+        <h4>{{ category }}</h4>
         <NuxtLink
         :to="`/${uid}`"
         >{{ uid }}</NuxtLink>
