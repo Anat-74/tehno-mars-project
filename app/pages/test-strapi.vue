@@ -13,7 +13,7 @@ const { data: products, status, error } = useAsyncData(
 
 onMounted(() => {
   console.log('Products data:', products.value)
-  console.log('First product:', products.value?.data?.[0])
+//   console.log('First product:', products.value?.data?.[0])
 })
 </script>
 

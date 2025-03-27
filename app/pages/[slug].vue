@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Product } from "../types/types";
+
 const { find } = useStrapi()
 const route = useRoute()
 const config = useRuntimeConfig()
@@ -7,7 +8,8 @@ const cartStore = useCartStore()
 
 const currentImage = useState<string | null>('currentImage', () => null)
 
-const { data: product, error, status } = await useAsyncData('product', async () => {
+const { data: product, error, status } = await useAsyncData('product',
+   async () => {
     const response = await find<Product>('products', {
        filters: {slug: route.params.slug},
       populate: '*'
@@ -27,13 +29,13 @@ const { data: product, error, status } = await useAsyncData('product', async () 
 })
 
 const addToCart = (product: Product) => {
-  const productData = {
+   const productData = {
+    category: product.category?.name || '',
     id: product.id,
     name: product.name,
     description: product.description || '',
     image: product.image?.[0]?.url || '',
     price: product.price || 0,
-    category: product.category?.name || '' 
   }
   cartStore.addToCart(productData)
 }
@@ -70,7 +72,7 @@ onMounted(() => {
         v-for="(img, index) in product.image" 
         :key="img.id"
         class="thumbnail"
-        :class="{ 'thumbnail--active': isActive(img.url).value         }"
+        :class="{ 'thumbnail--active': isActive(img.url).value}"
         @mouseover="currentImage = `${config.public.strapi.url}${img.url}`"
         @click="currentImage = `${config.public.strapi.url}${img.url}`"
       >

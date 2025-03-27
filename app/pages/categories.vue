@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const { find } = useStrapi()
 
-const { data: categories, pending, error } = useAsyncData('categories',
+const { data: categories, status, error } = useAsyncData('category',
    async () => await find('categories', {
       populate: '*'
    })
@@ -14,7 +14,7 @@ onMounted(() => {
 
 <template>
    <div>
-      <Loader v-if="pending" />
+      <Loader v-if="status === 'pending'" />
       <h1>Categories</h1>
       <ul v-if="categories?.data">
          <li

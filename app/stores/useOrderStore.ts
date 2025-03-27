@@ -6,7 +6,7 @@ export const useOrderStore = defineStore('order', () => {
       try {
          const orderData = {
             items: cartStore.items,
-            total: parseFloat(cartStore.totalPrice),//=======???
+            total: parseFloat(cartStore.totalPrice),
             email,
             phone,
             statusOrders: 'new'
