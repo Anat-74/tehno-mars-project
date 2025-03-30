@@ -63,20 +63,20 @@ export default defineNuxtConfig({
     },
    i18n: {
       lazy: true,
-      strategy: 'prefix_except_default',
-      locales: [
-         {
-            code: 'ru',
-            name: 'RU',
-            file: 'ru-RU.json'
-         },
-         {
-            code: 'be',
-            name: 'BY',
-            file: 'be-BY.json'
-          }
+      strategy: 'no_prefix',  // URL без префикса языка
+      locales: ['en', 'ru', 'be'
+         // {
+         //    code: 'ru',
+         //    name: 'RU',
+         //    file: 'ru-RU.json'
+         // },
+         // {
+         //    code: 'be',
+         //    name: 'BY',
+         //    file: 'be-BY.json'
+         //  }
       ],
-      defaultLocale: 'ru'
+      defaultLocale: 'ru',
    },
    image: {
       // domains: ['localhost'],

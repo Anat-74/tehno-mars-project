@@ -44,6 +44,10 @@ const { isAccount, isContacts } = useVisibilityProvider()
       <div class="footer__container">
          <CategoriesSection />
          <ScrollToTop />
+         <div>
+            <NuxtLink
+            to="/translations"
+            >internationalizations page</NuxtLink></div>
    </div>
    </footer>
 </template>

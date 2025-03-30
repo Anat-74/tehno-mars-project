@@ -1,3 +1,11 @@
+export interface TranslationData {
+   [key: string]: string
+ }
+ 
+ export interface TranslationsCache {
+   [lang: string]: TranslationData
+ }
+//========================================================================================================================================
 export interface PropsProduct {
    id: number
    title: string
@@ -5,15 +13,14 @@ export interface PropsProduct {
    url: string
    price: number
 }
-
+//===============================================================================================================================================
 export interface VisibilityState {
    isAccount: Ref<boolean>
    isContacts: Ref<boolean>
    visibleIsAccount: () => void
    visibleIsContacts: () => void
 }
-
-
+//========================================================================================================================================================
 export type Image = {
    id: number;
    documentId: string;
@@ -57,4 +64,5 @@ export type Image = {
        total: number;
      }
    }
- }
+}
+ //============================================================================================================================================

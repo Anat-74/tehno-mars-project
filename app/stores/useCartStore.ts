@@ -1,4 +1,3 @@
-import { defineStore } from 'pinia';
 type CartItem = {
    product: {
       id: number | string
