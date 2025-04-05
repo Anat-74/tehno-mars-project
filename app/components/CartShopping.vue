@@ -3,13 +3,14 @@ const cartStore = useCartStore()
 onMounted(() => {
   cartStore.loadCart();
 })
+const { currentLocale } = useLocale()
 </script>
 
 <template>
 <div >
 <NuxtLink
 class="cart-link"
-   to="/cartshopping"
+   :to="`/${currentLocale}/cartshopping`"
    >
    <span class="cart-link__price">{{ cartStore.totalItems }}</span>
    <Icon

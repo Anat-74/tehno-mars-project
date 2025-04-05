@@ -1,32 +1,31 @@
 <script lang="ts" setup>
 const { isContacts, visibleIsContacts } = useVisibilityConsumer()
+const { currentLocale } = useLocale()
 </script>
 
 <template>
    <nav class="nav">
       <ul class="nav__list">
          <li class="nav__item">
-            <NuxtLink
-            class="nav__link" 
-            to="/">
-            home</NuxtLink>
+            <NuxtLink :to="`/${currentLocale}`" 
+            class="nav__link">Home</NuxtLink>
       </li>
       <li class="nav__item">
             <NuxtLink
             class="nav__link"  
-            to="/about">
+            :to="`/${currentLocale}/about`">
             about</NuxtLink>
       </li>
       <li class="nav__item">
             <NuxtLink 
             class="nav__link" 
-            to="/services">
+            :to="`/${currentLocale}/services`">
             servicess</NuxtLink>
       </li>
       <li class="nav__item">
             <NuxtLink 
             class="nav__link" 
-            to="/info">
+            :to="`/${currentLocale}/info`">
             info</NuxtLink>
       </li>
 
@@ -36,7 +35,7 @@ const { isContacts, visibleIsContacts } = useVisibilityConsumer()
       >
             <NuxtLink 
             class="nav__link" 
-            to="/contacts"
+            :to="`/${currentLocale}/contacts`"
             ><Icon name="material-symbols:install-mobile-outline-rounded" />
             contacts
             </NuxtLink>

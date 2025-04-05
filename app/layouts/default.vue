@@ -1,5 +1,5 @@
 <script setup lang="ts">
-
+const { currentLocale } = useLocale()
 const { isContacts } = useVisibilityProvider()
 </script>
 
@@ -16,7 +16,7 @@ const { isContacts } = useVisibilityProvider()
    <div class="header__container-bottom">
    <NuxtLink 
    class="header__link-logo"
-   to="/">
+   :to="`/${currentLocale}`">
       <NuxtImg 
    class="header__logo"
    src="/image/logo.png"

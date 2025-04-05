@@ -1,9 +1,17 @@
-export default defineNuxtRouteMiddleware((to) => {
-   const supportedLangs = ['en', 'ru', 'be']
-   const lang = to.params.lang
+// middleware/lang.global.ts (исправленный)
+export default defineNuxtRouteMiddleware((to, from) => {
+   // const supportedLangs = ['en', 'ru', 'be']
+   
+   // // Редирект с корня на сохраненный язык
+   // if (to.path === '/') {
+   //   const langCookie = useCookie('lang').value || 'ru'
+   //   return navigateTo(`/${langCookie}`)
+   // }
  
-   // Если язык не поддерживается — редирект на 'en'
-   if (!supportedLangs.includes(String(lang))) {
-     return navigateTo('/ru')
-   }
+   // // Проверка языка в URL
+   // const urlLang = to.params.lang as string
+   // if (!supportedLangs.includes(urlLang)) {
+   //   const langCookie = useCookie('lang').value || 'ru'
+   //   return navigateTo(`/${langCookie}`)
+   // }
  })

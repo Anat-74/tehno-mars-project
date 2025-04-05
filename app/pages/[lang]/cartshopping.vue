@@ -1,13 +1,16 @@
 <script setup lang="ts">
-useSeoMeta({
-   title: 'Корзина',
-   ogTitle: 'Корзина',
-   description: 'Страница корзины сайта',
-   ogDescription: 'Страница корзины сайта'
-})
+import type { LocaleCode } from "../../types/types"
+import { cartTranslations } from '~/locales/cart';
 
-
+const { currentLocale } = useLocale()
 const cartStore = useCartStore()
+
+useSeoMeta({
+  title: cartTranslations[currentLocale.value as LocaleCode].title,
+  ogTitle: cartTranslations[currentLocale.value as LocaleCode].title,
+  description: cartTranslations[currentLocale.value as LocaleCode].description,
+  ogDescription: cartTranslations[currentLocale.value as LocaleCode].description
+})
 
 onMounted(() => {
   cartStore.loadCart();
@@ -16,51 +19,56 @@ onMounted(() => {
 
 <template>
    <section class="cart-page">
-      <div 
-      v-if="cartStore.totalItems === 0"
-      class="cart-page__no-product-items"
-      >
-         <NuxtImg
-      class="cart-page__image" 
-      src="image/cart-empty-img.png"
-      alt="image"
-      format="webp"
-      width="444"
-      />
-      <span class="cart-page__text">Товаров пока нет(</span>
-   </div>
-
-   <div 
-   v-else
-   class="cart-page__cart-items">
-   <div>
-      <h2>Корзина</h2>
-<div class="cart-page__cart-item-body">
-   <CartTest />
-</div>
-</div>
-
-<div>
-<div class="cart-page__summary">
-   <span class="cart-page__total">Итого
-      <Icon 
-      class="icon-bel-ruble"
-      name="my-icon:icon-by-regular" />
-      <b>{{ cartStore.totalPrice }}</b>
-   </span>
-   <UButton
-   @click=""
-   size="large"
-   label="Оформить"
-   role="link"
-   />
-</div>
-</div>
-
-<OrderForm />
-</div>
+     <div 
+       v-if="cartStore.totalItems === 0"
+       class="cart-page__no-product-items"
+     >
+       <NuxtImg
+         class="cart-page__image" 
+         src="image/cart-empty-img.png"
+         alt="image"
+         format="webp"
+         width="444"
+       />
+       <span class="cart-page__text">
+         {{ cartTranslations[currentLocale].noProducts }}
+       </span>
+     </div>
+ 
+     <div 
+       v-else
+       class="cart-page__cart-items"
+     >
+       <div>
+         <h2>{{ cartTranslations[currentLocale].title }}</h2>
+         <div class="cart-page__cart-item-body">
+           <CartTest />
+         </div>
+       </div>
+ 
+       <div>
+         <div class="cart-page__summary">
+           <span class="cart-page__total">
+             {{ cartTranslations[currentLocale].total }}
+             <Icon 
+               class="icon-bel-ruble"
+               name="my-icon:icon-by-regular" 
+             />
+             <b>{{ cartStore.totalPrice }}</b>
+           </span>
+           <UButton
+             @click=""
+             size="large"
+             :label="cartTranslations[currentLocale].checkout"
+             role="link"
+           />
+         </div>
+       </div>
+ 
+       <OrderForm />
+     </div>
    </section>
-</template>
+ </template>
 
 <style lang="scss" scoped>
 .cart-page {

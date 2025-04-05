@@ -1,26 +1,37 @@
+// composables/useLocale.ts
 export const useLocale = () => {
-  const route = useRoute()
-  const router = useRouter()
-
-  // Текущий язык из URL (например, `/ru` → `ru`)
-   const currentLocale = ref<string>(route.params.lang as string || 'ru')
-
-  // Список доступных локалей (должен совпадать с Strapi)
-  const locales = [
-    { code: 'en', name: 'English', flag: '🇬🇧' },
-    { code: 'ru', name: 'Русский', flag: '🇷🇺' },
-    { code: 'be', name: 'Беларускi', flag: 'BE' }
-  ]
-
-  // Переключение языка
-  const switchLocale = async (newLocale: string) => {
-    // Обновляем URL без перезагрузки страницы
-    await router.push({
-      params: { lang: newLocale },
-      query: route.query, // Сохраняем query-параметры
-    })
-    currentLocale.value = newLocale
-  }
-
-  return { currentLocale, locales, switchLocale }
-}
+   const route = useRoute()
+   const router = useRouter()
+   const langCookie = useCookie<string>('lang', {
+     maxAge: 365 * 24 * 60 * 60,
+     sameSite: 'lax'
+   })
+ 
+   // Инициализация из URL или куки
+   const currentLocale = useState<string>('locale', () => {
+     return (route.params.lang as string) || langCookie.value || 'ru'
+   })
+ 
+   // Автоматическая синхронизация при изменении
+   watch(currentLocale, (newVal) => {
+     langCookie.value = newVal
+     if (route.params.lang !== newVal) {
+       router.replace({
+         params: { ...route.params, lang: newVal },
+         query: route.query
+       })
+     }
+   })
+ 
+   const locales = [
+     { code: 'en', name: 'English' },
+     { code: 'ru', name: 'Русский' },
+     { code: 'be', name: 'Беларускi' }
+   ]
+ 
+   const switchLocale = (newLocale: string) => {
+     currentLocale.value = newLocale
+   }
+ 
+   return { currentLocale, locales, switchLocale }
+ }

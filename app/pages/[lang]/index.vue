@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import type { ProductsResponse } from "../../types/types";
+import Product from "~/components/Product.vue"
+import type { ProductsResponse, LocaleCode } from "../../types/types"
 const { currentLocale } = useLocale()
-
-type LocaleCode = 'ru' | 'en' | 'be'
 
 const pageMeta = {
   ru: {
@@ -49,7 +48,7 @@ onMounted(() => {
    <LangSwitcher/>
     <Loader v-if="status === 'pending'" />
     <ul v-else-if="products?.data?.length">
-      <Test v-for="product in products.data" 
+      <Product v-for="product in products.data" 
       :key="product.id"
       :id="product.id"
       :name="product.name"
@@ -59,7 +58,7 @@ onMounted(() => {
       :slug="product.slug"
       :image="`${config.public.strapi.url}${product.image[0]?.url}`"
       >
-      </Test>
+      </Product>
     </ul>
     <div v-else-if="error">Error: {{ error.message }}</div>
   </div>

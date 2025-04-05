@@ -8,8 +8,8 @@ interface PropsProducts {
    category?: string
    slug?: string
 }
-const props = defineProps<PropsProducts>()
-   const { currentLocale } = useLocale()
+defineProps<PropsProducts>()
+const { currentLocale } = useLocale()
 
 // const cartStore = useCartStore()
 
