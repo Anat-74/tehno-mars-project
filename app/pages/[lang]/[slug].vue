@@ -10,7 +10,7 @@ const slug = route.params.slug
 
 const currentImage = useState<string | null>('currentImage', () => null)
 
-const { data: product, error, status } = await useAsyncData(`product-${lang}-${slug}`,
+const { data: product, error, status } = useAsyncData(`product-${lang}-${slug}`,
    async () => {
     const response = await find<Product>('products', {
        filters: { slug: slug },

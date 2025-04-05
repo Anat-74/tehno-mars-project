@@ -40,9 +40,9 @@ export default defineNuxtConfig({
           }
       }
    },
-   routeRules: {
-      '/': { redirect: '/ru' }
-    },
+   // routeRules: {
+   //    '/': { redirect: '/ru' }
+   //  },
     nitro: {
       prerender: {
         routes: ['/en', '/ru', '/be']

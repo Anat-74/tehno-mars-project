@@ -10,7 +10,6 @@ const { isContacts } = useVisibilityProvider()
    <ColorMode class="header__color-mode"/>
 </ClientOnly>
 <BaseNavigation class="header__navigation hidden-tablet" />
-<LangSwitcher/>
 <ShowModalHamburger class="header__dialog-header" />
 </div>
 <div :class="['header__bg', {header__bg_hidden: isContacts}]">
