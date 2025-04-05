@@ -8,7 +8,8 @@ interface PropsProducts {
    category?: string
    slug?: string
 }
-const props = defineProps<PropsProducts>();
+const props = defineProps<PropsProducts>()
+   const { currentLocale } = useLocale()
 
 // const cartStore = useCartStore()
 
@@ -40,7 +41,7 @@ const props = defineProps<PropsProducts>();
         <!-- <button @click="addToCart">addToCart</button> -->
         <h4>{{ category }}</h4>
         <NuxtLink
-        :to="`/${slug}`"
+        :to="`/${currentLocale}/${slug}`"
         >{{ slug }}</NuxtLink>
   </li>
 </template>

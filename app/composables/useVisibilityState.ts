@@ -3,16 +3,16 @@ import type { VisibilityState } from "@/types/types";
 const VISIBILITY_KEY = "visible";
 
 export const useVisibilityProvider = () => {
-  const isAccount = ref<boolean>(false);
+//   const isAccount = ref<boolean>(false);
   const isContacts = ref<boolean>(false);
 
-  const visibleIsAccount = () => (isAccount.value = true);
+//   const visibleIsAccount = () => (isAccount.value = true);
   const visibleIsContacts = () => (isContacts.value = true);
 
   const state: VisibilityState = {
-    isAccount,
+   //  isAccount,
     isContacts,
-    visibleIsAccount,
+   //  visibleIsAccount,
     visibleIsContacts,
   };
 

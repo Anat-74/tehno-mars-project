@@ -1,17 +1,20 @@
 <script setup lang="ts">
-import type { Product } from "../types/types";
+import type { Product } from "../../types/types"
 
 const { find } = useStrapi()
 const route = useRoute()
 const config = useRuntimeConfig()
 const cartStore = useCartStore()
+const lang = route.params.lang
+const slug = route.params.slug
 
 const currentImage = useState<string | null>('currentImage', () => null)
 
-const { data: product, error, status } = await useAsyncData('product',
+const { data: product, error, status } = await useAsyncData(`product-${lang}-${slug}`,
    async () => {
     const response = await find<Product>('products', {
-       filters: {slug: route.params.slug},
+       filters: { slug: slug },
+       locale: lang,
       populate: '*'
     })
 
@@ -47,14 +50,16 @@ onMounted(() => {
    console.debug('Продукт:', product.value)
 })
 
+useSeoMeta({
+  title: product.value?.name,
+  description: product.value?.description
+})
 </script> 
 
 <template>
    <Loader v-if="status === 'pending'" />
    <div v-if="product">
      <h1>Name: {{ product.name }}</h1>
-     <p>UID: {{ product.slug }}</p>
-
      <div v-if="currentImage" class="main-image">
       <NuxtImg 
         :src="currentImage"

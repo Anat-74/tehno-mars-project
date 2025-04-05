@@ -26,7 +26,7 @@ export default defineNuxtConfig({
       '@nuxt/icon',
       '@pinia/nuxt',
       'pinia-plugin-persistedstate/nuxt',
-      '@nuxtjs/i18n',
+      // '@nuxtjs/i18n',
       '@nuxtjs/color-mode',
       '@nuxtjs/html-validator',
       '@nuxtjs/strapi'
@@ -40,6 +40,14 @@ export default defineNuxtConfig({
           }
       }
    },
+   routeRules: {
+      '/': { redirect: '/ru' }
+    },
+    nitro: {
+      prerender: {
+        routes: ['/en', '/ru', '/be']
+      }
+    },
    runtimeConfig: {
       strapi: {
          url: process.env.NUXT_STRAPI_URL,
@@ -61,23 +69,23 @@ export default defineNuxtConfig({
         }
       }
     },
-   i18n: {
-      lazy: true,
-      strategy: 'no_prefix',  // URL без префикса языка
-      locales: ['en', 'ru', 'be'
-         // {
-         //    code: 'ru',
-         //    name: 'RU',
-         //    file: 'ru-RU.json'
-         // },
-         // {
-         //    code: 'be',
-         //    name: 'BY',
-         //    file: 'be-BY.json'
-         //  }
-      ],
-      defaultLocale: 'ru',
-   },
+   // i18n: {
+   //    lazy: true,
+   //    strategy: 'no_prefix',  // URL без префикса языка
+   //    locales: [
+   //       {
+   //          code: 'ru',
+   //          name: 'RU',
+   //          file: 'ru-RU.json'
+   //       },
+   //       {
+   //          code: 'be',
+   //          name: 'BY',
+   //          file: 'be-BY.json'
+   //        }
+   //    ],
+   //    defaultLocale: 'ru',
+   // },
    image: {
       // domains: ['localhost'],
       // strapi: {

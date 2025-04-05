@@ -1,3 +1,10 @@
+<script setup lang="ts">
+const { currentLocale } = useLocale()
+useHead({
+  htmlAttrs: { lang: () => currentLocale.value }
+})
+</script>
+
 <template>
    <NuxtLayout>
    <NuxtPage />

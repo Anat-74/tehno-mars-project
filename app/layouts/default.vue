@@ -1,7 +1,6 @@
 <script setup lang="ts">
-const userStore = useUserStore()
 
-const { isAccount, isContacts } = useVisibilityProvider()
+const { isContacts } = useVisibilityProvider()
 </script>
 
 <template>
@@ -11,10 +10,10 @@ const { isAccount, isContacts } = useVisibilityProvider()
    <ColorMode class="header__color-mode"/>
 </ClientOnly>
 <BaseNavigation class="header__navigation hidden-tablet" />
-<LangSwitcher class="header__lang hidden-tablet" />
+<LangSwitcher/>
 <ShowModalHamburger class="header__dialog-header" />
 </div>
-<div :class="['header__bg', {header__bg_hidden: isAccount || isContacts}]">
+<div :class="['header__bg', {header__bg_hidden: isContacts}]">
    <div class="header__container-bottom">
    <NuxtLink 
    class="header__link-logo"
@@ -44,10 +43,6 @@ const { isAccount, isContacts } = useVisibilityProvider()
       <div class="footer__container">
          <CategoriesSection />
          <ScrollToTop />
-         <div>
-            <NuxtLink
-            to="/translations"
-            >internationalizations page</NuxtLink></div>
    </div>
    </footer>
 </template>

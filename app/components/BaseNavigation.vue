@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-const localePath = useLocalePath()
-const { isAccount, isContacts, visibleIsAccount, visibleIsContacts } = useVisibilityConsumer()
+const { isContacts, visibleIsContacts } = useVisibilityConsumer()
 </script>
 
 <template>
@@ -9,26 +8,26 @@ const { isAccount, isContacts, visibleIsAccount, visibleIsContacts } = useVisibi
          <li class="nav__item">
             <NuxtLink
             class="nav__link" 
-            :to="localePath('/')">
-               {{ $t('nav.home') }}</NuxtLink>
+            to="/">
+            home</NuxtLink>
       </li>
       <li class="nav__item">
             <NuxtLink
             class="nav__link"  
-            :to="localePath('/about')">
-               {{ $t('nav.about_us') }}</NuxtLink>
+            to="/about">
+            about</NuxtLink>
       </li>
       <li class="nav__item">
             <NuxtLink 
             class="nav__link" 
-            :to="localePath('/services')">
-               {{ $t('nav.services') }}</NuxtLink>
+            to="/services">
+            servicess</NuxtLink>
       </li>
       <li class="nav__item">
             <NuxtLink 
             class="nav__link" 
-            :to="localePath('/info')">
-               {{ $t('nav.info') }}</NuxtLink>
+            to="/info">
+            info</NuxtLink>
       </li>
 
       <li :class="['nav__item', {nav__item_contacts: isContacts}]"
@@ -37,9 +36,9 @@ const { isAccount, isContacts, visibleIsAccount, visibleIsContacts } = useVisibi
       >
             <NuxtLink 
             class="nav__link" 
-            :to="localePath('/contacts')"
+            to="/contacts"
             ><Icon name="material-symbols:install-mobile-outline-rounded" />
-               {{ $t('nav.contacts') }}
+            contacts
             </NuxtLink>
             <div
             v-if="isContacts"
@@ -67,35 +66,6 @@ const { isAccount, isContacts, visibleIsAccount, visibleIsContacts } = useVisibi
    </a>
          </div>
       </li>
-
-      <li 
-      :class="['nav__item', {nav__item_account: isAccount}]"
-      @mouseenter="visibleIsAccount"
-      @mouseleave="isAccount = false"
-      >
-      <Icon name="mdi:account-tie-outline" />
-         {{ $t('nav.profile') }}
-      <Icon 
-      name="oui:arrow-down" />
-      <div
-      v-if="isAccount"
-      class="nav__profile profile">
-      <h3 class="profile__title">{{ $t('nav.profile_title') }}</h3>
-         <NuxtLink
-         class="profile__link"
-         :to="localePath('/auth')"
-         >{{ $t('nav.profile_login') }}
-      </NuxtLink>
-         <ul class="profile__list">
-            <li 
-            @click="navigateTo('/orders')"
-            class="profile__item">{{ $t('nav.profile_orders') }}
-         </li>
-            <li class="profile__item">{{ $t('nav.profile_exit') }}
-            </li>
-            </ul>
-         </div>
-       </li>
       </ul>
    </nav>
 </template>
@@ -119,14 +89,6 @@ const { isAccount, isContacts, visibleIsAccount, visibleIsContacts } = useVisibi
          .iconify--material-symbols {
             font-size: toRem(20);
          }
-         .iconify--mdi {
-            margin-block: toRem(1);
-            font-size: toRem(24);
-         }
-         .iconify--oui {
-            margin-inline-start: toRem(12);
-            font-size: toRem(18);
-         }
 
          &_contacts {
          position: relative;
@@ -136,20 +98,6 @@ const { isAccount, isContacts, visibleIsAccount, visibleIsContacts } = useVisibi
          margin-block-end: toRem(-24);
 
          svg {
-            color: var(--active-color);
-            transition: color var(--transition-duration);
-         }
-      }
-
-         &_account {
-            position: relative;
-            padding-block-start: toRem(7);
-            margin-block-start: toRem(-7);
-            padding-block-end: toRem(24);
-            margin-block-end: toRem(-24);
-            color: var(--secondary-color);
-
-            svg {
             color: var(--active-color);
             transition: color var(--transition-duration);
          }
@@ -251,57 +199,6 @@ const { isAccount, isContacts, visibleIsAccount, visibleIsContacts } = useVisibi
          background-color: var(--danger-color);
          transition: background-color var(--transition-duration);
       }
-}
-
-.profile {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      row-gap: toRem(9);
-      white-space: nowrap;
-      text-align: center;
-      position: absolute;
-      top: toRem(56);
-      right: 0;
-      padding-inline: toRem(18);
-      padding-block: toRem(12);
-      border-radius: toRem(4);
-      color: var(--primary-color);
-      background-color: var(--secondary-color);
-      @include adaptiveValue("font-size", 16, 14);
-
-      &__title {
-         font-weight: 500;
-      }
-
-      &__link {
-         padding-block: toRem(2);
-         border: 2px solid var(--danger-color);
-         font-weight: 600;
-         border-color: var(--danger-color);
-         color: var(--danger-color);
-         transition: background-color var(--transition-duration);
-
-         @include hover {
-            color: var(--light-color);
-            background-color: var(--danger-color);
-         }
-      }
-
-      &__item {
-         padding-block: toRem(1);
-         border: 2px dotted var(--primary-color);
-         font-weight: 500;
-
-         &:not(:last-child) {
-            margin-block-end: toRem(4);
-         }
-
-      @include hover {
-         color: var(--light-color);
-         background-color: var(--border-color);
-      }
-   }
 }
 
 .router-link-active {

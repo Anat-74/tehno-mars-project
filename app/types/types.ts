@@ -1,23 +1,15 @@
-export interface TranslationData {
-   [key: string]: string
- }
- 
- export interface TranslationsCache {
-   [lang: string]: TranslationData
- }
-//========================================================================================================================================
-export interface PropsProduct {
-   id: number
-   title: string
-   description: string
-   url: string
-   price: number
-}
+// export interface PropsProduct {
+//    id: number
+//    title: string
+//    description: string
+//    url: string
+//    price: number
+// }
 //===============================================================================================================================================
 export interface VisibilityState {
-   isAccount: Ref<boolean>
+   // isAccount: Ref<boolean>
    isContacts: Ref<boolean>
-   visibleIsAccount: () => void
+   // visibleIsAccount: () => void
    visibleIsContacts: () => void
 }
 //========================================================================================================================================================
@@ -33,8 +25,9 @@ export type Image = {
  export type Category = {
    id: number;
    documentId: string;
-    name: string;
-    slug: string;
+   name: string;
+   slug: string;
+   locale: string;
    createdAt: string;
    updatedAt: string;
    publishedAt: string;
@@ -46,6 +39,7 @@ export type Image = {
    name: string;
    description: string;
    slug: string;
+   locale: string;
    price: number;
    createdAt: string;
    updatedAt: string;

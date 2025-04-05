@@ -1,11 +1,18 @@
-<!-- <script setup lang="ts">
-import type { ProductsResponse } from "../types/types";
+<script setup lang="ts">
+useSeoMeta({
+   title: 'Главная',
+   ogTitle: 'Главная',
+   description: 'Главная страница сайта',
+   ogDescription: 'Главная страница сайта'
+})
+
+import type { ProductsResponse } from "../../types/types";
 const { find } = useStrapi()
 const config = useRuntimeConfig()
 const { currentLocale } = useLocale()
 
 const { data: products, status, error } = useAsyncData(
-  'products',
+  `products-${currentLocale.value}`,
   async () => {
      const response = await find('products', {
       locale: currentLocale.value,
@@ -19,11 +26,11 @@ onMounted(() => {
   console.log('Products data:', products.value)
 //   console.log('First product:', products.value?.data?.[0])
 })
-</script> -->
+</script>
 
 <template>
   <div>
-    <!-- <Loader v-if="status === 'pending'" />
+    <Loader v-if="status === 'pending'" />
     <ul v-else-if="products?.data?.length">
       <Test v-for="product in products.data" 
       :key="product.id"
@@ -37,16 +44,6 @@ onMounted(() => {
       >
       </Test>
     </ul>
-    <div v-else-if="error">Error: {{ error.message }}</div> -->
+    <div v-else-if="error">Error: {{ error.message }}</div>
   </div>
 </template>
-
-
-
-
-
-
-
-
-
-
