@@ -1,9 +1,13 @@
+<script lang="ts" setup>
+const { currentLocale } = useLocale()
+</script>
+
 <template>
    <div class="error">
       <h1 class="error__title">404 - Страница не найдена</h1>
       <p class="error__descr">Oops! Что-то пошло не так. Страница не найдена</p>
       <NuxtLink 
-      to="/"
+      :to="`/${currentLocale}`"
       class="error__link"
       >Вернуться на главную страницу
    </NuxtLink>

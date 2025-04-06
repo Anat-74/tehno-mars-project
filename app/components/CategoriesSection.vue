@@ -1,10 +1,11 @@
+<script lang="ts" setup>
+const { currentLocale } = useLocale()
+</script>
+
 <template>
    <div>
-      <NuxtLink to="/test-strapi">
-      Test
-    </NuxtLink>
       <NuxtLink
-      to="/categories"
+      :to="`/${currentLocale}/categories`"
       >Categories</NuxtLink>
    </div>
 </template>

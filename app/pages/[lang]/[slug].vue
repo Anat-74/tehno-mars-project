@@ -58,26 +58,25 @@ useSeoMeta({
 
 <template>
    <Loader v-if="status === 'pending'" />
-   <div v-if="product">
+   <div v-if="product"
+   class="product-review"
+   >
      <h1>Name: {{ product.name }}</h1>
-     <div v-if="currentImage" class="main-image">
       <NuxtImg 
+        v-if="currentImage"
         :src="currentImage"
         :alt="product.name"
         format="webp"
         width="344"
-        class="main-image__img"
+        class="product-review__image"
       />
-    </div>
-     
      <div v-if="product.image?.length"
-     class="thumbnails"
+     class="product-review__thumbnails"
      >
      <div 
         v-for="(img, index) in product.image" 
         :key="img.id"
-        class="thumbnail"
-        :class="{ 'thumbnail--active': isActive(img.url).value}"
+        :class="['product-review__thumbnail', {'product-review__thumbnail_active': isActive(img.url).value}]"
         @mouseover="currentImage = `${config.public.strapi.url}${img.url}`"
         @click="currentImage = `${config.public.strapi.url}${img.url}`"
       >
@@ -87,56 +86,63 @@ useSeoMeta({
           format="webp"
           width="80"
           loading="lazy"
-          class="thumbnail__img"
+          class="product-review__thumbnail-image"
         />
       </div>
-      <button @click="addToCart(product)">addToCart</button>
      </div>
+     <p
+     class="product-review__description"
+     >{{ product.description }}</p>
+     <UButton
+     @click="addToCart(product)"
+      name-class="add-to-cart"
+      label="Добавить в корзину"
+      class="product-review__btn"
+     />
    </div>
    <div v-else-if="error">Error: {{ error.message }}</div>
  </template>
 
  <style lang="scss" scoped>
-.main-image {
-  margin: 20px 0;
+.product-review {
+&__image {
+   border-radius: toRem(8);
+   box-shadow: 0 toRem(2) toRem(8) rgba(0,0,0,0.1);
 }
 
-.main-image__img {
-   height: toRem(368);
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+&__thumbnails {
+   display: inline-flex;
+   align-items: center;
+   gap: 10px;
+   margin-top: 15px;
 }
 
-.thumbnails {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 15px;
+&__thumbnail {
+   cursor: pointer;
+  border: toRem(2) solid transparent;
+  border-radius: toRem(4);
+  transition: all var(--transition-duration);
+   &_active {
+      opacity: 1;
+      border-color: #3b82f6;
+   }
+
+   @include hover {
+      scale: .9;
+   }
 }
 
-.thumbnail {
-  cursor: pointer;
-  border: 2px solid transparent;
-  border-radius: 4px;
-  transition: all 0.2s ease;
+&__thumbnail-image {
+   border-radius: toRem(4);
+   transition: opacity var(--transition-duration);
 }
 
-.thumbnail:hover {
-  transform: scale(.9);
+&__description {
 }
 
-.thumbnail--active {
-  border-color: #3b82f6;
+&__btn {
+}
 }
 
-.thumbnail__img {
-  border-radius: 4px;
-  opacity: 0.8;
-  transition: opacity 0.2s ease;
-}
-
-.thumbnail--active .thumbnail__img {
-  opacity: 1;
-}
 </style>
 

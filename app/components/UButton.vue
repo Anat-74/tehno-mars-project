@@ -169,7 +169,7 @@ body:has(dialog[open]) {
 
   &_add-to-cart {
    border-radius: toRem(8);
-   box-shadow: 0 toRem(5) toRem(1) rgba(0, 0, 0, 0.4);
+   box-shadow: 0 toRem(4) toRem(1) rgba(0, 0, 0, 0.4);
    transition: background-color var(--transition-duration);
    background-color: var(--warning-color);
 

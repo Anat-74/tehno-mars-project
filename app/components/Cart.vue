@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const cartStore = useCartStore()
 const config = useRuntimeConfig()
+
 onMounted(() => {
   cartStore.loadCart();
 })
@@ -48,51 +49,3 @@ console.log('cart',cartStore.items)
     <button @click="cartStore.clearCart">Очистить корзину</button>
   </div>
  </template>
-
-
- //==============================================================================================================
-
-
- <!-- <script setup lang="ts">
-const cartStore = useCartStore()
-
-onMounted(() => {
-  cartStore.syncCart()
-})
-</script>
-
-<template>
-  <div class="cart">
-    <h2>Корзина ({{ cartStore.totalItems }})</h2>
-    <div v-if="cartStore.items.length === 0">
-      Корзина пуста
-    </div>
-    <ul v-else>
-      <li v-for="item in cartStore.items" :key="item.product.id">
-        <div class="cart-item">
-          <img :src="item.product.image" :alt="item.product.name">
-          <div class="item-info">
-            <h3>{{ item.product.name }}</h3>
-            <p>{{ item.product.description }}</p>
-            <div class="quantity-controls">
-              <input
-                type="number"
-                :value="item.quantity"
-                min="1"
-                @change="cartStore.updateQuantity(item.product.id, $event.target.value)"
-              >
-              <button @click="cartStore.removeFromCart(item.product.id)">
-                Удалить
-              </button>
-            </div>
-            <p>{{ (item.product.price * item.quantity).toFixed(2) }} ₽</p>
-          </div>
-        </div>
-      </li>
-    </ul>
-    <div class="cart-total">
-      <p>Итого: {{ cartStore.totalPrice }} ₽</p>
-      <button @click="cartStore.clearCart">Очистить корзину</button>
-    </div>
-  </div>
-</template> -->

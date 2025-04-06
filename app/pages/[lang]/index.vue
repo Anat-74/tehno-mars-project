@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import Product from "~/components/Product.vue"
 import type { ProductsResponse, LocaleCode } from "../../types/types"
 const { currentLocale } = useLocale()
-
+const { find } = useStrapi()
+const config = useRuntimeConfig()
 const pageMeta = {
   ru: {
     title: 'Главная',
@@ -23,8 +23,6 @@ useSeoMeta({
   description: pageMeta[currentLocale.value as LocaleCode].description,
   ogDescription: pageMeta[currentLocale.value as LocaleCode].description
 })
-const { find } = useStrapi()
-const config = useRuntimeConfig()
 
 const { data: products, status, error } = useAsyncData(
   `products-${currentLocale.value}`,
@@ -47,7 +45,7 @@ onMounted(() => {
   <div>
    <LangSwitcher/>
     <Loader v-if="status === 'pending'" />
-    <ul v-else-if="products?.data?.length">
+    <ul v-if="products?.data?.length">
       <Product v-for="product in products.data" 
       :key="product.id"
       :id="product.id"

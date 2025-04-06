@@ -42,7 +42,7 @@ onMounted(() => {
        <div>
          <h2>{{ cartTranslations[currentLocale].title }}</h2>
          <div class="cart-page__cart-item-body">
-           <CartTest />
+           <Cart />
          </div>
        </div>
  
