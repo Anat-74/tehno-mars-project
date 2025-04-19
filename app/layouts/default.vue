@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import ProductsSection from '~/components/ProductsSection.vue';
+
 const { currentLocale } = useLocale()
 const { isContacts } = useVisibilityProvider()
 </script>
@@ -40,7 +42,7 @@ const { isContacts } = useVisibilityProvider()
 
    <footer class="footer">
       <div class="footer__container">
-         <CategoriesSection />
+         <ProductsSection/>
          <ScrollToTop />
    </div>
    </footer>

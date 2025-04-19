@@ -1,7 +1,8 @@
 <script setup lang="ts">
 const { currentLocale } = useLocale()
 useHead({
-  htmlAttrs: { lang: () => currentLocale.value }
+   title: 'TechnoMars',
+   htmlAttrs: { lang: () => currentLocale.value }
 })
 </script>
 

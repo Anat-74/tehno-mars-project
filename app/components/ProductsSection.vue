@@ -5,8 +5,8 @@ const { currentLocale } = useLocale()
 <template>
    <div>
       <NuxtLink
-      :to="`/${currentLocale}/categories`"
-      >Categories</NuxtLink>
+      :to="`/${currentLocale}/products`"
+      >Products</NuxtLink>
    </div>
 </template>
 

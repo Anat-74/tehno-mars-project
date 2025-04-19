@@ -73,7 +73,7 @@ useSeoMeta({
      <div v-if="product.image?.length"
      class="product-review__thumbnails"
      >
-     <div 
+     <div
         v-for="(img, index) in product.image" 
         :key="img.id"
         :class="['product-review__thumbnail', {'product-review__thumbnail_active': isActive(img.url).value}]"
@@ -113,8 +113,8 @@ useSeoMeta({
 &__thumbnails {
    display: inline-flex;
    align-items: center;
-   gap: 10px;
-   margin-top: 15px;
+   gap: toRem(10);
+   margin-block-start: toRem(15);
 }
 
 &__thumbnail {

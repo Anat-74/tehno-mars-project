@@ -11,7 +11,6 @@ export const useLocale = () => {
    const currentLocale = useState<string>('locale', () => {
      return (route.params.lang as string) || langCookie.value || 'ru'
    })
- 
    // Автоматическая синхронизация при изменении
    watch(currentLocale, (newVal) => {
      langCookie.value = newVal

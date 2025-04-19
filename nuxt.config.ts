@@ -32,17 +32,17 @@ export default defineNuxtConfig({
       '@nuxtjs/strapi'
    ],
    ssr: true,
-   app: {
-      head: {
-         title: 'TechnoMars',
-         htmlAttrs: {
-            lang: 'ru'
-          }
-      }
-   },
-   // routeRules: {
-   //    '/': { redirect: '/ru' }
-   //  },
+   // app: {
+   //    head: {
+   //       title: 'TechnoMars',
+   //       htmlAttrs: {
+   //          lang: 'ru'
+   //        }
+   //    }
+   // },
+   routeRules: {
+      '/': { redirect: '/ru' }
+    },
     nitro: {
       prerender: {
         routes: ['/en', '/ru', '/be']
