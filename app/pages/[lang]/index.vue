@@ -60,7 +60,7 @@ onMounted(() => {
          :key="category.id"
          >
          <NuxtLink
-         :to="`/${currentLocale}/category`"
+         :to="`/${currentLocale}/category/${category.slug}`"
          >
          <NuxtImg
          :src="`${config.public.strapi.url}${category.image[0]?.url}`"
@@ -70,18 +70,6 @@ onMounted(() => {
          ></NuxtImg>
          </NuxtLink>
          <h3>{{ category.name }}</h3>
-      <Category
-      class="category-product"
-      v-for="prod in category.products"
-      :key="prod.id"
-      :id="prod.id"
-      :name="prod.name"
-      :price="prod.price"
-      :description="prod.description"
-      :slug="prod.slug"
-      :image="`${config.public.strapi.url}${prod.image[0]?.url}`"
-      >
-   </Category>
       </li>
           <li>
           </li>
