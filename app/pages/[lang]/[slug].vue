@@ -93,6 +93,7 @@ useSeoMeta({
      <p
      class="product-review__description"
      >{{ product.description }}</p>
+     <span>{{ product.price }}</span>
      <UButton
      @click="addToCart(product)"
       name-class="add-to-cart"

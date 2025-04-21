@@ -1,4 +1,3 @@
-// composables/useLocale.ts
 export const useLocale = () => {
    const route = useRoute()
    const router = useRouter()
