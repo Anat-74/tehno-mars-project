@@ -13,7 +13,7 @@ const { currentLocale } = useLocale()
 </script>
 
 <template>
-  <li>
+  <!-- <li>
    <h2>{{ category }}</h2>
    <h3>{{ name }}</h3>
         <span>Цена: {{ price }} ₽</span>
@@ -26,7 +26,7 @@ const { currentLocale } = useLocale()
           format="webp"
           width="122"
         /></NuxtLink>
-  </li>
+  </li> -->
 </template>
 
 <style lang="scss" scoped>

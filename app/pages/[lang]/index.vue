@@ -71,8 +71,6 @@ onMounted(() => {
          </NuxtLink>
          <h3>{{ category.name }}</h3>
       </li>
-          <li>
-          </li>
       </ul>
       <div v-else-if="error">Error: {{ error.message }}</div>
    </div>

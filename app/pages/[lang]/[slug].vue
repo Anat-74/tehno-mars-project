@@ -5,6 +5,7 @@ const { find } = useStrapi()
 const route = useRoute()
 const config = useRuntimeConfig()
 const cartStore = useCartStore()
+const { currentLocale } = useLocale()
 const lang = route.params.lang
 const slug = route.params.slug
 
@@ -13,13 +14,18 @@ const currentImage = useState<string | null>('currentImage', () => null)
 const { data: product, error, status } = useAsyncData(`product-${lang}-${slug}`,
    async () => {
     const response = await find<Product>('products', {
-       filters: { slug: slug },
-       locale: lang,
+       filters: {
+          slug: { $eq: slug },
+          locale: currentLocale.value
+       },
       populate: '*'
     })
 
     if (!response.data || response.data.length === 0) {
-    throw createError({ statusCode: 404, message: 'Продукт не найден' })
+       throw createError({
+          statusCode: 404,
+          message: 'Product Not Found'
+       })
   }
 
      const productData = response.data[0]
@@ -54,6 +60,11 @@ useSeoMeta({
   title: product.value?.name,
   description: product.value?.description
 })
+
+onMounted(() => {
+  console.log('Route params:', route.params); 
+  // Должно быть: { lang: 'ru', productSlug: 'sejfy' }
+});
 </script> 
 
 <template>

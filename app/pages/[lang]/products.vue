@@ -42,7 +42,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
+  <!-- <div>
    <LangSwitcher/>
     <Loader v-if="status === 'pending'" />
     <ul v-if="products?.data?.length">
@@ -59,5 +59,5 @@ onMounted(() => {
       </Product>
     </ul>
     <div v-else-if="error">Error: {{ error.message }}</div>
-  </div>
+  </div> -->
 </template>
