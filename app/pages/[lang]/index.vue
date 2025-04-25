@@ -29,13 +29,13 @@ useSeoMeta({
 const { data: categories, status, error } = useAsyncData(
    `category-${currentLocale.value}`,
    async () => {
-   const response = await find('categories', {
-      locale: currentLocale.value,
+      const response = await find('categories', {
+      filters: { locale: currentLocale.value },
       populate: {
-        image: true,
-        products: {
-          populate: ['image']
-        }
+        image: true
+      //   products: {
+      //     populate: ['image']
+      //   }
       }
       })
       return response as ProductsResponse

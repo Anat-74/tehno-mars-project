@@ -20,6 +20,12 @@ export const useLocale = () => {
        })
      }
    })
+
+   watch(() => route.params.lang, (newVal) => {
+      if (newVal && newVal !== currentLocale.value) {
+        currentLocale.value = newVal.toString()
+      }
+    })
  
    const locales = [
      { code: 'en', name: 'English' },

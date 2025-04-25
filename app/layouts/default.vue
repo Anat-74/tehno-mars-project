@@ -42,7 +42,8 @@ const { isContacts } = useVisibilityProvider()
 
    <footer class="footer">
       <div class="footer__container">
-         <ProductsSection/>
+         <!-- <ProductsSection/> -->
+          <TestSubCat />
          <ScrollToTop />
    </div>
    </footer>

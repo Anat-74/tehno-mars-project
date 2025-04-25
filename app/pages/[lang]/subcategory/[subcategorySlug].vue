@@ -4,26 +4,19 @@ const route = useRoute()
 const { currentLocale } = useLocale()
 const config = useRuntimeConfig()
 
-const page = ref(route.query.page ? +route.query.page : 1); // Текущая страница из URL
-const pageSize = 10; // Элементов на странице
-
 // Получаем данные категории
-const { data: category, status, error } = useAsyncData(
-  `category-${route.params.categorySlug}-${currentLocale.value}-page-${page.value}`,
+const { data: subcategory, status, error } = useAsyncData(
+  `subcategory-${route.params.subcategorySlug}-${currentLocale.value}`,
   async () => {
-    const response = await find('categories', {
+    const response = await find('subcategories', {
        filters: {
-          slug: { $eq: route.params.categorySlug },
+          slug: { $eq: route.params.subcategorySlug },
           locale: currentLocale.value
        },
-      populate: {
+       populate: {
         products: {
           populate: ['image']
         }
-       },
-       pagination: {
-        page: page.value,
-        pageSize: pageSize
       }
     })
 
@@ -31,7 +24,7 @@ const { data: category, status, error } = useAsyncData(
     if (!response.data || response.data.length === 0) {
       throw createError({
         statusCode: 404,
-        statusMessage: 'Category Not Found'
+        statusMessage: 'Products subCategory Not Found'
       })
     }
     
@@ -41,30 +34,26 @@ const { data: category, status, error } = useAsyncData(
 
 // SEO метаданные
 useSeoMeta({
-  title: category.value?.name,
-  description: category.value?.description
-})
-
-const pageCount = computed(() => {
-  const total = category.value?.products.meta?.pagination.total || 0;
-  return Math.ceil(total / pageSize);
+  title: subcategory.value?.name,
+  description: subcategory.value?.description
 })
 
 onMounted(() => {
-  console.log('CategorySlug data:', category.value)
+  console.log('subCategorySlug data:', subcategory.value)
 })
 </script>
 
 <template>
    <Loader v-if="status === 'pending'" />
-      <div >
-        <ul v-if="category?.products?.length" class="products-grid">
+      <div  v-if="subcategory">
+         <ul v-if="subcategory.products?.length" 
+         class="products-grid">
          <li
-          v-for="product in category.products"
-          :key="product.id"
+          v-for="product in subcategory.products"
+          :key="product.name"
           class="product-card"
         >
-          <NuxtLink
+        <NuxtLink
             :to="`/${currentLocale}/${product.slug}`"
             class="product-link"
           >
@@ -75,23 +64,20 @@ onMounted(() => {
               format="webp"
               loading="lazy"
               decoding="async"
-              width="300"
+              width="260"
               class="product-image"
             />
          </NuxtLink>
               <h3>{{ product.name }}</h3>
-              <p>{{ product.price }} ₽</p>
               <p>{{ product.description }}</p>
+              <span>{{ product.price }}</span>
         </li>
         </ul>
-        <Pagination 
-        :page="page"
-        :pageCount="pageCount"
-        :routeName="$route.name?.toString() || ''"
-      />
       </div>
 
     <div v-if="error" class="error">
       {{ error.message }}
     </div>
 </template>
+
+<style lang="scss" scoped></style>
