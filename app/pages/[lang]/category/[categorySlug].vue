@@ -79,6 +79,7 @@ onMounted(() => {
               class="product-image"
             />
          </NuxtLink>
+         <span>{{ subcategory.inStock }}</span>
               <h3>{{ subcategory.name }}</h3>
         </li>
         </ul>

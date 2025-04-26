@@ -54,7 +54,7 @@ onMounted(() => {
           class="product-card"
         >
         <NuxtLink
-            :to="`/${currentLocale}/${product.slug}`"
+            :to="`/${currentLocale}/product/${product.slug}`"
             class="product-link"
           >
             <NuxtImg

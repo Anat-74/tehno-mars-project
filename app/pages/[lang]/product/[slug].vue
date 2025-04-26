@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Product } from "../../types/types"
+import type { Product } from "../../../types/types"
 
 const { find } = useStrapi()
 const route = useRoute()
