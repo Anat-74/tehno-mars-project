@@ -12,7 +12,7 @@ const pageSize = 8; // Элементов на странице
 const { data: category, status, error } = useAsyncData(
   `category-${categorySlug}-${currentLocale.value}-page-${page.value}`,
   async () => {
-    const response = await find('categories', {
+     const response = await find('categories', {
        filters: {
           slug: { $eq: categorySlug },
           locale: currentLocale.value
@@ -37,22 +37,27 @@ const { data: category, status, error } = useAsyncData(
     }
     
     return response.data[0] // Берем первую категорию из массива
-  }
+   },
+   { server: true }
 )
 
-// SEO метаданные
-// useSeoMeta({
-//   title: category.value?.name,
-//   description: category.value?.description
-// })
+useServerSeoMeta({
+  title: category.value?.name || 'TechnoMars',
+  description: category.value?.description || 'Лучший магазин электроники'
+})
 
 watch(category, (newCategory) => {
   if (newCategory) {
     useSeoMeta({
       title: newCategory.name,
       description: newCategory.description
-    });
+    })
   }
+})
+
+useSeoMeta({
+  title: category.value?.name || '...',
+  description: category.value?.description || '...'
 })
 
 const pageCount = computed(() => {

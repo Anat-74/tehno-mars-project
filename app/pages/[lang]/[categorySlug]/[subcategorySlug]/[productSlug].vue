@@ -6,7 +6,6 @@ const route = useRoute()
 const lang = route.params.lang
 const { productSlug } = route.params
 const config = useRuntimeConfig()
-const cartStore = useCartStore()
 const { currentLocale } = useLocale()
 
 const currentImage = useState<string | null>('currentImage', () => null)
@@ -37,18 +36,6 @@ const { data: product, error, status } = useAsyncData(`product-${lang}-${product
       return productData
 })
 
-const addToCart = (product: Product) => {
-   const productData = {
-    category: product.category?.name || '',
-    id: product.id,
-    name: product.name,
-    description: product.description || '',
-    image: product.image?.[0]?.url || '',
-    price: product.price || 0,
-  }
-  cartStore.addToCart(productData)
-}
-
 const isActive = (imgUrl: string) => 
   computed(() => currentImage.value === `${config.public.strapi.url}${imgUrl}`)
 
@@ -60,11 +47,6 @@ watch(product, (newCategory) => {
   console.log('product data:', newCategory);
 });
 
-// useSeoMeta({
-//   title: product.value?.name,
-//   description: product.value?.description
-// })
-
 watch(product, (newCategory) => {
   if (newCategory) {
     useSeoMeta({
@@ -72,6 +54,11 @@ watch(product, (newCategory) => {
       description: newCategory.description
     })
   }
+})
+
+useSeoMeta({
+  title: product.value?.name,
+  description: product.value?.description
 })
 </script> 
 
@@ -114,7 +101,7 @@ watch(product, (newCategory) => {
      >{{ product.description }}</p>
      <span>{{ product.price }}</span>
      <UButton
-     @click="addToCart(product)"
+     @click="useAddToCart(product)"
       name-class="add-to-cart"
       label="Добавить в корзину"
       class="product-review__btn"

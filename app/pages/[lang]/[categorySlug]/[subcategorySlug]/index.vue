@@ -5,9 +5,12 @@ const { categorySlug, subcategorySlug } = route.params
 const { currentLocale } = useLocale()
 const config = useRuntimeConfig()
 
+const page = ref(Number(route.query.page) || 1); // Текущая страница из URL
+const pageSize = 8; // Товаров на странице
+
 // Получаем данные категории
 const { data: subcategory, status, error } = useAsyncData(
-  `subcategory-${subcategorySlug}-${currentLocale.value}`,
+  `subcategory-${subcategorySlug}-${currentLocale.value}-page-${page.value}`,
   async () => {
     const response = await find('subcategories', {
        filters: {
@@ -17,7 +20,11 @@ const { data: subcategory, status, error } = useAsyncData(
        },
        populate: {
         products: {
-          populate: ['image']
+             populate: ['image'],
+         //     pagination: {
+         //       page: page.value,
+         //       pageSize: pageSize
+         //  }
         }
       }
     })
@@ -34,12 +41,6 @@ const { data: subcategory, status, error } = useAsyncData(
    }
 )
 
-// SEO метаданные
-// useSeoMeta({
-//   title: subcategory.value?.name,
-//   description: subcategory.value?.description
-// })
-
 watch(subcategory, (newCategory) => {
   if (newCategory) {
     useSeoMeta({
@@ -49,8 +50,14 @@ watch(subcategory, (newCategory) => {
   }
 })
 
-onMounted(() => {
-   console.log('subCategorySlug data:', subcategory.value)
+useSeoMeta({
+  title: subcategory.value?.name,
+  description: subcategory.value?.description
+})
+
+const pageCount = computed(() => {
+  const total = subcategory.value?.products.meta?.pagination.total || 0
+  return Math.ceil(total / pageSize)
 })
 
 watch(subcategory, (newCategory) => {
@@ -86,8 +93,17 @@ watch(subcategory, (newCategory) => {
               <h3>{{ product.name }}</h3>
               <p>{{ product.description }}</p>
               <span>{{ product.price }}</span>
+
+              <button type="button"
+              @click="useAddToCart(product)"
+              >addToCart</button>
         </li>
         </ul>
+        <Pagination 
+        :page="page"
+        :pageCount="pageCount"
+        :routeName="$route.name?.toString() || ''"
+      />
       </div>
 
     <div v-if="error" class="error">

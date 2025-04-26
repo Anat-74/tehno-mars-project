@@ -1,4 +1,4 @@
-export function useCloseDialogElement(dialogElement: HTMLDialogElement): () => void {
+export const useCloseDialogElement = (dialogElement: HTMLDialogElement) => {
    dialogElement.addEventListener("click", closeOnBackDropClick)
  
    function closeOnBackDropClick({ currentTarget, target }: MouseEvent): void {
