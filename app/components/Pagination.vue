@@ -1,11 +1,12 @@
 <script setup lang="ts">
+const route = useRoute()
+
 interface PropsPagination {
    page: number
    pageCount: number
    routeName: string
 }
 
-const route = useRoute()
 const props = defineProps<PropsPagination>()
 
 const getPageLink = (newPage: number) => {
@@ -44,3 +45,33 @@ const getPageLink = (newPage: number) => {
 <style lang="scss" scoped>
 
 </style>
+
+
+<!-- <template>
+  <div class="pagination">
+    <button 
+      @click="currentPage--"
+      :disabled="currentPage <= 1"
+    >
+      Назад
+    </button>
+
+    <span>Страница {{ currentPage }} из {{ totalPages }}</span>
+
+    <button
+      @click="currentPage++"
+      :disabled="currentPage >= totalPages"
+    >
+      Вперед
+    </button>
+  </div>
+</template>
+
+<script setup lang="ts">
+const props = defineProps({
+  currentPage: { type: Number, required: true },
+  totalPages: { type: Number, required: true }
+});
+
+const emit = defineEmits(['update:currentPage']);
+</script> -->

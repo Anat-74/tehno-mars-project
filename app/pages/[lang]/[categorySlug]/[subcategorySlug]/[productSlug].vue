@@ -1,21 +1,21 @@
 <script setup lang="ts">
-import type { Product } from "../../../types/types"
+import type { Product } from "../../../../types/types"
 
 const { find } = useStrapi()
 const route = useRoute()
+const lang = route.params.lang
+const { productSlug } = route.params
 const config = useRuntimeConfig()
 const cartStore = useCartStore()
 const { currentLocale } = useLocale()
-const lang = route.params.lang
-const slug = route.params.slug
 
 const currentImage = useState<string | null>('currentImage', () => null)
 
-const { data: product, error, status } = useAsyncData(`product-${lang}-${slug}`,
+const { data: product, error, status } = useAsyncData(`product-${lang}-${productSlug}`,
    async () => {
     const response = await find<Product>('products', {
        filters: {
-          slug: { $eq: slug },
+          slug: { $eq: productSlug },
           locale: currentLocale.value
        },
       populate: '*'
@@ -56,16 +56,23 @@ onMounted(() => {
    console.debug('Продукт:', product.value)
    console.log('product data:', product.value)
 })
-
-useSeoMeta({
-  title: product.value?.name,
-  description: product.value?.description
-})
-
-onMounted(() => {
-  console.log('Route params:', route.params); 
-  console.log('productSlug', product.value)
+watch(product, (newCategory) => {
+  console.log('product data:', newCategory);
 });
+
+// useSeoMeta({
+//   title: product.value?.name,
+//   description: product.value?.description
+// })
+
+watch(product, (newCategory) => {
+  if (newCategory) {
+    useSeoMeta({
+      title: newCategory.name,
+      description: newCategory.description
+    })
+  }
+})
 </script> 
 
 <template>
@@ -158,4 +165,3 @@ onMounted(() => {
 }
 
 </style>
-

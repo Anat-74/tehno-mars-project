@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const { find } = useStrapi()
 const route = useRoute()
+const { categorySlug } = route.params
 const { currentLocale } = useLocale()
 const config = useRuntimeConfig()
 
@@ -9,11 +10,11 @@ const pageSize = 8; // Элементов на странице
 
 // Получаем данные категории
 const { data: category, status, error } = useAsyncData(
-  `category-${route.params.categorySlug}-${currentLocale.value}-page-${page.value}`,
+  `category-${categorySlug}-${currentLocale.value}-page-${page.value}`,
   async () => {
     const response = await find('categories', {
        filters: {
-          slug: { $eq: route.params.categorySlug },
+          slug: { $eq: categorySlug },
           locale: currentLocale.value
        },
       populate: {
@@ -40,18 +41,27 @@ const { data: category, status, error } = useAsyncData(
 )
 
 // SEO метаданные
-useSeoMeta({
-  title: category.value?.name,
-  description: category.value?.description
+// useSeoMeta({
+//   title: category.value?.name,
+//   description: category.value?.description
+// })
+
+watch(category, (newCategory) => {
+  if (newCategory) {
+    useSeoMeta({
+      title: newCategory.name,
+      description: newCategory.description
+    });
+  }
 })
 
 const pageCount = computed(() => {
-  const total = category.value?.subcategories.meta?.pagination.total || 0;
-  return Math.ceil(total / pageSize);
+  const total = category.value?.subcategories.meta?.pagination.total || 0
+  return Math.ceil(total / pageSize)
 })
 
-onMounted(() => {
-  console.log('CategorySlug data:', category.value)
+watch(category, (newCategory) => {
+  console.log('Category data:', newCategory)
 })
 </script>
 
@@ -65,7 +75,7 @@ onMounted(() => {
           class="product-card"
         >
           <NuxtLink
-            :to="`/${currentLocale}/subcategory/${subcategory.slug}`"
+            :to="`/${currentLocale}/${categorySlug}/${subcategory.slug}`"
             class="product-link"
           >
             <NuxtImg
@@ -94,6 +104,3 @@ onMounted(() => {
       {{ error.message }}
     </div>
 </template>
-
-
-

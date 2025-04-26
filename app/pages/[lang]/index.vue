@@ -33,24 +33,21 @@ const { data: categories, status, error } = useAsyncData(
       filters: { locale: currentLocale.value },
       populate: {
         image: true
-      //   products: {
-      //     populate: ['image']
-      //   }
       }
       })
       return response as ProductsResponse
    }
 )
 
-onMounted(() => {
-   console.log('catergories (client):', categories.value)
-})
+watch(categories, (newCategory) => {
+  console.log('category data:', newCategory);
+});
 </script>
 
 <template>
    <div>
       <LangSwitcher/>
-      <!-- <Loader v-if="status === 'pending'" /> -->
+      <Loader v-if="status === 'pending'" />
       <h2>Categories</h2>
       <ul v-if="categories?.data?.length"
       class="category-list"
@@ -60,7 +57,7 @@ onMounted(() => {
          :key="category.id"
          >
          <NuxtLink
-         :to="`/${currentLocale}/category/${category.slug}`"
+         :to="`/${currentLocale}/${category.slug}`"
          >
          <NuxtImg
          :src="`${config.public.strapi.url}${category.image[0]?.url}`"

@@ -1,16 +1,18 @@
 <script setup lang="ts">
 const { find } = useStrapi()
 const route = useRoute()
+const { categorySlug, subcategorySlug } = route.params
 const { currentLocale } = useLocale()
 const config = useRuntimeConfig()
 
 // Получаем данные категории
 const { data: subcategory, status, error } = useAsyncData(
-  `subcategory-${route.params.subcategorySlug}-${currentLocale.value}`,
+  `subcategory-${subcategorySlug}-${currentLocale.value}`,
   async () => {
     const response = await find('subcategories', {
        filters: {
-          slug: { $eq: route.params.subcategorySlug },
+          slug: { $eq: subcategorySlug },
+          category: { slug: { $eq: categorySlug } },
           locale: currentLocale.value
        },
        populate: {
@@ -28,19 +30,32 @@ const { data: subcategory, status, error } = useAsyncData(
       })
     }
     
-    return response.data[0] // Берем первую категорию из массива
-  }
+     return response.data[0] // Берем первую категорию из массива
+   }
 )
 
 // SEO метаданные
-useSeoMeta({
-  title: subcategory.value?.name,
-  description: subcategory.value?.description
+// useSeoMeta({
+//   title: subcategory.value?.name,
+//   description: subcategory.value?.description
+// })
+
+watch(subcategory, (newCategory) => {
+  if (newCategory) {
+    useSeoMeta({
+      title: newCategory.name,
+      description: newCategory.description
+    })
+  }
 })
 
 onMounted(() => {
-  console.log('subCategorySlug data:', subcategory.value)
+   console.log('subCategorySlug data:', subcategory.value)
 })
+
+watch(subcategory, (newCategory) => {
+  console.log('subcategory data:', newCategory);
+});
 </script>
 
 <template>
@@ -54,7 +69,7 @@ onMounted(() => {
           class="product-card"
         >
         <NuxtLink
-            :to="`/${currentLocale}/product/${product.slug}`"
+            :to="`/${currentLocale}/${categorySlug}/${subcategorySlug}/${product.slug}`"
             class="product-link"
           >
             <NuxtImg
