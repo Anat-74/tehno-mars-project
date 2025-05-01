@@ -14,7 +14,7 @@ class="cart-link"
    >
    <span class="cart-link__price">{{ cartStore.totalItems }}</span>
    <Icon
-   name="carbon:shopping-cart"
+   name="cil:cart"
    width="30"
    height="30"
    />

@@ -30,7 +30,7 @@ onUnmounted(() => {
       @click="scrollToTop"
       v-show="isVisible"
       name-class="go-to-top"
-      icon="mynaui:chevron-up"
+      icon="pixelarticons:chevron-up"
       aria-label="scroll to top"
       />
 </template>

@@ -32,14 +32,6 @@ export default defineNuxtConfig({
       '@nuxtjs/strapi'
    ],
    ssr: true,
-   // app: {
-   //    head: {
-   //       title: 'TechnoMars',
-   //       htmlAttrs: {
-   //          lang: 'ru'
-   //        }
-   //    }
-   // },
    routeRules: {
       '/': { redirect: '/ru' }
     },
@@ -55,12 +47,6 @@ export default defineNuxtConfig({
          prefix: '/api',
          admin: '/admin',
          version: 'v5',
-         cookie: {
-            // path: '/',
-            // maxAge: 14 * 24 * 60 * 60,
-            // secure: process.env.NODE_ENV === 'production',
-            // sameSite: 'lax'
-         },
          cookieName: 'strapi_jwt'
       },
       public: {
@@ -87,10 +73,17 @@ export default defineNuxtConfig({
    //    defaultLocale: 'ru',
    // },
    image: {
-      // domains: ['localhost'],
-      // strapi: {
-      //    baseURL:process.env.NUXT_PUBLIC_STRAPI_URL || 'http://localhost:1337'
-      //  },
+      domains: ['127.0.0.1:1337'],
+      provider: 'ipx',
+      ipx: {
+        modifiers: {
+          quality: 85,
+          format: 'webp'
+        }
+      },
+      strapi: {
+         baseURL:process.env.NUXT_PUBLIC_STRAPI_URL || 'http://127.0.0.1:1337'
+       },
       screens: {
          'xs': 320,
          'sm': 479.98,
@@ -101,8 +94,7 @@ export default defineNuxtConfig({
          '2xl': 1536
       },
       quality: 85,
-      densities: [1, 2],
-      format: ['avif', 'webp'],
+      densities: [1]
    },
    icon: {
       customCollections: [
@@ -114,8 +106,8 @@ export default defineNuxtConfig({
       ],
    },
    colorMode: {
-      preference: 'system', // default value of $colorMode.preference
-      fallback: 'light', // fallback value if not system preference found
+      preference: 'system',
+      fallback: 'light',
    },
    css: ['~/assets/scss/styles.scss'],
    vite: {

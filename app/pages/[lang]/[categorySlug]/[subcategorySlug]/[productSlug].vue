@@ -44,8 +44,8 @@ onMounted(() => {
    console.log('product data:', product.value)
 })
 watch(product, (newCategory) => {
-  console.log('product data:', newCategory);
-});
+  console.log('product data:', newCategory)
+})
 
 watch(product, (newCategory) => {
   if (newCategory) {
@@ -98,7 +98,9 @@ useSeoMeta({
      </div>
      <p
      class="product-review__description"
-     >{{ product.description }}</p>
+     >
+     <span>{{ product.inStock }}</span>
+     {{ product.description }}</p>
      <span>{{ product.price }}</span>
      <UButton
      @click="useAddToCart(product)"

@@ -35,7 +35,6 @@ onMounted(() => {
          <UButton 
          @click="closeDialog"
          name-class="hamburger"
-         type="submit" 
          aria-label="Закрыть модальное окно"
           />
      </div>

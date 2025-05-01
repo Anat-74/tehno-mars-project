@@ -25,10 +25,10 @@ for="my-search"
    >
    <Icon
    v-if="isSearching"
-   name="eos-icons:loading" />
+   name="eos-icons:bubble-loading" />
    <UButton
    name-class="search"
-   icon="ph:magnifying-glass"
+   icon="ph:magnifying-glass-light"
    aria-label="Поиск"
    />
 </div>

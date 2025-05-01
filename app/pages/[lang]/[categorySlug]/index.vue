@@ -34,11 +34,9 @@ const { data: category, status, error } = useAsyncData(
         statusCode: 404,
         statusMessage: 'Category - Not Found'
       })
-    }
-    
+     }
     return response.data[0] // Берем первую категорию из массива
-   },
-   { server: true }
+   }
 )
 
 useServerSeoMeta({
@@ -95,7 +93,8 @@ watch(category, (newCategory) => {
             />
          </NuxtLink>
          <span>{{ subcategory.inStock }}</span>
-              <h3>{{ subcategory.name }}</h3>
+            <h3>{{ subcategory.name }}</h3>
+            <span>{{ subcategory.price }}</span>
         </li>
         </ul>
         <Pagination 

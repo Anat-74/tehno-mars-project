@@ -7,18 +7,26 @@ const config = useRuntimeConfig()
 
 const pageMeta = {
   ru: {
-    title: 'Главная',
+    title: 'ТехноМарс',
     description: 'Главная страница сайта'
   },
   en: {
-    title: 'Home',
+    title: 'TehnoMars',
     description: 'Main page of the site'
   },
   be: {
-    title: 'Галоўная',
+    title: 'ТехнаМарс',
     description: 'Галоўная старонка сайта'
   }
 }
+
+useServerSeoMeta({
+   title: pageMeta[currentLocale.value as LocaleCode].title || 'TechnoMars',
+  ogTitle: pageMeta[currentLocale.value as LocaleCode].title || 'TechnoMars',
+  description: pageMeta[currentLocale.value as LocaleCode].description || 'Лучший магазин',
+  ogDescription: pageMeta[currentLocale.value as LocaleCode].description || 'Лучший магазин'
+})
+
 useSeoMeta({
   title: pageMeta[currentLocale.value as LocaleCode].title,
   ogTitle: pageMeta[currentLocale.value as LocaleCode].title,
@@ -40,8 +48,8 @@ const { data: categories, status, error } = useAsyncData(
 )
 
 watch(categories, (newCategory) => {
-  console.log('category data:', newCategory);
-});
+  console.debug('category data:', newCategory)
+})
 </script>
 
 <template>

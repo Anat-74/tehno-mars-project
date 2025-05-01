@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import ProductsSection from '~/components/ProductsSection.vue';
-
 const { currentLocale } = useLocale()
 const { isContacts } = useVisibilityProvider()
 </script>

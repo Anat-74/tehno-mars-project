@@ -36,10 +36,14 @@ const { data: subcategory, status, error } = useAsyncData(
         statusMessage: 'Products subCategory Not Found'
       })
     }
-    
      return response.data[0] // Берем первую категорию из массива
    }
 )
+
+useServerSeoMeta({
+  title: subcategory.value?.name || 'TechnoMars',
+  description: subcategory.value?.description || 'Лучший магазин электроники'
+})
 
 watch(subcategory, (newCategory) => {
   if (newCategory) {
@@ -83,7 +87,6 @@ watch(subcategory, (newCategory) => {
               v-if="product.image?.length"
               :src="`${config.public.strapi.url}${product.image[0]?.url}`"
               :alt="product.name"
-              format="webp"
               loading="lazy"
               decoding="async"
               width="260"
@@ -92,6 +95,7 @@ watch(subcategory, (newCategory) => {
          </NuxtLink>
               <h3>{{ product.name }}</h3>
               <p>{{ product.description }}</p>
+              <span>{{ product.inStock }}</span>
               <span>{{ product.price }}</span>
 
               <button type="button"

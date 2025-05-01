@@ -36,7 +36,7 @@ const { currentLocale } = useLocale()
             <NuxtLink 
             class="nav__link" 
             :to="`/${currentLocale}/contacts`"
-            ><Icon name="material-symbols:install-mobile-outline-rounded" />
+            ><Icon name="material-symbols:send-to-mobile-outline-rounded" />
             contacts
             </NuxtLink>
             <div
