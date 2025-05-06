@@ -17,7 +17,6 @@ console.log('cart',cartStore.items)
         <h3>{{ item.product.name }}</h3>
         <p>Цена: {{ item.product.price }} ₽</p>
         <p>Количество: {{ item.quantity }}</p>
-        <p>{{ item.product.description }}</p>
         <NuxtImg
           :src="`${config.public.strapi.url}${item.product.image}`"
           :alt="item.product.name"

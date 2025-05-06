@@ -10,8 +10,8 @@ const closeDialog = () => {
 }
 
 onMounted(() => {
-  if (dialogElement.value) {
-    useCloseDialogElement(dialogElement.value)
+   if (dialogElement.value) {
+   useCloseDialogElement(dialogElement.value)
   }
 })
 </script>
@@ -23,7 +23,7 @@ onMounted(() => {
    name-class="hamburger"
    aria-label="Открыть модальное окно" 
    >
-     <span></span>
+     <!-- <span></span> -->
    </UButton>
    <dialog 
    class="dialog-contacts"

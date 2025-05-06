@@ -14,7 +14,6 @@
     "@nuxt/image": "^1.9.0",
     "@nuxtjs/color-mode": "^3.5.2",
     "@nuxtjs/html-validator": "^1.8.2",
-    "@nuxtjs/i18n": "^9.2.0",
     "@nuxtjs/strapi": "^2.0.0",
     "@pinia/nuxt": "^0.10.0",
     "nuxt": "^3.15.4",
@@ -24,7 +23,12 @@
     "vue-router": "latest"
   },
   "devDependencies": {
+    "@iconify-json/cil": "^1.2.2",
+    "@iconify-json/eos-icons": "^1.2.2",
+    "@iconify-json/fa-brands": "^1.2.1",
     "@iconify-json/fluent": "^1.2.13",
+    "@iconify-json/material-symbols": "^1.2.20",
+    "@iconify-json/ph": "^1.2.2",
     "sass": "^1.84.0"
   }
 }

@@ -1,32 +1,31 @@
 export default defineNuxtConfig({
-  compatibilityDate: '2024-11-01',
+   compatibilityDate: '2024-11-01',
    devtools: { enabled: false },
    future: {
       compatibilityVersion: 4,
    },
    experimental: {
-    sharedPrerenderData: false,
-    compileTemplate: true,
-    resetAsyncDataToUndefined: true,
-    templateUtils: true,
-    relativeWatchPaths: true,
-    defaults: {
-      useAsyncData: {
-        deep: true
+      sharedPrerenderData: false,
+      compileTemplate: true,
+      resetAsyncDataToUndefined: true,
+      templateUtils: true,
+      relativeWatchPaths: true,
+      defaults: {
+         useAsyncData: {
+            deep: true
+         }
       }
-    }
    },
-  unhead: {
-    renderSSRHeadOptions: {
-      omitLineBreaks: false
-    }
+   unhead: {
+      renderSSRHeadOptions: {
+         omitLineBreaks: false
+      }
    },
    modules: [
       '@nuxt/image',
       '@nuxt/icon',
       '@pinia/nuxt',
       'pinia-plugin-persistedstate/nuxt',
-      // '@nuxtjs/i18n',
       '@nuxtjs/color-mode',
       '@nuxtjs/html-validator',
       '@nuxtjs/strapi'
@@ -34,12 +33,12 @@ export default defineNuxtConfig({
    ssr: true,
    routeRules: {
       '/': { redirect: '/ru' }
-    },
-    nitro: {
+   },
+   nitro: {
       prerender: {
-        routes: ['/en', '/ru', '/be']
+         routes: ['/en', '/ru', '/be']
       }
-    },
+   },
    runtimeConfig: {
       strapi: {
          url: process.env.NUXT_STRAPI_URL,
@@ -50,40 +49,23 @@ export default defineNuxtConfig({
          cookieName: 'strapi_jwt'
       },
       public: {
-        strapi: {
-          url: process.env.NUXT_PUBLIC_STRAPI_URL
-        }
+         strapi: {
+            url: process.env.NUXT_PUBLIC_STRAPI_URL
+         }
       }
-    },
-   // i18n: {
-   //    lazy: true,
-   //    strategy: 'no_prefix',  // URL без префикса языка
-   //    locales: [
-   //       {
-   //          code: 'ru',
-   //          name: 'RU',
-   //          file: 'ru-RU.json'
-   //       },
-   //       {
-   //          code: 'be',
-   //          name: 'BY',
-   //          file: 'be-BY.json'
-   //        }
-   //    ],
-   //    defaultLocale: 'ru',
-   // },
+   },
    image: {
       domains: ['127.0.0.1:1337'],
       provider: 'ipx',
       ipx: {
-        modifiers: {
-          quality: 85,
-          format: 'webp'
-        }
+         modifiers: {
+            quality: 85,
+            format: 'webp'
+         }
       },
       strapi: {
-         baseURL:process.env.NUXT_PUBLIC_STRAPI_URL || 'http://127.0.0.1:1337'
-       },
+         baseURL: process.env.NUXT_PUBLIC_STRAPI_URL || 'http://127.0.0.1:1337'
+      },
       screens: {
          'xs': 320,
          'sm': 479.98,
@@ -97,6 +79,20 @@ export default defineNuxtConfig({
       densities: [1]
    },
    icon: {
+      serverBundle: {
+         collections: [
+            'material-symbols',
+            'eos-icons',
+            'ph',
+            'cil',
+            'fa-brands'
+         ]
+      },
+      // Автоматически добавлять иконки из компонентов в клиентский бандл
+    clientBundle: {
+      scan: true,
+      sizeLimitKb: 200
+      },
       customCollections: [
         {
           prefix: 'my-icon',

@@ -59,6 +59,7 @@ useSeoMeta({
   description: subcategory.value?.description
 })
 
+
 const pageCount = computed(() => {
   const total = subcategory.value?.products.meta?.pagination.total || 0
   return Math.ceil(total / pageSize)
@@ -67,6 +68,7 @@ const pageCount = computed(() => {
 watch(subcategory, (newCategory) => {
   console.log('subcategory data:', newCategory);
 });
+
 </script>
 
 <template>
@@ -94,7 +96,6 @@ watch(subcategory, (newCategory) => {
             />
          </NuxtLink>
               <h3>{{ product.name }}</h3>
-              <p>{{ product.description }}</p>
               <span>{{ product.inStock }}</span>
               <span>{{ product.price }}</span>
 

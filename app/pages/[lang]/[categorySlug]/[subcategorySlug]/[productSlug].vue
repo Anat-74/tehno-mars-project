@@ -67,41 +67,41 @@ useSeoMeta({
    <div v-if="product"
    class="product-review"
    >
-     <h1>Name: {{ product.name }}</h1>
+   <div class="product-review__wrapper-left wrapper-left">
+      <span class="wrapper-left__in-stock">{{ product.inStock }}</span>
       <NuxtImg 
         v-if="currentImage"
         :src="currentImage"
         :alt="product.name"
-        format="webp"
-        width="380"
-        class="product-review__image"
+        width="480"
+        class="wrapper-left__image"
       />
-     <div v-if="product.image?.length"
-     class="product-review__thumbnails"
+     <ul
+      v-if="product.image?.length"
+     class="wrapper-left__thumbnails"
      >
-     <div
+     <li
         v-for="(img, index) in product.image" 
         :key="img.id"
-        :class="['product-review__thumbnail', {'product-review__thumbnail_active': isActive(img.url).value}]"
+        :class="['wrapper-left__thumbnail', {'wrapper-left__thumbnail_active': isActive(img.url).value}]"
         @mouseover="currentImage = `${config.public.strapi.url}${img.url}`"
         @click="currentImage = `${config.public.strapi.url}${img.url}`"
       >
         <NuxtImg 
           :src="`${config.public.strapi.url}${img.url}`"
           :alt="`${product.name} - Image ${index + 1}`"
-          format="webp"
           width="80"
-          loading="lazy"
-          class="product-review__thumbnail-image"
+          class="wrapper-left__thumbnail-image"
         />
-      </div>
-     </div>
-     <p
-     class="product-review__description"
-     >
-     <span>{{ product.inStock }}</span>
-     {{ product.description }}</p>
-     <span>{{ product.price }}</span>
+      </li>
+     </ul>
+   </div>
+   <div class="product-review__wrapper-right wrapper-right">
+      <h2 class="wrapper-right__title">{{ product.name }}</h2>
+      <p class="wrapper-right__characteristics">{{ product.characteristics }}</p>
+     <p class="wrapper-right__description"
+     >{{ product.description }}</p>
+     <span class="wrapper-right__price">{{ product.price }}</span>
      <UButton
      @click="useAddToCart(product)"
       name-class="add-to-cart"
@@ -109,25 +109,42 @@ useSeoMeta({
       class="product-review__btn"
      />
    </div>
-   <div v-else-if="error">Error: {{ error.message }}</div>
+</div>
+   <span v-else-if="error">Error: {{ error.message }}</span>
  </template>
 
  <style lang="scss" scoped>
 .product-review {
-&__image {
+   display: grid;
+   grid-template-columns: auto minmax(toRem(190), toRem(1220));
+   column-gap: toEm(24, 16);
+   padding-inline: toEm(22, 16);
+   padding-block: toEm(18, 16);
+}
+
+.wrapper-left {
+   &__in-stock {
+   grid-area: inStock;
+   display: inline-block;
+   margin-block-end: toRem(32);
+   color: var(--dark-golden-color);
+}
+
+   &__image {
    border-radius: toRem(8);
    box-shadow: 0 toRem(2) toRem(8) rgba(0,0,0,0.1);
 }
 
 &__thumbnails {
-   display: inline-flex;
+   display: flex;
    align-items: center;
+   justify-content: center;
    gap: toRem(10);
    margin-block-start: toRem(15);
 }
 
 &__thumbnail {
-   cursor: pointer;
+  cursor: pointer;
   border: toRem(2) solid transparent;
   border-radius: toRem(4);
   transition: all var(--transition-duration);
@@ -145,12 +162,42 @@ useSeoMeta({
    border-radius: toRem(4);
    transition: opacity var(--transition-duration);
 }
+}
+
+.wrapper-right {
+   display: grid;
+   align-items: center;
+   grid-template-columns: 1fr auto;
+   grid-template-areas: 
+   'title title'
+   'descr descr'
+   'charact charact'
+   'price btn'
+   ;
+
+&__title {
+   grid-area: title;
+   margin-block-end: toEm(22, 16);
+}
+
+&__characteristics {
+   grid-area: charact;
+}
 
 &__description {
+   grid-area: descr;
+   margin-block-end: toRem(12);
+}
+
+&__price {
+   grid-area: price;
 }
 
 &__btn {
+   grid-area: btn;
 }
 }
+
+
 
 </style>

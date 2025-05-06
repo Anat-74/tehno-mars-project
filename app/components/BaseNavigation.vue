@@ -46,7 +46,7 @@ const { currentLocale } = useLocale()
             class="contacts__viber-link contacts-link"
             href="#"
             >
-            <Icon name="fontisto:viber" />
+            <Icon name="fa-brands:viber" />
                Viber
          </a>
             <a
@@ -60,7 +60,7 @@ const { currentLocale } = useLocale()
       class="contacts__mail-link contacts-link"
       href="mailto:technomars@bk.ru"
       >
-      <Icon name="octicon:mail-24" />
+      <Icon name="material-symbols:mail-outline-rounded" />
       technomars@bk.ru
    </a>
          </div>

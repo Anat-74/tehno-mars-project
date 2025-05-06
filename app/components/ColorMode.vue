@@ -2,10 +2,10 @@
 const colorMode = useColorMode()
 
 function iconName(theme: string) {
-  if (theme === 'system') return 'i-ph-laptop'
-  if (theme === 'light') return 'i-ph-sun'
-  if (theme === 'dark') return 'i-ph-moon'
-   return 'i-ph-coffee'
+  if (theme === 'system') return 'ph:laptop'
+  if (theme === 'light') return 'ph:sun-duotone'
+  if (theme === 'dark') return 'ph:moon-light'
+   return 'ph:coffee'
 }
 </script>
 
