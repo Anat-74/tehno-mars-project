@@ -22,13 +22,14 @@ export default defineNuxtConfig({
       }
    },
    modules: [
-      '@nuxt/image',
-      '@nuxt/icon',
-      '@pinia/nuxt',
-      'pinia-plugin-persistedstate/nuxt',
-      '@nuxtjs/color-mode',
-      '@nuxtjs/html-validator',
-      '@nuxtjs/strapi'
+     '@nuxt/image',
+     '@nuxt/icon',
+     '@pinia/nuxt',
+     'pinia-plugin-persistedstate/nuxt',
+     '@nuxtjs/color-mode',
+     '@nuxtjs/html-validator',
+     '@nuxtjs/strapi',
+     '@nuxtjs/mdc'
    ],
    ssr: true,
    routeRules: {
@@ -60,12 +61,13 @@ export default defineNuxtConfig({
       ipx: {
          modifiers: {
             quality: 85,
-            format: 'webp'
+            format: 'webp',
+            densities: [1, 2]
          }
       },
-      strapi: {
-         baseURL: process.env.NUXT_PUBLIC_STRAPI_URL || 'http://127.0.0.1:1337'
-      },
+      // strapi: {
+      //    baseURL: process.env.NUXT_PUBLIC_STRAPI_URL || 'http://127.0.0.1:1337'
+      // },
       screens: {
          'xs': 320,
          'sm': 479.98,
@@ -76,7 +78,7 @@ export default defineNuxtConfig({
          '2xl': 1536
       },
       quality: 85,
-      densities: [1]
+      densities: [1, 2]
    },
    icon: {
       serverBundle: {
@@ -131,5 +133,5 @@ export default defineNuxtConfig({
          include: ['sass']
       },
       assetsInclude: ['**/*.avif']
-   },
+   }
 })

@@ -98,15 +98,24 @@ useSeoMeta({
    </div>
    <div class="product-review__wrapper-right wrapper-right">
       <h2 class="wrapper-right__title">{{ product.name }}</h2>
-      <p class="wrapper-right__characteristics">{{ product.characteristics }}</p>
-     <p class="wrapper-right__description"
-     >{{ product.description }}</p>
-     <span class="wrapper-right__price">{{ product.price }}</span>
+
+      <MDC 
+      class="wrapper-right__description"
+      :value="product.description" 
+      />
+      <MDC 
+      class="wrapper-right__characteristics"
+      :value="product.characteristics"
+      />
+     <span class="wrapper-right__price">
+      <Icon name="my-icon:icon-by-regular" />
+      {{ product.price }}
+     </span>
      <UButton
      @click="useAddToCart(product)"
       name-class="add-to-cart"
       label="Добавить в корзину"
-      class="product-review__btn"
+      class="wrapper-right__btn"
      />
    </div>
 </div>
@@ -118,15 +127,20 @@ useSeoMeta({
    display: grid;
    grid-template-columns: auto minmax(toRem(190), toRem(1220));
    column-gap: toEm(24, 16);
-   padding-inline: toEm(22, 16);
    padding-block: toEm(18, 16);
+
+   @media (max-width:$tablet){
+      grid-template-columns: 1fr;
+      justify-items: center;
+      row-gap: toEm(22, 16);
+   }
 }
 
 .wrapper-left {
    &__in-stock {
    grid-area: inStock;
    display: inline-block;
-   margin-block-end: toRem(32);
+   margin-block-end: toEm(22, 16);
    color: var(--dark-golden-color);
 }
 
@@ -168,6 +182,7 @@ useSeoMeta({
    display: grid;
    align-items: center;
    grid-template-columns: 1fr auto;
+   row-gap: toRem(12);
    grid-template-areas: 
    'title title'
    'descr descr'
@@ -177,27 +192,27 @@ useSeoMeta({
 
 &__title {
    grid-area: title;
-   margin-block-end: toEm(22, 16);
+   margin-block-end: toEm(12, 16);
 }
 
-&__characteristics {
-   grid-area: charact;
-}
-
-&__description {
+&:deep(.wrapper-right__description) {
    grid-area: descr;
-   margin-block-end: toRem(12);
+}
+
+&:deep(.wrapper-right__characteristics) {
+   grid-area: charact;
 }
 
 &__price {
    grid-area: price;
+   font-weight: 600;
+   svg {
+      translate: 0 toRem(2);
+   }
 }
 
 &__btn {
    grid-area: btn;
 }
 }
-
-
-
 </style>

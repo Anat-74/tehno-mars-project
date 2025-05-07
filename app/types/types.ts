@@ -28,7 +28,8 @@ export type Image = {
  export type Product = {
    id: number;
    documentId: string;
-   name: string;
+    name: string;
+    characteristics: string;
    description: string;
    slug: string;
    locale: string;
