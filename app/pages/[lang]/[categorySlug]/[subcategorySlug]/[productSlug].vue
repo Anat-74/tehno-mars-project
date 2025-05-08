@@ -7,6 +7,7 @@ const lang = route.params.lang
 const { productSlug } = route.params
 const config = useRuntimeConfig()
 const { currentLocale } = useLocale()
+const { goBack } = useGoToForwardOrBack()
 
 const currentImage = useState<string | null>('currentImage', () => null)
 
@@ -34,10 +35,18 @@ const { data: product, error, status } = useAsyncData(`product-${lang}-${product
       currentImage.value = `${config.public.strapi.url}${firstImage}`
     }
       return productData
-})
+   })
 
 const isActive = (imgUrl: string) => 
   computed(() => currentImage.value === `${config.public.strapi.url}${imgUrl}`)
+
+  const characteristics = computed(() => {
+  try {
+    return JSON.parse(product.value?.characteristics || '[]')
+  } catch {
+    return []
+  }
+  })
 
 onMounted(() => {
    console.debug('Продукт:', product.value)
@@ -68,12 +77,22 @@ useSeoMeta({
    class="product-review"
    >
    <div class="product-review__wrapper-left wrapper-left">
-      <span class="wrapper-left__in-stock">{{ product.inStock }}</span>
+      <UButton
+      @click="goBack"
+      icon="material-symbols:arrow-back"
+      aria-label="go back"
+      name-class="go-forward-back"
+     />
+     <ProductStatus 
+      :product="product"
+      class="wrapper-left__in-stock"
+     />
       <NuxtImg 
         v-if="currentImage"
         :src="currentImage"
         :alt="product.name"
-        width="480"
+        width="580"
+        height="436"
         class="wrapper-left__image"
       />
      <ul
@@ -90,7 +109,8 @@ useSeoMeta({
         <NuxtImg 
           :src="`${config.public.strapi.url}${img.url}`"
           :alt="`${product.name} - Image ${index + 1}`"
-          width="80"
+          width="133"
+          height="100"
           class="wrapper-left__thumbnail-image"
         />
       </li>
@@ -98,14 +118,13 @@ useSeoMeta({
    </div>
    <div class="product-review__wrapper-right wrapper-right">
       <h2 class="wrapper-right__title">{{ product.name }}</h2>
-
       <MDC 
       class="wrapper-right__description"
       :value="product.description" 
       />
-      <MDC 
-      class="wrapper-right__characteristics"
-      :value="product.characteristics"
+      <ProductCharacteristics 
+      :specs="characteristics" 
+       class="wrapper-right__characteristics"
       />
      <span class="wrapper-right__price">
       <Icon name="my-icon:icon-by-regular" />
@@ -126,45 +145,57 @@ useSeoMeta({
 .product-review {
    display: grid;
    grid-template-columns: auto minmax(toRem(190), toRem(1220));
-   column-gap: toEm(24, 16);
-   padding-block: toEm(18, 16);
+   column-gap: toEm(24);
+   padding-block: toEm(18);
 
    @media (max-width:$tablet){
       grid-template-columns: 1fr;
       justify-items: center;
-      row-gap: toEm(22, 16);
+      row-gap: toEm(22);
    }
 }
 
 .wrapper-left {
+   position: relative;
+
    &__in-stock {
-   grid-area: inStock;
    display: inline-block;
-   margin-block-end: toEm(22, 16);
-   color: var(--dark-golden-color);
+   position: absolute;
+   right: 0;
+   top: toRem(4);
+   padding-inline: toEm(8);
+   padding-block: toEm(4);
+   border-radius: toRem(4);
+   background-color: var(--bg);
+   box-shadow: 0px 1px toRem(5) var(--shadow);
 }
 
    &__image {
+   margin-block-start: toRem(10);
    border-radius: toRem(8);
-   box-shadow: 0 toRem(2) toRem(8) rgba(0,0,0,0.1);
+   box-shadow: 0 0 toRem(4) var(--shadow);
+   @include adaptiveValue("margin-block-end", 48, 12);
 }
 
 &__thumbnails {
    display: flex;
    align-items: center;
    justify-content: center;
-   gap: toRem(10);
-   margin-block-start: toRem(15);
+   gap: toEm(10);
+
+   @media (max-width:$tablet){
+      margin-block-end: toEm(22);;
+   }
 }
 
 &__thumbnail {
   cursor: pointer;
   border: toRem(2) solid transparent;
   border-radius: toRem(4);
+  box-shadow: 0px 1px toRem(5) var(--shadow);
   transition: all var(--transition-duration);
    &_active {
-      opacity: 1;
-      border-color: #3b82f6;
+      border-color: var(--dark-golden-color);
    }
 
    @include hover {
@@ -182,7 +213,7 @@ useSeoMeta({
    display: grid;
    align-items: center;
    grid-template-columns: 1fr auto;
-   row-gap: toRem(12);
+   row-gap: toEm(12);
    grid-template-areas: 
    'title title'
    'descr descr'
@@ -192,11 +223,23 @@ useSeoMeta({
 
 &__title {
    grid-area: title;
-   margin-block-end: toEm(12, 16);
+   justify-self: start;
+   padding-inline: toEm(8, 22);
+   padding-block: toEm(4, 22);
+   border-radius: toEm(4, 22);
+   color: var(--dark-golden-color);
+   background-color: var(--bg);
+   box-shadow: 0px 1px toRem(5) var(--shadow);
 }
 
 &:deep(.wrapper-right__description) {
    grid-area: descr;
+   padding-inline: toEm(8);
+   padding-block-start: toEm(16);
+   padding-block-end: toEm(2);
+   border-radius: toRem(4);
+   background-color: var(--bg);
+   box-shadow: 0px 1px toRem(5) var(--shadow);
 }
 
 &:deep(.wrapper-right__characteristics) {
@@ -206,8 +249,16 @@ useSeoMeta({
 &__price {
    grid-area: price;
    font-weight: 600;
+   justify-self: start;
+   padding-inline: toEm(8);
+   padding-block: toEm(4);
+   border-radius: toRem(4);
+   color: var(--dark-golden-color);
+   background-color: var(--bg);
+   box-shadow: 0px 1px toRem(5) var(--shadow);
    svg {
       translate: 0 toRem(2);
+      color: var(--dark-golden-color);
    }
 }
 

@@ -22,6 +22,7 @@
    --bg: #f3f5f4;
    --primary-color: #778899;
    --secondary-color: #ffffff;
+   --shadow: rgba(0,0,0,0.1);
  }
 
  .dark-mode {
@@ -33,6 +34,7 @@
   --light-color: #fdf9f3;
   --border-color: #c0c0c0;
   --gray-color: #fdf9f3;
+  --shadow: #f3f5f4;
  }
  .sepia-mode {
   --color: #433422;

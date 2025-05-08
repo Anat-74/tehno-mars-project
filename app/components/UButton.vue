@@ -79,7 +79,7 @@ body:has(dialog[open]) {
 
     &_icon {
       padding: 0;
-      font-size: toRem(24);
+      font-size: toEm(24);
       color: var(--light-color);
   }
 
@@ -167,11 +167,22 @@ body:has(dialog[open]) {
       }
   }
 
+  &_go-forward-back {
+   padding: toRem(6);
+   border-radius: toRem(8);
+   background-color: var(--warning-color);
+   transition: background-color var(--transition-duration);
+
+   @include hover {
+      background-color: var(--warning-hover);
+   }
+   }
+
   &_add-to-cart {
    border-radius: toRem(8);
    box-shadow: 0 toRem(4) toRem(1) rgba(0, 0, 0, 0.4);
    transition: background-color var(--transition-duration);
-   background-color: var(--warning-color);
+   background-color: var(--danger-color);
 
    &:active {
       translate: 0 toRem(3);

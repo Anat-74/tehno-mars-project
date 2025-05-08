@@ -3,6 +3,7 @@ const { find } = useStrapi()
 const route = useRoute()
 const { categorySlug, subcategorySlug } = route.params
 const { currentLocale } = useLocale()
+const { goBack, goForward } = useGoToForwardOrBack()
 const config = useRuntimeConfig()
 
 const page = ref(Number(route.query.page) || 1); // Текущая страница из URL
@@ -74,6 +75,18 @@ watch(subcategory, (newCategory) => {
 <template>
    <Loader v-if="status === 'pending'" />
       <div  v-if="subcategory">
+         <UButton
+      @click="goBack"
+      icon="material-symbols:arrow-back"
+      aria-label="go back"
+      name-class="go-forward-back"
+     />
+     <UButton
+      @click="goForward"
+      icon="material-symbols:arrow-forward"
+      aria-label="go forward"
+      name-class="go-forward-back"
+     />
          <ul v-if="subcategory.products?.length" 
          class="products-grid">
          <li
