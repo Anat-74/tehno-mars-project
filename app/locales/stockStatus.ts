@@ -2,18 +2,18 @@ import type { LocaleCode } from "../types/types"
 
 export const stockStatusTranslations: Record<LocaleCode, {
    inStock: string
-   outOfStock: string
+   toOrder: string
 }> = {
    ru: {
       inStock: "В наличии",
-      outOfStock: "Под заказ ",
+     toOrder: "Под заказ",
    },
    en: {
-      inStock: "in stock",
-      outOfStock: "out of stock",
+      inStock: "In stock",
+      toOrder: "To order",
    }, 
    be: {
-      inStock: "В н",
-      outOfStock: "Под з",
+      inStock: "У наяўнасці",
+      toOrder: "Пад замову",
    }
  }

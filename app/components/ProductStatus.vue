@@ -14,10 +14,10 @@ const { product } = defineProps<{
   <span 
     :class="{
       'in-stock': product.isAvailable,
-      'out-of-stock': !product.isAvailable
+      'to-order': !product.isAvailable
     }"
   >
-    {{ product.isAvailable ? stockStatusTranslations[currentLocale].inStock : stockStatusTranslations[currentLocale].outOfStock }}
+    {{ product.isAvailable ? stockStatusTranslations[currentLocale].inStock : stockStatusTranslations[currentLocale].toOrder }}
   </span>
 </template>
 
@@ -27,7 +27,7 @@ const { product } = defineProps<{
    color: var(--forest-green-color);
 }
 
-.out-of-stock {
+.to-order {
    color: var( --danger-color);
 }
 </style>

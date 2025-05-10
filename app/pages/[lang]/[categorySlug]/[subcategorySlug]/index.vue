@@ -129,4 +129,11 @@ watch(subcategory, (newCategory) => {
     </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+ul {
+   display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(toRem(290), 1fr));
+      row-gap: toRem(12);
+      column-gap: toRem(8);
+}
+</style>
