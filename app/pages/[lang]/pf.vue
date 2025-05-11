@@ -1,7 +1,7 @@
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 const searchStore = useSearchStore()
 const { products, status, hasSearched, totalPages, currentPage } = storeToRefs(searchStore)
-</script>
+</script> -->
 
 <template>
   <div>

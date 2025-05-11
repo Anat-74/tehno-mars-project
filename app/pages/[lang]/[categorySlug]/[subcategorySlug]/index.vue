@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const searchStore = useSearchStore()
+const { products, hasSearched, totalPages, currentPage } = storeToRefs(searchStore)
 const { find } = useStrapi()
 const route = useRoute()
 const { categorySlug, subcategorySlug } = route.params

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 const { currentLocale } = useLocale()
 const { isContacts } = useVisibilityProvider()
+
+const searchStore = useSearchStore()
 </script>
 
 <template>
@@ -27,6 +29,14 @@ const { isContacts } = useVisibilityProvider()
    />
 </NuxtLink>
 <BaseSearch class="header__search" />
+<ProductFilters />
+<div v-if="searchStore.products.length" class="header-results">
+        <ProductCard
+          v-for="product in searchStore.products"
+          :key="product.id"
+          :product="product"
+        />
+      </div>
 <CartShopping class="header__cart" />
 </div>
 </div>
