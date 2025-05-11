@@ -28,7 +28,7 @@ export const useSearchStore = defineStore('search', () => {
     try {
       const result = await find<Product>('products', getQueryParams())
       products.value = result.data
-      totalPages.value = result.meta.pagination.pageCount
+      totalPages.value = (result.meta.pagination as { pageCount: number }).pageCount
       hasSearched.value = true
     } finally {
       status.value = 'success'
@@ -66,7 +66,10 @@ const getQueryParams = () => {
  
    return {
       populate: {
-         image: true
+         image: true,
+         subcategory: {
+            populate: ['category'] // Добавляем категорию через подкатегорию
+          },
        },
      filters: baseFilters,
      sort: [filters.sort],
@@ -76,14 +79,6 @@ const getQueryParams = () => {
      }
    }
  }
-
-//   const resetFilters = () => {
-//    filters.name = ''
-//    filters.sort = ''
-//    products.value = []
-//    hasSearched.value = false
-//    currentPage.value = 1
-   //  }
    
    const resetFilters = () => {
       filters.name = ''
@@ -91,11 +86,6 @@ const getQueryParams = () => {
       products.value = []
       hasSearched.value = false
       currentPage.value = 1
-    
-      // Сбрасываем только если не на странице товара
-      if (!route.params.productSlug) {
-        products.value = []
-      }
     }
 
   return {

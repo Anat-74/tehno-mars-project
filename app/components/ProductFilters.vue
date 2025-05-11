@@ -2,45 +2,36 @@
 const searchStore = useSearchStore()
 const route = useRoute()
 
-// const searchName = ref('')
-// const sortBy = ref('')
-
+// Полная синхронизация с хранилищем
 const searchName = computed({
   get: () => searchStore.filters.name,
-  set: (value) => searchStore.filters.name = value
+  set: value => searchStore.filters.name = value
 })
 
 const sortBy = computed({
   get: () => searchStore.filters.sort,
-  set: (value) => searchStore.filters.sort = value
+  set: value => searchStore.filters.sort = value
 })
 
-//Следим за сбросом фильтров
+// Автоматический сброс при переходе на товар
 watch(() => route.params.productSlug, (newSlug) => {
   if (newSlug) {
-    // Явно обновляем локальные значения
+    searchStore.resetFilters()
+    // Принудительный триггер обновления
     searchName.value = ''
-     sortBy.value = ''
-     searchStore.resetFilters()
+    sortBy.value = ''
   }
 })
 
+// Дебаунс для поиска
 const applyFilters = () => {
-  // Отправляем только актуальные фильтры
-  searchStore.updateFilters({
-    name: searchName.value,
-    sort: sortBy.value
-  })
+  searchStore.executeSearch()
 }
 
-//Сбрасываем фильтры при входе на страницу товара
-
-// watch(() => route.params.productSlug, (newSlug) => {
-//   if (newSlug) {
-//     searchStore.resetFilters()
-//   }
-// })
-
+// Реакция на любые изменения фильтров
+watch([searchName, sortBy], () => {
+  applyFilters()
+})
 </script>
 
 <template>
@@ -58,7 +49,6 @@ const applyFilters = () => {
     >
       <option value="">Без сортировки</option>
       <option value="name:asc">От А до Я</option>
-      <option value="name:desc">От Я до А</option>
       <option value="price:asc">Сначала дешёвые</option>
       <option value="price:desc">Сначала дорогие</option>
     </select>
