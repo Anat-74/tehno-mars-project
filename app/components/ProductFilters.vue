@@ -25,7 +25,11 @@ const applyFilters = () => {
      >
  
      <!-- Сортировка -->
-     <select v-model="sortBy" @change="applyFilters">
+     <select 
+     v-model="sortBy" 
+     @change="applyFilters"
+     :class="{ 'sort-active': sortBy }"
+     >
        <option value="">Без сортировки</option>
        <option value="name:asc">От А до Я</option>
        <option value="name:desc">От Я до А</option>
@@ -34,3 +38,20 @@ const applyFilters = () => {
      </select>
    </div>
  </template>
+
+ <style lang="scss" scoped >
+.sort-notice {
+  color: #666;
+  font-size: 0.9em;
+  margin: 0.5rem 0;
+}
+
+.sort-active {
+  border-color: #3b82f6;
+  background: #f0f4ff;
+}
+
+.search-input {
+  margin-bottom: 1rem;
+}
+</style>

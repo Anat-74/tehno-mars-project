@@ -7,6 +7,7 @@
 }
 
  const { find } = useStrapi()
+ const config = useRuntimeConfig()
  const route = useRoute()
  const lang = route.params.lang
  const { productSlug } = route.params
@@ -22,7 +23,7 @@ const totalPages = ref(1)
  
  // Отключаем автоматический запрос
  const { data: products, status, execute } = useAsyncData(
-  `products-${lang}-${productSlug}-${currentPage.value}`,
+  `products-filter-${lang}-${productSlug}-${currentPage.value}`,
  async () => {
    if (!filters.name.trim() && !filters.sort) {
       return { data: [], meta: { pagination: { pageCount: 1 } } }
@@ -48,9 +49,6 @@ const totalPages = ref(1)
   }
 )
 
-watch([currentPage, filters], () => execute())
-// Типизация для пагинации
-
 watch(products, (newProducts: any) => {
   totalPages.value = newProducts?.meta?.pagination?.pageCount || 1
 })
@@ -63,11 +61,26 @@ const updateFilters = (newFilters: FilterParams) => {
   filters.name = newFilters.name
   filters.sort = newFilters.sort
   currentPage.value = 1
+
+    // Выполняем запрос только при наличии поискового запроса
+    if (filters.name.trim()) {
+    currentPage.value = 1
+    execute()
+  } else {
+    // Сбрасываем данные, но сохраняем сортировку
+    products.value = { data: [], meta: { pagination: { pageCount: 1 } } }
+  }
 }
 
 const changePage = (page: number) => {
   currentPage.value = page
 }
+
+watch([currentPage, filters], () => {
+  if (filters.name.trim()) {
+    execute()
+  }
+})
 
 watch(products, (newCategory) => {
   console.debug('category data:', newCategory)
@@ -96,6 +109,20 @@ watch(products, (newCategory) => {
        >
          <h3>{{ product.name }}</h3>
          <p>Цена: {{ product.price }}</p>
+         <NuxtLink
+         :to="`/${currentLocale}/${product.slug}`"
+            class="product-link"
+          >
+            <NuxtImg
+              v-if="product.image?.length"
+              :src="`${config.public.strapi.url}${product.image[0]?.url}`"
+              :alt="product.name"
+              loading="lazy"
+              decoding="async"
+              width="260"
+              class="product-image"
+            />
+         </NuxtLink>
        </div>
 
        <div class="pagination">
