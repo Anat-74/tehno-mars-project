@@ -6,12 +6,9 @@ const { currentLocale } = useLocale()
 const { goBack, goForward } = useGoToForwardOrBack()
 const config = useRuntimeConfig()
 
-const page = ref(Number(route.query.page) || 1); // Текущая страница из URL
-const pageSize = 8; // Товаров на странице
-
 // Получаем данные категории
 const { data: subcategory, status, error } = useAsyncData(
-  `subcategory-${subcategorySlug}-${currentLocale.value}-page-${page.value}`,
+  `subcategory-${subcategorySlug}-${currentLocale.value}`,
   async () => {
     const response = await find('subcategories', {
        filters: {
@@ -22,10 +19,6 @@ const { data: subcategory, status, error } = useAsyncData(
        populate: {
         products: {
              populate: ['image'],
-         //     pagination: {
-         //       page: page.value,
-         //       pageSize: pageSize
-         //  }
         }
       }
     })
@@ -58,12 +51,6 @@ watch(subcategory, (newCategory) => {
 useSeoMeta({
   title: subcategory.value?.name,
   description: subcategory.value?.description
-})
-
-
-const pageCount = computed(() => {
-  const total = subcategory.value?.products.meta?.pagination.total || 0
-  return Math.ceil(total / pageSize)
 })
 
 watch(subcategory, (newCategory) => {
@@ -117,11 +104,6 @@ watch(subcategory, (newCategory) => {
               >addToCart</button>
         </li>
         </ul>
-        <Pagination 
-        :page="page"
-        :pageCount="pageCount"
-        :routeName="$route.name?.toString() || ''"
-      />
       </div>
 
     <div v-if="error" class="error">

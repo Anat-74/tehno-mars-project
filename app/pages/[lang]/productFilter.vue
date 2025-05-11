@@ -10,8 +10,8 @@
  const config = useRuntimeConfig()
  const route = useRoute()
  const lang = route.params.lang
- const { productSlug } = route.params
  const { currentLocale } = useLocale()
+ const { categorySlug, subcategorySlug, productSlug } = route.params
 
  const currentPage = ref(1)
 const totalPages = ref(1)
@@ -110,7 +110,7 @@ watch(products, (newCategory) => {
          <h3>{{ product.name }}</h3>
          <p>Цена: {{ product.price }}</p>
          <NuxtLink
-         :to="`/${currentLocale}/${product.slug}`"
+          :to="`/${currentLocale}/${categorySlug}/${subcategorySlug}/${product.slug}`"
             class="product-link"
           >
             <NuxtImg
