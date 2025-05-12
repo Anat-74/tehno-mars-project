@@ -9,6 +9,7 @@ const { currentLocale, locales, switchLocale } = useLocale()
       :key="locale.code"
       :class="{ active: currentLocale === locale.code }"
       @click="switchLocale(locale.code)"
+      type="button"
     >
       {{ locale.name }}
     </button>

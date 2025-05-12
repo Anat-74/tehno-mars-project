@@ -25,17 +25,25 @@ const categorySlug = computed(() => {
 </script>
 
 <template>
+   <div>
+   <h4>{{ product.name }}</h4>
+   <span>{{ product.price }}</span>
   <NuxtLink
     :to="`/${currentLocale}/${categorySlug}/${subcategorySlug}/${product.slug}`"
     class="product-link"
   >
     <NuxtImg 
       v-if="product.image?.length"
-      width="88"
+      width="48"
       loading="lazy"
       decoding="async"
       :src="`${config.public.strapi.url}${product.image[0]?.url}`" 
       :alt="product.name"
+      class="product-image"
     />
   </NuxtLink>
+</div>
 </template>
+
+<style lang="scss" scoped>
+</style>

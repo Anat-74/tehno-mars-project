@@ -105,25 +105,6 @@ body:has(dialog[open]) {
          }
       }
 
-   &_search {
-      height: 100%;
-      border: toRem(2) solid var(--danger-color);
-      padding-inline: toRem(10);
-      border-radius: toRem(0) toRem(4) toRem(4) toRem(0);
-      background-color: var(--danger-color);
-
-      svg {
-         font-size: toRem(20);
-         transition: transform var(--transition-duration);
-      }
-
-      @include hover {
-         svg {
-            transform: scale(1.3);
-         }
-      }
-   }
-
    &_hamburger {
    display: none;
    @media (max-width:$tablet){

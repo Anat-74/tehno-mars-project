@@ -28,9 +28,10 @@ const searchStore = useSearchStore()
    height="68"
    />
 </NuxtLink>
-<BaseSearch class="header__search" />
-<ProductFilters />
-<div v-if="searchStore.products.length" class="header-results">
+<ProductFilter class="header__search" />
+<div 
+v-if="searchStore.products.length" 
+class="header__product-card">
         <ProductCard
           v-for="product in searchStore.products"
           :key="product.id"
@@ -120,6 +121,18 @@ const searchStore = useSearchStore()
    @media (max-width:$tablet){
       width: 100%;
    }
+   }
+
+   &__product-card {
+      position: absolute;
+      top: 20%;
+      left: 80%;
+      translate: -50% 0;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+      justify-items: center;
+      align-items: center;
    }
 
    &__cart {
