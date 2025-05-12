@@ -3,6 +3,7 @@ const { currentLocale } = useLocale()
 const { isContacts } = useVisibilityProvider()
 
 const searchStore = useSearchStore()
+const { products, totalPages, currentPage } = storeToRefs(searchStore)
 </script>
 
 <template>
@@ -29,14 +30,25 @@ const searchStore = useSearchStore()
    />
 </NuxtLink>
 <ProductFilter class="header__search" />
-<div 
-v-if="searchStore.products.length" 
-class="header__product-card">
+   <div 
+      v-if="searchStore.products.length" 
+      class="header__product-card">
         <ProductCard
-          v-for="product in searchStore.products"
+          v-for="product in products"
           :key="product.id"
           :product="product"
         />
+        <div class="pagination">
+        <button 
+          v-for="page in totalPages" 
+          :key="page"
+          type="button"
+          @click="searchStore.changePage(page)"
+          :class="{ active: currentPage === page }"
+        >
+          {{ page }}
+        </button>
+      </div>
       </div>
 <CartShopping class="header__cart" />
 </div>
@@ -52,7 +64,6 @@ class="header__product-card">
    <footer class="footer">
       <div class="footer__container">
          <ScrollToTop />
-         <ProductsSection />
    </div>
    </footer>
 </template>

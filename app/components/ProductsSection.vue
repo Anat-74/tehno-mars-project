@@ -3,11 +3,11 @@ const { currentLocale } = useLocale()
 </script>
 
 <template>
-   <div>
+   <!-- <div>
       <NuxtLink
       :to="`/${currentLocale}/productFilter`"
       >Products</NuxtLink>
-   </div>
+   </div> -->
 </template>
 
 <style lang="scss" scoped>

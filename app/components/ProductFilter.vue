@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const searchStore = useSearchStore()
 const route = useRoute()
+const { products, status, hasSearched } = storeToRefs(searchStore)
 
 // Полная синхронизация с хранилищем
 const searchName = computed({
@@ -53,7 +54,7 @@ watch([searchName, sortBy], () => {
       id="my-search"
     >
       <Icon
-
+   v-if="status === 'pending'"
    name="eos-icons:bubble-loading" 
    class="search-loader"
    />
@@ -62,7 +63,11 @@ watch([searchName, sortBy], () => {
    name="ph:magnifying-glass-light"
    class="search-glass"
    />
-
+   <span 
+    v-if="hasSearched && products.length === 0 && status !== 'pending'"
+   class="search-no-results">
+      Товары не найдены
+    </span>
    <div class="search-select-wrapper">
       <label 
       class="visually-hidden"
@@ -76,10 +81,10 @@ watch([searchName, sortBy], () => {
       id="sort-product"
       :class="{ 'sort-active': sortBy }"
     >
-      <option value="">Без сортировки</option>
+      <option value=""></option>
       <option value="name:asc">От А до Я</option>
-      <option value="price:asc">Сначала дешёвые</option>
-      <option value="price:desc">Сначала дорогие</option>
+      <option value="price:asc">Дешевле</option>
+      <option value="price:desc">Дороже</option>
     </select>
     </div>
   </div>
@@ -87,8 +92,6 @@ watch([searchName, sortBy], () => {
 
 <style lang="scss" scoped>
 .search {
-   position: relative;
-
    &-body {
       position: relative;
       height: toRem(40);
@@ -108,10 +111,10 @@ watch([searchName, sortBy], () => {
    &-loader {
       position: absolute;
       top: 50%;
-      right: 212px;
+      right: toRem(222);
       translate: 0 -50%;
       font-size: toRem(25);
-      color: var(--light-green);
+      color: var(--sky-blue-color);
    }
 
    &-glass {
@@ -123,6 +126,16 @@ watch([searchName, sortBy], () => {
       font-size: toRem(25);
    }
 
+   &-no-results {
+      white-space: nowrap;
+      position: absolute;
+      left: 50%;
+      translate: -50% 0;
+      top: toRem(-19);
+      font-weight: 600;
+      color: var(--primary-color);
+   }
+
    &-select-wrapper {
       position: relative;
       height: 100%;
@@ -132,10 +145,10 @@ watch([searchName, sortBy], () => {
       content: '';
       pointer-events: none;
       position: absolute;
-      top: calc(45% - toRem(1));
+      top: calc(50% - toRem(1));
       width: toRem(8);
       height: toRem(2);
-      background-color: var(--gray-color);
+      background-color: var(--danger-color);
    }
    &::before {
       right: toRem(12);
@@ -145,17 +158,6 @@ watch([searchName, sortBy], () => {
       right: toRem(8);
       transform: rotate(125deg);
    }
-
-@media (max-width:$tablet){
-   &::before,
-   &::after{
-      background-color: var(--light-green);
-   }
-
-   &::after {
-      left: toRem(11);
-   }
-}
    }
 
    &-select {
@@ -164,46 +166,13 @@ watch([searchName, sortBy], () => {
       appearance: none;
       cursor: pointer;
       color: var(--gray-color);
-      width: toRem(195);
       border: toRem(2) solid var( --danger-color);
       border-radius: toEm(0) toEm(4) toEm(4) toEm(0);
       padding-inline: toEm(9);
-
-      &:focus-visible {
-         border: 2px solid var(--grey-color);
-      }
-      &:active {
-         border: 2px solid var(--orange-color);
-      }
-
-      @media (min-width:$tablet){
-      font-size: toRem(17);
-   }
-
-      @media (max-width:$tablet){
-      width: toRem(27);
-      padding-inline: toRem(12);
-      border: 2px solid var(--lime-color);
-      border-inline-start: 1px solid var(--lime-color);
-      border-inline-end: 1px solid var(--lime-color);
-      border-radius: 0;
-      background-color: rgba(255 255 255/.3);
-
-      &:focus-visible {
-         border: 2px solid var(--lime-color);
-         outline: 3px solid var(--whitesmoke-color);
-      }
-
-      &:active {
-         border: 2px solid var(--orange-color);
-      }
-   }
+      @include adaptiveValue("width", 112, 27);
 
    option {
-      background-color: var(--whitesmoke-color);
-      @media (min-width:$tablet){
-         font-size: toRem(17);
-      }
+      background-color: var(--bg);
    }
    }
 }
