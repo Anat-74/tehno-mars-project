@@ -3,7 +3,7 @@ interface Props{
    nameClass?: string
    disabled?: boolean
    icon?: string
-   label?: string
+   label?: string | number
    size?: string
    loading?: boolean
    theme?: string
@@ -81,6 +81,10 @@ body:has(dialog[open]) {
       padding: 0;
       font-size: toEm(24);
       color: var(--light-color);
+  }
+
+  &_lang-switcher {
+   background-color: var(--warning-color);
   }
 
    &_color-theme {
@@ -216,6 +220,10 @@ body:has(dialog[open]) {
       font-size: toRem(24);
       color: var(--dark-golden-color);
    }
+}
+
+&_pagination {
+   background-color: var(--warning-color);
 }
 
 

@@ -18,7 +18,7 @@ const { products, totalPages, currentPage } = storeToRefs(searchStore)
 <div :class="['header__bg', {header__bg_hidden: isContacts}]">
    <div class="header__container-bottom">
    <NuxtLink 
-   class="header__link-logo"
+   class="header__link-logo hidden-mobile-small"
    :to="`/${currentLocale}`">
       <NuxtImg 
    class="header__logo"
@@ -38,16 +38,15 @@ const { products, totalPages, currentPage } = storeToRefs(searchStore)
           :key="product.id"
           :product="product"
         />
-        <div class="pagination">
-        <button 
+        <div class="header__pagination-product">
+        <UButton 
           v-for="page in totalPages" 
           :key="page"
-          type="button"
+          name-class="pagination"
+          :label="page"
           @click="searchStore.changePage(page)"
           :class="{ active: currentPage === page }"
-        >
-          {{ page }}
-        </button>
+        />
       </div>
       </div>
 <CartShopping class="header__cart" />
@@ -103,14 +102,17 @@ const { products, totalPages, currentPage } = storeToRefs(searchStore)
    display: grid;
    grid-template-columns: auto 1fr auto;
    align-items: center;
+   padding-block: toRem(16);
    @include adaptiveValue("column-gap", 44, 7);
+
+   @media (max-width:$mobileSmall){
+       grid-template-columns: 1fr auto; 
+   }
 }
 
 &__link-logo {
    margin-inline-start: toRem(20);
    padding-inline: toRem(2);
-   padding-block: toRem(6);
-   margin-block: toRem(5);
    border-radius: 50%;
    background-color: var(--light-color);
    transition: box-shadow var(--transition-duration);
@@ -136,14 +138,23 @@ const { products, totalPages, currentPage } = storeToRefs(searchStore)
 
    &__product-card {
       position: absolute;
-      top: 20%;
-      left: 80%;
-      translate: -50% 0;
+      z-index: 999;
+      top: 19%;
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 22px;
+      grid-template-columns: 1fr;
+      gap: toRem(12);
       justify-items: center;
-      align-items: center;
+      padding: toEm(12);
+      border-radius: toRem(4);
+      border: toRem(2) solid var(--primary-color);
+      background-color: var(--secondary-color);
+      @include adaptiveValue("top", 175, 122);
+      @include adaptiveValue("right", 235, 0);
+   }
+
+   &__pagination-product {
+      align-self: end;
+      justify-self: end;
    }
 
    &__cart {

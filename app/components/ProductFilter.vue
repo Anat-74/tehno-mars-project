@@ -105,6 +105,7 @@ watch([searchName, sortBy], () => {
       padding-inline-start: toRem(42);
       border-radius: toEm(4) toEm(0) toEm(0) toEm(4);
       border: toRem(2) solid var(--danger-color);
+      border-right: none;
       font-size: toRem(18);
    }
 
@@ -131,7 +132,7 @@ watch([searchName, sortBy], () => {
       position: absolute;
       left: 50%;
       translate: -50% 0;
-      top: toRem(-19);
+      bottom: toRem(-22);
       font-weight: 600;
       color: var(--primary-color);
    }

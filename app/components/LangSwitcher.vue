@@ -4,15 +4,18 @@ const { currentLocale, locales, switchLocale } = useLocale()
 
 <template>
   <div class="lang-switcher">
-    <button
+    <UButton
       v-for="locale in locales"
       :key="locale.code"
+      :label="locale.name"
       :class="{ active: currentLocale === locale.code }"
       @click="switchLocale(locale.code)"
-      type="button"
     >
+    <Icon
+    name="emojione:flag-for-belarus"
+    />
       {{ locale.name }}
-    </button>
+    </UButton>
   </div>
 </template>
 

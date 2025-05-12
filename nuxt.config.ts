@@ -87,7 +87,8 @@ export default defineNuxtConfig({
             'eos-icons',
             'ph',
             'cil',
-            'fa-brands'
+            'fa-brands',
+            'emojione'
          ]
       },
       // Автоматически добавлять иконки из компонентов в клиентский бандл
