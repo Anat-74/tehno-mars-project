@@ -7,25 +7,22 @@ const { currentLocale, locales, switchLocale } = useLocale()
     <UButton
       v-for="locale in locales"
       :key="locale.code"
-      :label="locale.name"
+      :icon="locale.icon"
       :class="{ active: currentLocale === locale.code }"
       @click="switchLocale(locale.code)"
-    >
-    <Icon
-    name="emojione:flag-for-belarus"
+      aria-label="Переключить язык"
     />
-      {{ locale.name }}
-    </UButton>
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .lang-switcher {
-  display: flex;
-  gap: 8px;
+  display: inline-flex;
+  gap: toEm(18);
+  padding-inline-end: toEm(12);
+  padding-block: toEm(12);
 }
 .active {
-  font-weight: bold;
-  border-bottom: 2px solid;
+   opacity: .6;
 }
 </style>

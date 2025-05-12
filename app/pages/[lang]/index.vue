@@ -53,10 +53,12 @@ watch(categories, (newCategory) => {
 </script>
 
 <template>
-   <div>
+   <section aria-labelledby="category">
+      <h2 
+      id="category"
+      class="visually-hidden">Категории товаров</h2>
       <LangSwitcher/>
       <Loader v-if="status === 'pending'" />
-      <h2>Categories</h2>
       <ul v-if="categories?.data?.length"
       class="category-list"
       >
@@ -78,7 +80,7 @@ watch(categories, (newCategory) => {
       </li>
       </ul>
       <div v-else-if="error">Error: {{ error.message }}</div>
-   </div>
+   </section>
 </template>
 
 <style lang="scss" scoped>

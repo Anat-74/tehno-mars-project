@@ -83,10 +83,6 @@ body:has(dialog[open]) {
       color: var(--light-color);
   }
 
-  &_lang-switcher {
-   background-color: var(--warning-color);
-  }
-
    &_color-theme {
       padding: toRem(2);
       transition: transform var(--transition-duration);

@@ -28,10 +28,19 @@ export const useLocale = () => {
     })
  
    const locales = [
-     { code: 'en', name: 'English' },
-     { code: 'ru', name: 'Русский' },
-     { code: 'be', name: 'Беларускi' }
-   ]
+      { 
+         code: 'ru', 
+         icon: 'emojione:flag-for-russia'
+       },
+      { 
+        code: 'en', 
+        icon: 'emojione:flag-for-united-kingdom'
+      },
+      { 
+        code: 'be', 
+        icon: 'emojione:flag-for-belarus'
+      }
+    ]
  
    const switchLocale = (newLocale: string) => {
      currentLocale.value = newLocale
