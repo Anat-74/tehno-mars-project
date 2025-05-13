@@ -1,6 +1,4 @@
 <script setup lang="ts">
-const searchStore = useSearchStore()
-const { products, hasSearched, totalPages, currentPage } = storeToRefs(searchStore)
 const { find } = useStrapi()
 const route = useRoute()
 const { categorySlug, subcategorySlug } = route.params
@@ -36,11 +34,6 @@ const { data: subcategory, status, error } = useAsyncData(
    }
 )
 
-useServerSeoMeta({
-  title: subcategory.value?.name || 'TechnoMars',
-  description: subcategory.value?.description || 'Лучший магазин электроники'
-})
-
 watch(subcategory, (newCategory) => {
   if (newCategory) {
     useSeoMeta({
@@ -65,11 +58,11 @@ watch(subcategory, (newCategory) => {
    <Loader v-if="status === 'pending'" />
       <section  
       v-if="subcategory"
-      aria-labelledby="sub-category"
+      aria-labelledby="sub-category-product"
       >
          <h2 
-      id="sub-category"
-      class="visually-hidden">Подкатегории товаров</h2>
+      id="sub-category-product"
+      class="visually-hidden">Товары подкатегории</h2>
          <UButton
       @click="goBack"
       icon="material-symbols:arrow-back"
@@ -89,6 +82,7 @@ watch(subcategory, (newCategory) => {
           :key="product.name"
           class="product-card"
         >
+        <article>
         <NuxtLink
             :to="`/${currentLocale}/${categorySlug}/${subcategorySlug}/${product.slug}`"
             class="product-link"
@@ -110,6 +104,7 @@ watch(subcategory, (newCategory) => {
               <button type="button"
               @click="useAddToCart(product)"
               >addToCart</button>
+            </article>
         </li>
         </ul>
       </section>

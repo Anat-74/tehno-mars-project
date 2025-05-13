@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { productFilterTranslations } from '~/locales/productFilter'
+const { currentLocale } = useLocale()
 const searchStore = useSearchStore()
 const route = useRoute()
 const { products, status, hasSearched } = storeToRefs(searchStore)
@@ -43,11 +45,11 @@ watch([searchName, sortBy], () => {
   <label 
    class="visually-hidden"
    for="my-search"
-   >Поиск товаров
+   > {{ productFilterTranslations[currentLocale].labelInput }}
 </label>
     <input 
       v-model="searchName" 
-      placeholder="Название товара"
+      :placeholder="productFilterTranslations[currentLocale].placeholder"
       @input="applyFilters"
       class="search-input"
       type="search"
@@ -66,13 +68,13 @@ watch([searchName, sortBy], () => {
    <span 
     v-if="hasSearched && products.length === 0 && status !== 'pending'"
    class="search-no-results">
-      Товары не найдены
+   {{ productFilterTranslations[currentLocale].noResults }}
     </span>
    <div class="search-select-wrapper">
       <label 
       class="visually-hidden"
       for="sort-product"
-      >Сортировка товаров
+      >{{ productFilterTranslations[currentLocale].labelSelect }}
    </label>
       <select 
       v-model="sortBy" 
@@ -82,9 +84,9 @@ watch([searchName, sortBy], () => {
       :class="{ 'sort-active': sortBy }"
     >
       <option value=""></option>
-      <option value="name:asc">От А до Я</option>
-      <option value="price:asc">Дешевле</option>
-      <option value="price:desc">Дороже</option>
+      <option value="name:asc">{{ productFilterTranslations[currentLocale].optionName }}</option>
+      <option value="price:asc">{{ productFilterTranslations[currentLocale].optionPrice }}</option>
+      <option value="price:desc">{{ productFilterTranslations[currentLocale].optionPriceDesc }}</option>
     </select>
     </div>
   </div>

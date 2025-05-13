@@ -1,3 +1,5 @@
+import type { LocaleCode } from "../types/types"
+
 export const useLocale = () => {
    const route = useRoute()
    const router = useRouter()
@@ -5,11 +7,11 @@ export const useLocale = () => {
      maxAge: 365 * 24 * 60 * 60,
      sameSite: 'lax'
    })
- 
-   // Инициализация из URL или куки
-   const currentLocale = useState<string>('locale', () => {
-     return (route.params.lang as string) || langCookie.value || 'ru'
-   })
+
+   const currentLocale = useState<LocaleCode>('locale', () => {
+      const lang = (route.params.lang as string) || langCookie.value || 'ru'
+      return lang as LocaleCode
+    })
    // Автоматическая синхронизация при изменении
    watch(currentLocale, (newVal) => {
      langCookie.value = newVal
@@ -23,7 +25,10 @@ export const useLocale = () => {
 
    watch(() => route.params.lang, (newVal) => {
       if (newVal && newVal !== currentLocale.value) {
-        currentLocale.value = newVal.toString()
+        const validLocales: LocaleCode[] = ['ru', 'en', 'be']
+        currentLocale.value = validLocales.includes(newVal as LocaleCode) 
+          ? newVal as LocaleCode 
+          : 'ru' // fallback
       }
     })
  
@@ -42,9 +47,9 @@ export const useLocale = () => {
       }
     ]
  
-   const switchLocale = (newLocale: string) => {
-     currentLocale.value = newLocale
-   }
+    const switchLocale = (newLocale: LocaleCode) => {
+      currentLocale.value = newLocale
+    }
  
    return { currentLocale, locales, switchLocale }
  }

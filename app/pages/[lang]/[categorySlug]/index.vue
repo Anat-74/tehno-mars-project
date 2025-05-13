@@ -71,7 +71,10 @@ watch(category, (newCategory) => {
 
 <template>
    <Loader v-if="status === 'pending'" />
-      <div >
+      <section aria-labelledby="sub-category">
+         <h2
+      id="sub-category"
+      class="visually-hidden">Подкатегории товаров</h2>
          <UButton
       @click="goBack"
       icon="material-symbols:arrow-back"
@@ -115,7 +118,7 @@ watch(category, (newCategory) => {
         :pageCount="pageCount"
         :routeName="$route.name?.toString() || ''"
       />
-      </div>
+      </section>
 
     <div v-if="error" class="error">
       {{ error.message }}

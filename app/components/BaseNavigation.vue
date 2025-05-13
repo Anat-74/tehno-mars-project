@@ -18,7 +18,7 @@ const { currentLocale } = useLocale()
       </li>
       <li class="nav__item">
             <NuxtLink
-            class="nav__link"  
+            class="nav__link"
             :to="`/${currentLocale}/about`">
             {{ baseNavigationTranslations[currentLocale].about }}
          </NuxtLink>

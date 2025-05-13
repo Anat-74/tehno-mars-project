@@ -73,7 +73,7 @@ useSeoMeta({
 
 <template>
    <Loader v-if="status === 'pending'" />
-   <div v-if="product"
+   <article v-if="product"
    class="product-review"
    >
    <div class="product-review__wrapper-left wrapper-left">
@@ -137,7 +137,7 @@ useSeoMeta({
       class="wrapper-right__btn"
      />
    </div>
-</div>
+</article>
    <span v-else-if="error">Error: {{ error.message }}</span>
  </template>
 
