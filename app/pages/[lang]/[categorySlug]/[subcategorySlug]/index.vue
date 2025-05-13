@@ -63,7 +63,13 @@ watch(subcategory, (newCategory) => {
 
 <template>
    <Loader v-if="status === 'pending'" />
-      <div  v-if="subcategory">
+      <section  
+      v-if="subcategory"
+      aria-labelledby="sub-category"
+      >
+         <h2 
+      id="sub-category"
+      class="visually-hidden">Подкатегории товаров</h2>
          <UButton
       @click="goBack"
       icon="material-symbols:arrow-back"
@@ -106,7 +112,7 @@ watch(subcategory, (newCategory) => {
               >addToCart</button>
         </li>
         </ul>
-      </div>
+      </section>
 
     <div v-if="error" class="error">
       {{ error.message }}

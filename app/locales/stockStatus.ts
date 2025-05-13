@@ -6,14 +6,14 @@ export const stockStatusTranslations: Record<LocaleCode, {
 }> = {
    ru: {
       inStock: "В наличии",
-     toOrder: "Под заказ",
+     toOrder: "Под заказ"
    },
    en: {
       inStock: "In stock",
-      toOrder: "To order",
+      toOrder: "To order"
    }, 
    be: {
       inStock: "У наяўнасці",
-      toOrder: "Пад замову",
+      toOrder: "Пад замову"
    }
  }

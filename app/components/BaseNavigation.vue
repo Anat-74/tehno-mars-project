@@ -1,6 +1,10 @@
 <script lang="ts" setup>
+import { baseNavigationTranslations } from '~/locales/baseNavigation'
+
 const { isContacts, visibleIsContacts } = useVisibilityConsumer()
 const { currentLocale } = useLocale()
+
+
 </script>
 
 <template>
@@ -8,25 +12,30 @@ const { currentLocale } = useLocale()
       <ul class="nav__list">
          <li class="nav__item">
             <NuxtLink :to="`/${currentLocale}`" 
-            class="nav__link">Home</NuxtLink>
+            class="nav__link">
+            {{ baseNavigationTranslations[currentLocale].home }}
+         </NuxtLink>
       </li>
       <li class="nav__item">
             <NuxtLink
             class="nav__link"  
             :to="`/${currentLocale}/about`">
-            about</NuxtLink>
+            {{ baseNavigationTranslations[currentLocale].about }}
+         </NuxtLink>
       </li>
       <li class="nav__item">
             <NuxtLink 
             class="nav__link" 
             :to="`/${currentLocale}/services`">
-            servicess</NuxtLink>
+            {{ baseNavigationTranslations[currentLocale].services }}
+         </NuxtLink>
       </li>
       <li class="nav__item">
             <NuxtLink 
             class="nav__link" 
             :to="`/${currentLocale}/info`">
-            info</NuxtLink>
+            {{ baseNavigationTranslations[currentLocale].info }}
+         </NuxtLink>
       </li>
 
       <li :class="['nav__item', {nav__item_contacts: isContacts}]"
@@ -37,7 +46,7 @@ const { currentLocale } = useLocale()
             class="nav__link" 
             :to="`/${currentLocale}/contacts`"
             ><Icon name="material-symbols:send-to-mobile-outline-rounded" />
-            contacts
+            {{ baseNavigationTranslations[currentLocale].contacts }}
             </NuxtLink>
             <div
             v-if="isContacts"

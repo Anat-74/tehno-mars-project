@@ -147,17 +147,19 @@ watch([searchName, sortBy], () => {
       pointer-events: none;
       position: absolute;
       top: calc(50% - toRem(1));
-      width: toRem(8);
-      height: toRem(2);
+      width: toRem(10);
+      height: toRem(4);
       background-color: var(--danger-color);
    }
    &::before {
-      right: toRem(12);
+      right: toRem(16);
       transform: rotate(-125deg);
+      @include adaptiveValue("right", 16, 10);
    }
    &::after {
-      right: toRem(8);
+      right: toRem(12);
       transform: rotate(125deg);
+      @include adaptiveValue("right", 12, 6);
    }
    }
 
@@ -170,7 +172,7 @@ watch([searchName, sortBy], () => {
       border: toRem(2) solid var( --danger-color);
       border-radius: toEm(0) toEm(4) toEm(4) toEm(0);
       padding-inline: toEm(9);
-      @include adaptiveValue("width", 112, 27);
+      @include adaptiveValue("width", 112, 32);
 
    option {
       background-color: var(--bg);

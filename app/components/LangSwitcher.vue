@@ -18,11 +18,19 @@ const { currentLocale, locales, switchLocale } = useLocale()
 <style lang="scss" scoped>
 .lang-switcher {
   display: inline-flex;
-  gap: toEm(18);
-  padding-inline-end: toEm(12);
-  padding-block: toEm(12);
+  flex-direction: column;
+  gap: toRem(12);
+  padding-inline: toEm(12);
+  padding-block: toEm(8);
+  border-radius: toEm(8);
+  margin-inline-start: toEm(36);
+  margin-block-start: toEm(8);
+  background-color: var(--light-color);
 }
 .active {
-   opacity: .6;
+   border: 1px solid var(--danger-color);
+   border-radius: 50%;
+   padding: toRem(1);
+   font-size: toRem(20);
 }
 </style>

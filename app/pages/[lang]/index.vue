@@ -54,9 +54,9 @@ watch(categories, (newCategory) => {
 
 <template>
    <section aria-labelledby="category">
-      <h2 
+      <h1 
       id="category"
-      class="visually-hidden">Категории товаров</h2>
+      class="visually-hidden">Категории товаров</h1>
       <LangSwitcher/>
       <Loader v-if="status === 'pending'" />
       <ul v-if="categories?.data?.length"
@@ -76,7 +76,7 @@ watch(categories, (newCategory) => {
           width="240"
          ></NuxtImg>
          </NuxtLink>
-         <h3>{{ category.name }}</h3>
+         <h2>{{ category.name }}</h2>
       </li>
       </ul>
       <div v-else-if="error">Error: {{ error.message }}</div>

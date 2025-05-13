@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { LocaleCode } from "../../types/types"
-import { cartTranslations } from '~/locales/cart';
+import type { LocaleCode } from '../../types/types'
+import { cartTranslations } from '~/locales/cart'
 
 const { currentLocale } = useLocale()
 const cartStore = useCartStore()
