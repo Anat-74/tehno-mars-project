@@ -49,7 +49,7 @@ const { products, totalPages, currentPage } = storeToRefs(searchStore)
         />
       </div>
       </div>
-<CartShopping class="header__cart" />
+<Basket class="header__cart" />
 </div>
 </div>
 </header>

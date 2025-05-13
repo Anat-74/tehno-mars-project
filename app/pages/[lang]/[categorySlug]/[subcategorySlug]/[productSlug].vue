@@ -73,7 +73,9 @@ useSeoMeta({
 
 <template>
    <Loader v-if="status === 'pending'" />
-   <article v-if="product"
+   <section 
+   v-if="product"
+   aria-labelledby="product-description"
    class="product-review"
    >
    <div class="product-review__wrapper-left wrapper-left">
@@ -117,7 +119,10 @@ useSeoMeta({
      </ul>
    </div>
    <div class="product-review__wrapper-right wrapper-right">
-      <h2 class="wrapper-right__title">{{ product.name }}</h2>
+      <h2 
+      class="wrapper-right__title"
+      id="product-description"
+      >{{ product.name }}</h2>
       <MDC 
       class="wrapper-right__description"
       :value="product.description" 
@@ -137,8 +142,10 @@ useSeoMeta({
       class="wrapper-right__btn"
      />
    </div>
-</article>
-   <span v-else-if="error">Error: {{ error.message }}</span>
+</section>
+   <span v-else-if="error">
+      Error: {{ error.message }}
+   </span>
  </template>
 
  <style lang="scss" scoped>

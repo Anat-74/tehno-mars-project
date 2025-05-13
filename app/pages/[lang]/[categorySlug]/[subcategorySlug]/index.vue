@@ -82,7 +82,6 @@ watch(subcategory, (newCategory) => {
           :key="product.name"
           class="product-card"
         >
-        <article>
         <NuxtLink
             :to="`/${currentLocale}/${categorySlug}/${subcategorySlug}/${product.slug}`"
             class="product-link"
@@ -101,17 +100,19 @@ watch(subcategory, (newCategory) => {
               <span>{{ product.inStock }}</span>
               <span>{{ product.price }}</span>
 
-              <button type="button"
-              @click="useAddToCart(product)"
-              >addToCart</button>
-            </article>
+            <UButton
+            @click="useAddToCart(product)"
+            name-class="add-to-cart"
+            label="Добавить в корзину"
+            class="wrapper-right__btn"
+     />
         </li>
         </ul>
       </section>
 
-    <div v-if="error" class="error">
+    <span v-if="error" class="error">
       {{ error.message }}
-    </div>
+    </span>
 </template>
 
 <style lang="scss" scoped>

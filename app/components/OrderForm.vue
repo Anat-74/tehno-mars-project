@@ -61,7 +61,6 @@ const submitOrder = async () => {
          <span>{{ orderFormTranslations[currentLocale].total }}</span>
          <span>
             <Icon 
-               class="icon-bel-ruble"
                name="my-icon:icon-by-regular" 
              />
             {{ cartStore.totalPrice }}

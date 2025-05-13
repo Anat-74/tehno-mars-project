@@ -1,58 +1,119 @@
 <script setup lang="ts">
 const cartStore = useCartStore()
+const config = useRuntimeConfig()
+
 onMounted(() => {
   cartStore.loadCart();
 })
-const { currentLocale } = useLocale()
 </script>
 
 <template>
-<div >
-<NuxtLink
-class="cart-link"
-   :to="`/${currentLocale}/cartshopping`"
-   >
-   <span class="cart-link__price">{{ cartStore.totalItems }}</span>
-   <Icon
-   name="cil:cart"
-   width="30"
-   height="30"
-   />
-</NuxtLink>
-</div>
-</template>
+    <ul
+   class="cart-item"
+    aria-label="Список товаров в корзине"
+    >
+      <li 
+      v-for="item in cartStore.items" 
+      :key="item.product.id"
+      class="cart-item__item"
+      >
+        <h3 class="cart-item__title" >{{ item.product.name }}</h3>
+        <NuxtImg
+          :src="`${config.public.strapi.url}${item.product.image}`"
+          :alt="item.product.name"
+          format="webp"
+          loading="lazy"
+          decoding="async"
+          width="144"
+          height="108"
+          class="cart-item__image"
+        />
+        <span class="cart-item__price">
+         <Icon 
+            class="cart-item__icon"
+            name="my-icon:icon-by-regular" 
+             />
+         {{ item.product.price }}
+      </span>
+        <div class="cart-item__controls">
+        <UButton
+         @click="cartStore.updateQuantity(item.product.id, item.quantity -1)"
+         :disabled="item.quantity <= 1"
+         name-class="remove-quantity-prod"
+         aria-label="Уменьшить количество"
+        />
+        <label 
+            class="visually-hidden"
+            for="roduct-quantity"
+            >Количество товара
+         </label>
+        <input 
+         v-model.number="item.quantity" 
+         @input="cartStore.updateQuantity(item.product.id, item.quantity)"
+         min="1"
+         type="text"
+         id="roduct-quantity"
+        >
+        <UButton
+         @click="cartStore.updateQuantity(item.product.id, item.quantity +1)"
+         name-class="add-quantity-prod"
+         aria-label="Увеличить количество"
+        />
+      </div>
+        <UButton
+        @click="cartStore.removeFromCart(item.product.id)"
+        icon="material-symbols:delete-outline-rounded"
+        aria-label="Удалить товар из корзины"
+        class="cart-item__remove-from-cart"
+        />
+      </li>
+    </ul>
+ </template>
 
-<style lang="scss" scoped>
-   .cart-link {
-      position: relative;
+ <style lang="scss" scoped>
+.cart-item {
+&__item {
+   display: grid;
+   grid-template-columns: auto repeat(3, 1fr);
+   justify-items: center;
+   align-items: center;
+   grid-template-areas: 
+   'image title controls price remove'
+   'image title controls price remove'
+   ;
+}
 
-      svg {
-         transition: color var(--transition-duration), transform var(--transition-duration);
-         @include hover {
-            transform: scale(1.1);
-            color: var(--danger-color);
-         }
-      }
+&__title {
+   grid-area: title;
+}
 
-      &__price {
-         display: flex;
-         justify-content: center;
-         align-items: center;
-         padding-inline: toRem(4);
-         padding-block: toRem(1);
-         position: absolute;
-         top: toRem(-27);
-         right: toRem(-7);
-         font-weight: 500;
-         border-radius: 50%;
-         color: var(--light-color);
-         background-color: var(--danger-color);
-         transition: transform var(--transition-duration);
+&__image {
+   grid-area: image;
+}
 
-         @include hover {
-            transform: scale(1.2);
-         }
-      }
+&__price {
+   grid-area: price;
+   font-weight: 600;
+   color: var(--primary-color);
+}
+
+&__icon {
+   translate: 0 toRem(2);
+}
+
+&__controls {
+   grid-area: controls;
+   display: flex;
+   align-items: center;
+   input {
+      width: 28px;
+      padding-inline-start: toRem(9);
    }
+}
 
+&__remove-from-cart {
+   grid-area: remove;
+   color: var(--warning-color);
+}
+}
 </style>

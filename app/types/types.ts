@@ -34,7 +34,7 @@ export type Image = {
    slug: string;
    locale: string;
     price: number;
-    inStock: string;
+    isAvailable: boolean;
    createdAt: string;
    updatedAt: string;
    publishedAt: string;
