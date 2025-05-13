@@ -18,7 +18,10 @@ onMounted(() => {
 </script>
 
 <template>
-   <section class="cart-page">
+   <section 
+   class="cart-page"
+   aria-labelledby="cart-page"
+   >
      <div 
        v-if="cartStore.totalItems === 0"
        class="cart-page__no-product-items"
@@ -40,31 +43,19 @@ onMounted(() => {
        class="cart-page__cart-items"
      >
        <div>
-         <h2>{{ cartTranslations[currentLocale].title }}</h2>
+         <h2 id="cart-page">
+            {{ cartTranslations[currentLocale].title }}
+         </h2>
          <div class="cart-page__cart-item-body">
            <Cart />
-         </div>
-       </div>
- 
-       <div>
-         <div class="cart-page__summary">
-           <span class="cart-page__total">
-             {{ cartTranslations[currentLocale].total }}
-             <Icon 
-               class="icon-bel-ruble"
-               name="my-icon:icon-by-regular" 
-             />
-             <b>{{ cartStore.totalPrice }}</b>
-           </span>
+           
            <UButton
-             @click=""
-             size="large"
-             :label="cartTranslations[currentLocale].checkout"
-             role="link"
+           @click="cartStore.clearCart"
+           label="Очистить корзину"
+           name-class="remove-cart-item"
            />
          </div>
        </div>
- 
        <OrderForm />
      </div>
    </section>

@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { orderFormTranslations } from '~/locales/orderForm'
+const { currentLocale } = useLocale()
+
 const form = reactive({
    email: '',
    phone: '',
@@ -26,10 +29,10 @@ const submitOrder = async () => {
 
 <template>
    <div class="order-form">
-     <h3>Оформление заказа</h3>
+     <h3>{{ orderFormTranslations[currentLocale].title }}</h3>
      <form @submit.prevent="submitOrder">
        <div>
-         <label>Email:</label>
+         <label>{{ orderFormTranslations[currentLocale].email }}</label>
          <input 
            v-model="form.email" 
            type="email" 
@@ -38,12 +41,12 @@ const submitOrder = async () => {
          >
        </div>
        <div>
-         <label>Телефон:</label>
+         <label>{{ orderFormTranslations[currentLocale].phone }}</label>
          <input
            v-model="form.phone"
            type="tel"
            required
-           placeholder="+7 (999) 123-45-67"
+           placeholder="+375(00) 000-00-00"
          >
        </div>
        <div>
@@ -53,15 +56,23 @@ const submitOrder = async () => {
              type="checkbox" 
              required
            >
-           Согласен с условиями обработки данных
+           {{ orderFormTranslations[currentLocale].checkbox }}
          </label>
+         <span>{{ orderFormTranslations[currentLocale].total }}</span>
+         <span>
+            <Icon 
+               class="icon-bel-ruble"
+               name="my-icon:icon-by-regular" 
+             />
+            {{ cartStore.totalPrice }}
+         </span>
        </div>
-       <button 
-         type="submit" 
-         :disabled="isSubmitting || cartStore.totalItems === 0"
-       >
-         {{ isSubmitting ? 'Оформляем...' : 'Подтвердить заказ' }}
-       </button>
+       <UButton
+             size="large"
+             type="submit" 
+             :disabled="isSubmitting || cartStore.totalItems === 0"
+             :label="isSubmitting ? orderFormTranslations[currentLocale].submitting : orderFormTranslations[currentLocale].checkout"
+           />
      </form>
    </div>
  </template>

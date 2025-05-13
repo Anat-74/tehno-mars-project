@@ -69,7 +69,7 @@ body:has(dialog[open]) {
    border: none;
 
    &:disabled {
-    opacity: .6;
+    opacity: .4;
     cursor: default;
   }
     span {
@@ -80,7 +80,7 @@ body:has(dialog[open]) {
     &_icon {
       padding: 0;
       font-size: toEm(24);
-      color: var(--light-color);
+      color: var(--primary-color);
   }
 
    &_color-theme {
@@ -176,14 +176,58 @@ body:has(dialog[open]) {
   }
 
   &_remove-cart-item {
-   align-self: start;
-   justify-self: end;
-   color: var(--gray-color);
+   // align-self: start;
+   // justify-self: end;
+   color: var(--light-color);
+   background-color: var(--warning-color);
    transition: color var(--transition-duration);
 
    @include hover {
-      color: var(--danger-color);
+      background-color: var(--warning-hover);
    }
+  }
+
+  &_remove-quantity-prod {
+   position: relative;
+   width: toRem(32);
+   height: toRem(32);
+   background-color: var(--border-color);
+
+   &::before{
+         content: '';
+			left: 50%;
+			position: absolute;
+			width: toRem(16);
+         top: 50%;
+         translate: -50% -50%;
+			height: toRem(2);
+			background-color: var(--light-color);
+      }
+  }
+
+  &_add-quantity-prod {
+   position: relative;
+   width: toRem(32);
+   height: toRem(32);
+   background-color: var(--border-color);
+
+   &::before,
+      &::after{
+         content: '';
+			left: 50%;
+			position: absolute;
+			width: toRem(18);
+         top: 50%;
+         translate: -50% -50%;
+			height: toRem(2);
+			background-color: var(--light-color);
+      }
+      &::before {
+
+		}
+		&::after {
+         transform: rotate(90deg);
+		}
   }
 
   &_large {

@@ -5,54 +5,46 @@ const config = useRuntimeConfig()
 onMounted(() => {
   cartStore.loadCart();
 })
-
-console.log('cart',cartStore.items)
 </script>
 
 <template>
-  <section 
-  aria-labelledby="cart-products">
-   <h2
-      id="cart-products"
-      class="visually-hidden">Карзина товаров</h2>
     <ul>
       <li 
       v-for="item in cartStore.items" 
       :key="item.product.id"
-      
       >
-         <article>
+      <article>
         <h3>{{ item.product.name }}</h3>
-        <p>Цена: {{ item.product.price }} ₽</p>
-        <p>Количество: {{ item.quantity }}</p>
         <NuxtImg
           :src="`${config.public.strapi.url}${item.product.image}`"
           :alt="item.product.name"
           format="webp"
           width="122"
         />
-        <button @click="cartStore.removeFromCart(item.product.id)">Удалить</button>
-
+        <p>Цена: {{ item.product.price }} ₽</p>
+        <p>Количество: {{ item.quantity }}</p>
         <div class="quantity-controls">
-        <button 
-          @click="cartStore.updateQuantity(item.product.id, item.quantity -1)"
-          :disabled="item.quantity <= 1"
-        >-</button>
-        
+        <UButton
+         @click="cartStore.updateQuantity(item.product.id, item.quantity -1)"
+         :disabled="item.quantity <= 1"
+         name-class="remove-quantity-prod"
+        />
         <input 
         type="number" 
          v-model.number="item.quantity" 
          @input="cartStore.updateQuantity(item.product.id, item.quantity)"
          min="1"
         >
-        <button 
-          @click="cartStore.updateQuantity(item.product.id, item.quantity +1)"
-        >+</button>
+        <UButton
+         @click="cartStore.updateQuantity(item.product.id, item.quantity +1)"
+         name-class="add-quantity-prod"
+        />
       </div>
+        <UButton
+        @click="cartStore.removeFromCart(item.product.id)"
+        icon="material-symbols:delete-outline-rounded"
+        />
    </article>
       </li>
     </ul>
-    <p>Общая сумма: {{ cartStore.totalPrice }} ₽</p>
-    <button @click="cartStore.clearCart">Очистить корзину</button>
-   </section>
  </template>
