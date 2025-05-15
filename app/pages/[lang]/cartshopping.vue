@@ -85,13 +85,13 @@ onMounted(() => {
 //----------------------------------------------------------------------------------------------------------------------------------------------
 &__body {
    display: grid;
-   grid-template-columns: 1fr minmax(toRem(290), toRem(344));
+   grid-template-columns: 1fr auto;
    column-gap: toEm(22);
    padding-block: toEm(32);
 
    @media (max-width:$tablet){
       grid-template-columns: 1fr;
-      row-gap: toEm(22);
+      row-gap: toEm(32);
       column-gap: 0;
    }
 }
@@ -129,6 +129,9 @@ onMounted(() => {
 
 &__order-form {
    justify-self: end;
+   @media (max-width:$mobileSmall){
+      justify-self: center;
+   }
 }
 }
 </style>

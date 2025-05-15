@@ -94,7 +94,8 @@ const submitOrder = async () => {
 
 <style lang="scss" scoped>
 .order-form {
-   max-width: toRem(344);
+   max-width: toRem(340);
+
    &__title {
       text-align: center;
       padding-block: toEm(9);
@@ -110,6 +111,8 @@ const submitOrder = async () => {
 
 &__form {
     display: grid;
+    padding-inline: toEm(22);
+    padding-block: toEm(16);
     margin-block: toEm(4);
     border-radius: toRem(2);
     background-color: var(--secondary-color);
@@ -118,8 +121,6 @@ const submitOrder = async () => {
       0px 12px 10px -6px rgba(30, 33, 44, 0.08),
       0px 26px 24px -10px rgba(30, 33, 44, 0.1),
       0px 60px 80px -20px rgba(30, 33, 44, 0.16);
-    @include adaptiveValue("padding-inline", 20, 10);
-    @include adaptiveValue("padding-block", 18, 14);
 }
 
 &__label {
@@ -208,8 +209,6 @@ const submitOrder = async () => {
       }
     }
   }
-&__btn {
-}
 
 &__total {
    display: flex;

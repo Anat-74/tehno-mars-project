@@ -67,25 +67,38 @@ onMounted(() => {
 .cart-item {
 &__item {
    display: grid;
-   grid-template-columns: auto repeat(3, 1fr);
+   grid-template-columns: auto repeat(3, 1fr) auto;
    justify-items: center;
    align-items: center;
    grid-template-areas: 
    'image title controls price remove'
    'image title controls price remove'
    ;
+   padding: toEm(7);
+   border: toRem(2) solid var(--bg);
+   border-radius: toRem(6);
 
    &:not(:last-child) {
-      padding-block-end: toEm(16);
+      margin-block-end: toEm(16);
    }
 
    @media (max-width: toEm(639.98)){
-        
+      grid-template-columns: auto 1fr;
+      justify-items: start;
+      grid-template-areas: 
+   'image price'
+   'image title'
+   'remove controls'
+   ;
    }
 }
 
 &__title {
    grid-area: title;
+
+   @media (max-width: toEm(639.98)){
+        align-self: start;
+   }
 }
 
 &__image {
@@ -108,6 +121,10 @@ onMounted(() => {
    overflow: hidden;
    border: toEm(3) solid var(--bg);
    border-radius: toRem(25);
+   }
+
+   @media (max-width: toEm(639.98)){
+      justify-self: end;
    }
 }
 
