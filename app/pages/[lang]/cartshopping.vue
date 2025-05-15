@@ -22,6 +22,10 @@ onMounted(() => {
    class="cart-page"
    aria-labelledby="cart-page"
    >
+   <h1
+   class="visually-hidden"
+   id="cart-page"
+   >{{ cartTranslations[currentLocale].visuallyHidden }}</h1>
      <div 
        v-if="cartStore.totalItems === 0"
        class="cart-page__no-product-items"
@@ -40,26 +44,23 @@ onMounted(() => {
  
      <div 
        v-else
-       class="cart-page__grid"
+       class="cart-page__body"
      >
      <div class="cart-page__cart-items">
-         <h2 
-         class="cart-page__title"
-         id="cart-page">
-            {{ cartTranslations[currentLocale].title }}
+      <h2 class="cart-page__title">
+         {{ cartTranslations[currentLocale].title }}
          </h2>
-         <span class="cart-page__total">
-            Всего товаров:
-            {{ cartStore.totalItems }}
+         <span 
+         aria-atomic="true"
+         aria-live="polite"
+         role="status"
+         class="cart-page__total">
+         {{ cartTranslations[currentLocale].total }}
+            <b>{{ cartStore.totalItems }}</b>
          </span>
            <CartShopping
            class="cart-page__products"
            />
-           <!-- <UButton
-           @click="cartStore.clearCart"
-           label="Очистить корзину"
-           name-class="remove-cart-item"
-           /> -->
          </div>
          <OrderForm 
          class="cart-page__order-form"
@@ -70,28 +71,64 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .cart-page {
+   &__no-product-items {
+         display: grid;
+         justify-items: center;
+         padding-block-start: toRem(124);
+   }
 
-&__grid {
+   &__text {
+      font-family: $font-family2;
+      font-size: toEm(24);
+      color: var(--danger-color);
+   }
+//----------------------------------------------------------------------------------------------------------------------------------------------
+&__body {
    display: grid;
-   grid-template-columns: 1fr auto;
+   grid-template-columns: 1fr minmax(toRem(290), toRem(344));
+   column-gap: toEm(22);
+   padding-block: toEm(32);
+
+   @media (max-width:$tablet){
+      grid-template-columns: 1fr;
+      row-gap: toEm(22);
+      column-gap: 0;
+   }
 }
 
 &__cart-items {
-   margin-block: toRem(16);
-   border-radius: toRem(8);
+   padding-inline: toEm(16);
+   padding-block: toEm(16);
+   border-radius: toEm(8);
    background-color: var(--secondary-color);
+   box-shadow:
+      0px 4px 4px -4px rgba(30, 33, 44, 0.05),
+      0px 12px 10px -6px rgba(30, 33, 44, 0.08),
+      0px 26px 24px -10px rgba(30, 33, 44, 0.1),
+      0px 30px 120px -50px rgba(30, 33, 44, 0.16);
 }
 
 &__title {
+   margin-block-end: toEm(4);
+   color: var(--dark-golden-color);
 }
 
 &__total {
+   display: inline-block;
+   margin-block-end: toRem(4);
+   color: var(--primary-color);
+
+   b {
+      font-size: toEm(18);
+      color: var(--gray-color);
+   }
 }
 
 &__products {
 }
 
 &__order-form {
+   justify-self: end;
 }
 }
 </style>

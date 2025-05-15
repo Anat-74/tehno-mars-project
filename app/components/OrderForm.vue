@@ -29,53 +29,213 @@ const submitOrder = async () => {
 
 <template>
    <div class="order-form">
-     <h3>{{ orderFormTranslations[currentLocale].title }}</h3>
-     <form @submit.prevent="submitOrder">
-       <div>
-         <label>{{ orderFormTranslations[currentLocale].email }}</label>
+     <h3 class="order-form__title">{{ orderFormTranslations[currentLocale].title }}</h3>
+     <form
+      @submit.prevent="submitOrder"
+      class="order-form__form"
+      >
+         <label 
+         class="order-form__label"
+         for="email">
+         {{ orderFormTranslations[currentLocale].email }}
+      </label>
          <input 
            v-model="form.email" 
            type="email" 
-           required
+           id="email"
            placeholder="your@email.com"
+           class="order-form__input"
          >
-       </div>
-       <div>
-         <label>{{ orderFormTranslations[currentLocale].phone }}</label>
+         <label 
+         class="order-form__label"
+         for="phone">
+         {{ orderFormTranslations[currentLocale].phone }}*
+      </label>
          <input
            v-model="form.phone"
            type="tel"
            required
+           id="phone"
            placeholder="+375(00) 000-00-00"
+           class="order-form__input"
          >
-       </div>
-       <div>
-         <label>
+         <label class="order-form__checkbox-label">
            <input 
              v-model="form.agree" 
              type="checkbox" 
              required
+             class="order-form__checkbox"
            >
-           {{ orderFormTranslations[currentLocale].checkbox }}
-         </label>
-         <span>{{ orderFormTranslations[currentLocale].total }}</span>
-         <span>
-            <Icon 
-               name="my-icon:icon-by-regular" 
-             />
-            {{ cartStore.totalPrice }}
+           <span
+           class="order-form__conditions"
+           >{{ orderFormTranslations[currentLocale].checkbox }}
          </span>
-       </div>
+         </label>
        <UButton
              size="large"
              type="submit" 
              :disabled="isSubmitting || cartStore.totalItems === 0"
              :label="isSubmitting ? orderFormTranslations[currentLocale].submitting : orderFormTranslations[currentLocale].checkout"
-           />
+             class="order-form__btn"
+             />
      </form>
+     <div class="order-form__total">
+      <b>{{ orderFormTranslations[currentLocale].total }}</b>
+             <strong
+               aria-live="polite"
+               role="status"
+               aria-atomic="true"
+             >
+               <Icon name="my-icon:icon-by-regular" />
+               {{ cartStore.totalPrice }}</strong>
+      </div>
    </div>
  </template>
 
 <style lang="scss" scoped>
+.order-form {
+   max-width: toRem(344);
+   &__title {
+      text-align: center;
+      padding-block: toEm(9);
+      border-radius: toRem(8) toRem(8) toRem(2) toRem(2);
+      color: var(--danger-color);
+      background-color: var(--secondary-color);
+      box-shadow:
+      0px 4px 4px -4px rgba(30, 33, 44, 0.05),
+      0px 12px 10px -6px rgba(30, 33, 44, 0.08),
+      0px 26px 24px -10px rgba(30, 33, 44, 0.1),
+      0px 60px 80px -20px rgba(30, 33, 44, 0.16);
+   }
+
+&__form {
+    display: grid;
+    margin-block: toEm(4);
+    border-radius: toRem(2);
+    background-color: var(--secondary-color);
+    box-shadow:
+      0px 4px 4px -4px rgba(30, 33, 44, 0.05),
+      0px 12px 10px -6px rgba(30, 33, 44, 0.08),
+      0px 26px 24px -10px rgba(30, 33, 44, 0.1),
+      0px 60px 80px -20px rgba(30, 33, 44, 0.16);
+    @include adaptiveValue("padding-inline", 20, 10);
+    @include adaptiveValue("padding-block", 18, 14);
+}
+
+&__label {
+   display: inline-block;
+    color: var(--table-color);
+    @include adaptiveValue("margin-block-end", 8, 5);
+}
+
+&__input {
+    padding-inline-start: toEm(16);
+    padding-block: toEm(12);
+    border-radius: toEm(4);
+    border: 1px solid var(--border-color);
+    background-color: var(--secondary-color);
+    transition: background-color var(--transition-duration);
+    @include adaptiveValue("margin-block-end", 20, 14);
+
+    &::placeholder {
+      color: var(--border-color);
+      transition: color var(--transition-duration);
+    }
+
+    @include hover {
+      background-color: var(--placeholder-hover);
+      &::placeholder {
+        color: var(--color);
+      }
+    }
+}
+
+  &__checkbox-label {
+    display: flex;
+    .order-form__checkbox:checked + .order-form__conditions::before {
+      background-color: var(--danger-color);
+    }
+    .order-form__checkbox:checked + .order-form__conditions::after {
+      opacity: 1;
+    }
+    .order-form__checkbox:focus-visible + .order-form__conditions {
+      outline: toRem(2) solid var(--warning-hover);
+      outline-offset: toRem(3);
+      border-radius: toRem(3);
+    }
+  }
+
+  &__checkbox {
+    opacity: 0;
+    width: toRem(16);
+    height: toRem(16);
+  }
+
+  &__conditions {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    margin-inline-start: toEm(9);
+    margin-block-end: toEm(22);
+    font-size: toRem(14);
+    color: var(--primary-color);
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      left: toRem(-27);
+      top: 50%;
+      translate: 0 -50%;
+      width: toRem(16);
+      height: toRem(16);
+    }
+
+    &::before {
+      border-radius: toRem(3);
+      border: 1px solid var(--warning-color);
+      transition: border var(--transition-duration);
+    }
+
+    &::after {
+      opacity: 0;
+      background: url("/my-icons/check.svg") 50% / toRem(10) toRem(8) no-repeat;
+    }
+
+    @include hover {
+      &::before {
+        border-width: toRem(2);
+      }
+    }
+  }
+&__btn {
+}
+
+&__total {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   column-gap: toRem(2);
+   padding-inline: toRem(16);
+   padding-block: toEm(9);
+   border-radius: toRem(2) toRem(2) toRem(8) toRem(8);
+   background-color: var(--secondary-color);
+   box-shadow:
+      0px 4px 4px -4px rgba(30, 33, 44, 0.05),
+      0px 12px 10px -6px rgba(30, 33, 44, 0.08),
+      0px 26px 24px -10px rgba(30, 33, 44, 0.1),
+      0px 60px 80px -20px rgba(30, 33, 44, 0.16);
+
+   strong {
+      letter-spacing: 1px;
+      font-size: toEm(20);
+   }
+
+   svg {
+      translate: 0 toRem(4);
+      font-size: toEm(18);
+   }
+}
+}
 
 </style>

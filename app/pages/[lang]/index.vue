@@ -57,7 +57,7 @@ watch(categories, (newCategory) => {
    <section aria-labelledby="category">
       <h1 
       id="category"
-      class="visually-hidden">Категории товаров</h1>
+      class="visually-hidden">Категории товаров или Главная страница</h1>
       <LangSwitcher/>
       <ul v-if="categories?.data?.length"
       class="category-list"

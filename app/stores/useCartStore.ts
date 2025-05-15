@@ -41,10 +41,11 @@ export const useCartStore = defineStore('cart', () => {
    const updateQuantity = (productId: string | number, quantity: number) => {
       const item = items.value.find(item => item.product.id === productId)
       if (item) {
-         item.quantity = Math.max(1, Math.round(quantity))
-         saveCart()
+        const newQuantity = Math.max(1, quantity)
+        item.quantity = newQuantity
+        saveCart()
       }
-   }
+    }
 
    const clearCart = () => {
       items.value = []

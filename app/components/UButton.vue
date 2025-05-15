@@ -80,7 +80,6 @@ body:has(dialog[open]) {
     &_icon {
       padding: 0;
       font-size: toEm(24);
-      color: var(--primary-color);
   }
 
    &_color-theme {

@@ -28,12 +28,12 @@ h1 {
 }
 
 h2 {
-   font-weight: 500;
+   // font-weight: 500;
    @include m.adaptiveValue("font-size", 22, 18);
 }
 
 h3 {
-   font-weight: 600;
+   // font-weight: 600;
    @include m.adaptiveValue("font-size", 18, 16);
 }
 
@@ -69,10 +69,9 @@ input {
    // }
 }
 
-.icon-bel-ruble {
-   translate: toRem(1) toRem(1);
-   font-size: toRem(12);
-   color: currentColor;
+.iconify--my-icon {
+   translate: 0 toRem(2);
+   color: var(--dark-golden-color);
 }
 
 .hidden-tablet {

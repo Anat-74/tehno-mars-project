@@ -29,10 +29,7 @@ onMounted(() => {
           class="cart-item__image"
         />
         <span class="cart-item__price">
-         <Icon 
-            class="cart-item__icon"
-            name="my-icon:icon-by-regular" 
-             />
+         <Icon name="my-icon:icon-by-regular" />
          {{ item.product.price }}
       </span>
         <div class="cart-item__controls">
@@ -42,18 +39,14 @@ onMounted(() => {
          name-class="remove-quantity-prod"
          aria-label="Уменьшить количество"
         />
-        <label 
-            class="visually-hidden"
-            for="roduct-quantity"
-            >Количество товара
-         </label>
-        <input 
-         v-model.number="item.quantity" 
-         @input="cartStore.updateQuantity(item.product.id, item.quantity)"
-         min="1"
-         type="text"
-         id="roduct-quantity"
-        >
+         <span 
+         class="quantity-value"
+         aria-live="polite"
+         role="status"
+         aria-atomic="true"
+      >
+    {{ item.quantity }}
+  </span>
         <UButton
          @click="cartStore.updateQuantity(item.product.id, item.quantity +1)"
          name-class="add-quantity-prod"
@@ -81,6 +74,14 @@ onMounted(() => {
    'image title controls price remove'
    'image title controls price remove'
    ;
+
+   &:not(:last-child) {
+      padding-block-end: toEm(16);
+   }
+
+   @media (max-width: toEm(639.98)){
+        
+   }
 }
 
 &__title {
@@ -97,17 +98,16 @@ onMounted(() => {
    color: var(--primary-color);
 }
 
-&__icon {
-   translate: 0 toRem(2);
-}
-
 &__controls {
    grid-area: controls;
    display: flex;
    align-items: center;
-   input {
-      width: 28px;
-      padding-inline-start: toRem(9);
+   column-gap: toEm(12);
+
+   @media (max-width:$tablet){
+   overflow: hidden;
+   border: toEm(3) solid var(--bg);
+   border-radius: toRem(25);
    }
 }
 

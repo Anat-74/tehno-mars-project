@@ -11,8 +11,8 @@ export const orderFormTranslations: Record<LocaleCode, {
  }> = {
    ru: {
       title: 'Оформление заказа',
-      email: 'Почта:',
-       phone: 'Телефон:',
+      email: 'Почта',
+       phone: 'Телефон',
       checkbox: 'Согласен с условиями обработки данных',
       total: 'Итого:',
       checkout: 'Оформить',
@@ -20,8 +20,8 @@ export const orderFormTranslations: Record<LocaleCode, {
    },
    en: {
       title: 'Placing an order',
-      email: 'Email:',
-      phone: 'Phone:',
+      email: 'Email',
+      phone: 'Phone',
       checkbox: 'I agree with the terms of data processing',
       total: 'Total:',
       checkout: 'Checkout',
@@ -29,8 +29,8 @@ export const orderFormTranslations: Record<LocaleCode, {
    },
    be: {
       title: 'Афармленне замовы',
-      email: 'Пошта:',
-      phone: 'Тэлефон:',
+      email: 'Пошта',
+      phone: 'Тэлефон',
       checkbox: 'Згодзен з умовамі апрацоўкі дадзеных',
       total: 'Усяго:',
       checkout: 'Аформіць',

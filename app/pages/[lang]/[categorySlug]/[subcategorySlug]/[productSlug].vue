@@ -263,10 +263,6 @@ useSeoMeta({
    color: var(--dark-golden-color);
    background-color: var(--bg);
    box-shadow: 0px 1px toRem(5) var(--shadow);
-   svg {
-      translate: 0 toRem(2);
-      color: var(--dark-golden-color);
-   }
 }
 
 &__btn {

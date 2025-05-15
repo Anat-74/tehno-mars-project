@@ -63,6 +63,7 @@ const { products, totalPages, currentPage } = storeToRefs(searchStore)
    <footer class="footer">
       <div class="footer__container">
          <ScrollToTop />
+         FOOTER
    </div>
    </footer>
 </template>
