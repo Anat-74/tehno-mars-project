@@ -148,14 +148,22 @@ body:has(dialog[open]) {
   }
 
   &_go-forward-back {
-   padding: toRem(6);
-   border-radius: toRem(8);
+   padding: toRem(5);
+   border-radius: toRem(6);
    background-color: var(--warning-color);
    transition: background-color var(--transition-duration);
 
    @include hover {
       background-color: var(--warning-hover);
    }
+   }
+
+   &_share {
+      padding: toRem(2);
+      border: 2px solid var(--warning-color);
+      svg {
+         color: var(--warning-color);
+      }
    }
 
   &_add-to-cart {
@@ -170,13 +178,11 @@ body:has(dialog[open]) {
    }
 
    @include hover {
-      background-color: var(--warning-hover);
+      background-color: var(--danger-hover);
    }
   }
 
   &_remove-cart-item {
-   // align-self: start;
-   // justify-self: end;
    color: var(--light-color);
    background-color: var(--warning-color);
    transition: color var(--transition-duration);

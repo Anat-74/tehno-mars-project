@@ -89,6 +89,7 @@ useSeoMeta({
       :product="product"
       class="wrapper-left__in-stock"
      />
+     <ShareButton class="wrapper-left__share" />
       <NuxtImg 
         v-if="currentImage"
         :src="currentImage"
@@ -168,13 +169,19 @@ useSeoMeta({
    &__in-stock {
    display: inline-block;
    position: absolute;
-   right: 0;
+   right: toRem(40);
    top: toRem(4);
    padding-inline: toEm(8);
    padding-block: toEm(4);
    border-radius: toRem(4);
    background-color: var(--bg);
    box-shadow: 0px 1px toRem(5) var(--shadow);
+}
+
+&__share {
+   position: absolute;
+   top: toRem(2);
+   right: 0;
 }
 
    &__image {

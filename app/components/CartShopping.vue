@@ -2,6 +2,7 @@
 const cartStore = useCartStore()
 const config = useRuntimeConfig()
 
+
 onMounted(() => {
   cartStore.loadCart();
 })
@@ -18,6 +19,9 @@ onMounted(() => {
       class="cart-item__item"
       >
         <h3 class="cart-item__title" >{{ item.product.name }}</h3>
+        <NuxtLink
+            to=""
+          >
         <NuxtImg
           :src="`${config.public.strapi.url}${item.product.image}`"
           :alt="item.product.name"
@@ -28,6 +32,7 @@ onMounted(() => {
           height="108"
           class="cart-item__image"
         />
+      </NuxtLink>
         <span class="cart-item__price">
          <Icon name="my-icon:icon-by-regular" />
          {{ item.product.price }}

@@ -50,6 +50,7 @@ export default defineNuxtConfig({
          cookieName: 'strapi_jwt'
       },
       public: {
+         siteUrl: process.env.SITE_URL || 'http://localhost:3000',
          strapi: {
             url: process.env.NUXT_PUBLIC_STRAPI_URL
          }
