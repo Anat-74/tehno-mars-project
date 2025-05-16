@@ -3,8 +3,13 @@ import type { Product } from "../../../../types/types"
 
 const { find } = useStrapi()
 const route = useRoute()
+const cartStore = useCartStore()
 const lang = route.params.lang
-const { productSlug } = route.params
+const { categorySlug, subcategorySlug, productSlug } = route.params as {
+  categorySlug: string
+  subcategorySlug: string
+  productSlug: string
+}
 const config = useRuntimeConfig()
 const { currentLocale } = useLocale()
 const { goBack } = useGoToForwardOrBack()
@@ -69,6 +74,14 @@ useSeoMeta({
   title: product.value?.name,
   description: product.value?.description
 })
+
+const handleAddToCart = (product: Product) => {
+  cartStore.addToCart(
+    product,
+    categorySlug,
+    subcategorySlug
+  )
+}
 </script> 
 
 <template>
@@ -137,7 +150,7 @@ useSeoMeta({
       {{ product.price }}
      </span>
      <UButton
-     @click="useAddToCart(product)"
+     @click="handleAddToCart(product)"
       name-class="add-to-cart"
       label="Добавить в корзину"
       class="wrapper-right__btn"

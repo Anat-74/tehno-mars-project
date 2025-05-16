@@ -1,15 +1,25 @@
-type CartItem = {
-   product: {
-      id: number | string
-      name: string
-      description: string
-      image: string
-      price: number
-      category: string
-   }
-   quantity: number
-}
+import type { Product } from "../types/types"
 
+// export type CartItem = {
+//   product: Product & {
+//     categorySlug: string
+//     subcategorySlug: string
+//     image: string
+//   }
+//   quantity: number
+// }
+
+export type CartProduct = Omit<Product, 'image'> & {
+   image: string // Только URL
+   categorySlug: string
+   subcategorySlug: string
+ }
+ 
+ export type CartItem = {
+   product: CartProduct
+   quantity: number
+ }
+ 
 export const useCartStore = defineStore('cart', () => {
    const items = ref<CartItem[]>([])
 
@@ -22,16 +32,35 @@ export const useCartStore = defineStore('cart', () => {
       return total.toFixed(2)
    })
 
-   const addToCart = (product: CartItem['product'], quantity: number = 1) => {
+   const addToCart = (
+      product: Product,
+      categorySlug: string,
+      subcategorySlug: string
+    ) => {
       const existingItem = items.value.find(item => item.product.id === product.id)
-
+      
+      // Нормализация изображения
+      const normalizedImage = typeof product.image === 'string' 
+        ? product.image 
+        : Array.isArray(product.image) 
+          ? product.image[0]?.url || ''
+          : ''
+  
       if (existingItem) {
-         existingItem.quantity +=quantity
+        existingItem.quantity += 1
       } else {
-         items.value.push({product, quantity})
+        items.value.push({
+          product: {
+            ...product,
+            image: normalizedImage,
+            categorySlug,
+            subcategorySlug
+          },
+          quantity: 1
+        })
       }
       saveCart()
-   }
+    }
 
    const removeFromCart = (productId: string | number) => {
       items.value = items.value.filter(item => item.product.id !== productId)

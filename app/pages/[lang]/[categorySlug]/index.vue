@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Category, SubcategoriesResponse } from "../../../types/types"
+
 const { find } = useStrapi()
 const route = useRoute()
 const { categorySlug } = route.params
@@ -9,7 +11,6 @@ const config = useRuntimeConfig()
 const page = ref(route.query.page ? +route.query.page : 1); // Текущая страница из URL
 const pageSize = 8; // Элементов на странице
 
-// Получаем данные категории
 const { data: category, status, error } = useAsyncData(
   `category-${categorySlug}-${currentLocale.value}-page-${page.value}`,
   async () => {
@@ -36,7 +37,7 @@ const { data: category, status, error } = useAsyncData(
         statusMessage: 'Category - Not Found'
       })
      }
-    return response.data[0] // Берем первую категорию из массива
+    return response.data[0] as Category & { subcategories: SubcategoriesResponse }
    }
 )
 
@@ -108,7 +109,6 @@ watch(category, (newCategory) => {
               class="product-image"
             />
          </NuxtLink>
-         <span>{{ subcategory.inStock }}</span>
             <h3>{{ subcategory.name }}</h3>
             <span>{{ subcategory.price }}</span>
         </li>

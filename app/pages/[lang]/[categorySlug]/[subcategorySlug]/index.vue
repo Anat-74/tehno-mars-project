@@ -1,16 +1,23 @@
 <script setup lang="ts">
+import type { Product, Subcategory } from "../../../../types/types"
+
 const { find } = useStrapi()
 const route = useRoute()
-const { categorySlug, subcategorySlug } = route.params
 const { currentLocale } = useLocale()
 const { goBack, goForward } = useGoToForwardOrBack()
 const config = useRuntimeConfig()
+const cartStore = useCartStore()
+
+const { categorySlug, subcategorySlug } = route.params as {
+  categorySlug: string
+  subcategorySlug: string
+}
 
 // Получаем данные категории
 const { data: subcategory, status, error } = useAsyncData(
   `subcategory-${subcategorySlug}-${currentLocale.value}`,
   async () => {
-    const response = await find('subcategories', {
+    const response = await find<Subcategory>('subcategories', {
        filters: {
           slug: { $eq: subcategorySlug },
           category: { slug: { $eq: categorySlug } },
@@ -30,7 +37,7 @@ const { data: subcategory, status, error } = useAsyncData(
         statusMessage: 'Products subCategory Not Found'
       })
     }
-     return response.data[0] // Берем первую категорию из массива
+     return response.data[0]
    }
 )
 
@@ -50,8 +57,15 @@ useSeoMeta({
 
 watch(subcategory, (newCategory) => {
   console.log('subcategory data:', newCategory);
-});
+})
 
+const handleAddToCart = (product: Product) => {
+  cartStore.addToCart(
+    product,
+    categorySlug,
+    subcategorySlug
+  )
+}
 </script>
 
 <template>
@@ -97,11 +111,10 @@ watch(subcategory, (newCategory) => {
             />
          </NuxtLink>
               <h3>{{ product.name }}</h3>
-              <span>{{ product.inStock }}</span>
               <span>{{ product.price }}</span>
 
             <UButton
-            @click="useAddToCart(product)"
+            @click="handleAddToCart(product)"
             name-class="add-to-cart"
             label="Добавить в корзину"
             class="wrapper-right__btn"

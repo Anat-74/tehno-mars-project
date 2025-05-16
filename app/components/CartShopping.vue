@@ -1,7 +1,11 @@
 <script setup lang="ts">
 const cartStore = useCartStore()
 const config = useRuntimeConfig()
+const { currentLocale } = useLocale()
 
+const getProductLink = (product: CartItem['product']) => {
+  return `/${currentLocale.value}/${product.categorySlug}/${product.subcategorySlug}/${product.slug}`
+}
 
 onMounted(() => {
   cartStore.loadCart();
@@ -20,17 +24,17 @@ onMounted(() => {
       >
         <h3 class="cart-item__title" >{{ item.product.name }}</h3>
         <NuxtLink
-            to=""
+        :to="getProductLink(item.product)"
+         class="cart-item__link"
           >
         <NuxtImg
-          :src="`${config.public.strapi.url}${item.product.image}`"
-          :alt="item.product.name"
+         :src="`${config.public.strapi.url}${item.product.image}`"
+         :alt="item.product.name"
           format="webp"
           loading="lazy"
           decoding="async"
           width="144"
           height="108"
-          class="cart-item__image"
         />
       </NuxtLink>
         <span class="cart-item__price">
@@ -76,8 +80,8 @@ onMounted(() => {
    justify-items: center;
    align-items: center;
    grid-template-areas: 
-   'image title controls price remove'
-   'image title controls price remove'
+   'link title controls price remove'
+   'link title controls price remove'
    ;
    padding: toEm(7);
    border: toRem(2) solid var(--bg);
@@ -91,8 +95,8 @@ onMounted(() => {
       grid-template-columns: auto 1fr;
       justify-items: start;
       grid-template-areas: 
-   'image price'
-   'image title'
+   'link price'
+   'link title'
    'remove controls'
    ;
    }
@@ -106,8 +110,8 @@ onMounted(() => {
    }
 }
 
-&__image {
-   grid-area: image;
+&__link {
+   grid-area: link;
 }
 
 &__price {

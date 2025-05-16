@@ -5,54 +5,116 @@ export interface VisibilityState {
    visibleIsContacts: () => void
 }
 //========================================================================================================================================================
+
 export type Image = {
    id: number;
-   documentId: string;
-   name: string;
-   alternativeText: string | null;
-   caption: string | null;
    url: string;
+   name: string;
+   alternativeText?: string | null;
+   caption?: string | null;
+   ext?: string;
+   formats?: {
+     thumbnail?: Image;
+     small?: Image;
+   };
+   hash?: string;
+   width?: number;
+   height?: number;
+   mime?: string;
+   size?: number;
+   previewUrl?: string | null;
+   provider?: string;
+   createdAt?: string;
+   updatedAt?: string;
+   publishedAt?: string;
  }
  
  export type Category = {
    id: number;
-   documentId: string;
    name: string;
    slug: string;
-   locale: string;
-   createdAt: string;
-   updatedAt: string;
-   publishedAt: string;
+   description?: string;
+   locale?: string;
+   documentId?: string;
+   createdAt?: string;
+   updatedAt?: string;
+   publishedAt?: string;
+   subcategories?: Subcategory[];
+ }
+ 
+ export type Subcategory = {
+   id: number;
+   name: string;
+   slug: string;
+    description?: string;
+   price: string
+   locale?: string;
+   documentId?: string;
+   createdAt?: string;
+   updatedAt?: string;
+   publishedAt?: string;
+   image: Image[];
+   products?: Product[];
  }
  
  export type Product = {
    id: number;
-   documentId: string;
-    name: string;
-    characteristics: string;
-   description: string;
+   name: string;
    slug: string;
-   locale: string;
-    price: number;
-    isAvailable: boolean;
-   createdAt: string;
-   updatedAt: string;
-   publishedAt: string;
+   price: number;
+   description: string;
+   characteristics: string;
+   isAvailable: boolean;
    image: Image[];
-   category: Category;
+   category: {
+     slug: string;
+   };
+   subcategory?: {
+     slug: string;
+     category?: {
+       slug: string;
+     }
+   };
+   locale?: string;
+   documentId?: string;
+   createdAt?: string;
+   updatedAt?: string;
+   publishedAt?: string;
+ }
+ 
+ export type PaginationMeta = {
+   page: number;
+   pageSize: number;
+   pageCount: number;
+   total: number;
  }
  
  export type ProductsResponse = {
    data: Product[];
    meta: {
-     pagination: {
-       page: number;
-       pageSize: number;
-       pageCount: number;
-       total: number;
-     }
+     pagination: PaginationMeta;
    }
-}
+ }
+ 
+ export type SubcategoriesResponse = {
+   data: Subcategory[];
+   meta: {
+     pagination: PaginationMeta;
+   }
+ }
+ 
+ // Для корзины
+//  export type CartProduct = Omit<Product, 'image' | 'category'> & {
+//    image: string;
+//    categorySlug: string;
+//    subcategorySlug: string;
+//  }
+ 
+//  export type CartItem = {
+//    product: CartProduct;
+//    quantity: number;
+//  }
+
 //============================================================================================================================================
 
 export type LocaleCode = 'ru' | 'en' | 'be'
