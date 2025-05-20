@@ -16,13 +16,13 @@ useSeoMeta({
 <template>
       <section class="services">
          <h1 class="services__title"> services page</h1>
-         <NuxtPicture 
+         <!-- <NuxtPicture 
          class="services__image"
          src="/image/removebg-preview.png"
          alt="image"
          loading="lazy"
          sizes="xs:100vw sm:100vw md:100vw lg:100vw"
-         />
+         /> -->
       </section>
 </template>
 

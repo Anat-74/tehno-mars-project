@@ -3,8 +3,6 @@ import { baseNavigationTranslations } from '~/locales/baseNavigation'
 
 const { isContacts, visibleIsContacts } = useVisibilityConsumer()
 const { currentLocale } = useLocale()
-
-
 </script>
 
 <template>
@@ -62,7 +60,10 @@ const { currentLocale } = useLocale()
             class="contacts__phone-link contacts-link"
             href="tel:+375293348180"
             >
-            <Icon name="my-icon:icon-a1" color="red" />
+            <Icon 
+            name="my-icon:icon-a1" 
+            color="red" 
+            />
             +37529 334-81-80
          </a>
       <a 

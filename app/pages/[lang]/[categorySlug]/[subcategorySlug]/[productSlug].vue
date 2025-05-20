@@ -53,14 +53,6 @@ const isActive = (imgUrl: string) =>
   }
   })
 
-onMounted(() => {
-   console.debug('Продукт:', product.value)
-   console.log('product data:', product.value)
-})
-watch(product, (newCategory) => {
-  console.log('product data:', newCategory)
-})
-
 watch(product, (newCategory) => {
   if (newCategory) {
     useSeoMeta({
@@ -82,6 +74,10 @@ const handleAddToCart = (product: Product) => {
     subcategorySlug
   )
 }
+
+watch(product, (newCategory) => {
+  console.debug('product data:', newCategory)
+})
 </script> 
 
 <template>

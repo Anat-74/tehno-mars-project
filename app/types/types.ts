@@ -38,7 +38,8 @@ export type Image = {
    documentId?: string;
    createdAt?: string;
    updatedAt?: string;
-   publishedAt?: string;
+    publishedAt?: string;
+    image: Image[];
    subcategories?: Subcategory[];
  }
  
@@ -102,18 +103,6 @@ export type Image = {
      pagination: PaginationMeta;
    }
  }
- 
- // Для корзины
-//  export type CartProduct = Omit<Product, 'image' | 'category'> & {
-//    image: string;
-//    categorySlug: string;
-//    subcategorySlug: string;
-//  }
- 
-//  export type CartItem = {
-//    product: CartProduct;
-//    quantity: number;
-//  }
 
 //============================================================================================================================================
 

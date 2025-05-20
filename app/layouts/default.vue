@@ -1,19 +1,24 @@
 <script setup lang="ts">
+const searchStore = useSearchStore()
+const { products, totalPages, currentPage } = storeToRefs(searchStore)
 const { currentLocale } = useLocale()
 const { isContacts } = useVisibilityProvider()
 
-const searchStore = useSearchStore()
-const { products, totalPages, currentPage } = storeToRefs(searchStore)
+
 </script>
 
 <template>
 <header class="header">
    <div class="header__container-top">
 <ClientOnly >
-   <ColorMode class="header__color-mode"/>
+   <ColorMode class="header__color-mode"
+   />
 </ClientOnly>
-<BaseNavigation class="header__navigation hidden-tablet" />
-<ShowModalHamburger class="header__dialog-header" />
+<BaseNavigation 
+class="header__navigation hidden-tablet" 
+/>
+<ShowModalHamburger class="header__dialog-header"
+ />
 </div>
 <div :class="['header__bg', {header__bg_hidden: isContacts}]">
    <div class="header__container-bottom">
@@ -29,7 +34,8 @@ const { products, totalPages, currentPage } = storeToRefs(searchStore)
    height="68"
    />
 </NuxtLink>
-<ProductFilter class="header__search" />
+<ProductFilter class="header__search"
+ />
    <div 
       v-if="searchStore.products.length" 
       class="header__product-card">
@@ -49,7 +55,8 @@ const { products, totalPages, currentPage } = storeToRefs(searchStore)
         />
       </div>
       </div>
-<Basket class="header__cart" />
+   <Basket class="header__cart"
+   />
 </div>
 </div>
 </header>
@@ -60,12 +67,8 @@ const { products, totalPages, currentPage } = storeToRefs(searchStore)
    </div>
    </main>
 
-   <footer class="footer">
-      <div class="footer__container">
-         <ScrollToTop />
-         FOOTER
-   </div>
-   </footer>
+   <Footer class="footer"
+    />
 </template>
 
 <style lang="scss" scoped>
@@ -163,15 +166,7 @@ const { products, totalPages, currentPage } = storeToRefs(searchStore)
       margin-inline-end: toRem(9);
    }
 }
-
 //======================================================================================================================================================================================================================================
-
 .footer {
-   &__container {
-      display: grid;
-   }
-   &__show-modal {
-      justify-self: end;
-   }
 }
 </style>

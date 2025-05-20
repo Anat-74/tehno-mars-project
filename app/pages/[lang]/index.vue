@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ProductsResponse, LocaleCode } from "../../types/types"
+import type { Category, LocaleCode } from "../../types/types"
 
 const { find } = useStrapi()
 const { currentLocale } = useLocale()
@@ -20,13 +20,6 @@ const pageMeta = {
   }
 }
 
-useServerSeoMeta({
-   title: pageMeta[currentLocale.value as LocaleCode].title || 'TechnoMars',
-  ogTitle: pageMeta[currentLocale.value as LocaleCode].title || 'TechnoMars',
-  description: pageMeta[currentLocale.value as LocaleCode].description || 'Лучший магазин',
-  ogDescription: pageMeta[currentLocale.value as LocaleCode].description || 'Лучший магазин'
-})
-
 useSeoMeta({
   title: pageMeta[currentLocale.value as LocaleCode].title,
   ogTitle: pageMeta[currentLocale.value as LocaleCode].title,
@@ -37,13 +30,29 @@ useSeoMeta({
 const { data: categories, status, error } = useAsyncData(
    `category-${currentLocale.value}`,
    async () => {
-      const response = await find('categories', {
+      const response = await find<Category>('categories', {
       filters: { locale: currentLocale.value },
       populate: {
-        image: true
-      }
+         image: {
+               fields: ["alternativeText", "url"]
+         },
+         // label: {
+         //    populate: {
+         //       logo: {
+         //          fields: ["alternativeText", "url"]
+         //       }
+         //    }
+         //    }
+         }
       })
-      return response as ProductsResponse
+
+      if (!response.data || response.data.length === 0) {
+      throw createError({
+        statusCode: 404,
+        statusMessage: 'Category - Not Found'
+      })
+     }
+      return response.data
    }
 )
 
@@ -59,11 +68,11 @@ watch(categories, (newCategory) => {
       id="category"
       class="visually-hidden">Категории товаров или Главная страница</h1>
       <LangSwitcher/>
-      <ul v-if="categories?.data?.length"
+      <ul v-if="categories"
       class="category-list"
       >
          <li
-         v-for="category in categories.data"
+         v-for="category in categories"
          :key="category.id"
          >
          <NuxtLink
@@ -77,6 +86,19 @@ watch(categories, (newCategory) => {
          ></NuxtImg>
          </NuxtLink>
          <h2>{{ category.name }}</h2>
+         <!-- <template v-if="category.label">
+      <span>{{ category.label.companyName }}</span>
+      <NuxtImg
+        v-if="category.label.logo?.length"
+        :src="`${config.public.strapi.url}${category.label.logo[0]?.url}`"
+        :alt="category.label.logo[0]?.alternativeText || ''"
+        format="webp"
+        loading="lazy"
+        decoding="async"
+        width="260"
+        class="product-image"
+      />
+    </template> -->
       </li>
       </ul>
       <div v-else-if="error">Error: {{ error.message }}</div>

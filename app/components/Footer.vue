@@ -3,15 +3,16 @@
 </script>
 
 <template>
-   <div>
-      help <br>
-      Alibaba Group Website <br>
-      <small>Privacy Policy</small>
+   <section class="footer-component">
+      <div class="footer-component__container">
+         go
+         <ScrollToTop />
    </div>
+   </section>
 </template>
 
 <style lang="scss" scoped>
-div {
+.footer {
    background-color: var(--border-color);
 }
 </style>

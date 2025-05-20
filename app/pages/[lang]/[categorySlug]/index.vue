@@ -21,8 +21,12 @@ const { data: category, status, error } = useAsyncData(
        },
       populate: {
         subcategories: {
-          populate: ['image']
-        }
+            populate: {
+              image: {
+               fields: ["alternativeText", "url"]
+            }
+          }
+         }
        },
        pagination: {
         page: page.value,
@@ -30,21 +34,15 @@ const { data: category, status, error } = useAsyncData(
       }
     })
 
-    // Проверяем наличие данных
     if (!response.data || response.data.length === 0) {
       throw createError({
         statusCode: 404,
-        statusMessage: 'Category - Not Found'
+        statusMessage: 'subcategory - Not Found'
       })
      }
     return response.data[0] as Category & { subcategories: SubcategoriesResponse }
    }
 )
-
-useServerSeoMeta({
-  title: category.value?.name || 'TechnoMars',
-  description: category.value?.description || 'Лучший магазин электроники'
-})
 
 watch(category, (newCategory) => {
   if (newCategory) {
@@ -66,7 +64,7 @@ const pageCount = computed(() => {
 })
 
 watch(category, (newCategory) => {
-  console.log('Category data:', newCategory)
+  console.debug('Category data:', newCategory)
 })
 </script>
 
