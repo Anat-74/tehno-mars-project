@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import type { GlobalData } from "../types/types"
 
+
 const { find } = useStrapi()
 const searchStore = useSearchStore()
 const { products, totalPages, currentPage } = storeToRefs(searchStore)
 const { currentLocale } = useLocale()
 const { isContacts } = useVisibilityProvider()
-const config = useRuntimeConfig()
 
-const {data: global, error, refresh  } = useAsyncData(
+const {data: global, pending, error, refresh } = useAsyncData(
    `global-${currentLocale.value}`,
    async () => {
-      const response = await find<GlobalData>('global', {
+      const response = await find('global', {
          filters: { locale: currentLocale.value },
          populate: {
             footer: {
@@ -31,12 +31,14 @@ const {data: global, error, refresh  } = useAsyncData(
             legal: true,
             phones: true,
             email: true
-         }
+         },
       })
-      if (!response.data?.id) {
+
+      if (!response.data) {
       throw createError({ statusCode: 404, message: 'Global not found' });
-   }
-     return response.data
+      }
+
+      return response.data as unknown as GlobalData
    }
 )
 
@@ -44,12 +46,12 @@ watch(currentLocale, () => {
   refresh()
 })
 
-
 watchEffect(() => {
   if (global.value) {
     console.debug('Global data:', global.value);
   }
 })
+
 </script>
 
 <template>
@@ -119,7 +121,6 @@ class="header__navigation hidden-tablet"
       :footer="global.footer"
       :legal="global.legal"
       :socials="global.socials"
-      :logo="`${config.public.strapi.url}${global.footer.logo[0]?.url}`"
       class="footer"
     />
 </template>

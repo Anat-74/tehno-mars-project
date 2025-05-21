@@ -109,86 +109,12 @@ export type Image = {
 export type LocaleCode = 'ru' | 'en' | 'be'
 
 //Single Type==================================================================================================================================================
-
-// Тип для иконок (используется в SocialLink и Footer)
-// export interface StrapiImage {
-//    id: number
-//    url: string
-//    alternativeText?: string | null
-//    documentId?: string
-//  }
- 
-//  // Социальные сети
-//  export interface SocialLink {
-//    id: number
-//    label: string
-//    href: string
-//    isSocial: boolean | null
-//    icon: StrapiImage[]
-//  }
- 
-//  // Элементы списка email
-//  export interface Email {
-//    id: number
-//    email: string
-//    isEmail: boolean | null
-//  }
- 
-//  // Элементы списка телефонов
-//  export interface Phone {
-//    id: number
-//    phoneNumber: string
-//    isMobile: boolean
-//  }
- 
-//  // Блок footer в Global
-//  export interface FooterData {
-//    id: number
-//    companyName: string
-//    copyright: string
-//    legalAdress: string
-//    taxId: string
-//    workingHours: string
-//    logo: StrapiImage[]
-//  }
- 
-//  // Юридическая информация
-//  export interface LegalInfo {
-//    id: number
-//    accountNumber: string
-//    bankAddress: string
-//    bankName: string
-//    swiftCode: string
-//  }
- 
-//  // Основной тип для Global
-// // Для Single Types (Global)
-// export interface GlobalData {
-//    id: number;
-//    documentId: string;
-//    createdAt: string;
-//    updatedAt: string;
-//    publishedAt: string;
-//    locale: string;
-//    email: Email[];
-//    phones: Phone[];
-//    socials: SocialLink[];
-//    footer: FooterData;
-//    legal: LegalInfo;
-//  }
- 
-//  // Для запросов к Single Type
-//  export interface StrapiSingleResponse<T> {
-//    data: T; // Без вложенности!
-//  }
-
-
 // Изображения
 export interface StrapiImage {
    id: number;
    url: string;
    alternativeText: string | null;
-   documentId?: string; // Опционально, т.к. есть не у всех изображений
+   documentId?: string;
  }
  
  // Социальные сети
@@ -211,7 +137,7 @@ export interface StrapiImage {
  export interface Phone {
    id: number;
    phoneNumber: string;
-   isMobile: boolean;
+   isMobile: boolean | null;
  }
  
  // Футер
@@ -244,7 +170,58 @@ export interface StrapiImage {
    locale: string;
    email: Email[];
    phones: Phone[];
-   socials: SocialLink[];
+    socials: SocialLink[];
    footer: FooterData;
-   legal: LegalInfo;
+    legal: LegalInfo;
  }
+
+
+// export interface GlobalData {
+//    id: number
+//    documentId: string
+//    createdAt: string
+//    updatedAt: string
+//    publishedAt: string
+//    locale: string
+//    email: Array<{
+//      id: number
+//      email: string
+//      isEmail: boolean | null
+//    }>
+//    phones: Array<{
+//      id: number
+//      phoneNumber: string
+//      isMobile: boolean
+//    }>
+//    socials: Array<{
+//      id: number
+//      label: string
+//      href: string
+//      isSocial: boolean | null
+//      icon: Array<{
+//        id: number
+//        url: string
+//        alternativeText: string | null
+//      }>
+//    }>
+//    footer: {
+//      id: number
+//      companyName: string
+//      copyright: string
+//      legalAdress: string
+//      taxId: string
+//      workingHours: string
+//      logo: Array<{
+//        id: number
+//        url: string
+//        alternativeText: string | null
+//      }>
+//    }
+//    legal: {
+//      id: number
+//      accountNumber: string
+//      bankAddress: string
+//      bankName: string
+//      swiftCode: string
+//    }
+//  }
