@@ -36,16 +36,8 @@ const { data: categories, status, error } = useAsyncData(
          image: {
                fields: ["alternativeText", "url"]
          },
-         // label: {
-         //    populate: {
-         //       logo: {
-         //          fields: ["alternativeText", "url"]
-         //       }
-         //    }
-         //    }
          }
       })
-
       if (!response.data || response.data.length === 0) {
       throw createError({
         statusCode: 404,
@@ -81,24 +73,12 @@ watch(categories, (newCategory) => {
          <NuxtImg
          :src="`${config.public.strapi.url}${category.image[0]?.url}`"
          :alt="category.name"
+          loading="lazy"
           format="webp"
           width="240"
          ></NuxtImg>
          </NuxtLink>
          <h2>{{ category.name }}</h2>
-         <!-- <template v-if="category.label">
-      <span>{{ category.label.companyName }}</span>
-      <NuxtImg
-        v-if="category.label.logo?.length"
-        :src="`${config.public.strapi.url}${category.label.logo[0]?.url}`"
-        :alt="category.label.logo[0]?.alternativeText || ''"
-        format="webp"
-        loading="lazy"
-        decoding="async"
-        width="260"
-        class="product-image"
-      />
-    </template> -->
       </li>
       </ul>
       <div v-else-if="error">Error: {{ error.message }}</div>

@@ -1,10 +1,55 @@
 <script setup lang="ts">
+import type { GlobalData } from "../types/types"
+
+const { find } = useStrapi()
 const searchStore = useSearchStore()
 const { products, totalPages, currentPage } = storeToRefs(searchStore)
 const { currentLocale } = useLocale()
 const { isContacts } = useVisibilityProvider()
+const config = useRuntimeConfig()
+
+const {data: global, error, refresh  } = useAsyncData(
+   `global-${currentLocale.value}`,
+   async () => {
+      const response = await find<GlobalData>('global', {
+         filters: { locale: currentLocale.value },
+         populate: {
+            footer: {
+               populate: {
+                  logo: {
+                     fields: ['alternativeText', 'url']
+                  }
+               }
+            },
+            socials: {
+               populate: {
+                  icon: {
+                     fields: ['alternativeText', 'url']
+                  }
+               }
+            },
+            legal: true,
+            phones: true,
+            email: true
+         }
+      })
+      if (!response.data?.id) {
+      throw createError({ statusCode: 404, message: 'Global not found' });
+   }
+     return response.data
+   }
+)
+
+watch(currentLocale, () => {
+  refresh()
+})
 
 
+watchEffect(() => {
+  if (global.value) {
+    console.debug('Global data:', global.value);
+  }
+})
 </script>
 
 <template>
@@ -67,7 +112,15 @@ class="header__navigation hidden-tablet"
    </div>
    </main>
 
-   <Footer class="footer"
+   <Footer
+     v-if="global"
+      :phones="global.phones"
+      :email="global.email"
+      :footer="global.footer"
+      :legal="global.legal"
+      :socials="global.socials"
+      :logo="`${config.public.strapi.url}${global.footer.logo[0]?.url}`"
+      class="footer"
     />
 </template>
 

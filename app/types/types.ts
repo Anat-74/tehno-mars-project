@@ -4,7 +4,7 @@ export interface VisibilityState {
    // visibleIsAccount: () => void
    visibleIsContacts: () => void
 }
-//========================================================================================================================================================
+//Collection========================================================================================================================================================
 
 export type Image = {
    id: number;
@@ -107,3 +107,144 @@ export type Image = {
 //============================================================================================================================================
 
 export type LocaleCode = 'ru' | 'en' | 'be'
+
+//Single Type==================================================================================================================================================
+
+// Тип для иконок (используется в SocialLink и Footer)
+// export interface StrapiImage {
+//    id: number
+//    url: string
+//    alternativeText?: string | null
+//    documentId?: string
+//  }
+ 
+//  // Социальные сети
+//  export interface SocialLink {
+//    id: number
+//    label: string
+//    href: string
+//    isSocial: boolean | null
+//    icon: StrapiImage[]
+//  }
+ 
+//  // Элементы списка email
+//  export interface Email {
+//    id: number
+//    email: string
+//    isEmail: boolean | null
+//  }
+ 
+//  // Элементы списка телефонов
+//  export interface Phone {
+//    id: number
+//    phoneNumber: string
+//    isMobile: boolean
+//  }
+ 
+//  // Блок footer в Global
+//  export interface FooterData {
+//    id: number
+//    companyName: string
+//    copyright: string
+//    legalAdress: string
+//    taxId: string
+//    workingHours: string
+//    logo: StrapiImage[]
+//  }
+ 
+//  // Юридическая информация
+//  export interface LegalInfo {
+//    id: number
+//    accountNumber: string
+//    bankAddress: string
+//    bankName: string
+//    swiftCode: string
+//  }
+ 
+//  // Основной тип для Global
+// // Для Single Types (Global)
+// export interface GlobalData {
+//    id: number;
+//    documentId: string;
+//    createdAt: string;
+//    updatedAt: string;
+//    publishedAt: string;
+//    locale: string;
+//    email: Email[];
+//    phones: Phone[];
+//    socials: SocialLink[];
+//    footer: FooterData;
+//    legal: LegalInfo;
+//  }
+ 
+//  // Для запросов к Single Type
+//  export interface StrapiSingleResponse<T> {
+//    data: T; // Без вложенности!
+//  }
+
+
+// Изображения
+export interface StrapiImage {
+   id: number;
+   url: string;
+   alternativeText: string | null;
+   documentId?: string; // Опционально, т.к. есть не у всех изображений
+ }
+ 
+ // Социальные сети
+ export interface SocialLink {
+   id: number;
+   label: string;
+   href: string;
+   isSocial: boolean | null;
+   icon: StrapiImage[];
+ }
+ 
+ // Email-адреса
+ export interface Email {
+   id: number;
+   email: string;
+   isEmail: boolean | null;
+ }
+ 
+ // Телефоны
+ export interface Phone {
+   id: number;
+   phoneNumber: string;
+   isMobile: boolean;
+ }
+ 
+ // Футер
+ export interface FooterData {
+   id: number;
+   companyName: string;
+   copyright: string;
+   legalAdress: string;
+   taxId: string;
+   workingHours: string;
+   logo: StrapiImage[];
+ }
+ 
+ // Юридическая информация
+ export interface LegalInfo {
+   id: number;
+   accountNumber: string;
+   bankAddress: string;
+   bankName: string;
+   swiftCode: string;
+ }
+ 
+ // Основной тип для Global
+ export interface GlobalData {
+   id: number;
+   documentId: string;
+   createdAt: string;
+   updatedAt: string;
+   publishedAt: string;
+   locale: string;
+   email: Email[];
+   phones: Phone[];
+   socials: SocialLink[];
+   footer: FooterData;
+   legal: LegalInfo;
+ }

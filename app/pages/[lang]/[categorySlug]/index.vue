@@ -8,8 +8,8 @@ const { currentLocale } = useLocale()
 const { goBack, goForward } = useGoToForwardOrBack()
 const config = useRuntimeConfig()
 
-const page = ref(route.query.page ? +route.query.page : 1); // Текущая страница из URL
-const pageSize = 8; // Элементов на странице
+const page = ref(route.query.page ? +route.query.page : 1)
+const pageSize = 8
 
 const { data: category, status, error } = useAsyncData(
   `category-${categorySlug}-${currentLocale.value}-page-${page.value}`,
