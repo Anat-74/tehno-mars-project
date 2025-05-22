@@ -1,3 +1,5 @@
+export type LocaleCode = 'ru' | 'en' | 'be'
+
 export interface VisibilityState {
    // isAccount: Ref<boolean>
    isContacts: Ref<boolean>
@@ -5,7 +7,6 @@ export interface VisibilityState {
    visibleIsContacts: () => void
 }
 //Collection========================================================================================================================================================
-
 export type Image = {
    id: number;
    url: string;
@@ -104,11 +105,7 @@ export type Image = {
    }
  }
 
-//============================================================================================================================================
-
-export type LocaleCode = 'ru' | 'en' | 'be'
-
-//Single Type==================================================================================================================================================
+//Single Type Global==================================================================================================================================================
 // Изображения
 export interface StrapiImage {
    id: number;
@@ -161,20 +158,24 @@ export interface StrapiImage {
  }
  
  // Основной тип для Global
- export interface GlobalData {
-   id: number;
-   documentId: string;
-   createdAt: string;
-   updatedAt: string;
-   publishedAt: string;
-   locale: string;
-   email: Email[];
-   phones: Phone[];
-    socials: SocialLink[];
-   footer: FooterData;
-    legal: LegalInfo;
+export interface GlobalData {
+     id: number;
+     documentId: string;
+     createdAt: string;
+     updatedAt: string;
+     publishedAt: string;
+     locale: string;
+     email: Email[];
+     phones: Phone[];
+     socials: SocialLink[];
+     footer: FooterData;
+     legal: LegalInfo;
  }
 
+ export interface StrapiResponse<T> {
+   data: T;
+   meta?: object;
+ }
 
 // export interface GlobalData {
 //    id: number

@@ -22,14 +22,14 @@ export default defineNuxtConfig({
       }
    },
    modules: [
-     '@nuxt/image',
-     '@nuxt/icon',
-     '@pinia/nuxt',
-     'pinia-plugin-persistedstate/nuxt',
-     '@nuxtjs/color-mode',
-     '@nuxtjs/html-validator',
-     '@nuxtjs/strapi',
-     '@nuxtjs/mdc'
+      '@nuxt/image',
+      '@nuxt/icon',
+      '@pinia/nuxt',
+      'pinia-plugin-persistedstate/nuxt',
+      '@nuxtjs/color-mode',
+      '@nuxtjs/html-validator',
+      '@nuxtjs/strapi',
+      '@nuxtjs/mdc'
    ],
    ssr: true,
    routeRules: {
@@ -89,7 +89,9 @@ export default defineNuxtConfig({
             'ph',
             'cil',
             'fa-brands',
-            'emojione'
+            'emojione',
+            'carbon',
+            'et'
          ]
       },
       // Автоматически добавлять иконки из компонентов в клиентский бандл
