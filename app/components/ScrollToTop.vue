@@ -2,7 +2,7 @@
 const isVisible = ref(false)
 
 const checkScroll = () => {
-  isVisible.value = window.scrollY > 240
+  isVisible.value = window.scrollY > 126
 }
 
 const scrollToTop = () => {

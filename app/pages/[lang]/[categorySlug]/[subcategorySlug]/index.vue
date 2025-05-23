@@ -145,30 +145,40 @@ const handleAddToCart = (product: Product) => {
    grid-template-columns: repeat(auto-fit, minmax(toRem(290), 1fr));
    justify-items: center;
    align-items: start;
-   row-gap: toRem(12);
-   @include adaptiveValue("column-gap", 40, 16);
+   row-gap: toEm(12);
+   @include adaptiveValue("column-gap", 52, 16);
 }
 
 &__item {
-   box-shadow: 0 1px 2px 0 var(--shadow);
-   border-radius: toRem(4);
-
+   justify-self: center;
+   display: grid;
+   align-items: end;
+   min-height: 100%;
+   width: 100%;
+   padding-block-end: toEm(18);
+   box-shadow: 0px 1px 2px 0px var(--shadow);
+   border-radius: toEm(4);
 }
 
-&__items-bottom {
-   position: relative;
-   padding-inline: toEm(12);
-   padding-block-end: toEm(16);
+&__link {
+   display: flex;
+   justify-content: center;
 }
 
 &__image {
-   @media (max-width: toEm(955)){
+   @media (max-width: toEm(628)){
       width: toRem(322);
 }
 }
 
+&__items-bottom {
+   position: relative;
+   padding-inline: toEm(16);
+}
+
 &__title {
-   margin-block-end: toEm(16);
+   text-align: center;
+   margin-block-end: toEm(18);
 }
 
 &__price {
@@ -178,13 +188,13 @@ const handleAddToCart = (product: Product) => {
    font-weight: 600;
    color: var(--warning-color);
    background-color: var(--secondary-color);
-   border-radius: toRem(4);
+   border-radius: toEm(4);
 }
 
 &__add-to-cart {
    position: absolute;
-   right: toRem(9);
-   bottom: toRem(12);
+   right: toRem(18);
+   bottom: 0;
 }
 }
 

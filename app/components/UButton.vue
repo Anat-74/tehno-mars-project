@@ -155,6 +155,7 @@ body:has(dialog[open]) {
 
    svg {
       color: var(--warning-color);
+
       @include hover {
       color: var(--danger-color);
       scale: 1.1;
@@ -188,10 +189,13 @@ body:has(dialog[open]) {
   }
 
   &_small-add-to-cart {
-   transition: color var(--transition-duration);
+   outline: toRem(2) solid var(--light-color);
+   outline-offset: toRem(4);
+   border-radius: 50%;
+
    svg {
-      font-size: toEm(32, 24);
       color: var(--primary-color);
+      transition: color var(--transition-duration);
 
       @include hover {
       color: var(--warning-hover);
@@ -267,12 +271,11 @@ body:has(dialog[open]) {
    position: fixed;
    z-index: 999;
    right: toRem(12);
-   bottom: toRem(16);
+   bottom: toRem(14);
    width: toRem(36);
    height: toRem(36);
    padding: toRem(4);
    border: 1px solid var(--dark-golden-color);
-   background-color: var(--bg);
    transition: color var(--transition-duration);
 
    @media (max-width:$mobile){

@@ -26,7 +26,7 @@ defineProps<{
       :src="`${config.public.strapi.url}${footer.logo[0]?.url}`"
       :alt="footer.companyName"
       format="webp"
-      width="55"
+      width="62"
       loading="lazy"
       class="base-footer__logo"
     />
@@ -124,23 +124,40 @@ defineProps<{
 <style lang="scss" scoped>
 .base-footer {
    background-color:var(--bg-footer-color);
-   @include adaptiveValue("padding-block", 24, 16);
+   @include adaptiveValue("padding-block", 22, 12);
 
 &__container {
    display: grid;
    grid-template-columns: 1fr auto 1fr;
-   row-gap: toRem(28);
+   row-gap: toEm(9);
    grid-template-areas: 
-   'logo .. socials'
+   'logo logo socials'
    'company nav legal'
    'copyr copyr ..'
    ;
-   font-size: toRem(14);
+   font-size: toEm(15);
+
+   @media (max-width:$mobile){
+      grid-template-columns: 1fr auto;
+      grid-template-areas: 
+      'logo socials'
+      'company nav'
+      'legal legal'
+      'copyr copyr'
+      ;
+   }
 }
 
 &__logo {
    grid-area: logo;
    align-self: center;
+   border-radius: toEm(8);
+   padding: toEm(3);
+   background-color: var(--light-color);
+
+   @media (max-width:$mobile){
+      max-width: toRem(48); 
+   }
 }
 
 &__socials {
@@ -158,26 +175,28 @@ defineProps<{
 &__navigation {
    grid-area: nav;
    justify-self: center;
-   height: 100%;
-   width: toRem(144);
-   // border-right: 1px solid var(--warning-color);
-   outline: toRem(9) inset var(--light-color);
+   outline: toRem(5) inset var(--bg-nav-footer-outline);
+   background-color: var(--bg-nav-footer);
+   @include adaptiveValue("width", 144, 108);
 
-
-
-   background-color: var(--bg);
+   @media (max-width:$mobile){
+      justify-self: end;
+      outline-width: toRem(3);
+   }
 }
 
 &__legal {
    grid-area: legal;
    justify-self: end;
-   @media (max-width:$tablet){
+   @media (max-width:$mobile){
       justify-self: start;
    }
 }
 
 &__copyright {
    grid-area: copyr;
+   margin-inline-end: toRem(44);
+   margin-block-start: toRem(16);
 }
 }
 
@@ -185,12 +204,11 @@ defineProps<{
    display: flex;
    flex-direction: column;
    row-gap: toEm(8);
-   // border-right: 1px solid var(--warning-color);
-   @include adaptiveValue("padding-inline-end", 44, 9);
+   padding-inline-end: toEm(22);
 
 &__title {
+   margin-block-end: toEm(1);
    color: var(--light-color);
-   @include adaptiveValue("margin-block-end", 12, 5);
 }
 
 &__name {
@@ -241,37 +259,27 @@ defineProps<{
       color: var(--sky-blue-color);
    }
 }
-
-&__link-phones {
-}
-
-&__link-email {
-}
 }
 
 .legal {
    display: flex;
    flex-direction: column;
    row-gap: toEm(8);
-   padding-inline-start: toRem(64);
-   // border-left: 1px solid var(--warning-color);
-   @include adaptiveValue("padding-inline-start", 44, 9);
+   padding-inline-start: toEm(22);
 
-   // @media (max-width:$tablet){
-   //    padding-inline-start: toRem(16);
-   // }
+   @media (max-width:$mobile){
+      padding-inline-start: toRem(0);
+      margin-block-start: toEm(16);
+   }
 
 &__title {
+   margin-block-end: toEm(2);
    color: var(--light-color);
-   @include adaptiveValue("margin-block-end", 12, 5);
-}
-
-&__name {
 }
 
 &__address {
    svg {
-      translate: 0 toRem(4);
+      translate: toRem(-5) toRem(4);
       color: var(--gray-color);
    }
 }

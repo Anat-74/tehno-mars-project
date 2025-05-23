@@ -41,7 +41,7 @@ const { currentLocale } = useLocale()
 &__list {
    display: flex;
    flex-direction: column;
-   row-gap: toRem(26);
+   row-gap: toRem(32);
    align-items: center;
    position: absolute;
    top: 50%;
@@ -49,16 +49,14 @@ const { currentLocale } = useLocale()
    translate: -50% -50%;
 }
 &__item {
-
 }
 
 &__link {
-   padding-inline: toRem(12);
-   padding-block: toRem(4);
    font-weight: 600;
+   letter-spacing: 1.2px;
+   font-family: $font-family2;
    color: var(--primary-color);
-   border-radius: toRem(18);
-   border: 2px solid var(--light-color);
+   @include adaptiveValue("font-size", 18, 14);
 }
 }
 
