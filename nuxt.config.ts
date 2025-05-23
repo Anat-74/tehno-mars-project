@@ -91,7 +91,12 @@ export default defineNuxtConfig({
             'fa-brands',
             'emojione',
             'carbon',
-            'et'
+            'et',
+            'mingcute',
+            'entypo',
+            'mdi',
+            'qlementine-icons',
+            'pixelarticons'
          ]
       },
       // Автоматически добавлять иконки из компонентов в клиентский бандл

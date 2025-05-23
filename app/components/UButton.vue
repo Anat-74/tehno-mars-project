@@ -148,14 +148,19 @@ body:has(dialog[open]) {
   }
 
   &_go-forward-back {
-   padding: toRem(5);
+   padding: toRem(3);
    border-radius: toRem(6);
-   background-color: var(--warning-color);
-   transition: background-color var(--transition-duration);
+   border: 2px solid var(--secondary-color);
+   transition: color var(--transition-duration), scale var(--transition-duration);
 
-   @include hover {
-      background-color: var(--warning-hover);
+   svg {
+      color: var(--warning-color);
+      @include hover {
+      color: var(--danger-color);
+      scale: 1.1;
    }
+   }
+
    }
 
    &_share {
@@ -179,6 +184,18 @@ body:has(dialog[open]) {
 
    @include hover {
       background-color: var(--danger-hover);
+   }
+  }
+
+  &_small-add-to-cart {
+   transition: color var(--transition-duration);
+   svg {
+      font-size: toEm(32, 24);
+      color: var(--primary-color);
+
+      @include hover {
+      color: var(--warning-hover);
+   }
    }
   }
 
@@ -251,19 +268,23 @@ body:has(dialog[open]) {
    z-index: 999;
    right: toRem(12);
    bottom: toRem(16);
-   width: toRem(40);
-   height: toRem(40);
+   width: toRem(36);
+   height: toRem(36);
    padding: toRem(4);
    border: 1px solid var(--dark-golden-color);
+   background-color: var(--bg);
+   transition: color var(--transition-duration);
 
    @media (max-width:$mobile){
-      width: toRem(34);
-      height: toRem(34);
+      width: toRem(32);
+      height: toRem(32);
    }
 
    svg {
-      font-size: toRem(24);
       color: var(--dark-golden-color);
+   }
+   @include hover {
+      background-color: var(--warning-hover);
    }
 }
 

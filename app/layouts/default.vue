@@ -200,15 +200,15 @@ class="header__navigation hidden-tablet"
    </div>
    </main>
 
-   <Footer
+   <Footer class="footer"
      v-if="global"
       :phones="global.phones"
       :email="global.email"
       :footer="global.footer"
       :legal="global.legal"
       :socials="global.socials"
-      class="footer"
-    />
+    >
+    </Footer>
 </template>
 
 <style lang="scss" scoped>

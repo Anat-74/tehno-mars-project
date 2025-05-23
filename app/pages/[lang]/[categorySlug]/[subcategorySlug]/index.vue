@@ -13,7 +13,6 @@ const { categorySlug, subcategorySlug } = route.params as {
   subcategorySlug: string
 }
 
-// Получаем данные категории
 const { data: subcategory, status, error } = useAsyncData(
   `subcategory-${subcategorySlug}-${currentLocale.value}`,
   async () => {
@@ -30,7 +29,6 @@ const { data: subcategory, status, error } = useAsyncData(
       }
     })
 
-    // Проверяем наличие данных
     if (!response.data || response.data.length === 0) {
       throw createError({
         statusCode: 404,
@@ -70,13 +68,14 @@ const handleAddToCart = (product: Product) => {
 
 <template>
    <Loader v-if="status === 'pending'" />
-      <section  
+      <section class="subcategory-products"
       v-if="subcategory"
-      aria-labelledby="sub-category-product"
+      aria-labelledby="subcategory-products"
       >
          <h2 
-      id="sub-category-product"
+      id="subcategory-product"
       class="visually-hidden">Товары подкатегории</h2>
+      <div class="subcategory-products__go-buttons">
          <UButton
       @click="goBack"
       icon="material-symbols:arrow-back"
@@ -89,36 +88,40 @@ const handleAddToCart = (product: Product) => {
       aria-label="go forward"
       name-class="go-forward-back"
      />
-         <ul v-if="subcategory.products?.length" 
-         class="products-grid">
-         <li
+   </div>
+         <ul class="subcategory-products__list"
+         v-if="subcategory.products?.length" 
+         >
+         <li class="subcategory-products__item"
           v-for="product in subcategory.products"
           :key="product.name"
-          class="product-card"
         >
-        <NuxtLink
+        <NuxtLink class="subcategory-products__link"
             :to="`/${currentLocale}/${categorySlug}/${subcategorySlug}/${product.slug}`"
-            class="product-link"
           >
-            <NuxtImg
+            <NuxtImg class="subcategory-products__image"
               v-if="product.image?.length"
               :src="`${config.public.strapi.url}${product.image[0]?.url}`"
               :alt="product.name"
               loading="lazy"
               decoding="async"
-              width="260"
-              class="product-image"
+              width="280"
+              height="210"
             />
          </NuxtLink>
-              <h3>{{ product.name }}</h3>
-              <span>{{ product.price }}</span>
+         <div class="subcategory-products__items-bottom">
+              <h3 class="subcategory-products__title">
+               {{ product.name }}</h3>
+              <span class="subcategory-products__price">
+               {{ product.price }}</span>
 
-            <UButton
+            <UButton class="subcategory-products__add-to-cart"
             @click="handleAddToCart(product)"
-            name-class="add-to-cart"
-            label="Добавить в корзину"
-            class="wrapper-right__btn"
-     />
+            name-class="small-add-to-cart"
+            icon="qlementine-icons:add-to-cart-16"
+            aria-label="add to cart"
+            />
+         </div>
         </li>
         </ul>
       </section>
@@ -129,10 +132,60 @@ const handleAddToCart = (product: Product) => {
 </template>
 
 <style lang="scss" scoped>
-ul {
-   display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(toRem(290), 1fr));
-      row-gap: toRem(12);
-      column-gap: toRem(8);
+.subcategory-products {
+
+&__go-buttons {
+   display: flex;
+   column-gap: toEm(7);
+   padding-block: toEm(9);
 }
+
+&__list {
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(toRem(290), 1fr));
+   justify-items: center;
+   align-items: start;
+   row-gap: toRem(12);
+   @include adaptiveValue("column-gap", 40, 16);
+}
+
+&__item {
+   box-shadow: 0 1px 2px 0 var(--shadow);
+   border-radius: toRem(4);
+
+}
+
+&__items-bottom {
+   position: relative;
+   padding-inline: toEm(12);
+   padding-block-end: toEm(16);
+}
+
+&__image {
+   @media (max-width: toEm(955)){
+      width: toRem(322);
+}
+}
+
+&__title {
+   margin-block-end: toEm(16);
+}
+
+&__price {
+   padding-inline: toEm(6);
+   padding-block: toEm(2);
+   letter-spacing: 1.2px;
+   font-weight: 600;
+   color: var(--warning-color);
+   background-color: var(--secondary-color);
+   border-radius: toRem(4);
+}
+
+&__add-to-cart {
+   position: absolute;
+   right: toRem(9);
+   bottom: toRem(12);
+}
+}
+
 </style>

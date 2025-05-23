@@ -58,8 +58,9 @@ const handleAddToCart = () => {
   </NuxtLink>
   <UButton
       @click="handleAddToCart"
-      name-class="add-to-cart"
-      label="Добавить в корзину"
+      name-class="small-add-to-cart"
+      icon="qlementine-icons:add-to-cart-16"
+      aria-label="add to cart"
      />
 </div>
 </template>

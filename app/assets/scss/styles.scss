@@ -24,10 +24,11 @@
    --secondary-color: #ffffff;
    --placeholder-hover: #f3f5f4;
    --shadow: rgba(0,0,0,0.1);
+   --bg-footer-color: #dcdcdc;
  }
 
  .dark-mode {
-   filter: brightness(88%);
+   filter: brightness(95%);
   --color: #f5f5f5;
   --bg: #091A28;
   --secondary-color:#2f4f4f;
@@ -37,6 +38,7 @@
   --gray-color: #fdf9f3;
   --placeholder-hover: #c0c0c0;
   --shadow: #f3f5f4;
+  --bg-footer-color: #2f4f4f;
  }
  .sepia-mode {
   --color: #433422;

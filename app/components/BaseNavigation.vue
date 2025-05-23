@@ -6,7 +6,10 @@ const { currentLocale } = useLocale()
 </script>
 
 <template>
-   <nav class="nav">
+   <nav 
+   class="nav"
+   aria-label="primary navigation"
+   >
       <ul class="nav__list">
          <li class="nav__item">
             <NuxtLink :to="`/${currentLocale}`" 
@@ -26,13 +29,6 @@ const { currentLocale } = useLocale()
             class="nav__link" 
             :to="`/${currentLocale}/services`">
             {{ baseNavigationTranslations[currentLocale].services }}
-         </NuxtLink>
-      </li>
-      <li class="nav__item">
-            <NuxtLink 
-            class="nav__link" 
-            :to="`/${currentLocale}/info`">
-            {{ baseNavigationTranslations[currentLocale].info }}
          </NuxtLink>
       </li>
 
@@ -153,6 +149,7 @@ const { currentLocale } = useLocale()
 }
 
    .contacts {
+   @media (min-width:$tablet){
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -183,6 +180,11 @@ const { currentLocale } = useLocale()
          color: var(--deep-sky-blue);
       }
    }
+}
+
+@media (max-width:$tablet){
+   display: none;
+}
 }
 .contacts-link {
    width: toRem(236);
