@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Product, Subcategory } from "../../../../types/types"
+import { productFilterTranslations } from '~/locales/productFilter'
 
 const { find } = useStrapi()
 const route = useRoute()
@@ -8,12 +9,14 @@ const { goBack, goForward } = useGoToForwardOrBack()
 const config = useRuntimeConfig()
 const cartStore = useCartStore()
 
+const sortOption = ref<string>('')
+
 const { categorySlug, subcategorySlug } = route.params as {
   categorySlug: string
   subcategorySlug: string
 }
 
-const { data: subcategory, status, error } = useAsyncData(
+const { data: subcategory, status, error, refresh } = useAsyncData(
   `subcategory-${subcategorySlug}-${currentLocale.value}`,
   async () => {
     const response = await find<Subcategory>('subcategories', {
@@ -25,6 +28,7 @@ const { data: subcategory, status, error } = useAsyncData(
        populate: {
         products: {
              populate: ['image'],
+             sort: sortOption.value
         }
       }
     })
@@ -39,6 +43,11 @@ const { data: subcategory, status, error } = useAsyncData(
    }
 )
 
+useSeoMeta({
+  title: subcategory.value?.name,
+  description: subcategory.value?.description
+})
+
 watch(subcategory, (newCategory) => {
   if (newCategory) {
     useSeoMeta({
@@ -48,9 +57,8 @@ watch(subcategory, (newCategory) => {
   }
 })
 
-useSeoMeta({
-  title: subcategory.value?.name,
-  description: subcategory.value?.description
+watch(sortOption, () => {
+   refresh()
 })
 
 watch(subcategory, (newCategory) => {
@@ -63,6 +71,10 @@ const handleAddToCart = (product: Product) => {
     categorySlug,
     subcategorySlug
   )
+}
+
+const existingItem = (productId) => {
+   cartStore.items.find(item => item.product.id === productId)
 }
 </script>
 
@@ -89,6 +101,30 @@ const handleAddToCart = (product: Product) => {
       name-class="go-forward-back"
      />
    </div>
+   <label 
+      class="visually-hidden"
+      for="sort-subcategory-product"
+      >{{ productFilterTranslations[currentLocale].labelSelect }}
+   </label>
+      <select
+      v-model="sortOption"
+      @change="refresh"
+      class="simple-sort"
+      id="sort-subcategory-product"
+
+      >
+      >
+      <option value="">Без сортировки</option>
+      <option value="name:asc">{{ productFilterTranslations[currentLocale].optionName }}</option>
+      <option 
+      value="price:asc"
+      :aria-label="productFilterTranslations[currentLocale].optionPrice"
+      >По цене (↑)</option>
+      <option 
+      value="price:desc"
+      :aria-label="productFilterTranslations[currentLocale].optionPriceDesc"
+      >По цене (↓)</option>
+      </select>
          <ul class="subcategory-products__list"
          v-if="subcategory.products?.length" 
          >
@@ -116,6 +152,7 @@ const handleAddToCart = (product: Product) => {
                {{ product.price }}</span>
 
             <UButton class="subcategory-products__add-to-cart"
+            :class="{ 'active': existingItem(product.id) }"
             @click="handleAddToCart(product)"
             name-class="small-add-to-cart"
             icon="qlementine-icons:add-to-cart-16"
@@ -142,11 +179,15 @@ const handleAddToCart = (product: Product) => {
 
 &__list {
    display: grid;
-   grid-template-columns: repeat(auto-fit, minmax(toRem(290), 1fr));
+   grid-template-columns: repeat(auto-fit, minmax(toRem(262), 1fr));
    justify-items: center;
    align-items: start;
    row-gap: toEm(12);
-   @include adaptiveValue("column-gap", 52, 16);
+   @include adaptiveValue("column-gap", 64, 7);
+
+   @media (max-width:toEm(568)){
+      grid-template-columns: repeat(2, 1fr);
+   }
 }
 
 &__item {
@@ -198,4 +239,8 @@ const handleAddToCart = (product: Product) => {
 }
 }
 
+.active {
+   bottom: 99px;
+   background-color: var(--warning-color);
+}
 </style>

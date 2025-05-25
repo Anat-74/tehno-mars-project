@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { productFilterTranslations } from '~/locales/productFilter'
 const { currentLocale } = useLocale()
-const searchStore = useSearchStore()
 const route = useRoute()
+const searchStore = useSearchStore()
 const { products, status, hasSearched } = storeToRefs(searchStore)
 
 // Полная синхронизация с хранилищем
@@ -85,8 +85,14 @@ watch([searchName, sortBy], () => {
     >
       <option value=""></option>
       <option value="name:asc">{{ productFilterTranslations[currentLocale].optionName }}</option>
-      <option value="price:asc">{{ productFilterTranslations[currentLocale].optionPrice }}</option>
-      <option value="price:desc">{{ productFilterTranslations[currentLocale].optionPriceDesc }}</option>
+      <option 
+      value="price:asc"
+      :aria-label="productFilterTranslations[currentLocale].optionPrice"
+      >(↑)</option>
+      <option 
+      value="price:desc"
+      :aria-label="productFilterTranslations[currentLocale].optionPriceDesc"
+      >(↓)</option>
     </select>
     </div>
   </div>
@@ -171,15 +177,18 @@ watch([searchName, sortBy], () => {
       appearance: none;
       cursor: pointer;
       color: var(--gray-color);
-      border: toRem(2) solid var( --danger-color);
+      border: toRem(2) solid var(--danger-color);
       border-radius: toEm(0) toEm(4) toEm(4) toEm(0);
       padding-inline: toEm(9);
       @include adaptiveValue("width", 112, 32);
 
    option {
-      background-color: var(--bg);
+      background-color: var(--gray-color);
    }
    }
 }
 
+.sort-active {
+   color: var(--light-color);
+}
 </style>

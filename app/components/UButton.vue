@@ -189,11 +189,12 @@ body:has(dialog[open]) {
   }
 
   &_small-add-to-cart {
-   outline: toRem(2) solid var(--light-color);
-   outline-offset: toRem(4);
+   padding: toEm(4);
+   outline: toRem(3) solid var(--light-color);
    border-radius: 50%;
 
    svg {
+      font-size: toEm(22, 24);
       color: var(--primary-color);
       transition: color var(--transition-duration);
 

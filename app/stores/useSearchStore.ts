@@ -4,7 +4,6 @@ export const useSearchStore = defineStore('search', () => {
   const { find } = useStrapi()
   const route = useRoute()
   
-  // Состояние
   const filters = reactive({
     name: '',
     sort: ''
@@ -16,7 +15,6 @@ export const useSearchStore = defineStore('search', () => {
   const status = ref<'idle' | 'pending' | 'success'>('idle')
   const hasSearched = ref(false)
 
-  // Методы
   const executeSearch = async () => {
    if (!filters.name.trim()) {
       products.value = []

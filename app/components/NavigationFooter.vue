@@ -36,26 +36,26 @@ const { currentLocale } = useLocale()
 
 <style lang="scss" scoped>
 .nav-footer {
-   position: relative;
-
 &__list {
    display: flex;
    flex-direction: column;
-   row-gap: toRem(32);
+   row-gap: toEm(28);
    align-items: center;
-   position: absolute;
-   top: 50%;
-   left: 50%;
-   translate: -50% -50%;
-}
-&__item {
+   padding-inline: toEm(9);
+   padding-block: toEm(18);
+   outline: toRem(5) inset var(--bg-nav-footer-outline);
+   background-color: var(--bg-nav-footer);
+
+   @media (max-width:$mobile){
+      outline-width: toRem(3);
+   }
 }
 
 &__link {
    font-weight: 600;
    letter-spacing: 1.2px;
    font-family: $font-family2;
-   color: var(--primary-color);
+   color: var(--border-color);
    @include adaptiveValue("font-size", 18, 14);
 }
 }

@@ -175,14 +175,8 @@ defineProps<{
 &__navigation {
    grid-area: nav;
    justify-self: center;
-   outline: toRem(5) inset var(--bg-nav-footer-outline);
+   align-self: center;
    background-color: var(--bg-nav-footer);
-   @include adaptiveValue("width", 144, 108);
-
-   @media (max-width:$mobile){
-      justify-self: end;
-      outline-width: toRem(3);
-   }
 }
 
 &__legal {
@@ -212,7 +206,7 @@ defineProps<{
 }
 
 &__name {
-   font-size: toRem(15);
+   font-size: toEm(15);
 }
 
 &__tax-id {

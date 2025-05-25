@@ -1,16 +1,7 @@
 import type { Product } from "../types/types"
 
-// export type CartItem = {
-//   product: Product & {
-//     categorySlug: string
-//     subcategorySlug: string
-//     image: string
-//   }
-//   quantity: number
-// }
-
 export type CartProduct = Omit<Product, 'image'> & {
-   image: string // Только URL
+   image: string
    categorySlug: string
    subcategorySlug: string
  }
