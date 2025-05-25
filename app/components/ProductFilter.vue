@@ -84,7 +84,9 @@ watch([searchName, sortBy], () => {
       :class="{ 'sort-active': sortBy }"
     >
       <option value=""></option>
-      <option value="name:asc">{{ productFilterTranslations[currentLocale].optionName }}</option>
+      <option 
+      value="name:asc"
+      >{{ productFilterTranslations[currentLocale].optionName }}</option>
       <option 
       value="price:asc"
       :aria-label="productFilterTranslations[currentLocale].optionPrice"

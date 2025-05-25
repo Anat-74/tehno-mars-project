@@ -73,9 +73,10 @@ const handleAddToCart = (product: Product) => {
   )
 }
 
-const existingItem = (productId) => {
-   cartStore.items.find(item => item.product.id === productId)
-}
+// const existingItem = (productId) =>
+//    computed(() => cartStore.items.find(item => item.product.id === productId))
+const isInCart = (productId: string | number) => 
+  cartStore.items.some(item => item.product.id === productId)
 </script>
 
 <template>
@@ -108,23 +109,26 @@ const existingItem = (productId) => {
    </label>
       <select
       v-model="sortOption"
-      @change="refresh"
+      @change="refresh()"
       class="simple-sort"
       id="sort-subcategory-product"
-
       >
-      >
-      <option value="">Без сортировки</option>
-      <option value="name:asc">{{ productFilterTranslations[currentLocale].optionName }}</option>
+      <option value="">Sort</option>
+      <option
+      value="name:asc">
+      {{ productFilterTranslations[currentLocale].optionName }}</option>
       <option 
       value="price:asc"
       :aria-label="productFilterTranslations[currentLocale].optionPrice"
-      >По цене (↑)</option>
+      >(↑)
+      </option>
       <option 
       value="price:desc"
       :aria-label="productFilterTranslations[currentLocale].optionPriceDesc"
-      >По цене (↓)</option>
+      >(↓)
+      </option>
       </select>
+
          <ul class="subcategory-products__list"
          v-if="subcategory.products?.length" 
          >
@@ -152,7 +156,7 @@ const existingItem = (productId) => {
                {{ product.price }}</span>
 
             <UButton class="subcategory-products__add-to-cart"
-            :class="{ 'active': existingItem(product.id) }"
+            :class="{ active: isInCart(product.id) }"
             @click="handleAddToCart(product)"
             name-class="small-add-to-cart"
             icon="qlementine-icons:add-to-cart-16"
@@ -236,11 +240,10 @@ const existingItem = (productId) => {
    position: absolute;
    right: toRem(18);
    bottom: 0;
-}
+   }
 }
 
 .active {
-   bottom: 99px;
-   background-color: var(--warning-color);
+   background-color: var(--forest-green-color);
 }
 </style>
