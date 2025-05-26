@@ -9,7 +9,7 @@ const { goBack, goForward } = useGoToForwardOrBack()
 const config = useRuntimeConfig()
 const cartStore = useCartStore()
 
-const sortOption = ref<string>('')
+const sortOption = ref<string>('name:asc')
 
 const { categorySlug, subcategorySlug } = route.params as {
   categorySlug: string
@@ -73,8 +73,6 @@ const handleAddToCart = (product: Product) => {
   )
 }
 
-// const existingItem = (productId) =>
-//    computed(() => cartStore.items.find(item => item.product.id === productId))
 const isInCart = (productId: string | number) => 
   cartStore.items.some(item => item.product.id === productId)
 </script>
@@ -85,10 +83,10 @@ const isInCart = (productId: string | number) =>
       v-if="subcategory"
       aria-labelledby="subcategory-products"
       >
-         <h2 
-      id="subcategory-product"
-      class="visually-hidden">Товары подкатегории</h2>
-      <div class="subcategory-products__go-buttons">
+         <h1
+      id="subcategory-products"
+      class="visually-hidden">Секция товаров подкатегории</h1>
+   <div class="subcategory-products__row-top">
          <UButton
       @click="goBack"
       icon="material-symbols:arrow-back"
@@ -101,34 +99,41 @@ const isInCart = (productId: string | number) =>
       aria-label="go forward"
       name-class="go-forward-back"
      />
-   </div>
+     <div class="subcategory-products__select-wrapper select-wrapper">
    <label 
       class="visually-hidden"
       for="sort-subcategory-product"
       >{{ productFilterTranslations[currentLocale].labelSelect }}
    </label>
-      <select
+      <select class="subcategory-products__select select"
       v-model="sortOption"
       @change="refresh()"
-      class="simple-sort"
       id="sort-subcategory-product"
       >
-      <option value="">Sort</option>
+      <option 
+      class="option"
+      disabled
+      value="">
+   </option>
       <option
-      value="name:asc">
-      {{ productFilterTranslations[currentLocale].optionName }}</option>
-      <option 
+      class="option"
+      value="name:asc"
+      >{{ productFilterTranslations[currentLocale].optionName }}
+   </option>
+      <option
+      class="option"
       value="price:asc"
-      :aria-label="productFilterTranslations[currentLocale].optionPrice"
-      >(↑)
-      </option>
+      >{{ productFilterTranslations[currentLocale].optionPrice }}(🡹)
+   </option>
       <option 
+      class="option"
       value="price:desc"
-      :aria-label="productFilterTranslations[currentLocale].optionPriceDesc"
-      >(↓)
-      </option>
+      > {{ productFilterTranslations[currentLocale].optionPriceDesc }}(🡻)
+   </option>
       </select>
-
+   </div>
+   </div>
+      <h2 class="visually-hidden">Список товаров подкатегории</h2>
          <ul class="subcategory-products__list"
          v-if="subcategory.products?.length" 
          >
@@ -156,10 +161,17 @@ const isInCart = (productId: string | number) =>
                {{ product.price }}</span>
 
             <UButton class="subcategory-products__add-to-cart"
-            :class="{ active: isInCart(product.id) }"
+            v-if="!isInCart(product.id)"
             @click="handleAddToCart(product)"
             name-class="small-add-to-cart"
             icon="qlementine-icons:add-to-cart-16"
+            aria-label="add to cart"
+            />
+            <UButton class="subcategory-products__add-to-cart"
+            v-else
+            @click="handleAddToCart(product)"
+            name-class="small-add-to-cart"
+            icon="emojione-v1:left-check-mark"
             aria-label="add to cart"
             />
          </div>
@@ -175,10 +187,19 @@ const isInCart = (productId: string | number) =>
 <style lang="scss" scoped>
 .subcategory-products {
 
-&__go-buttons {
+&__row-top {
+   display: grid;
+   grid-template-columns: repeat(2,auto) 1fr;
+   align-items: center;
+   column-gap: toEm(12);
+   padding-block: toEm(16);
+   margin-block-end: toEm(9);
+}
+
+&__select-wrapper {
+   justify-self: end;
    display: flex;
-   column-gap: toEm(7);
-   padding-block: toEm(9);
+   height: 100%;
 }
 
 &__list {
@@ -241,9 +262,5 @@ const isInCart = (productId: string | number) =>
    right: toRem(18);
    bottom: 0;
    }
-}
-
-.active {
-   background-color: var(--forest-green-color);
 }
 </style>

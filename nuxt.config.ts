@@ -90,6 +90,7 @@ export default defineNuxtConfig({
             'cil',
             'fa-brands',
             'emojione',
+            'emojione-v1',
             'carbon',
             'et',
             'mingcute',

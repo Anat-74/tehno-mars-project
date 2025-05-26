@@ -154,6 +154,7 @@ body:has(dialog[open]) {
    transition: color var(--transition-duration), scale var(--transition-duration);
 
    svg {
+      font-size: toEm(18, 24);
       color: var(--warning-color);
 
       @include hover {
@@ -189,18 +190,22 @@ body:has(dialog[open]) {
   }
 
   &_small-add-to-cart {
-   padding: toEm(4);
+   padding: toRem(3);
    outline: toRem(3) solid var(--light-color);
    border-radius: 50%;
+   transition: outline-color var(--transition-duration);
+
+   @include hover {
+      outline-color: var(--warning-hover);
+   }
 
    svg {
       font-size: toEm(22, 24);
       color: var(--primary-color);
-      transition: color var(--transition-duration);
-
-      @include hover {
-      color: var(--warning-hover);
    }
+
+   .iconify--emojione-v1 {
+      padding: toRem(3);
    }
   }
 

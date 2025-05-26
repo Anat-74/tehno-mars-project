@@ -54,8 +54,8 @@ watch(category, (newCategory) => {
 })
 
 useSeoMeta({
-  title: category.value?.name || '...',
-  description: category.value?.description || '...'
+  title: category.value?.name || '',
+  description: category.value?.description || ''
 })
 
 const pageCount = computed(() => {
@@ -71,9 +71,9 @@ watch(category, (newCategory) => {
 <template>
    <Loader v-if="status === 'pending'" />
       <section aria-labelledby="sub-category">
-         <h2
+         <h1
       id="sub-category"
-      class="visually-hidden">Подкатегории товаров</h2>
+      class="visually-hidden">Подкатегории товаров</h1>
          <UButton
       @click="goBack"
       icon="material-symbols:arrow-back"
@@ -107,7 +107,7 @@ watch(category, (newCategory) => {
               class="product-image"
             />
          </NuxtLink>
-            <h3>{{ subcategory.name }}</h3>
+            <h2>{{ subcategory.name }}</h2>
             <span>{{ subcategory.price }}</span>
         </li>
         </ul>

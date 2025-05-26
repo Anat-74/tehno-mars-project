@@ -23,8 +23,8 @@ body:has(dialog[open]) {
 
 
 h1 {
-   color: var(--light-green);
-   @include m.adaptiveValue("font-size", 26, 20);
+   // color: var(--light-green);
+   // @include m.adaptiveValue("font-size", 26, 20);
 }
 
 h2 {
@@ -73,6 +73,45 @@ input {
    translate: 0 toRem(2);
    color: var(--dark-golden-color);
 }
+
+//*select start======================================================================================================================
+.select-wrapper {
+   position: relative;
+
+ &::before,
+   &::after{
+      content: '';
+      pointer-events: none;
+      position: absolute;
+      top: calc(50% - toRem(1));
+      width: toRem(6);
+      height: toRem(2);
+      background-color: var(--warning-color);
+   }
+   &::before {
+      right: toRem(9);
+      transform: rotate(-125deg);
+   }
+   &::after {
+      right: toRem(6);
+      transform: rotate(125deg);
+   }
+ }
+ .select {
+   width: toEm(106);
+   padding-inline: toEm(4);
+   padding-block: toRem(1);
+   border: toRem(2) solid var(--warning-color);
+   border-radius: toEm(4, 16);
+   outline: none;
+   appearance: none;
+   cursor: pointer;
+}
+.option {
+   border-radius: toRem(6);
+  }
+//*select end======================================================================================================================
+
 
 .hidden-tablet {
    @media (max-width:c.$tablet){

@@ -70,7 +70,7 @@ watch([searchName, sortBy], () => {
    class="search-no-results">
    {{ productFilterTranslations[currentLocale].noResults }}
     </span>
-   <div class="search-select-wrapper">
+   <div class="search-select-wrapper select-wrapper">
       <label 
       class="visually-hidden"
       for="sort-product"
@@ -79,22 +79,28 @@ watch([searchName, sortBy], () => {
       <select 
       v-model="sortBy" 
       @change="applyFilters"
-      class="search-select"
       id="sort-product"
-      :class="{ 'sort-active': sortBy }"
+      class="search-select select"
     >
-      <option value=""></option>
       <option 
+      class="search-option option" 
+      value="">
+   </option>
+      <option 
+      class="search-option option" 
       value="name:asc"
-      >{{ productFilterTranslations[currentLocale].optionName }}</option>
+      >{{ productFilterTranslations[currentLocale].optionName }}
+   </option>
       <option 
+      class="search-option option" 
       value="price:asc"
-      :aria-label="productFilterTranslations[currentLocale].optionPrice"
-      >(↑)</option>
+      >{{ productFilterTranslations[currentLocale].optionPrice }}(🡹)
+   </option>
       <option 
+      class="search-option option" 
       value="price:desc"
-      :aria-label="productFilterTranslations[currentLocale].optionPriceDesc"
-      >(↓)</option>
+      > {{ productFilterTranslations[currentLocale].optionPriceDesc }}(🡻)
+   </option>
     </select>
     </div>
   </div>
@@ -116,7 +122,7 @@ watch([searchName, sortBy], () => {
       border-radius: toEm(4) toEm(0) toEm(0) toEm(4);
       border: toRem(2) solid var(--danger-color);
       border-right: none;
-      font-size: toRem(18);
+      font-size: toEm(18);
    }
 
    &-loader {
@@ -148,18 +154,18 @@ watch([searchName, sortBy], () => {
    }
 
    &-select-wrapper {
-      position: relative;
       height: 100%;
 
 &::before,
    &::after{
       content: '';
-      pointer-events: none;
-      position: absolute;
-      top: calc(50% - toRem(1));
       width: toRem(10);
-      height: toRem(4);
+      height: toEm(3);
       background-color: var(--danger-color);
+
+      @media (max-width:$mobile){
+         background-color: var(--light-color);
+      }
    }
    &::before {
       right: toRem(16);
@@ -169,28 +175,27 @@ watch([searchName, sortBy], () => {
    &::after {
       right: toRem(12);
       transform: rotate(125deg);
-      @include adaptiveValue("right", 12, 6);
+      @include adaptiveValue("right", 11, 5);
    }
    }
 
    &-select {
       height: 100%;
-      outline: none;
-      appearance: none;
-      cursor: pointer;
-      color: var(--gray-color);
+      width: toEm(116);
       border: toRem(2) solid var(--danger-color);
-      border-radius: toEm(0) toEm(4) toEm(4) toEm(0);
-      padding-inline: toEm(9);
-      @include adaptiveValue("width", 112, 32);
+      border-radius: 0 toEm(4) toEm(4) 0;
+      padding-inline-start: toEm(6);
 
-   option {
-      background-color: var(--gray-color);
+      @media (max-width:$mobile){
+          width: toEm(40);
+          padding-inline: toRem(2);
+          color: var(--danger-color);
+          background-color: currentColor;
+      }
    }
+   &-option {
+      background-color: var(--border-color);
+      color: var(--light-color);
    }
-}
-
-.sort-active {
-   color: var(--light-color);
 }
 </style>
