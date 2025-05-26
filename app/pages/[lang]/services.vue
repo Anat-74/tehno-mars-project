@@ -1,9 +1,28 @@
 <script lang="ts" setup>
+import type { LocaleCode } from "../../types/types"
+import { visuallyHiddenTranslations } from '~/locales/visuallyHidden'
+const { currentLocale } = useLocale()
+
+const pageMeta = {
+  ru: {
+    title: 'Наши услуги',
+    description: 'Страница с нашими услугами'
+  },
+  en: {
+    title: 'Our services',
+    description: 'Our Services Page'
+  },
+  be: {
+    title: 'Нашы паслугі',
+    description: 'Старонка з нашымі паслугамі'
+  }
+}
+
 useSeoMeta({
-   title: 'Наши услуги',
-   ogTitle: 'Наши услуги',
-   description: 'Страница о наших услугах',
-   ogDescription: 'Страница о наших услугах'
+  title: pageMeta[currentLocale.value as LocaleCode].title,
+  ogTitle: pageMeta[currentLocale.value as LocaleCode].title,
+  description: pageMeta[currentLocale.value as LocaleCode].description,
+  ogDescription: pageMeta[currentLocale.value as LocaleCode].description
 })
 
 // definePageMeta({
@@ -14,8 +33,12 @@ useSeoMeta({
 <style lang="scss" scoped>
 </style>
 <template>
-      <section class="services">
-         <h1 class="services__title"> services page</h1>
+      <section aria-labelledby="our-services">
+         <h1
+         class="visually-hidden"
+         id="our-services"
+         >{{ visuallyHiddenTranslations[currentLocale].sectionOurServicesTitle }}</h1>
+         <h2>aboutUs</h2>
          <!-- <NuxtPicture 
          class="services__image"
          src="/image/removebg-preview.png"

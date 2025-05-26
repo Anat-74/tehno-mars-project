@@ -148,7 +148,7 @@ body:has(dialog[open]) {
   }
 
   &_go-forward-back {
-   padding: toRem(3);
+   padding: toRem(4);
    border-radius: toRem(6);
    border: 2px solid var(--secondary-color);
    transition: color var(--transition-duration), scale var(--transition-duration);
@@ -191,17 +191,22 @@ body:has(dialog[open]) {
 
   &_small-add-to-cart {
    padding: toRem(3);
-   outline: toRem(3) solid var(--light-color);
+   outline: toRem(2) solid var(--light-color);
    border-radius: 50%;
-   transition: outline-color var(--transition-duration);
 
-   @include hover {
-      outline-color: var(--warning-hover);
-   }
+   &:disabled {
+     opacity: 1;
+    cursor: default;
+  }
 
    svg {
       font-size: toEm(22, 24);
       color: var(--primary-color);
+      transition: color var(--transition-duration);
+
+      @include hover {
+         color: var(--warning-color);
+   }
    }
 
    .iconify--emojione-v1 {

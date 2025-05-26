@@ -12,14 +12,7 @@ defineProps<{
 </script>
 
 <template>
-   <section 
-   aria-labelledby="base-footer"
-   class="base-footer">
-   <h2
-      id="base-footer"
-      class="visually-hidden">
-      Секция с юридическими контактами компании и банковскими реквизитами
-   </h2>
+   <div class="base-footer">
       <div class="base-footer__container">
          <NuxtImg
       v-if="footer.logo?.length"
@@ -50,7 +43,7 @@ defineProps<{
    </div>
     <div class="base-footer__company company"
     >
-      <h3 class="company__title">Компания</h3>
+      <h2 class="company__title">Компания</h2>
       <strong class="company__name">{{ footer.companyName }}</strong>
       <span class="company__tax-id">{{footer.taxId}}</span>
       <span class="company__woring-hours">
@@ -58,7 +51,7 @@ defineProps<{
          name="mingcute:calendar-time-add-line" height="22"
          />
          {{ footer.workingHours }}</span>
-      <p class="company__lelal-adress">
+      <p class="company__legal-adress">
          <Icon name="entypo:address"
          />
          {{ footer.legalAdress }}</p>
@@ -105,7 +98,7 @@ defineProps<{
 
    <NavigationFooter class="base-footer__navigation"/>
    <div class="base-footer__legal legal">
-      <h3 class="legal__title">Банковские реквизиты</h3>
+      <h2 class="legal__title">Банковские реквизиты</h2>
    <strong class="legal__name">{{ legal.bankName }}</strong>
   <p class="legal__address">
    <Icon
@@ -118,7 +111,7 @@ defineProps<{
 <span class="base-footer__copyright">{{footer.copyright}}</span>
 </div>
 <ScrollToTop />
-   </section>
+   </div>
 </template>
 
 <style lang="scss" scoped>
@@ -221,7 +214,7 @@ defineProps<{
    }
 }
 
-&__lelal-adress {
+&__legal-adress {
    svg {
       translate: 0 toRem(3);
       color: var(--dark-golden-color);

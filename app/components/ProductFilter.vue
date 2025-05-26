@@ -83,7 +83,8 @@ watch([searchName, sortBy], () => {
       class="search-select select"
     >
       <option 
-      class="search-option option" 
+      class="search-option option"
+      disabled
       value="">
    </option>
       <option 
@@ -123,6 +124,7 @@ watch([searchName, sortBy], () => {
       border: toRem(2) solid var(--danger-color);
       border-right: none;
       font-size: toEm(18);
+      background-color: var(--light-color);
    }
 
    &-loader {

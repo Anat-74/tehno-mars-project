@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Product, Subcategory } from "../../../../types/types"
 import { productFilterTranslations } from '~/locales/productFilter'
+import { visuallyHiddenTranslations } from '~/locales/visuallyHidden'
 
 const { find } = useStrapi()
 const route = useRoute()
@@ -73,8 +74,12 @@ const handleAddToCart = (product: Product) => {
   )
 }
 
-const isInCart = (productId: string | number) => 
-  cartStore.items.some(item => item.product.id === productId)
+const cartProductIds = computed<Set<string | number>>(() => 
+  new Set(cartStore.items.map(item => item.product.id))
+)
+
+const isInCart = (productId: number) => 
+  cartProductIds.value.has(productId)
 </script>
 
 <template>
@@ -85,7 +90,7 @@ const isInCart = (productId: string | number) =>
       >
          <h1
       id="subcategory-products"
-      class="visually-hidden">Секция товаров подкатегории</h1>
+      class="visually-hidden">{{ visuallyHiddenTranslations[currentLocale].sectionSubcategorySlugTitle }}</h1>
    <div class="subcategory-products__row-top">
          <UButton
       @click="goBack"
@@ -113,7 +118,8 @@ const isInCart = (productId: string | number) =>
       <option 
       class="option"
       disabled
-      value="">
+      value=""
+      >
    </option>
       <option
       class="option"
@@ -169,7 +175,7 @@ const isInCart = (productId: string | number) =>
             />
             <UButton class="subcategory-products__add-to-cart"
             v-else
-            @click="handleAddToCart(product)"
+            disabled
             name-class="small-add-to-cart"
             icon="emojione-v1:left-check-mark"
             aria-label="add to cart"

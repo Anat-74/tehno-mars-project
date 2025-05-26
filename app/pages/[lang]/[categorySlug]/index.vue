@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Category, SubcategoriesResponse } from "../../../types/types"
+import { visuallyHiddenTranslations } from '~/locales/visuallyHidden'
 
 const { find } = useStrapi()
 const route = useRoute()
@@ -73,7 +74,7 @@ watch(category, (newCategory) => {
       <section aria-labelledby="sub-category">
          <h1
       id="sub-category"
-      class="visually-hidden">Подкатегории товаров</h1>
+      class="visually-hidden">{{ visuallyHiddenTranslations[currentLocale].sectionCategorySlugTitle }}</h1>
          <UButton
       @click="goBack"
       icon="material-symbols:arrow-back"

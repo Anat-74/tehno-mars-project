@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Product } from "../../../../types/types"
+import { visuallyHiddenTranslations } from '~/locales/visuallyHidden'
 
 const { find } = useStrapi()
 const route = useRoute()
@@ -87,6 +88,10 @@ watch(product, (newCategory) => {
    aria-labelledby="product-description"
    class="product-review"
    >
+   <h1
+      class="visually-hidden"
+      id="product-description"
+      >{{ visuallyHiddenTranslations[currentLocale].sectionProductSlugTitle }}</h1>
    <div class="product-review__wrapper-left wrapper-left">
       <UButton
       @click="goBack"
@@ -131,7 +136,6 @@ watch(product, (newCategory) => {
    <div class="product-review__wrapper-right wrapper-right">
       <h2 
       class="wrapper-right__title"
-      id="product-description"
       >{{ product.name }}</h2>
       <MDC 
       class="wrapper-right__description"

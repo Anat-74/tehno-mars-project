@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Category, LocaleCode } from "../../types/types"
+import { visuallyHiddenTranslations } from '~/locales/visuallyHidden'
 
 const { find } = useStrapi()
 const { currentLocale } = useLocale()
@@ -58,7 +59,7 @@ watch(categories, (newCategory) => {
    <section aria-labelledby="category">
       <h1 
       id="category"
-      class="visually-hidden">Категории товаров или Главная страница</h1>
+      class="visually-hidden">{{ visuallyHiddenTranslations[currentLocale].sectionLangTitle }}</h1>
       <LangSwitcher/>
       <ul v-if="categories"
       class="category-list"

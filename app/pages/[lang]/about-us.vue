@@ -5,16 +5,16 @@ const { currentLocale } = useLocale()
 
 const pageMeta = {
   ru: {
-    title: 'Контакты',
-    description: 'Страница с контактами'
+    title: 'О нас',
+    description: 'Страница - о нас'
   },
   en: {
-    title: 'Contacts',
-    description: 'Contact page'
+    title: 'About Us',
+    description: 'Page - about us'
   },
   be: {
-    title: 'Кантакты',
-    description: 'Старонка з кантактамі'
+    title: 'Пра нас',
+    description: 'Старонка - пра нас'
   }
 }
 
@@ -31,11 +31,15 @@ useSeoMeta({
 </script>
 
 <template>
-      <section aria-labelledby="contacts-page">
+      <section aria-labelledby="about-us">
          <h1
          class="visually-hidden"
-         id="contacts-page"
+         id="about-us"
          >{{ visuallyHiddenTranslations[currentLocale].sectionAboutUsTitle }}</h1>
          <h2>aboutUs</h2>
       </section>
 </template>
+
+<style lang="scss" scoped>
+
+</style>

@@ -98,7 +98,7 @@ input {
    }
  }
  .select {
-   width: toEm(106);
+   width: toEm(102);
    padding-inline: toEm(4);
    padding-block: toRem(1);
    border: toRem(2) solid var(--warning-color);
@@ -106,6 +106,7 @@ input {
    outline: none;
    appearance: none;
    cursor: pointer;
+   background-color: var(--light-color);
 }
 .option {
    border-radius: toRem(6);
