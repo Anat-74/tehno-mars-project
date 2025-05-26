@@ -15,7 +15,6 @@ onMounted(() => {
 <template>
     <ul
    class="cart-item"
-    aria-label="Список товаров в корзине"
     >
       <li 
       v-for="item in cartStore.items" 
@@ -46,7 +45,7 @@ onMounted(() => {
          @click="cartStore.updateQuantity(item.product.id, item.quantity -1)"
          :disabled="item.quantity <= 1"
          name-class="remove-quantity-prod"
-         aria-label="Уменьшить количество"
+         aria-label="reduce quantity"
         />
          <span 
          class="quantity-value"
@@ -59,13 +58,14 @@ onMounted(() => {
         <UButton
          @click="cartStore.updateQuantity(item.product.id, item.quantity +1)"
          name-class="add-quantity-prod"
-         aria-label="Увеличить количество"
+         aria-label="increase quantity"
         />
       </div>
         <UButton
         @click="cartStore.removeFromCart(item.product.id)"
+        name-class="remove-cart-item"
         icon="material-symbols:delete-outline-rounded"
-        aria-label="Удалить товар из корзины"
+        aria-label="remove item from cart"
         class="cart-item__remove-from-cart"
         />
       </li>
@@ -139,7 +139,6 @@ onMounted(() => {
 
 &__remove-from-cart {
    grid-area: remove;
-   color: var(--warning-color);
 }
 }
 </style>

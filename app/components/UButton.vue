@@ -168,8 +168,14 @@ body:has(dialog[open]) {
    &_share {
       padding: toRem(2);
       border: 2px solid var(--warning-color);
+      transition: color var(--transition-duration);
       svg {
+         font-size: toEm(22, 24);
          color: var(--warning-color);
+
+      @include hover {
+         color: var(--danger-color);
+         }
       }
    }
 
@@ -215,12 +221,14 @@ body:has(dialog[open]) {
   }
 
   &_remove-cart-item {
-   color: var(--light-color);
-   background-color: var(--warning-color);
-   transition: color var(--transition-duration);
+   svg {
+   color: var(--warning-color);
+   transition: color var(--transition-duration), scale var(--transition-duration);
 
    @include hover {
-      background-color: var(--warning-hover);
+      color: var(--danger-color);
+      scale: 1.1;
+   }
    }
   }
 
@@ -229,6 +237,18 @@ body:has(dialog[open]) {
    width: toRem(32);
    height: toRem(32);
    background-color: var(--border-color);
+   transition: background-color var(--transition-duration);
+
+   @include hover {
+      &:enabled {
+      background-color: var(--warning-hover);
+    }
+   }
+
+   @media (max-width:$mobile){
+      width: toRem(26);
+      height: toRem(26);
+   }
 
    &::before{
          content: '';
@@ -247,6 +267,16 @@ body:has(dialog[open]) {
    width: toRem(32);
    height: toRem(32);
    background-color: var(--border-color);
+   transition: background-color var(--transition-duration);
+
+@include hover {
+   background-color: var(--warning-hover);
+}
+
+   @media (max-width:$mobile){
+      width: toRem(26);
+      height: toRem(26);
+   }
 
    &::before,
       &::after{
@@ -259,9 +289,7 @@ body:has(dialog[open]) {
 			height: toRem(2);
 			background-color: var(--light-color);
       }
-      &::before {
 
-		}
 		&::after {
          transform: rotate(90deg);
 		}

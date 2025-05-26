@@ -4,6 +4,7 @@ import { cartTranslations } from '~/locales/cart'
 
 const { currentLocale } = useLocale()
 const cartStore = useCartStore()
+const { goBack } = useGoToForwardOrBack()
 
 useSeoMeta({
   title: cartTranslations[currentLocale.value as LocaleCode].title,
@@ -46,6 +47,13 @@ onMounted(() => {
        v-else
        class="cart-page__body"
      >
+     <UButton
+      @click="goBack"
+      icon="material-symbols:arrow-back"
+      aria-label="go back"
+      name-class="go-forward-back"
+      class="cart-page__go-back"
+     />
      <div class="cart-page__cart-items">
       <h2 class="cart-page__title">
          {{ cartTranslations[currentLocale].title }}
@@ -71,6 +79,8 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .cart-page {
+   position: relative;
+
    &__no-product-items {
          display: grid;
          justify-items: center;
@@ -83,11 +93,18 @@ onMounted(() => {
       color: var(--danger-color);
    }
 //----------------------------------------------------------------------------------------------------------------------------------------------
+&__go-back {
+   position: absolute;
+   top: toRem(12);
+   left: 0;
+}
+
 &__body {
    display: grid;
    grid-template-columns: 1fr auto;
    column-gap: toEm(22);
-   padding-block: toEm(32);
+   padding-block-start: toEm(58);
+   padding-block-end: toEm(32);
 
    @media (max-width:$tablet){
       grid-template-columns: 1fr;
@@ -122,9 +139,6 @@ onMounted(() => {
       font-size: toEm(18);
       color: var(--gray-color);
    }
-}
-
-&__products {
 }
 
 &__order-form {

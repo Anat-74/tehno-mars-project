@@ -56,55 +56,74 @@ watch(categories, (newCategory) => {
 
 <template>
    <Loader v-if="status === 'pending'" />
-   <section aria-labelledby="category">
+   <section class="category"
+   aria-labelledby="category-page">
       <h1 
-      id="category"
+      id="category-page"
       class="visually-hidden">{{ visuallyHiddenTranslations[currentLocale].sectionLangTitle }}</h1>
       <LangSwitcher/>
-      <ul v-if="categories"
-      class="category-list"
+      <ul class="category__list"
+      v-if="categories"
       >
-         <li
+         <li class="category__item"
          v-for="category in categories"
          :key="category.id"
          >
          <NuxtLink
+         class="category__link"
          :to="`/${currentLocale}/${category.slug}`"
          >
          <NuxtImg
          :src="`${config.public.strapi.url}${category.image[0]?.url}`"
          :alt="category.name"
-          loading="lazy"
-          format="webp"
-          width="240"
+         loading="lazy"
+         decoding="async"
+         format="webp"
+         width="180"
          ></NuxtImg>
          </NuxtLink>
-         <h2>{{ category.name }}</h2>
+         <h2 class="category__title">{{ category.name }}</h2>
       </li>
       </ul>
-      <div v-else-if="error">Error: {{ error.message }}</div>
    </section>
+
+   <div v-if="error" class="error">
+      {{ error.message }}
+    </div>
 </template>
 
 <style lang="scss" scoped>
-ul {
+.category {
+
+&__list {
    display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(toRem(290), 1fr));
-      row-gap: toRem(12);
-      column-gap: toRem(8);
-      li {
-         justify-self: center;
-         h3 {
-            text-align: center;
-         }
-         img {
-            justify-self: center;
-            height: toRem(188);
-         }
-         .category-product {
-            font-size: toRem(12);
-            font-style: italic;
-         }
-      }
+   grid-template-columns: repeat(auto-fit, minmax(toRem(262), 1fr));
+   // justify-items: center;
+   align-items: start;
+   row-gap: toEm(12);
+   @include adaptiveValue("column-gap", 64, 7);
+
+   // @media (max-width:toEm(568)){
+   //    grid-template-columns: repeat(2, 1fr);
+   // }
 }
+
+&__item {
+   justify-self: start;
+   display: grid;
+   justify-items: center;
+   padding-inline: toEm(16);
+   padding-block-end: toEm(7);
+   box-shadow: 0px 1px 2px 0px var(--shadow);
+   border-radius: toEm(4);
+}
+
+&__link {
+   margin-block-end: toEm(12);
+}
+
+&__title {
+}
+}
+
 </style>

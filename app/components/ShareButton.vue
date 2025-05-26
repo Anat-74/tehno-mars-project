@@ -26,6 +26,6 @@ const copyLink = async () => {
    @click="copyLink"
    icon="ph:link-simple-bold"
    name-class="share"
-   aria-label="Скопировать ссылку на товар"
+   aria-label="Copy link to product"
    />
 </template>
