@@ -196,15 +196,15 @@ watch(product, (newCategory) => {
    row-gap: toEm(16);
 
    &__row-top {
-      display: grid;
-      grid-template-columns: 1fr repeat(2, auto);
-      align-items: center;
-      column-gap: toEm(16);
-      margin-block-end: toEm(7);
+   display: grid;
+   grid-template-columns: 1fr repeat(2, auto);
+   align-items: center;
+   column-gap: toEm(16);
+   margin-block-end: toEm(7);
    }
 
    &__go-back {
-      justify-self: start;
+   justify-self: start;
    }
 
    &__in-stock {

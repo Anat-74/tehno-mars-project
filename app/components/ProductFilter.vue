@@ -26,14 +26,29 @@ watch(() => route.params.productSlug, (newSlug) => {
   }
 })
 
+const debounce = <T extends (...args: any[]) => void>(fn: T, delay: number) => {
+  let timeoutId: ReturnType<typeof setTimeout>
+  const debounced = (...args: Parameters<T>) => {
+    clearTimeout(timeoutId)
+    timeoutId = setTimeout(() => fn(...args), delay)
+  }
+  debounced.cancel = () => clearTimeout(timeoutId)
+  return debounced
+}
+
+
 // Дебаунс для поиска
 const applyFilters = () => {
   searchStore.executeSearch()
 }
 
-// Реакция на любые изменения фильтров
-watch([searchName, sortBy], () => {
-  applyFilters()
+// Создаем debounce-версию с задержкой 300 мс
+const debouncedApplyFilters = debounce(applyFilters, 300)
+
+watch([searchName, sortBy], debouncedApplyFilters)
+
+onUnmounted(() => {
+  debouncedApplyFilters.cancel()
 })
 </script>
 
@@ -50,7 +65,6 @@ watch([searchName, sortBy], () => {
     <input 
       v-model="searchName" 
       :placeholder="productFilterTranslations[currentLocale].placeholder"
-      @input="applyFilters"
       class="search-input"
       type="search"
       id="my-search"

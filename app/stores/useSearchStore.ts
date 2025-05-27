@@ -15,7 +15,7 @@ export const useSearchStore = defineStore('search', () => {
   const status = ref<'idle' | 'pending' | 'success'>('idle')
   const hasSearched = ref(false)
 
-  const executeSearch = async () => {
+   const executeSearch = async () => {
    if (!filters.name.trim()) {
       products.value = []
       hasSearched.value = false // Сбрасываем флаг поиска
