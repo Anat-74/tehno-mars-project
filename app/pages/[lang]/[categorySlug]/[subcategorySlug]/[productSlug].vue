@@ -6,6 +6,7 @@ const { find } = useStrapi()
 const route = useRoute()
 const cartStore = useCartStore()
 const lang = route.params.lang
+const { isInCart } = useIsInCart()
 const { categorySlug, subcategorySlug, productSlug } = route.params as {
   categorySlug: string
   subcategorySlug: string
@@ -94,6 +95,7 @@ watch(product, (newCategory) => {
       >{{ visuallyHiddenTranslations[currentLocale].sectionProductSlugTitle }}</h1>
    <div class="product-review__wrapper-left wrapper-left">
       <UButton
+      class="product-review__go-back"
       @click="goBack"
       icon="material-symbols:arrow-back"
       aria-label="go back"
@@ -150,11 +152,19 @@ watch(product, (newCategory) => {
       {{ product.price }}
      </span>
      <UButton
+      v-if="!isInCart(product.id)"
      @click="handleAddToCart(product)"
       name-class="add-to-cart"
       label="Добавить в корзину"
       class="wrapper-right__btn"
      />
+     <UButton class="subcategory-products__add-to-cart"
+      v-else
+      disabled
+      name-class="add-to-cart"
+      icon="emojione-v1:left-check-mark"
+      aria-label="add to cart"
+      />
    </div>
 </section>
    <span v-else-if="error">
@@ -174,10 +184,17 @@ watch(product, (newCategory) => {
       justify-items: center;
       row-gap: toEm(22);
    }
+
+   &__go-back {
+      justify-self: start;
+      align-self: start;
+   }
 }
 
 .wrapper-left {
    position: relative;
+   width: 100%;
+   display: grid;
 
    &__in-stock {
    display: inline-block;
@@ -198,6 +215,7 @@ watch(product, (newCategory) => {
 }
 
    &__image {
+      justify-self: center;
    margin-block-start: toRem(10);
    border-radius: toRem(8);
    box-shadow: 0 0 toRem(4) var(--shadow);

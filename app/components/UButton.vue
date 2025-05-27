@@ -154,7 +154,7 @@ body:has(dialog[open]) {
    transition: color var(--transition-duration), scale var(--transition-duration);
 
    svg {
-      font-size: toEm(18, 24);
+      font-size: toEm(20, 24);
       color: var(--warning-color);
 
       @include hover {
@@ -180,18 +180,28 @@ body:has(dialog[open]) {
    }
 
   &_add-to-cart {
-   border-radius: toRem(8);
-   box-shadow: 0 toRem(4) toRem(1) rgba(0, 0, 0, 0.4);
-   transition: background-color var(--transition-duration);
-   background-color: var(--danger-color);
+   font-weight: 600;
+   border-radius: toRem(6);
+   border: 1px solid var(--danger-hover);
+   box-shadow: 0 toRem(3) toRem(9) rgba(0, 0, 0, 0.4);
+   color: var(--danger-color);
+   background-color: var(--light-color);
+   transition: background-color var(--transition-duration), color var(--transition-duration);
 
-   &:active {
-      translate: 0 toRem(3);
-      box-shadow: 0 toRem(2) toRem(1) rgba(0, 0, 0, 0.4);
+   &:disabled {
+     opacity: .7;
+  }
+
+   svg {
+      font-size: toEm(30, 24);
+      padding: toRem(4);
    }
 
    @include hover {
+      &:enabled {
+      color: var(--light-color);
       background-color: var(--danger-hover);
+    }
    }
   }
 
@@ -202,7 +212,6 @@ body:has(dialog[open]) {
 
    &:disabled {
      opacity: 1;
-    cursor: default;
   }
 
    svg {
@@ -211,7 +220,7 @@ body:has(dialog[open]) {
       transition: color var(--transition-duration);
 
       @include hover {
-         color: var(--warning-color);
+      color: var(--warning-color);
    }
    }
 

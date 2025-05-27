@@ -23,7 +23,6 @@ onMounted(() => {
    name-class="hamburger"
    aria-label="Открыть модальное окно" 
    >
-     <!-- <span></span> -->
    </UButton>
    <dialog 
    class="dialog-contacts"
@@ -44,23 +43,23 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .dialog-contacts {
-  display: block;
   min-height: 100dvh;
+  display: block;
   position: fixed;
   inset: 0;
   margin-inline-end: 0;
   background-color: var(--slate-gray);
-  transform: translateX(100%);
-  transition: transform .2s linear;
+  translate: 100%;
+//   transition: translate .2s linear;
   @include adaptiveValue('width', 855, 285);
 
   &[open] {
-   transform: translateX(0);
-   transition: transform .3s linear;
+   translate: 0;
+   transition: translate .2s linear;
   }
   &[open]::backdrop {
    background-color: var(--dark-color);
-   animation: fade .3s linear forwards;
+   animation: fade .2s linear forwards;
   }
 
   &__items {

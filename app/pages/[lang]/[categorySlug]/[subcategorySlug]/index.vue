@@ -7,6 +7,7 @@ const { find } = useStrapi()
 const route = useRoute()
 const { currentLocale } = useLocale()
 const { goBack, goForward } = useGoToForwardOrBack()
+const { isInCart } = useIsInCart()
 const config = useRuntimeConfig()
 const cartStore = useCartStore()
 
@@ -73,13 +74,6 @@ const handleAddToCart = (product: Product) => {
     subcategorySlug
   )
 }
-
-const cartProductIds = computed<Set<string | number>>(() => 
-  new Set(cartStore.items.map(item => item.product.id))
-)
-
-const isInCart = (productId: number) => 
-  cartProductIds.value.has(productId)
 </script>
 
 <template>
@@ -192,7 +186,6 @@ const isInCart = (productId: number) =>
 
 <style lang="scss" scoped>
 .subcategory-products {
-
 &__row-top {
    display: grid;
    grid-template-columns: repeat(2,auto) 1fr;
