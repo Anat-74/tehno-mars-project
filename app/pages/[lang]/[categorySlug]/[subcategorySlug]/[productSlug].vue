@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Product } from "../../../../types/types"
 import { visuallyHiddenTranslations } from '~/locales/visuallyHidden'
+import { formatPrice } from '~/utils/formatPrice'
 
 const { find } = useStrapi()
 const route = useRoute()
@@ -152,7 +153,7 @@ watch(product, (newCategory) => {
       />
      <span class="wrapper-right__price">
       <Icon name="my-icon:icon-by-regular" />
-      {{ product.price }}
+      {{ formatPrice(product.price) }}
      </span>
      <UButton
       v-if="!isInCart(product.id)"

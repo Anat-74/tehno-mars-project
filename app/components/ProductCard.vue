@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Product } from "../types/types"
+import { formatPrice } from '~/utils/formatPrice'
 
 const props = defineProps<{
    product: Product & {
@@ -54,7 +55,7 @@ const handleAddToCart = () => {
       :alt="product.name"
       class="product-card__image"
     />
-    <span class="product-card__price">{{ product.price }}</span>
+    <span class="product-card__price">{{ formatPrice(product.price) }}</span>
   </NuxtLink>
   <UButton
       @click="handleAddToCart"

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { formatPrice } from '~/utils/formatPrice'
+
 const cartStore = useCartStore()
 const config = useRuntimeConfig()
 const { currentLocale } = useLocale()
@@ -38,7 +40,7 @@ onMounted(() => {
       </NuxtLink>
         <span class="cart-item__price">
          <Icon name="my-icon:icon-by-regular" />
-         {{ item.product.price }}
+         {{ formatPrice(item.product.price) }}
       </span>
         <div class="cart-item__controls">
         <UButton

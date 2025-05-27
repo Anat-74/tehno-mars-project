@@ -2,6 +2,7 @@
 import type { Product, Subcategory } from "../../../../types/types"
 import { productFilterTranslations } from '~/locales/productFilter'
 import { visuallyHiddenTranslations } from '~/locales/visuallyHidden'
+import { formatPrice } from '~/utils/formatPrice'
 
 const { find } = useStrapi()
 const route = useRoute()
@@ -158,7 +159,8 @@ const handleAddToCart = (product: Product) => {
               <h3 class="subcategory-products__title">
                {{ product.name }}</h3>
               <span class="subcategory-products__price">
-               {{ product.price }}</span>
+               {{ formatPrice(product.price) }}
+            </span>
 
             <UButton class="subcategory-products__add-to-cart"
             v-if="!isInCart(product.id)"

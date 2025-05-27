@@ -19,9 +19,17 @@ export const useCartStore = defineStore('cart', () => {
    )
 
    const totalPrice = computed(() => {
-     const total = items.value.reduce((total, item) => total + item.product.price * item.quantity, 0)
-      return total.toFixed(2)
-   })
+      const total = items.value.reduce(
+        (sum, item) => sum + item.product.price * item.quantity, 
+        0
+      )
+      
+      return new Intl.NumberFormat('ru-RU', {
+        style: 'decimal',
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }).format(total)
+    })
 
    const addToCart = (
       product: Product,
