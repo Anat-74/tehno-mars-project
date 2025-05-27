@@ -94,8 +94,9 @@ watch(product, (newCategory) => {
       id="product-description"
       >{{ visuallyHiddenTranslations[currentLocale].sectionProductSlugTitle }}</h1>
    <div class="product-review__wrapper-left wrapper-left">
+      <div class="wrapper-left__row-top">
       <UButton
-      class="product-review__go-back"
+      class="wrapper-left__go-back"
       @click="goBack"
       icon="material-symbols:arrow-back"
       aria-label="go back"
@@ -106,6 +107,8 @@ watch(product, (newCategory) => {
       class="wrapper-left__in-stock"
      />
      <ShareButton class="wrapper-left__share" />
+   </div>
+
       <NuxtImg 
         v-if="currentImage"
         :src="currentImage"
@@ -182,25 +185,29 @@ watch(product, (newCategory) => {
    @media (max-width:$tablet){
       grid-template-columns: 1fr;
       justify-items: center;
-      row-gap: toEm(22);
-   }
-
-   &__go-back {
-      justify-self: start;
-      align-self: start;
+      row-gap: toEm(16);
    }
 }
 
 .wrapper-left {
-   position: relative;
    width: 100%;
-   display: grid;
+   display: flex;
+   flex-direction: column;
+   row-gap: toEm(16);
+
+   &__row-top {
+      display: grid;
+      grid-template-columns: 1fr repeat(2, auto);
+      align-items: center;
+      column-gap: toEm(16);
+      margin-block-end: toEm(7);
+   }
+
+   &__go-back {
+      justify-self: start;
+   }
 
    &__in-stock {
-   display: inline-block;
-   position: absolute;
-   right: toRem(40);
-   top: toRem(4);
    padding-inline: toEm(8);
    padding-block: toEm(4);
    border-radius: toRem(4);
@@ -208,18 +215,15 @@ watch(product, (newCategory) => {
    box-shadow: 0px 1px toRem(5) var(--shadow);
 }
 
-&__share {
-   position: absolute;
-   top: toRem(2);
-   right: 0;
-}
-
    &__image {
-      justify-self: center;
-   margin-block-start: toRem(10);
-   border-radius: toRem(8);
+   align-self: center;
+   border-radius: toEm(8);
    box-shadow: 0 0 toRem(4) var(--shadow);
-   @include adaptiveValue("margin-block-end", 48, 12);
+   margin-block-end: toEm(48);
+
+   @media (max-width:$tablet){
+      margin-block-end: 0;
+   }
 }
 
 &__thumbnails {
