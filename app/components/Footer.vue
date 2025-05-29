@@ -9,6 +9,14 @@ defineProps<{
    email: Email[]
    phones: Phone[]
 }>()
+
+// Функция для форматирования телефонных номеров
+const formatPhone = (phone: string) => {
+  return phone
+    .replace(/ /g, '&nbsp;')   // Неразрывный пробел
+    .replace(/-/g, '&#8209;')  // Неразрывный дефис
+}
+//    v-html="formatPhone(item.phoneNumber)"
 </script>
 
 <template>
@@ -74,7 +82,7 @@ defineProps<{
     :href="`tel:${item.phoneNumber.replace(/[^0-9+]/g, '')}`"
     class="company__link-phones"
     >
-      {{ item.phoneNumber }}
+      {{ formatPhone(item.phoneNumber) }}
     </a>
    </div>
    <div 

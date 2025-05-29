@@ -188,13 +188,14 @@ const handleAddToCart = (product: Product) => {
 
 <style lang="scss" scoped>
 .subcategory-products {
+   padding-block: toEm(32);
+
 &__row-top {
    display: grid;
    grid-template-columns: repeat(2,auto) 1fr;
    align-items: center;
    column-gap: toEm(12);
-   padding-block: toEm(16);
-   margin-block-end: toEm(9);
+   margin-block-end: toEm(22);
 }
 
 &__select-wrapper {
@@ -208,7 +209,7 @@ const handleAddToCart = (product: Product) => {
    grid-template-columns: repeat(auto-fit, minmax(toRem(262), 1fr));
    justify-items: center;
    align-items: start;
-   row-gap: toEm(12);
+   row-gap: toEm(22);
    @include adaptiveValue("column-gap", 64, 7);
 
    @media (max-width:toEm(568)){

@@ -2,6 +2,7 @@
 import type { Product } from "../../../../types/types"
 import { visuallyHiddenTranslations } from '~/locales/visuallyHidden'
 import { formatPrice } from '~/utils/formatPrice'
+import { buttonTranslations } from '~/locales/button'
 
 const { find } = useStrapi()
 const route = useRoute()
@@ -159,7 +160,7 @@ watch(product, (newCategory) => {
       v-if="!isInCart(product.id)"
      @click="handleAddToCart(product)"
       name-class="add-to-cart"
-      label="Добавить в корзину"
+      :label="buttonTranslations[currentLocale].label"
       class="wrapper-right__btn"
      />
      <UButton class="subcategory-products__add-to-cart"

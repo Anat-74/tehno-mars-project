@@ -57,7 +57,9 @@ export default defineNuxtConfig({
       }
    },
    image: {
-      domains: ['127.0.0.1:1337'],
+      //      domains: ['127.0.0.1:1337'],
+      domains: ['127.0.0.1'],
+      dir: 'public',  // Ключевое изменение!
       provider: 'ipx',
       ipx: {
          modifiers: {
@@ -66,9 +68,9 @@ export default defineNuxtConfig({
             densities: [1, 2]
          }
       },
-      // strapi: {
-      //    baseURL: process.env.NUXT_PUBLIC_STRAPI_URL || 'http://127.0.0.1:1337'
-      // },
+      strapi: {
+         baseURL: process.env.NUXT_PUBLIC_STRAPI_URL
+      },
       screens: {
          'xs': 320,
          'sm': 479.98,
@@ -78,6 +80,14 @@ export default defineNuxtConfig({
          'xxl': 1536,
          '2xl': 1536
       },
+      // screens: {
+      //    xs: 320,
+      //    sm: 640,
+      //    md: 768,
+      //    lg: 1024,
+      //    xl: 1280,
+      //    xxl: 1536
+      //  },
       quality: 85,
       densities: [1, 2]
    },

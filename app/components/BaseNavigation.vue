@@ -60,7 +60,7 @@ const { currentLocale } = useLocale()
             name="my-icon:icon-a1" 
             color="red" 
             />
-            +37529 334-81-80
+            <!-- +37529 334-81-80 -->
          </a>
       <a 
       class="contacts__mail-link contacts-link"
