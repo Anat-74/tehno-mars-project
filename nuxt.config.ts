@@ -1,3 +1,5 @@
+import { resolve } from 'path'
+
 export default defineNuxtConfig({
    compatibilityDate: '2024-11-01',
    devtools: { enabled: false },
@@ -37,7 +39,11 @@ export default defineNuxtConfig({
    },
    nitro: {
       prerender: {
-         routes: ['/en', '/ru', '/be']
+         routes: ['/en', '/ru', '/be'],
+         ignore: [
+            /\/_ipx\//, // Игнорировать IPX пути
+            // /\.(jpg|png|webp)$/i // Игнорировать изображения
+          ]
       }
    },
    runtimeConfig: {
@@ -57,10 +63,12 @@ export default defineNuxtConfig({
       }
    },
    image: {
-      //      domains: ['127.0.0.1:1337'],
-      domains: ['127.0.0.1'],
-      dir: 'public',  // Ключевое изменение!
       provider: 'ipx',
+      // domains: ['127.0.0.1'],
+      // dir: 'public',
+      // dir: resolve('./public/_ipx'), // Абсолютный путь
+      domains: ['127.0.0.1:1337'], // Домен с портом!
+  
       ipx: {
          modifiers: {
             quality: 85,
@@ -72,22 +80,13 @@ export default defineNuxtConfig({
          baseURL: process.env.NUXT_PUBLIC_STRAPI_URL
       },
       screens: {
-         'xs': 320,
-         'sm': 479.98,
-         'md': 767.98,
-         'lg': 1023.98,
-         'xl': 1279.98,
-         'xxl': 1536,
-         '2xl': 1536
-      },
-      // screens: {
-      //    xs: 320,
-      //    sm: 640,
-      //    md: 768,
-      //    lg: 1024,
-      //    xl: 1280,
-      //    xxl: 1536
-      //  },
+         xs: 320,
+         sm: 640,
+         md: 768,
+         lg: 1024,
+         xl: 1280,
+         xxl: 1536
+       },
       quality: 85,
       densities: [1, 2]
    },

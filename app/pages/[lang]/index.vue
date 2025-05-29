@@ -80,7 +80,7 @@ watch(categories, (newCategory) => {
          decoding="async"
          format="webp"
          width="180"
-         ></NuxtImg>
+        />
          </NuxtLink>
          <h2 class="category__title">{{ category.name }}</h2>
       </li>

@@ -31,13 +31,13 @@ onMounted(() => {
        v-if="cartStore.totalItems === 0"
        class="cart-page__no-product-items"
      >
-       <NuxtImg
+       <!-- <NuxtImg
          class="cart-page__image" 
          src="image/cart-empty-img.png"
          alt="image"
          format="webp"
          width="444"
-       />
+       /> -->
        <span class="cart-page__text">
          {{ cartTranslations[currentLocale].noProducts }}
        </span>
