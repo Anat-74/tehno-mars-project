@@ -1,6 +1,6 @@
 <template>
    <header>
-      <NuxtLink to="/">Вернуться на главную</NuxtLink>
+      <!-- <NuxtLink to="/">Вернуться на главную</NuxtLink> -->
    </header>
    <main>
       <slot />

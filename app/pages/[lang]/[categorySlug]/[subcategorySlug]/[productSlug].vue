@@ -57,6 +57,11 @@ const isActive = (imgUrl: string) =>
   }
   })
 
+  useSeoMeta({
+  title: product.value?.name,
+  description: product.value?.description
+})
+
 watch(product, (newCategory) => {
   if (newCategory) {
     useSeoMeta({
@@ -66,11 +71,6 @@ watch(product, (newCategory) => {
   }
 })
 
-useSeoMeta({
-  title: product.value?.name,
-  description: product.value?.description
-})
-
 const handleAddToCart = (product: Product) => {
   cartStore.addToCart(
     product,
@@ -78,10 +78,6 @@ const handleAddToCart = (product: Product) => {
     subcategorySlug
   )
 }
-
-watch(product, (newCategory) => {
-  console.debug('product data:', newCategory)
-})
 </script> 
 
 <template>

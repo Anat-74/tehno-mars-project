@@ -73,7 +73,7 @@ const getQueryParams = () => {
      sort: [filters.sort],
      pagination: {
        page: currentPage.value,
-       pageSize: 10
+       pageSize: 16
      }
    }
  }

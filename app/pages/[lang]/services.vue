@@ -38,7 +38,7 @@ useSeoMeta({
          class="visually-hidden"
          id="our-services"
          >{{ visuallyHiddenTranslations[currentLocale].sectionOurServicesTitle }}</h1>
-         <h2>aboutUs</h2>
+         <h2>Servicess</h2>
          <!-- <NuxtPicture 
          class="services__image"
          src="/image/removebg-preview.png"
@@ -52,11 +52,7 @@ useSeoMeta({
 <style lang="scss" scoped>
 .services {
 display: flex;
-&__title {
-}
 
-&__image {
-}
 }
 
 </style>

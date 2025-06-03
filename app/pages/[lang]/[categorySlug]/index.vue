@@ -9,11 +9,12 @@ const { currentLocale } = useLocale()
 const { goBack, goForward } = useGoToForwardOrBack()
 const config = useRuntimeConfig()
 
-const page = ref(route.query.page ? +route.query.page : 1)
-const pageSize = 8
+// const page = ref(route.query.page ? +route.query.page : 1)
+// const pageSize = 6
+//-page-${page.value} кеширование
 
 const { data: category, status, error } = useAsyncData(
-  `category-${categorySlug}-${currentLocale.value}-page-${page.value}`,
+  `category-${categorySlug}-${currentLocale.value}`,
   async () => {
      const response = await find('categories', {
        filters: {
@@ -29,10 +30,10 @@ const { data: category, status, error } = useAsyncData(
           }
          }
        },
-       pagination: {
-        page: page.value,
-        pageSize: pageSize
-      }
+      //  pagination: {
+      //   page: page.value,
+      //   pageSize: pageSize
+      // }
     })
 
     if (!response.data || response.data.length === 0) {
@@ -45,28 +46,24 @@ const { data: category, status, error } = useAsyncData(
    }
 )
 
+useSeoMeta({
+  title: category.value?.name || '',
+  description: category.value?.name || ''
+})
+
 watch(category, (newCategory) => {
   if (newCategory) {
     useSeoMeta({
       title: newCategory.name,
-      description: newCategory.description
+      description: newCategory.name
     })
   }
 })
 
-useSeoMeta({
-  title: category.value?.name || '',
-  description: category.value?.description || ''
-})
-
-const pageCount = computed(() => {
-  const total = category.value?.subcategories.meta?.pagination.total || 0
-  return Math.ceil(total / pageSize)
-})
-
-watch(category, (newCategory) => {
-  console.debug('Category data:', newCategory)
-})
+// const pageCount = computed(() => {
+//   const total = category.value?.subcategories.meta?.pagination.total || 0
+//   return Math.ceil(total / pageSize)
+// })
 </script>
 
 <template>
@@ -114,11 +111,11 @@ watch(category, (newCategory) => {
          </NuxtLink>
         </li>
         </ul>
-        <Pagination class="sub-category__pagination"
+        <!-- <Pagination class="sub-category__pagination"
         :page="page"
         :pageCount="pageCount"
         :routeName="$route.name?.toString() || ''"
-      />
+      /> -->
       </section>
 
       <div v-if="error" class="error">
@@ -128,29 +125,25 @@ watch(category, (newCategory) => {
 
 <style lang="scss" scoped>
 .sub-category {
-   padding-block: toEm(22);
+   padding-block-start: toEm(12);
+   padding-block-end: toEm(22);
 
 &__buttons {
    display: inline-flex;
    column-gap: toEm(12);
-   margin-block-end: toEm(9);
+   margin-block-end: toEm(27);
 }
 
 &__list {
    display: grid;
    grid-template-columns: repeat(auto-fit, minmax(toRem(262), 1fr));
-   // justify-items: center;
-   align-items: start;
-   row-gap: toEm(12);
+   justify-items: center;
+   row-gap: toEm(22);
    @include adaptiveValue("column-gap", 64, 7);
-
-   // @media (max-width:toEm(568)){
-   //    grid-template-columns: repeat(2, 1fr);
-   // }
 }
 
 &__item {
-   justify-self: start;
+   width: 100%;
    display: grid;
    justify-items: center;
    padding-inline: toEm(12);

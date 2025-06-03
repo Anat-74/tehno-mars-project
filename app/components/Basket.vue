@@ -1,9 +1,10 @@
 <script setup lang="ts">
+const { currentLocale } = useLocale()
 const cartStore = useCartStore()
+
 onMounted(() => {
   cartStore.loadCart();
 })
-const { currentLocale } = useLocale()
 </script>
 
 <template>

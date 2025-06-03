@@ -9,15 +9,7 @@ const copyLink = async () => {
     await navigator.clipboard.writeText(productLink)
   } catch (err) {
     console.error('Ошибка копирования:', err)
-    // Fallback для старых браузеров
-    const input = document.createElement('input')
-    input.value = productLink
-    document.body.appendChild(input)
-    input.select()
-    document.body.removeChild(input)
    }
-
-   console.debug('Ссылка:', `${config.public.siteUrl}${route.fullPath.split('?')[0]}`)
 }
 </script>
 

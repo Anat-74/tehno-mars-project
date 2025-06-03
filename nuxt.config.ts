@@ -1,5 +1,3 @@
-import { resolve } from 'path'
-
 export default defineNuxtConfig({
    compatibilityDate: '2024-11-01',
    devtools: { enabled: false },
@@ -37,12 +35,14 @@ export default defineNuxtConfig({
    routeRules: {
       '/': { redirect: '/ru' }
    },
+   // imports: {
+   //    dirs: ['stores']
+   //  },
    nitro: {
       prerender: {
          routes: ['/en', '/ru', '/be'],
          ignore: [
             /\/_ipx\//, // Игнорировать IPX пути
-            // /\.(jpg|png|webp)$/i // Игнорировать изображения
           ]
       }
    },
@@ -152,5 +152,5 @@ export default defineNuxtConfig({
          include: ['sass']
       },
       assetsInclude: ['**/*.avif']
-   }
+   },
 })

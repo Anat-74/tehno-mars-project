@@ -8,15 +8,15 @@ const config = useRuntimeConfig()
 
 const pageMeta = {
   ru: {
-    title: 'ТехноМарс',
+    title: 'Главная',
     description: 'Главная страница сайта'
   },
   en: {
-    title: 'TehnoMars',
-    description: 'Main page of the site'
+    title: 'Home',
+    description: 'Home page of the site'
   },
   be: {
-    title: 'ТехнаМарс',
+    title: 'Галоўная',
     description: 'Галоўная старонка сайта'
   }
 }
@@ -48,10 +48,6 @@ const { data: categories, status, error } = useAsyncData(
       return response.data
    }
 )
-
-watch(categories, (newCategory) => {
-  console.debug('category data:', newCategory)
-})
 </script>
 
 <template>
@@ -98,18 +94,13 @@ watch(categories, (newCategory) => {
 &__list {
    display: grid;
    grid-template-columns: repeat(auto-fit, minmax(toRem(262), 1fr));
-   // justify-items: center;
-   align-items: start;
+   justify-items: center;
    row-gap: toEm(12);
    @include adaptiveValue("column-gap", 64, 7);
-
-   // @media (max-width:toEm(568)){
-   //    grid-template-columns: repeat(2, 1fr);
-   // }
 }
 
 &__item {
-   justify-self: start;
+   width: 100%;
    display: grid;
    justify-items: center;
    padding-inline: toEm(16);
@@ -120,9 +111,6 @@ watch(categories, (newCategory) => {
 
 &__link {
    margin-block-end: toEm(12);
-}
-
-&__title {
 }
 }
 

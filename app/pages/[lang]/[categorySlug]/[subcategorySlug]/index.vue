@@ -48,24 +48,20 @@ const { data: subcategory, status, error, refresh } = useAsyncData(
 
 useSeoMeta({
   title: subcategory.value?.name,
-  description: subcategory.value?.description
+  description: subcategory.value?.name
 })
 
 watch(subcategory, (newCategory) => {
   if (newCategory) {
     useSeoMeta({
       title: newCategory.name,
-      description: newCategory.description
+      description: newCategory.name
     })
   }
 })
 
 watch(sortOption, () => {
    refresh()
-})
-
-watch(subcategory, (newCategory) => {
-  console.log('subcategory data:', newCategory);
 })
 
 const handleAddToCart = (product: Product) => {

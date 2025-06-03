@@ -6,6 +6,14 @@ export interface VisibilityState {
    // visibleIsAccount: () => void
    visibleIsContacts: () => void
 }
+//====================================================================================================================================
+// export interface TranslationData {
+//    [key: string]: string
+//  }
+
+// export interface TranslationsCache {
+//    [lang: string]: TranslationData
+//  }
 //Collection========================================================================================================================================================
 export type Image = {
    id: number;
@@ -176,53 +184,3 @@ export interface GlobalData {
    data: T;
    meta?: object;
  }
-
-// export interface GlobalData {
-//    id: number
-//    documentId: string
-//    createdAt: string
-//    updatedAt: string
-//    publishedAt: string
-//    locale: string
-//    email: Array<{
-//      id: number
-//      email: string
-//      isEmail: boolean | null
-//    }>
-//    phones: Array<{
-//      id: number
-//      phoneNumber: string
-//      isMobile: boolean
-//    }>
-//    socials: Array<{
-//      id: number
-//      label: string
-//      href: string
-//      isSocial: boolean | null
-//      icon: Array<{
-//        id: number
-//        url: string
-//        alternativeText: string | null
-//      }>
-//    }>
-//    footer: {
-//      id: number
-//      companyName: string
-//      copyright: string
-//      legalAdress: string
-//      taxId: string
-//      workingHours: string
-//      logo: Array<{
-//        id: number
-//        url: string
-//        alternativeText: string | null
-//      }>
-//    }
-//    legal: {
-//      id: number
-//      accountNumber: string
-//      bankAddress: string
-//      bankName: string
-//      swiftCode: string
-//    }
-//  }

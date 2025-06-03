@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { FooterData, LegalInfo, SocialLink, Email, Phone } from "../types/types"
 const config = useRuntimeConfig()
+const { currentLocale } = useLocale()
 
 defineProps<{
    footer: FooterData
@@ -16,12 +17,14 @@ const formatPhone = (phone: string) => {
     .replace(/ /g, '&nbsp;')   // Неразрывный пробел
     .replace(/-/g, '&#8209;')  // Неразрывный дефис
 }
-//    v-html="formatPhone(item.phoneNumber)"
 </script>
 
 <template>
    <div class="base-footer">
       <div class="base-footer__container">
+         <NuxtLink 
+   class="header__link-logo hidden-mobile-small"
+   :to="`/${currentLocale}`">
          <NuxtImg
       v-if="footer.logo?.length"
       :src="`${config.public.strapi.url}${footer.logo[0]?.url}`"
@@ -31,6 +34,7 @@ const formatPhone = (phone: string) => {
       loading="lazy"
       class="base-footer__logo"
     />
+   </NuxtLink>
     <div class="base-footer__socials"
     v-if="socials"
    >
@@ -81,8 +85,8 @@ const formatPhone = (phone: string) => {
     <a
     :href="`tel:${item.phoneNumber.replace(/[^0-9+]/g, '')}`"
     class="company__link-phones"
+     v-html="formatPhone(item.phoneNumber)"
     >
-      {{ formatPhone(item.phoneNumber) }}
     </a>
    </div>
    <div 

@@ -320,16 +320,11 @@ body:has(dialog[open]) {
    z-index: 999;
    right: toRem(12);
    bottom: toRem(14);
-   width: toRem(36);
-   height: toRem(36);
    padding: toRem(4);
    border: 1px solid var(--dark-golden-color);
    transition: color var(--transition-duration);
-
-   @media (max-width:$mobile){
-      width: toRem(32);
-      height: toRem(32);
-   }
+   @include adaptiveValue("width", 36, 28);
+   @include adaptiveValue("height", 36, 30);
 
    svg {
       color: var(--dark-golden-color);

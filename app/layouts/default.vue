@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 const { find } = useStrapi()
 const searchStore = useSearchStore()
 const { products, totalPages, currentPage } = storeToRefs(searchStore)
@@ -44,12 +43,11 @@ watch(currentLocale, () => {
   refresh()
 })
 
-watchEffect(() => {
-  if (global.value) {
-    console.debug('Global data:', global.value);
-  }
-})
-
+// watchEffect(() => {
+//   if (global.value) {
+//     console.debug('Global data:', global.value);
+//   }
+// })
 </script>
 
 <template>

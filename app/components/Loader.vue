@@ -41,7 +41,6 @@
      top: toRem(8);
      height: toRem(64);
    }
-   50%,
    100% {
      top: toRem(24);
      height: toRem(32);

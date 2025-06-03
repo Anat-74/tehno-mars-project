@@ -36,6 +36,6 @@ useSeoMeta({
          class="visually-hidden"
          id="contacts-page"
          >{{ visuallyHiddenTranslations[currentLocale].sectionAboutUsTitle }}</h1>
-         <h2>aboutUs</h2>
+         <h2>Contacts</h2>
       </section>
 </template>
