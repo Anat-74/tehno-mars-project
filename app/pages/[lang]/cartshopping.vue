@@ -84,7 +84,7 @@ onMounted(() => {
    &__no-product-items {
          display: grid;
          justify-items: center;
-         padding-block-start: toRem(124);
+         padding-block: toEm(44);
    }
 
    &__text {

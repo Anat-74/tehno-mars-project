@@ -35,7 +35,7 @@ const { data: categories, status, error } = useAsyncData(
       filters: { locale: currentLocale.value },
       populate: {
          image: {
-               fields: ["alternativeText", "url"]
+            fields: ["alternativeText", "url"]
          },
          }
       })

@@ -9,31 +9,18 @@ const { currentLocale } = useLocale()
 const { goBack, goForward } = useGoToForwardOrBack()
 const config = useRuntimeConfig()
 
-// const page = ref(route.query.page ? +route.query.page : 1)
-// const pageSize = 6
-//-page-${page.value} кеширование
+const page = ref(route.query.page ? +route.query.page : 1)
+const pageSize = 6
 
-const { data: category, status, error } = useAsyncData(
+const { data: category, pending: categoryPending, error } = useAsyncData(
   `category-${categorySlug}-${currentLocale.value}`,
   async () => {
      const response = await find('categories', {
        filters: {
           slug: { $eq: categorySlug },
           locale: currentLocale.value
-       },
-      populate: {
-        subcategories: {
-            populate: {
-              image: {
-               fields: ["alternativeText", "url"]
-            }
-          }
-         }
-       },
-      //  pagination: {
-      //   page: page.value,
-      //   pageSize: pageSize
-      // }
+        },
+        fields: ['id', 'name']
     })
 
     if (!response.data || response.data.length === 0) {
@@ -42,9 +29,55 @@ const { data: category, status, error } = useAsyncData(
         statusMessage: 'subcategory - Not Found'
       })
      }
-    return response.data[0] as Category & { subcategories: SubcategoriesResponse }
+    return response.data[0] as Category
    }
 )
+
+
+const { data: subcategories, pending: subcategoriesPending, refresh: refreshSubcategories 
+} = useAsyncData(
+  `subcategories-${categorySlug}-${page.value}`,
+  async () => {
+    if (!category.value) return null
+    
+    const response = await find('subcategories', {
+      filters: {
+        category: category.value.id,
+        locale: currentLocale.value
+      },
+      populate: {
+        image: {
+          fields: ["alternativeText", "url"]
+        }
+      },
+      pagination: {
+        page: page.value,
+        pageSize: pageSize
+      }
+    })
+    
+    return response as SubcategoriesResponse
+  },
+  {
+     watch: [page, category] // Перезагрузка при смене страницы или категории
+  }
+)
+
+//Единый флаг загрузки
+const isLoading = computed(() => 
+  categoryPending.value || subcategoriesPending.value
+)
+
+//Вычисляем количество страниц
+const pageCount = computed(() => {
+  return subcategories.value?.meta?.pagination?.pageCount || 1
+})
+
+//Обновляем данные при изменении страницы
+watch(() => route.query.page, (newPage) => {
+  page.value = newPage ? +newPage : 1
+  refreshSubcategories()
+})
 
 useSeoMeta({
   title: category.value?.name || '',
@@ -59,43 +92,65 @@ watch(category, (newCategory) => {
     })
   }
 })
+watchEffect(() => {
+  console.debug('RouteName',route)
+})
 
-// const pageCount = computed(() => {
-//   const total = category.value?.subcategories.meta?.pagination.total || 0
-//   return Math.ceil(total / pageSize)
-// })
+watch(() => category.value, (newCategory) => {
+  if (newCategory) {
+    console.debug('Category data:', newCategory)
+  }
+})
+
+// Для подкатегорий
+watch(() => subcategories.value, (newSubcategories) => {
+  if (newSubcategories) {
+    console.debug('Subcategories data:', newSubcategories)
+  }
+})
 </script>
 
 <template>
-   <Loader v-if="status === 'pending'" />
-      <section class="sub-category"
-      aria-labelledby="sub-category">
-         <h1
-      id="sub-category"
-      class="visually-hidden">{{ visuallyHiddenTranslations[currentLocale].sectionCategorySlugTitle }}</h1>
-         <div class="sub-category__buttons">
-      <UButton
-      @click="goBack"
-      icon="material-symbols:arrow-back"
-      aria-label="go back"
-      name-class="go-forward-back"
-     />
-     <UButton
-      @click="goForward"
-      icon="material-symbols:arrow-forward"
-      aria-label="go forward"
-      name-class="go-forward-back"
-     />
-   </div>
-        <ul class="sub-category__list"
-         v-if="category?.subcategories?.length"
-         >
-         <li class="sub-category__item"
-          v-for="subcategory in category.subcategories"
-          :key="subcategory.id"
-        >
-        <h2 class="sub-category__title">{{ subcategory.name }}</h2>
-          <NuxtLink class="sub-category__link"
+
+    <Loader v-show="isLoading"/>
+
+   <section 
+      v-show="!isLoading" 
+     class="sub-category"
+     aria-labelledby="sub-category"
+   >
+     <h1 id="sub-category" class="visually-hidden">
+       {{ visuallyHiddenTranslations[currentLocale].sectionCategorySlugTitle }}
+     </h1>
+     
+     <div class="sub-category__buttons">
+       <UButton
+         @click="goBack"
+         icon="material-symbols:arrow-back"
+         aria-label="go back"
+         name-class="go-forward-back"
+       />
+       <UButton
+         @click="goForward"
+         icon="material-symbols:arrow-forward"
+         aria-label="go forward"
+         name-class="go-forward-back"
+       />
+     </div>
+     
+     <ul 
+       v-if="subcategories?.data?.length"
+       class="sub-category__list"
+     >
+       <li 
+         v-for="subcategory in subcategories.data" 
+         :key="subcategory.id"
+         class="sub-category__item"
+       >
+         <h2 class="sub-category__title">
+           {{ subcategory.name }}
+         </h2>
+         <NuxtLink class="sub-category__link"
             :to="`/${currentLocale}/${categorySlug}/${subcategory.slug}`"
           >
             <NuxtImg
@@ -109,19 +164,21 @@ watch(category, (newCategory) => {
               height="230"
             />
          </NuxtLink>
-        </li>
-        </ul>
-        <!-- <Pagination class="sub-category__pagination"
-        :page="page"
-        :pageCount="pageCount"
-        :routeName="$route.name?.toString() || ''"
-      /> -->
-      </section>
-
-      <div v-if="error" class="error">
-      {{ error.message }}
-    </div>
-</template>
+       </li>
+     </ul>
+     
+     <Pagination 
+       class="sub-category__pagination"
+       :page="page"
+       :pageCount="pageCount"
+       :routeName="route.name?.toString() || ''"
+     />
+   </section>
+ 
+   <div v-if="error" class="error">
+     {{ error.message }}
+   </div>
+ </template>
 
 <style lang="scss" scoped>
 .sub-category {

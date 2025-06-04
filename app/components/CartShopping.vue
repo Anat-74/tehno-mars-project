@@ -97,10 +97,10 @@ onMounted(() => {
       grid-template-columns: auto 1fr;
       justify-items: start;
       grid-template-areas: 
-   'link price'
-   'link title'
-   'remove controls'
-   ;
+      'link price'
+      'link title'
+      'remove controls'
+      ;
    }
 }
 
@@ -108,7 +108,7 @@ onMounted(() => {
    grid-area: title;
 
    @media (max-width: toEm(639.98)){
-        align-self: start;
+      align-self: start;
    }
 }
 

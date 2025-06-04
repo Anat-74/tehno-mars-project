@@ -183,7 +183,7 @@ body:has(dialog[open]) {
    font-weight: 600;
    border-radius: toRem(6);
    border: 1px solid var(--danger-hover);
-   box-shadow: 0 toRem(3) toRem(9) rgba(0, 0, 0, 0.4);
+   box-shadow: 0 toRem(4) toRem(0) rgba(0, 0, 0, 0.2);
    color: var(--danger-color);
    background-color: var(--light-color);
    transition: background-color var(--transition-duration), color var(--transition-duration);
@@ -215,7 +215,7 @@ body:has(dialog[open]) {
   }
 
    svg {
-      font-size: toEm(22, 24);
+      font-size: toEm(20, 24);
       color: var(--primary-color);
       transition: color var(--transition-duration);
 
@@ -226,6 +226,10 @@ body:has(dialog[open]) {
 
    .iconify--emojione-v1 {
       padding: toRem(3);
+   }
+
+   @media (max-width:$mobile){
+       outline-width: 1px; 
    }
   }
 
@@ -321,7 +325,7 @@ body:has(dialog[open]) {
    right: toRem(12);
    bottom: toRem(14);
    padding: toRem(4);
-   border: 1px solid var(--dark-golden-color);
+   border: toRem(2) solid var(--dark-golden-color);
    transition: color var(--transition-duration);
    @include adaptiveValue("width", 36, 28);
    @include adaptiveValue("height", 36, 30);
@@ -331,6 +335,10 @@ body:has(dialog[open]) {
    }
    @include hover {
       background-color: var(--warning-hover);
+   }
+
+   @media (max-width:$mobile){
+       border-width: 1px; 
    }
 }
 
