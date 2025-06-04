@@ -111,6 +111,11 @@ const { data: categories, status, error } = useAsyncData(
 
 &__link {
    margin-block-end: toEm(12);
+   transition: scale var(--transition-duration);
+
+   @include hover {
+      scale: 1.1;
+   }
 }
 }
 

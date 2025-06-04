@@ -1,112 +1,84 @@
 <script setup lang="ts">
-const route = useRoute()
+const route = useRoute();
 
 interface PropsPagination {
-   page: number
-   pageCount: number
-   routeName: string
+  page: number;
+  pageCount: number;
+  routeName: string;
 }
 
-const props = defineProps<PropsPagination>()
+const props = defineProps<PropsPagination>();
+
+// Генерируем массив страниц для отображения
+const visiblePages = computed(() => {
+  const pages = [];
+  const maxVisible = 7; // Максимальное количество видимых страниц
+  let start = Math.max(1, props.page - Math.floor(maxVisible / 2));
+  const end = Math.min(props.pageCount, start + maxVisible - 1);
+  
+  start = Math.max(1, end - maxVisible + 1);
+  
+  for (let i = start; i <= end; i++) {
+    pages.push(i);
+  }
+  
+  return pages;
+});
 
 const getPageLink = (newPage: number) => {
-   return {
-      name: props.routeName,
-      params: route.params,
-      query: { ...route.query, page: newPage}
-   }
-}
+  return {
+    name: props.routeName,
+    params: route.params,
+    query: { ...route.query, page: newPage }
+  };
+};
 </script>
 
 <template>
   <div class="pagination">
-    <NuxtLink 
-      v-if="page > 1"
-      :to="getPageLink(page - 1)"
-      class="pagination__prev"
-    > 
-    <Icon name="material-symbols:arrow-back" />
-    </NuxtLink>
-
-    <div class="pagination__current"
-    >
-    <span class="pagination__page">{{ page }}</span>
-     <b>...</b>
-     <span class="pagination__page-count">{{ pageCount }}</span>
-    </div>
-
-    <NuxtLink
-      v-if="page < pageCount"
-      :to="getPageLink(page + 1)"
-      class="pagination__next"
-    >
-    <Icon name="material-symbols:arrow-forward" />
-    </NuxtLink>
+    <template v-for="pageNum in visiblePages" :key="pageNum">
+      <NuxtLink
+        v-if="pageNum !== page"
+        :to="getPageLink(pageNum)"
+        class="pagination__number"
+      >
+        {{ pageNum }}
+      </NuxtLink>
+      <span v-else class="pagination__number pagination__number_active">
+        {{ pageNum }}
+      </span>
+    </template>
   </div>
 </template>
 
 <style lang="scss" scoped>
 .pagination {
-   display: flex;
-   align-items: center;
-   column-gap: toEm(16);
-   padding-block-start: toEm(22);
+  display: flex;
+  gap: toEm(4);
+  align-items: center;
+  justify-content: center;
+  padding-block-start: toEm(25);
 
-&__prev {
-   display: flex;
-   align-items: center;
-   padding-inline: toRem(5);
-   padding-block: toRem(3);
-   border-radius: toEm(4);
-   outline: toEm(3) solid var(--secondary-color);
+&__number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: toEm(27);
+  height: toEm(24);
+  border-radius: toEm(6);
+  transition: all var(--transition-duration);
 
-   svg {
-      font-size: toRem(18);
-      color: var(--primary-color);
-      transition: color var(--transition-duration);
-
-      @include hover {
-      color: var(--warning-color);
-   }
-   }
-}
-
-&__current {
-   display: flex;
-   column-gap: toEm(4);
+  &_active {
+   background-color: var(--blue-color);
+   color: var(--light-color);
    font-weight: 600;
+  }
 
-   b {
-      letter-spacing: toRem(1.4);
+  @include hover {
+   &:not(.pagination__number_active) {
+      background-color: var(--border-color);
+    }
    }
+  }
 }
-
-&__page {
-   color: var(--warning-color);
-}
-
-&__page-count {
-   font-weight: 500;
-}
-
-&__next {
-   display: flex;
-   align-items: center;
-   padding-inline: toRem(5);
-   padding-block: toRem(3);
-   border-radius: toEm(4);
-   outline: toEm(3) solid var(--secondary-color);
-
-   svg {
-      font-size: toRem(18);
-      color: var(--primary-color);
-      transition: color var(--transition-duration);
-
-      @include hover {
-      color: var(--warning-color);
-      }
-   }
-}
-}
-
 </style>

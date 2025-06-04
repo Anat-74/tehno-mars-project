@@ -48,8 +48,8 @@ const formatPhone = (phone: string) => {
          v-if="link.icon"
         :src="`${config.public.strapi.url}${link.icon[0]?.url}`"
         :alt="link.label"
-        width="24"
-        height="24"
+        width="26"
+        height="26"
       />
     </a>
    </div>
@@ -159,9 +159,15 @@ const formatPhone = (phone: string) => {
    border-radius: toEm(8);
    padding: toEm(3);
    background-color: var(--light-color);
+   transition: all var(--transition-duration);
 
    @media (max-width:$mobile){
       max-width: toRem(48); 
+   }
+
+   @include hover {
+      border-radius: 45%;
+      outline: 1px solid var(--border-color);
    }
 }
 
@@ -171,6 +177,15 @@ const formatPhone = (phone: string) => {
    align-self: center;
    display: flex;
    column-gap: toRem(12);
+
+   img {
+      transition: all var(--transition-duration);
+      @include hover {
+         padding: toEm(1);
+         outline: toRem(2) solid var(--bg);
+         border-radius: 50%;
+   }
+   }
 }
 
 &__company {
@@ -234,9 +249,11 @@ const formatPhone = (phone: string) => {
 }
 
 &__phones {
+   align-self: start;
    display: flex;
    align-items: center;
    column-gap: toRem(2);
+   transition: all var(--transition-duration);
 
    .iconify--et {
    translate: toRem(2) 0;
@@ -247,15 +264,30 @@ const formatPhone = (phone: string) => {
    svg {
       color: var(--primary-color);
    }
+
+   @include hover {
+      color: var(--dark-color);
+      svg {
+      color: var(--warning-color);
+   }
+   }
 }
 
 &__email {
+   align-self: start;
    display: flex;
    align-items: center;
    column-gap: toRem(5);
-
+   transition: all var(--transition-duration);
    svg {
       color: var(--sky-blue-color);
+   }
+
+   @include hover {
+      color: var(--dark-color);
+      svg {
+      color: var(--warning-color);
+   }
    }
 }
 }

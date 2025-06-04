@@ -242,7 +242,7 @@ const handleAddToCart = (product: Product) => {
   box-shadow: 0px 1px toRem(5) var(--shadow);
   transition: all var(--transition-duration);
    &_active {
-      border-color: var(--dark-golden-color);
+      border-color: var(--blue-color);
    }
 
    @include hover {

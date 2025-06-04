@@ -227,6 +227,11 @@ const handleAddToCart = (product: Product) => {
 &__link {
    display: flex;
    justify-content: center;
+   transition: scale var(--transition-duration);
+
+@include hover {
+   scale: 1.1;
+}
 }
 
 &__image {

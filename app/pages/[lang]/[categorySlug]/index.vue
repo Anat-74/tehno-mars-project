@@ -10,7 +10,7 @@ const { goBack, goForward } = useGoToForwardOrBack()
 const config = useRuntimeConfig()
 
 const page = ref(route.query.page ? +route.query.page : 1)
-const pageSize = 6
+const pageSize = 2
 
 const { data: category, pending: categoryPending, error } = useAsyncData(
   `category-${categorySlug}-${currentLocale.value}`,
@@ -214,6 +214,11 @@ watch(() => subcategories.value, (newSubcategories) => {
 }
 
 &__link {
+   transition: scale var(--transition-duration);
+
+   @include hover {
+      scale: 1.1;
+   }
 }
 
 &__pagination {
