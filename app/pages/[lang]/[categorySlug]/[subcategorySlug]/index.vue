@@ -2,6 +2,7 @@
 import type { Product, ProductsResponse, Subcategory } from "../../../../types/types"
 import { productFilterTranslations } from '~/locales/productFilter'
 import { visuallyHiddenTranslations } from '~/locales/visuallyHidden'
+import { buttonTranslations } from '~/locales/button'
 import { formatPrice } from '~/utils/formatPrice'
 
 const { find } = useStrapi()
@@ -146,13 +147,13 @@ watch(() => products.value, (newSubcategories) => {
       <UButton
         @click="goBack"
         icon="material-symbols:arrow-back"
-        aria-label="go back"
+        :aria-label="buttonTranslations[currentLocale].ariaLabelGoBack"
         name-class="go-forward-back"
       />
       <UButton
         @click="goForward"
         icon="material-symbols:arrow-forward"
-        aria-label="go forward"
+        :aria-label="buttonTranslations[currentLocale].ariaLabelGoForward"
         name-class="go-forward-back"
       />
       
@@ -236,7 +237,7 @@ watch(() => products.value, (newSubcategories) => {
             class="subcategory-products__add-to-cart"
             name-class="small-add-to-cart"
             icon="qlementine-icons:add-to-cart-16"
-            aria-label="add to cart"
+            :aria-label="buttonTranslations[currentLocale].label"
           />
           
           <UButton 
@@ -245,7 +246,7 @@ watch(() => products.value, (newSubcategories) => {
             disabled
             name-class="small-add-to-cart"
             icon="emojione-v1:left-check-mark"
-            aria-label="add to cart"
+            :aira-label="buttonTranslations[currentLocale].ariaLabelAdded"
           />
         </div>
       </li>

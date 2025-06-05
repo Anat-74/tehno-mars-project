@@ -6,6 +6,7 @@ export const cartTranslations: Record<LocaleCode, {
    emptyCart: string
    noProducts: string
    visuallyHidden: string
+   ariaLabelBasket: string
    total: string
  }> = {
    ru: {
@@ -14,6 +15,7 @@ export const cartTranslations: Record<LocaleCode, {
      emptyCart: 'Товаров пока нет(',
      noProducts: 'Товаров пока нет(',
      visuallyHidden: 'Корзина товаров и оформление заказа',
+     ariaLabelBasket: 'Перейти в кознину товаров',
      total: 'Всего товаров:'
    },
    en: {
@@ -22,14 +24,16 @@ export const cartTranslations: Record<LocaleCode, {
      emptyCart: 'No products yet(',
       noProducts: 'No products yet(',
       visuallyHidden: 'Shopping Cart and Checkout',
+      ariaLabelBasket: 'Go to the goods market',
       total: 'Total items::'
    },
    be: {
      title: 'Кошык',
      description: 'Старонка кошыка сайта',
      emptyCart: 'Тавараў пакуль няма(',
-      noProducts: 'Тавараў пакуль няма(',
-      visuallyHidden: 'Кошык тавараў, афармленне замовы',
-      total: 'Усяго тавараў::'
+     noProducts: 'Тавараў пакуль няма(',
+     visuallyHidden: 'Кошык тавараў, афармленне замовы',
+     ariaLabelBasket: 'Перайсці ў казіну тавараў',
+     total: 'Усяго тавараў::'
    }
  }

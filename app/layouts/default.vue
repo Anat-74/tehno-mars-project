@@ -64,7 +64,9 @@ watch(currentLocale, () => {
    <div class="header__container-bottom">
    <NuxtLink 
    class="header__logo"
-   :to="`/${currentLocale}`">
+   :to="`/${currentLocale}`"
+   aria-label="Go home"
+   >
 
       <NuxtImg 
    v-if="global.footer?.logo?.length"

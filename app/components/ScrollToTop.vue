@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { buttonTranslations } from '~/locales/button'
+
+const { currentLocale } = useLocale()
 const isVisible = ref(false)
 
 const checkScroll = () => {
@@ -31,6 +34,6 @@ onUnmounted(() => {
       v-show="isVisible"
       name-class="go-to-top"
       icon="pixelarticons:chevron-up"
-      aria-label="scroll to top"
+      :aria-label="buttonTranslations[currentLocale].ariaLabelScrollToTop"
       />
 </template>

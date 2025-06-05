@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { FooterData, LegalInfo, SocialLink, Email, Phone } from "../types/types"
+
 const config = useRuntimeConfig()
 const { currentLocale } = useLocale()
 const { formatPhone } = useFormatPhone()
@@ -11,6 +12,7 @@ defineProps<{
    email: Email[]
    phones: Phone[]
 }>()
+
 </script>
 
 <template>
@@ -26,6 +28,7 @@ defineProps<{
          width="62"
          loading="lazy"
          class="base-footer__logo"
+         aria-label="Go home"
     />
    </NuxtLink>
 

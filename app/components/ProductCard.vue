@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Product } from "../types/types"
 import { formatPrice } from '~/utils/formatPrice'
+import { buttonTranslations } from '~/locales/button'
 
 const props = defineProps<{
    product: Product & {
@@ -17,6 +18,7 @@ const route = useRoute()
 const { currentLocale } = useLocale()
 const config = useRuntimeConfig()
 const cartStore = useCartStore()
+const { isInCart } = useIsInCart()
 
 const categorySlug = computed(() => {
   return (route.params.categorySlug as string) 
@@ -58,11 +60,20 @@ const handleAddToCart = () => {
     <span class="product-card__price">{{ formatPrice(product.price) }}</span>
   </NuxtLink>
   <UButton
+        v-if="!isInCart(product.id)"
       @click="handleAddToCart"
       name-class="small-add-to-cart"
       icon="qlementine-icons:add-to-cart-16"
-      aria-label="add to cart"
+      :aria-label="buttonTranslations[currentLocale].label"
      />
+     <UButton 
+        class="subcategory-products__add-to-cart"
+        v-else
+        disabled
+        name-class="small-add-to-cart"
+        icon="emojione-v1:left-check-mark"
+        :aira-label="buttonTranslations[currentLocale].ariaLabelAdded"
+      />
 </div>
 </template>
 

@@ -99,7 +99,7 @@ const handleAddToCart = (product: Product) => {
       class="wrapper-left__go-back"
       @click="goBack"
       icon="material-symbols:arrow-back"
-      aria-label="go back"
+      :aria-label="buttonTranslations[currentLocale].ariaLabelGoBack"
       name-class="go-forward-back"
      />
      <ProductStatus 
@@ -166,7 +166,7 @@ const handleAddToCart = (product: Product) => {
       disabled
       name-class="add-to-cart"
       icon="emojione-v1:left-check-mark"
-      aria-label="add to cart"
+      :aira-label="buttonTranslations[currentLocale].ariaLabelAdded"
       />
    </div>
 </section>

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { cartTranslations } from '~/locales/cart'
+
 const { currentLocale } = useLocale()
 const cartStore = useCartStore()
 
@@ -12,6 +14,7 @@ onMounted(() => {
 <NuxtLink
 class="cart-link"
    :to="`/${currentLocale}/cartshopping`"
+   :aria-label="cartTranslations[currentLocale].ariaLabelBasket"
    >
    <span class="cart-link__price">{{ cartStore.totalItems }}</span>
    <Icon

@@ -1,4 +1,6 @@
 <script setup>
+import { buttonTranslations } from '~/locales/button'
+
 const { currentLocale, locales, switchLocale } = useLocale()
 </script>
 
@@ -11,7 +13,7 @@ const { currentLocale, locales, switchLocale } = useLocale()
       :class="{ active: currentLocale === locale.code }"
       @click="switchLocale(locale.code)"
       name-class="lang-switcher"
-      aria-label="Переключить язык"
+     :aria-label="buttonTranslations[currentLocale].ariaLabelLang"
     />
   </div>
 </template>

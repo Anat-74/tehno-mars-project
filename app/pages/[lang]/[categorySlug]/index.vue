@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Category, SubcategoriesResponse } from "../../../types/types"
 import { visuallyHiddenTranslations } from '~/locales/visuallyHidden'
+import { buttonTranslations } from '~/locales/button'
 
 const { find } = useStrapi()
 const route = useRoute()
@@ -128,13 +129,13 @@ watch(() => subcategories.value, (newSubcategories) => {
        <UButton
          @click="goBack"
          icon="material-symbols:arrow-back"
-         aria-label="go back"
+        :aria-label="buttonTranslations[currentLocale].ariaLabelGoBack"
          name-class="go-forward-back"
        />
        <UButton
          @click="goForward"
          icon="material-symbols:arrow-forward"
-         aria-label="go forward"
+         :aria-label="buttonTranslations[currentLocale].ariaLabelGoForward"
          name-class="go-forward-back"
        />
      </div>
