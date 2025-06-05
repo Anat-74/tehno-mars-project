@@ -157,24 +157,26 @@ watch(currentLocale, () => {
    display: grid;
    grid-template-columns: auto 1fr auto;
    align-items: center;
-   padding-block: toRem(16);
+   padding-block: toEm(12);
    @include adaptiveValue("column-gap", 44, 7);
 
    @media (max-width:$mobileSmall){
-       grid-template-columns: 1fr auto; 
+       grid-template-columns: 1fr auto;
+       padding-block: toEm(22);
    }
 }
 
 &__logo {
    margin-inline-start: toRem(20);
-   border-radius: toEm(8);
-   padding: toEm(3);
+   border-radius: 50%;
+   padding-inline: toEm(6);
+   padding-block: toEm(8);
    background-color: var(--light-color);
-   transition: all var(--transition-duration);
+   transition: outline var(--transition-duration);
 
    @include hover {
-      border-radius: 48%;
       outline: 1px solid var(--border-color);
+      outline-offset: toRem(2);
    }
 
    @media (max-width:$mobile){
@@ -183,8 +185,8 @@ watch(currentLocale, () => {
    }
 
    @media (max-width:$mobileSmall){
-      width: toEm(60);
-      // border-radius: toRem(4);
+      width: toEm(57);
+      border-radius: 50%;
       position: absolute;
       top: toEm(7);
    }

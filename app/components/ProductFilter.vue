@@ -139,6 +139,16 @@ onUnmounted(() => {
       border-right: none;
       font-size: toEm(18);
       background-color: var(--light-color);
+
+      &::placeholder {
+      transition: color var(--transition-duration);
+    }
+
+      @include hover {
+      &::placeholder {
+        color: var(--black-color);
+      }
+    }
    }
 
    &-loader {
@@ -201,12 +211,17 @@ onUnmounted(() => {
       border: toRem(2) solid var(--danger-color);
       border-radius: 0 toEm(4) toEm(4) 0;
       padding-inline-start: toEm(6);
+      transition: background-color var(--transition-duration);
 
       @media (max-width:$mobile){
           width: toEm(40);
           padding-inline: toRem(2);
           color: var(--danger-color);
           background-color: currentColor;
+      }
+
+      @include hover {
+         background-color: var(--placeholder-hover);
       }
    }
    &-option {
