@@ -158,6 +158,7 @@ watch(() => subcategories.value, (newSubcategories) => {
               v-if="subcategory.image?.length"
               :src="`${config.public.strapi.url}${subcategory.image[0]?.url}`"
               :alt="subcategory.name"
+              class="sub-category__image"
               format="webp"
               loading="lazy"
               decoding="async"
@@ -217,10 +218,13 @@ watch(() => subcategories.value, (newSubcategories) => {
 
 &__link {
    transition: scale var(--transition-duration);
-
    @include hover {
       scale: 1.1;
    }
+}
+
+&__image {
+   height: 100%;
 }
 
 &__pagination {

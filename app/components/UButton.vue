@@ -214,7 +214,7 @@ body:has(dialog[open]) {
 
   &_small-add-to-cart {
    padding: toRem(3);
-   outline: toRem(2) solid var(--light-color);
+   outline: toRem(1) solid var(--primary-color);
    border-radius: 50%;
 
    &:disabled {
@@ -222,7 +222,7 @@ body:has(dialog[open]) {
   }
 
    svg {
-      font-size: toEm(20, 24);
+      font-size: toEm(22, 24);
       color: var(--primary-color);
       transition: color var(--transition-duration);
 

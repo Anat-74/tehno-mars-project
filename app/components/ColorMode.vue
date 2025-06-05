@@ -29,7 +29,8 @@ function iconName(theme: string) {
  <style lang="scss" scoped>
  .color-mode {
    display: flex;
-   column-gap: toRem(4);
+   @include adaptiveValue("column-gap", 4, 8);
+
    &__item {
       display: flex;
       border: 2px solid var(--border-color);

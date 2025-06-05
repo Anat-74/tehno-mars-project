@@ -287,7 +287,6 @@ watch(() => products.value, (newSubcategories) => {
    display: grid;
    grid-template-columns: repeat(auto-fit, minmax(toRem(262), 1fr));
    justify-items: center;
-   align-items: start;
    row-gap: toEm(32);
    @include adaptiveValue("column-gap", 64, 7);
 
@@ -299,7 +298,6 @@ watch(() => products.value, (newSubcategories) => {
 &__item {
    justify-self: center;
    display: grid;
-   align-items: end;
    min-height: 100%;
    width: 100%;
    padding-block-end: toEm(18);
@@ -310,7 +308,7 @@ watch(() => products.value, (newSubcategories) => {
 &__link {
    display: flex;
    justify-content: center;
-   margin-block-end: toEm(7);
+   margin-block-end: toEm(4);
    transition: scale var(--transition-duration);
 
 @include hover {
@@ -319,35 +317,37 @@ watch(() => products.value, (newSubcategories) => {
 }
 
 &__image {
+
    @media (max-width: toEm(628)){
       width: toRem(322);
 }
 }
 
 &__items-bottom {
+   display: flex;
+   flex-direction: column;
    position: relative;
    padding-inline: toEm(16);
 }
 
 &__title {
+   flex: 1 1 auto;
    text-align: center;
    margin-block-end: toEm(18);
 }
 
 &__price {
-   padding-inline: toEm(6);
-   padding-block: toEm(2);
-   letter-spacing: 1.2px;
-   font-weight: 600;
+   padding-inline-start: toEm(12);
+   padding-block: toRem(7);
    color: var(--warning-color);
    background-color: var(--secondary-color);
-   border-radius: toEm(4);
+   border-radius: toRem(14);
 }
 
 &__add-to-cart {
    position: absolute;
-   right: toRem(18);
-   bottom: 0;
+   right: toRem(17);
+   bottom: toRem(3);
    }
 
    &__pagination {

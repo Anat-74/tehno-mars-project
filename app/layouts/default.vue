@@ -4,6 +4,7 @@ const searchStore = useSearchStore()
 const { products, totalPages, currentPage } = storeToRefs(searchStore)
 const { currentLocale } = useLocale()
 const { isContacts } = useVisibilityProvider()
+const config = useRuntimeConfig()
 
 const {data: global, status, error, refresh } = useAsyncData<any>(
    `global-${currentLocale.value}`,
@@ -42,12 +43,6 @@ const {data: global, status, error, refresh } = useAsyncData<any>(
 watch(currentLocale, () => {
   refresh()
 })
-
-// watchEffect(() => {
-//   if (global.value) {
-//     console.debug('Global data:', global.value);
-//   }
-// })
 </script>
 
 <template>
@@ -56,14 +51,11 @@ watch(currentLocale, () => {
    />
 <header class="header">
    <div class="header__container-top">
-<ClientOnly >
-   <ColorMode class="header__color-mode"
-   />
-</ClientOnly>
+<ClientOnly ><ColorMode /></ClientOnly>
 <BaseNavigation class="header__navigation hidden-tablet"
-      v-if="global"
-      :phones="global.phones"
-      :email="global.email"
+   v-if="global"
+   :phones="global.phones"
+   :email="global.email"
 />
 <ShowModalHamburger class="header__dialog-header"
  />
@@ -71,15 +63,16 @@ watch(currentLocale, () => {
 <div :class="['header__bg', {header__bg_hidden: isContacts}]">
    <div class="header__container-bottom">
    <NuxtLink 
-   class="header__link-logo hidden-mobile-small"
-   :to="`/${currentLocale}`">
-      <NuxtImg 
    class="header__logo"
-   src="/image/logo.png"
+   :to="`/${currentLocale}`">
+
+      <NuxtImg 
+   v-if="global.footer?.logo?.length"
+   :src="`${config.public.strapi.url}${global.footer?.logo[0]?.url}`"
    alt="logo"
    format="webp"
-   widht="68"
-   height="68"
+   widht="80"
+   height="70"
    />
 </NuxtLink>
 <ProductFilter class="header__search"
@@ -139,14 +132,15 @@ watch(currentLocale, () => {
       @media (min-width:$tablet){
          @include adaptiveValue("column-gap", 32, 0, 0, $containerWidth, 1023.98);
       }
+
+      @media (max-width:$mobileSmall){
+         grid-template-columns: 1fr;
+         justify-items: center;
+      }
    }
 
 &__navigation {
    justify-self: end;
-}
-
-&__lang {
-   translate: 0 toRem(-14);
 }
 
 &__bg {
@@ -171,20 +165,28 @@ watch(currentLocale, () => {
    }
 }
 
-&__link-logo {
+&__logo {
    margin-inline-start: toRem(20);
-   padding-inline: toRem(2);
-   border-radius: 50%;
+   border-radius: toEm(8);
+   padding: toEm(3);
    background-color: var(--light-color);
-   transition: box-shadow var(--transition-duration);
+   transition: all var(--transition-duration);
 
    @include hover {
-      box-shadow: 0 toRem(1) toRem(32) toRem(27) #f3f5f4;
+      border-radius: 48%;
+      outline: 1px solid var(--border-color);
    }
 
    @media (max-width:$mobile){
-      width: toRem(59);
+      width: toRem(70);
       margin-inline-start: toRem(0);
+   }
+
+   @media (max-width:$mobileSmall){
+      width: toEm(60);
+      // border-radius: toRem(4);
+      position: absolute;
+      top: toEm(7);
    }
 }
 
@@ -222,8 +224,5 @@ watch(currentLocale, () => {
       translate: 0 toRem(5);
       margin-inline-end: toRem(9);
    }
-}
-//======================================================================================================================================================================================================================================
-.footer {
 }
 </style>

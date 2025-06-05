@@ -16,7 +16,7 @@ defineProps<{
 <template>
    <div class="base-footer">
       <div class="base-footer__container">
-         <NuxtLink class="header__link-logo hidden-mobile-small"
+         <NuxtLink class="base-footer__logo"
          :to="`/${currentLocale}`">
       <NuxtImg
          v-if="footer.logo?.length"
@@ -122,6 +122,7 @@ defineProps<{
 
 <style lang="scss" scoped>
 .base-footer {
+   margin-block-start: toEm(16);
    background-color:var(--bg-footer-color);
    @include adaptiveValue("padding-block", 22, 12);
 
@@ -150,17 +151,18 @@ defineProps<{
 &__logo {
    grid-area: logo;
    align-self: center;
+   justify-self: start;
    border-radius: toEm(8);
    padding: toEm(3);
    background-color: var(--light-color);
    transition: all var(--transition-duration);
 
    @media (max-width:$mobile){
-      max-width: toRem(48); 
+      width: toRem(48); 
    }
 
    @include hover {
-      border-radius: 45%;
+      border-radius: 48%;
       outline: 1px solid var(--border-color);
    }
 }
@@ -173,11 +175,9 @@ defineProps<{
    column-gap: toRem(12);
 
    img {
-      transition: all var(--transition-duration);
+      transition: scale var(--transition-duration);
       @include hover {
-         padding: toEm(1);
-         outline: toRem(2) solid var(--bg);
-         border-radius: 50%;
+         scale: 1.2;
    }
    }
 }

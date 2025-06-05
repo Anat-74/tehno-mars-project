@@ -24,9 +24,16 @@ const { currentLocale, locales, switchLocale } = useLocale()
   padding-inline: toEm(12);
   padding-block: toEm(8);
   border-radius: toEm(8);
-  margin-inline-start: toEm(36);
+  margin-inline-start: toRem(38);
   margin-block-start: toEm(8);
-  background-color: var(--light-color);
+  background-color: var(--secondary-color);
+
+  @media (max-width:$mobile){
+   margin-inline-start: toRem(12);
+  }
+  @media (max-width:$mobileSmall){
+   margin-inline-start: toEm(0);
+  }
 }
 .active {
    border: 1px solid var(--danger-color);
