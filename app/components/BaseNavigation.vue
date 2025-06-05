@@ -1,8 +1,15 @@
 <script lang="ts" setup>
+import type { Email, Phone } from "../types/types"
 import { baseNavigationTranslations } from '~/locales/baseNavigation'
 
 const { isContacts, visibleIsContacts } = useVisibilityConsumer()
+const { formatPhone } = useFormatPhone()
 const { currentLocale } = useLocale()
+
+defineProps<{
+   email: Email[]
+   phones: Phone[]
+}>()
 </script>
 
 <template>
@@ -45,30 +52,42 @@ const { currentLocale } = useLocale()
             <div
             v-if="isContacts"
             class="nav__contacts contacts">
-            <a 
-            class="contacts__viber-link contacts-link"
-            href="#"
-            >
-            <Icon name="fa-brands:viber" />
-               Viber
-         </a>
-            <a
-            class="contacts__phone-link contacts-link"
-            href="tel:+375293348180"
-            >
-            <Icon 
-            name="my-icon:icon-a1" 
-            color="red" 
-            />
-            <!-- +37529 334-81-80 -->
-         </a>
-      <a 
-      class="contacts__mail-link contacts-link"
-      href="mailto:technomars@bk.ru"
+         <div
+      class="contacts__phone-link contacts-link"
+      v-for="item in phones" 
+      :key="item.id"
       >
-      <Icon name="material-symbols:mail-outline-rounded" />
-      technomars@bk.ru
-   </a>
+         <Icon
+          v-if="item.isMobile"
+         name="et:phone"
+         />
+
+         <Icon
+          v-if="!item.isMobile"
+         name="carbon:phone-ip"
+         />
+    <a
+    :href="`tel:${item.phoneNumber.replace(/[^0-9+]/g, '')}`"
+    v-html="formatPhone(item.phoneNumber)"
+    >
+    </a>
+   </div>
+   <div 
+      class="contacts__mail-link contacts-link"
+      v-for="item in email" 
+     :key="item.id"
+   >
+      <Icon
+       v-if="item.isEmail"
+         name="material-symbols:mail-outline"
+         />
+    <a
+     v-if="item.isEmail"
+      :href="`mailto:${item.email}`"
+    >
+    {{ item.email }}
+    </a>
+   </div>
          </div>
       </li>
       </ul>
@@ -103,7 +122,6 @@ const { currentLocale } = useLocale()
          margin-block-end: toRem(-24);
 
          svg {
-            color: var(--active-color);
             transition: color var(--transition-duration);
          }
       }
@@ -154,8 +172,10 @@ const { currentLocale } = useLocale()
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      row-gap: toRem(5);
-      padding: toRem(12);
+      row-gap: toEm(8);
+      padding-inline: toRem(12);
+      padding-block-start: toRem(12);
+      padding-block-end: toRem(6);
       white-space: nowrap;
       position: absolute;
       top: toRem(56);
@@ -195,10 +215,13 @@ const { currentLocale } = useLocale()
    column-gap: toRem(9);
    padding-inline: toRem(9);
    padding-block: toRem(1);
-   border: 2px solid currentColor;
    border-radius: toRem(4);
    font-size: toRem(18);
    font-weight: 500;
+
+   &:not(:last-child) {
+      border: 2px solid currentColor;
+   }
 
       svg {
          font-size: toRem(18);

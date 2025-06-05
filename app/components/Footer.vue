@@ -2,6 +2,7 @@
 import type { FooterData, LegalInfo, SocialLink, Email, Phone } from "../types/types"
 const config = useRuntimeConfig()
 const { currentLocale } = useLocale()
+const { formatPhone } = useFormatPhone()
 
 defineProps<{
    footer: FooterData
@@ -10,31 +11,24 @@ defineProps<{
    email: Email[]
    phones: Phone[]
 }>()
-
-// Функция для форматирования телефонных номеров
-const formatPhone = (phone: string) => {
-  return phone
-    .replace(/ /g, '&nbsp;')   // Неразрывный пробел
-    .replace(/-/g, '&#8209;')  // Неразрывный дефис
-}
 </script>
 
 <template>
    <div class="base-footer">
       <div class="base-footer__container">
-         <NuxtLink 
-   class="header__link-logo hidden-mobile-small"
-   :to="`/${currentLocale}`">
-         <NuxtImg
-      v-if="footer.logo?.length"
-      :src="`${config.public.strapi.url}${footer.logo[0]?.url}`"
-      :alt="footer.companyName"
-      format="webp"
-      width="62"
-      loading="lazy"
-      class="base-footer__logo"
+         <NuxtLink class="header__link-logo hidden-mobile-small"
+         :to="`/${currentLocale}`">
+      <NuxtImg
+         v-if="footer.logo?.length"
+         :src="`${config.public.strapi.url}${footer.logo[0]?.url}`"
+         :alt="footer.companyName"
+         format="webp"
+         width="62"
+         loading="lazy"
+         class="base-footer__logo"
     />
    </NuxtLink>
+
     <div class="base-footer__socials"
     v-if="socials"
    >
@@ -85,7 +79,7 @@ const formatPhone = (phone: string) => {
     <a
     :href="`tel:${item.phoneNumber.replace(/[^0-9+]/g, '')}`"
     class="company__link-phones"
-     v-html="formatPhone(item.phoneNumber)"
+    v-html="formatPhone(item.phoneNumber)"
     >
     </a>
    </div>

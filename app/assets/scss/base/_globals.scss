@@ -74,6 +74,10 @@ input {
    color: var(--dark-golden-color);
 }
 
+.loader {
+   translate: 0 100%;
+}
+
 //*select start======================================================================================================================
 .select-wrapper {
    position: relative;

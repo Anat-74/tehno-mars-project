@@ -10,6 +10,7 @@ const { currentLocale, locales, switchLocale } = useLocale()
       :icon="locale.icon"
       :class="{ active: currentLocale === locale.code }"
       @click="switchLocale(locale.code)"
+      name-class="lang-switcher"
       aria-label="Переключить язык"
     />
   </div>
@@ -32,5 +33,10 @@ const { currentLocale, locales, switchLocale } = useLocale()
    border-radius: 50%;
    padding: toRem(1);
    font-size: toRem(20);
+   cursor: default;
+
+   @include hover {
+      scale: 1;
+   }
 }
 </style>

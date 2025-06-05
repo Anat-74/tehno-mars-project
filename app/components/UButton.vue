@@ -147,6 +147,13 @@ body:has(dialog[open]) {
       }
   }
 
+  &_lang-switcher {
+   transition: scale var(--transition-duration);
+   @include hover {
+      scale: 1.2;
+   }
+  }
+
   &_go-forward-back {
    padding: toRem(4);
    border-radius: toRem(6);

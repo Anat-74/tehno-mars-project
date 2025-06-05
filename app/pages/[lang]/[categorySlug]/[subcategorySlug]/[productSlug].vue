@@ -81,7 +81,9 @@ const handleAddToCart = (product: Product) => {
 </script> 
 
 <template>
-   <Loader v-if="status === 'pending'" />
+   <Loader v-if="status === 'pending'"
+     class="loader"
+   />
    <section 
    v-if="product"
    aria-labelledby="product-description"

@@ -6,15 +6,7 @@ export interface VisibilityState {
    // visibleIsAccount: () => void
    visibleIsContacts: () => void
 }
-//====================================================================================================================================
-// export interface TranslationData {
-//    [key: string]: string
-//  }
 
-// export interface TranslationsCache {
-//    [lang: string]: TranslationData
-//  }
-//Collection========================================================================================================================================================
 export type Image = {
    id: number;
    url: string;
@@ -56,7 +48,7 @@ export type Image = {
    id: number;
    name: string;
    slug: string;
-    description?: string;
+   description?: string;
    price: string
    locale?: string;
    documentId?: string;
@@ -77,7 +69,7 @@ export type Image = {
    isAvailable: boolean;
    image: Image[];
    category: {
-     slug: string;
+   slug: string;
    };
    subcategory?: {
      slug: string;

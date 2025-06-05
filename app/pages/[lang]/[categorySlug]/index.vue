@@ -10,7 +10,7 @@ const { goBack, goForward } = useGoToForwardOrBack()
 const config = useRuntimeConfig()
 
 const page = ref(route.query.page ? +route.query.page : 1)
-const pageSize = 2
+const pageSize = 12
 
 const { data: category, pending: categoryPending, error } = useAsyncData(
   `category-${categorySlug}-${currentLocale.value}`,
@@ -112,8 +112,9 @@ watch(() => subcategories.value, (newSubcategories) => {
 
 <template>
 
-    <Loader v-show="isLoading"/>
-
+    <Loader v-show="isLoading"
+      class="loader"
+    />
    <section 
       v-show="!isLoading" 
      class="sub-category"
@@ -160,13 +161,13 @@ watch(() => subcategories.value, (newSubcategories) => {
               format="webp"
               loading="lazy"
               decoding="async"
-              width="180"
-              height="230"
+              width="240"
+              height="180"
             />
          </NuxtLink>
        </li>
      </ul>
-     
+
      <Pagination 
        class="sub-category__pagination"
        :page="page"
@@ -195,7 +196,7 @@ watch(() => subcategories.value, (newSubcategories) => {
    display: grid;
    grid-template-columns: repeat(auto-fit, minmax(toRem(262), 1fr));
    justify-items: center;
-   row-gap: toEm(22);
+   row-gap: toEm(32);
    @include adaptiveValue("column-gap", 64, 7);
 }
 
@@ -210,6 +211,7 @@ watch(() => subcategories.value, (newSubcategories) => {
 }
 
 &__title {
+   text-align: center;
    margin-block-end: toEm(12);
 }
 

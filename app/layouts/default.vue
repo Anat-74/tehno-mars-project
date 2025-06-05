@@ -5,7 +5,7 @@ const { products, totalPages, currentPage } = storeToRefs(searchStore)
 const { currentLocale } = useLocale()
 const { isContacts } = useVisibilityProvider()
 
-const {data: global, pending, error, refresh } = useAsyncData<any>(
+const {data: global, status, error, refresh } = useAsyncData<any>(
    `global-${currentLocale.value}`,
    async () => {
       const response = await find('global', {
@@ -51,14 +51,19 @@ watch(currentLocale, () => {
 </script>
 
 <template>
+      <Loader v-if="status === 'pending'"
+     class="loader"
+   />
 <header class="header">
    <div class="header__container-top">
 <ClientOnly >
    <ColorMode class="header__color-mode"
    />
 </ClientOnly>
-<BaseNavigation 
-class="header__navigation hidden-tablet" 
+<BaseNavigation class="header__navigation hidden-tablet"
+      v-if="global"
+      :phones="global.phones"
+      :email="global.email"
 />
 <ShowModalHamburger class="header__dialog-header"
  />
@@ -117,8 +122,10 @@ class="header__navigation hidden-tablet"
       :footer="global.footer"
       :legal="global.legal"
       :socials="global.socials"
-    >
-    </Footer>
+    />
+    <span v-else-if="error">
+      Error: {{ error.message }}
+   </span>
 </template>
 
 <style lang="scss" scoped>

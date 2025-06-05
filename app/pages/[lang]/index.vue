@@ -70,6 +70,7 @@ const { data: categories, status, error } = useAsyncData(
          :to="`/${currentLocale}/${category.slug}`"
          >
          <NuxtImg
+         class="category__image"
          :src="`${config.public.strapi.url}${category.image[0]?.url}`"
          :alt="category.name"
          loading="lazy"
@@ -111,10 +112,15 @@ const { data: categories, status, error } = useAsyncData(
 
 &__link {
    margin-block-end: toEm(12);
-   transition: scale var(--transition-duration);
+}
+
+&__image {
+   transition: border-radius var(--transition-duration);
 
    @include hover {
-      scale: 1.1;
+         border-radius: toRem(22);
+         outline: toEm(3) solid var(--secondary-color);
+         outline-offset: toRem(6);
    }
 }
 }

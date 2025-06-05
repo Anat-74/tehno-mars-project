@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Product, Subcategory } from "../../../../types/types"
+import type { Product, ProductsResponse, Subcategory } from "../../../../types/types"
 import { productFilterTranslations } from '~/locales/productFilter'
 import { visuallyHiddenTranslations } from '~/locales/visuallyHidden'
 import { formatPrice } from '~/utils/formatPrice'
@@ -13,27 +13,25 @@ const config = useRuntimeConfig()
 const cartStore = useCartStore()
 
 const sortOption = ref<string>('name:asc')
+const page = ref(route.query.page ? +route.query.page : 1) // Текущая страница из query-параметра
+const pageSize = 12 // Количество товаров на странице
 
 const { categorySlug, subcategorySlug } = route.params as {
   categorySlug: string
   subcategorySlug: string
 }
 
-const { data: subcategory, status, error, refresh } = useAsyncData(
+// Получаем ID подкатегории (без товаров)
+const { data: subcategory, pending: subcategoryPending, error } = useAsyncData(
   `subcategory-${subcategorySlug}-${currentLocale.value}`,
   async () => {
-    const response = await find<Subcategory>('subcategories', {
-       filters: {
-          slug: { $eq: subcategorySlug },
-          category: { slug: { $eq: categorySlug } },
-          locale: currentLocale.value
-       },
-       populate: {
-        products: {
-             populate: ['image'],
-             sort: sortOption.value
-        }
-      }
+    const response = await find('subcategories', {
+      filters: {
+        slug: { $eq: subcategorySlug },
+        category: { slug: { $eq: categorySlug } },
+        locale: currentLocale.value
+      },
+      fields: ['id', 'name'] // Только необходимые поля
     })
 
     if (!response.data || response.data.length === 0) {
@@ -42,9 +40,65 @@ const { data: subcategory, status, error, refresh } = useAsyncData(
         statusMessage: 'Products subCategory Not Found'
       })
     }
-     return response.data[0]
-   }
+    return response.data[0] as Subcategory
+  }
 )
+
+// Получаем товары с пагинацией и сортировкой
+const { 
+  data: products, 
+  pending: productsPending,
+  refresh: refreshProducts
+} = useAsyncData(
+  `products-${subcategorySlug}-${page.value}-${sortOption.value}`,
+  async () => {
+    if (!subcategory.value) return null
+    
+    const response = await find('products', {
+      filters: {
+        subcategory: subcategory.value.id,
+        locale: currentLocale.value
+      },
+      populate: {
+        image: {
+          fields: ["alternativeText", "url"]
+        }
+      },
+      sort: sortOption.value,
+      pagination: {
+        page: page.value,
+        pageSize: pageSize
+      }
+    })
+
+    return response as ProductsResponse
+  },
+  {
+    // Перезагружаем при изменении страницы, сортировки или подкатегории
+    watch: [page, sortOption, subcategory]
+  }
+   )
+
+//  Единый флаг загрузки
+const isLoading = computed(() => 
+  subcategoryPending.value || productsPending.value
+)
+
+// Вычисляем общее количество страниц
+const pageCount = computed(() => {
+  if (!products.value?.meta?.pagination) return 1
+  return products.value.meta.pagination.pageCount
+})
+
+// Обработчик изменения страницы
+watch(() => route.query.page, (newPage) => {
+  page.value = newPage ? +newPage : 1
+})
+
+// Обновляем товары при изменении сортировки
+watch(sortOption, () => {
+  refreshProducts()
+})
 
 useSeoMeta({
   title: subcategory.value?.name,
@@ -60,10 +114,6 @@ watch(subcategory, (newCategory) => {
   }
 })
 
-watch(sortOption, () => {
-   refresh()
-})
-
 const handleAddToCart = (product: Product) => {
   cartStore.addToCart(
     product,
@@ -71,115 +121,148 @@ const handleAddToCart = (product: Product) => {
     subcategorySlug
   )
 }
+
+watch(() => products.value, (newSubcategories) => {
+  if (newSubcategories) {
+    console.debug('Products data:', newSubcategories)
+  }
+})
 </script>
 
 <template>
-   <Loader v-if="status === 'pending'" />
-      <section class="subcategory-products"
-      v-if="subcategory"
-      aria-labelledby="subcategory-products"
-      >
-         <h1
-      id="subcategory-products"
-      class="visually-hidden">{{ visuallyHiddenTranslations[currentLocale].sectionSubcategorySlugTitle }}</h1>
-   <div class="subcategory-products__row-top">
-         <UButton
-      @click="goBack"
-      icon="material-symbols:arrow-back"
-      aria-label="go back"
-      name-class="go-forward-back"
-     />
-     <UButton
-      @click="goForward"
-      icon="material-symbols:arrow-forward"
-      aria-label="go forward"
-      name-class="go-forward-back"
-     />
-     <div class="subcategory-products__select-wrapper select-wrapper">
-   <label 
-      class="visually-hidden"
-      for="sort-subcategory-product"
-      >{{ productFilterTranslations[currentLocale].labelSelect }}
-   </label>
-      <select class="subcategory-products__select select"
-      v-model="sortOption"
-      @change="refresh()"
-      id="sort-subcategory-product"
-      >
-      <option 
-      class="option"
-      disabled
-      value=""
-      >
-   </option>
-      <option
-      class="option"
-      value="name:asc"
-      >{{ productFilterTranslations[currentLocale].optionName }}
-   </option>
-      <option
-      class="option"
-      value="price:asc"
-      >{{ productFilterTranslations[currentLocale].optionPrice }}(🡹)
-   </option>
-      <option 
-      class="option"
-      value="price:desc"
-      > {{ productFilterTranslations[currentLocale].optionPriceDesc }}(🡻)
-   </option>
-      </select>
-   </div>
-   </div>
-      <h2 class="visually-hidden">Список товаров подкатегории</h2>
-         <ul class="subcategory-products__list"
-         v-if="subcategory.products?.length" 
-         >
-         <li class="subcategory-products__item"
-          v-for="product in subcategory.products"
-          :key="product.name"
+  <Loader v-show="isLoading" 
+  class="loader"
+  />
+  <section 
+    v-show="!isLoading"
+    class="subcategory-products"
+    aria-labelledby="subcategory-products"
+  >
+    <h1 id="subcategory-products" class="visually-hidden">
+      {{ visuallyHiddenTranslations[currentLocale].sectionSubcategorySlugTitle }}
+    </h1>
+    
+    <div class="subcategory-products__row-top">
+      <UButton
+        @click="goBack"
+        icon="material-symbols:arrow-back"
+        aria-label="go back"
+        name-class="go-forward-back"
+      />
+      <UButton
+        @click="goForward"
+        icon="material-symbols:arrow-forward"
+        aria-label="go forward"
+        name-class="go-forward-back"
+      />
+      
+      <div class="subcategory-products__select-wrapper select-wrapper">
+        <label 
+          class="visually-hidden"
+          for="sort-subcategory-product"
         >
-        <NuxtLink class="subcategory-products__link"
-            :to="`/${currentLocale}/${categorySlug}/${subcategorySlug}/${product.slug}`"
+          {{ productFilterTranslations[currentLocale].labelSelect }}
+        </label>
+        
+        <select 
+          class="subcategory-products__select select"
+          v-model="sortOption"
+          id="sort-subcategory-product"
+        >
+          <option 
+            class="option"
+            disabled
+            value=""
+          ></option>
+          <option
+            class="option"
+            value="name:asc"
           >
-            <NuxtImg class="subcategory-products__image"
-              v-if="product.image?.length"
-              :src="`${config.public.strapi.url}${product.image[0]?.url}`"
-              :alt="product.name"
-              loading="lazy"
-              decoding="async"
-              width="280"
-              height="210"
-            />
-         </NuxtLink>
-         <div class="subcategory-products__items-bottom">
-              <h3 class="subcategory-products__title">
-               {{ product.name }}</h3>
-              <span class="subcategory-products__price">
-               {{ formatPrice(product.price) }}
-            </span>
+            {{ productFilterTranslations[currentLocale].optionName }}
+          </option>
+          <option
+            class="option"
+            value="price:asc"
+          >
+            {{ productFilterTranslations[currentLocale].optionPrice }}(🡹)
+          </option>
+          <option 
+            class="option"
+            value="price:desc"
+          >
+            {{ productFilterTranslations[currentLocale].optionPriceDesc }}(🡻)
+          </option>
+        </select>
+      </div>
+    </div>
+    <h2 class="visually-hidden">{{ visuallyHiddenTranslations[currentLocale].sectionSubcategorySlugList }}</h2>
+    <ul
+      v-if="products?.data.length" 
+      class="subcategory-products__list"
+    >
+      <li 
+        v-for="product in products.data" 
+        :key="product.id"
+        class="subcategory-products__item"
+      >
+        <NuxtLink 
+          class="subcategory-products__link"
+          :to="`/${currentLocale}/${categorySlug}/${subcategorySlug}/${product.slug}`"
+        >
+          <NuxtImg 
+            class="subcategory-products__image"
+            v-if="product.image?.length"
+            :src="`${config.public.strapi.url}${product.image[0]?.url}`"
+            :alt="product.name"
+            loading="lazy"
+            decoding="async"
+            width="240"
+            height="180"
+          />
+        </NuxtLink>
+        
+        <div class="subcategory-products__items-bottom">
+          <h3 class="subcategory-products__title">
+            {{ product.name }}
+          </h3>
+          
+          <span class="subcategory-products__price">
+            {{ formatPrice(product.price) }}
+          </span>
 
-            <UButton class="subcategory-products__add-to-cart"
+          <UButton 
             v-if="!isInCart(product.id)"
             @click="handleAddToCart(product)"
+            class="subcategory-products__add-to-cart"
             name-class="small-add-to-cart"
             icon="qlementine-icons:add-to-cart-16"
             aria-label="add to cart"
-            />
-            <UButton class="subcategory-products__add-to-cart"
+          />
+          
+          <UButton 
+            class="subcategory-products__add-to-cart"
             v-else
             disabled
             name-class="small-add-to-cart"
             icon="emojione-v1:left-check-mark"
             aria-label="add to cart"
-            />
-         </div>
-        </li>
-        </ul>
-      </section>
+          />
+        </div>
+      </li>
+    </ul>
 
-    <span v-if="error" class="error">
-      {{ error.message }}
-    </span>
+    <Pagination 
+      v-if="pageCount > 1"
+      class="subcategory-products__pagination"
+      :page="page"
+      :pageCount="pageCount"
+      :routeName="route.name?.toString() || ''"
+    />
+  </section>
+
+  <span v-if="error" class="error">
+    {{ error.message }}
+  </span>
 </template>
 
 <style lang="scss" scoped>
@@ -205,7 +288,7 @@ const handleAddToCart = (product: Product) => {
    grid-template-columns: repeat(auto-fit, minmax(toRem(262), 1fr));
    justify-items: center;
    align-items: start;
-   row-gap: toEm(22);
+   row-gap: toEm(32);
    @include adaptiveValue("column-gap", 64, 7);
 
    @media (max-width:toEm(568)){
@@ -227,6 +310,7 @@ const handleAddToCart = (product: Product) => {
 &__link {
    display: flex;
    justify-content: center;
+   margin-block-end: toEm(7);
    transition: scale var(--transition-duration);
 
 @include hover {
@@ -264,6 +348,10 @@ const handleAddToCart = (product: Product) => {
    position: absolute;
    right: toRem(18);
    bottom: 0;
+   }
+
+   &__pagination {
+      justify-self: end;
    }
 }
 </style>
