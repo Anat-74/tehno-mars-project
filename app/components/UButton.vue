@@ -322,7 +322,9 @@ body:has(dialog[open]) {
    transition: background-color var(--transition-duration);
 
    @include hover {
+      &:enabled {
       background-color: var(--danger-hover);
+    }
    }
   }
 

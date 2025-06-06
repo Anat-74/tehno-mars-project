@@ -26,6 +26,7 @@ defineProps<{
          :alt="footer.companyName"
          format="webp"
          width="62"
+         height="55"
          loading="lazy"
          class="base-footer__logo"
          aria-label="Go home"

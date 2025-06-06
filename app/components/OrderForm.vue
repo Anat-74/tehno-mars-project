@@ -1,16 +1,17 @@
 <script setup lang="ts">
 import { orderFormTranslations } from '~/locales/orderForm'
 const { currentLocale } = useLocale()
+const cartStore = useCartStore()
+const orderStore = useOrderStore()
 
+const emit = defineEmits(['order-success'])
+
+const isSubmitting = ref(false)
 const form = reactive({
    email: '',
    phone: '',
    agree: false
 })
-
-const cartStore = useCartStore()
-const orderStore = useOrderStore()
-const isSubmitting = ref(false)
 
 const submitOrder = async () => {
    if (!form.agree || !form.email || !form.phone) return
@@ -18,7 +19,14 @@ const submitOrder = async () => {
    isSubmitting.value = true
    try {
       await orderStore.createOrder(form.email, form.phone)
-      alert("Заказ успешно ооформлен!")
+
+      const message = orderFormTranslations[currentLocale.value].showSuccessMessage
+      emit('order-success', message)
+
+      form.email = ''
+      form.phone = ''
+      form.agree = false
+
    } catch (error) {
       alert('Ошибка:' + error)
    } finally {
@@ -28,7 +36,8 @@ const submitOrder = async () => {
 </script>
 
 <template>
-   <div class="order-form">
+   <div 
+   :class="['order-form', {'order-form_disabled': isSubmitting || cartStore.totalItems === 0}]">
      <h3 class="order-form__title">{{ orderFormTranslations[currentLocale].title }}</h3>
      <form
       @submit.prevent="submitOrder"
@@ -43,6 +52,7 @@ const submitOrder = async () => {
            v-model="form.email" 
            type="email" 
            id="email"
+           :disabled="isSubmitting || cartStore.totalItems === 0"
            placeholder="your@email.com"
            class="order-form__input"
          >
@@ -55,6 +65,7 @@ const submitOrder = async () => {
            v-model="form.phone"
            type="tel"
            required
+           :disabled="isSubmitting || cartStore.totalItems === 0"
            id="phone"
            placeholder="+375(00) 000-00-00"
            class="order-form__input"
@@ -64,6 +75,7 @@ const submitOrder = async () => {
              v-model="form.agree" 
              type="checkbox" 
              required
+             :disabled="isSubmitting || cartStore.totalItems === 0"
              class="order-form__checkbox"
            >
            <span
@@ -72,12 +84,12 @@ const submitOrder = async () => {
          </span>
          </label>
        <UButton
-             size="large"
-             type="submit" 
-             :disabled="isSubmitting || cartStore.totalItems === 0"
-             :label="isSubmitting ? orderFormTranslations[currentLocale].submitting : orderFormTranslations[currentLocale].checkout"
-             class="order-form__btn"
-             />
+         size="large"
+         type="submit" 
+         :disabled="isSubmitting || cartStore.totalItems === 0"
+         :label="isSubmitting ? orderFormTranslations[currentLocale].submitting : orderFormTranslations[currentLocale].checkout"
+         class="order-form__btn"
+         />
      </form>
      <div class="order-form__total">
       <b>{{ orderFormTranslations[currentLocale].total }}</b>
@@ -95,6 +107,27 @@ const submitOrder = async () => {
 <style lang="scss" scoped>
 .order-form {
    max-width: toRem(340);
+
+   &_disabled {
+      max-width: toRem(264);
+      opacity: .7;
+
+      .order-form__form {
+         background-color: transparent;
+         box-shadow: none
+      }
+      .order-form__title {
+         background-color: transparent;
+         box-shadow: none
+      }
+      .order-form__total {
+         background-color: transparent;
+         box-shadow: none
+      }
+      .order-form__conditions {
+         cursor: default;
+      }
+   }
 
    &__title {
       text-align: center;
@@ -144,9 +177,11 @@ const submitOrder = async () => {
     }
 
     @include hover {
-      background-color: var(--placeholder-hover);
+      &:enabled {
+         background-color: var(--placeholder-hover);
       &::placeholder {
         color: var(--color);
+      }
       }
     }
 }
@@ -204,8 +239,10 @@ const submitOrder = async () => {
     }
 
     @include hover {
-      &::before {
+      &:enabled {
+         &::before {
         border-width: toRem(2);
+      }
       }
     }
   }

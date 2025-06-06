@@ -21,19 +21,11 @@ body:has(dialog[open]) {
    transition: all .4s;
  }
 
-
-h1 {
-   // color: var(--light-green);
-   // @include m.adaptiveValue("font-size", 26, 20);
-}
-
 h2 {
-   // font-weight: 500;
    @include m.adaptiveValue("font-size", 22, 18);
 }
 
 h3 {
-   // font-weight: 600;
    @include m.adaptiveValue("font-size", 18, 14);
 }
 
@@ -42,10 +34,6 @@ a {
    &[class] {
       text-decoration: none;
    }
-
-   // @include m.hover {
-   //    color: var(--warning-hover);
-   // }
 
    &:focus-visible {
       outline: toRem(2) dashed var(--warning-color);
@@ -126,12 +114,6 @@ input {
 
 .hidden-mobile {
    @media (max-width:c.$mobile){
-      display: none;
-   }
-}
-
-.hidden-mobile-small {
-   @media (max-width:c.$mobileSmall){
       display: none;
    }
 }

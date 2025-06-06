@@ -80,6 +80,7 @@ export const useCartStore = defineStore('cart', () => {
       saveCart()
    }
 
+
    const saveCart = () => {
       localStorage.setItem('cart', JSON.stringify(items.value))
    }

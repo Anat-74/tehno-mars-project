@@ -35,9 +35,6 @@ export default defineNuxtConfig({
    routeRules: {
       '/': { redirect: '/ru' }
    },
-   // imports: {
-   //    dirs: ['stores']
-   //  },
    nitro: {
       prerender: {
          routes: ['/en', '/ru', '/be'],
@@ -64,9 +61,6 @@ export default defineNuxtConfig({
    },
    image: {
       provider: 'ipx',
-      // domains: ['127.0.0.1'],
-      // dir: 'public',
-      // dir: resolve('./public/_ipx'), // Абсолютный путь
       domains: ['127.0.0.1:1337'], // Домен с портом!
   
       ipx: {

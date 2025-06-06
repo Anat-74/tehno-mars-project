@@ -68,7 +68,7 @@ watch(currentLocale, () => {
    aria-label="Go home"
    >
 
-      <NuxtImg 
+    <NuxtImg 
    v-if="global.footer?.logo?.length"
    :src="`${config.public.strapi.url}${global.footer?.logo[0]?.url}`"
    alt="logo"
@@ -173,12 +173,13 @@ watch(currentLocale, () => {
    border-radius: 50%;
    padding-inline: toEm(6);
    padding-block: toEm(8);
+   outline: 1px solid var(--light-color);
+   outline-offset: toRem(2);
    background-color: var(--light-color);
    transition: outline var(--transition-duration);
 
    @include hover {
-      outline: 1px solid var(--border-color);
-      outline-offset: toRem(2);
+      outline-color: var(--warning-hover);
    }
 
    @media (max-width:$mobile){

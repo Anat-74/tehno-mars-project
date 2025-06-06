@@ -13,6 +13,19 @@ useSeoMeta({
   ogDescription: cartTranslations[currentLocale.value as LocaleCode].description
 })
 
+// Добавляем состояние для сообщения об успехе
+const showOrderSuccess = ref(false)
+const successMessage = ref('')
+
+const handleOrderSuccess = (message: string) => {
+  successMessage.value = message
+   showOrderSuccess.value = true
+
+  setTimeout(() => {
+    showOrderSuccess.value = false
+  }, 4000)
+}
+
 onMounted(() => {
   cartStore.loadCart();
 })
@@ -27,6 +40,16 @@ onMounted(() => {
    class="visually-hidden"
    id="cart-page"
    >{{ cartTranslations[currentLocale].visuallyHidden }}</h1>
+
+   <Transition name="fade">
+       <div v-if="showOrderSuccess"
+         class="success-message"
+       >
+         <Icon name="material-symbols:check-circle" class="success-icon" />
+         {{ successMessage }}
+       </div>
+     </Transition>
+
      <div 
        v-if="cartStore.totalItems === 0"
        class="cart-page__no-product-items"
@@ -36,17 +59,13 @@ onMounted(() => {
          src="image/cart-empty-img.png"
          alt="image"
          format="webp"
-         width="444"
+         width="274"
        />
        <span class="cart-page__text">
-         {{ cartTranslations[currentLocale].noProducts }}
        </span>
      </div>
- 
-     <div 
-       v-else
-       class="cart-page__body"
-     >
+
+     <div class="cart-page__body">
      <UButton
       @click="goBack"
       icon="material-symbols:arrow-back"
@@ -72,25 +91,58 @@ onMounted(() => {
          </div>
          <OrderForm 
          class="cart-page__order-form"
+         @order-success="handleOrderSuccess"
          />
          </div>
    </section>
  </template>
 
 <style lang="scss" scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity .5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.success {
+  &-message {
+   position: fixed;
+  top: toEm(16);
+  left: 50%;
+  translate: -50% 0;
+  padding: toEm(15) toEm(25);
+  background-color: var(--forest-green-color);
+  color: var(--light-color);
+  border-radius: toEm(6);
+  box-shadow: 0 toRem(4) toRem(12) var(--shadow);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: toEm(12);
+  }
+
+  &-icon {
+   font-size: toRem(25);
+   color: var(--light-color);
+  }
+}
+
 .cart-page {
    position: relative;
 
    &__no-product-items {
-         display: grid;
-         justify-items: center;
-         padding-block: toEm(44);
+      display: grid;
+      justify-items: end;
    }
 
    &__text {
       font-family: $font-family2;
       font-size: toEm(24);
-      color: var(--danger-color);
+      color: var(--forest-green-color);
    }
 //----------------------------------------------------------------------------------------------------------------------------------------------
 &__go-back {
