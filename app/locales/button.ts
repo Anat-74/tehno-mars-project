@@ -8,6 +8,7 @@ export const buttonTranslations: Record<LocaleCode, {
    ariaLabelAdded: string
    ariaLabelPagination: string
    ariaLabelScrollToTop: string
+   ariaLabelClosedSuccess: string
 
  }> = {
    ru: {
@@ -17,6 +18,7 @@ export const buttonTranslations: Record<LocaleCode, {
       ariaLabelGoBack: "Вернуться назад",
        ariaLabelGoForward: "Идти вперед",
        ariaLabelPagination: "Перейти на следующую страницу",
+       ariaLabelClosedSuccess: "Закрыть сообщение",
        ariaLabelScrollToTop: "Прокрутить наверх"
    },
    en: {
@@ -26,6 +28,7 @@ export const buttonTranslations: Record<LocaleCode, {
       ariaLabelGoBack: "Go back",
       ariaLabelGoForward: "Go forward",
       ariaLabelPagination: "Go to the next page",
+      ariaLabelClosedSuccess: "Close message",
       ariaLabelScrollToTop: "Scroll to top"
    },
    be: {
@@ -35,6 +38,7 @@ export const buttonTranslations: Record<LocaleCode, {
       ariaLabelGoBack: "Вярнуцца назад",
       ariaLabelGoForward: "Ідзі наперад",
       ariaLabelPagination: "Перайсці на наступную старонку",
+      ariaLabelClosedSuccess: "Закрыць паведамленне",
       ariaLabelScrollToTop: "Пракруціць уверх"
    }
  }

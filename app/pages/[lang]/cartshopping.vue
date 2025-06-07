@@ -17,13 +17,15 @@ useSeoMeta({
 const showOrderSuccess = ref(false)
 const successMessage = ref('')
 
-const handleOrderSuccess = (message: string) => {
-  successMessage.value = message
+const handleOrderSuccess = ( orderId: number ) => {
+   successMessage.value = `Заказ #${orderId} успешно сформирован! 
+  В ближайшее время с вами свяжутся. 
+  Благодарим за заказ!`
    showOrderSuccess.value = true
 
   setTimeout(() => {
     showOrderSuccess.value = false
-  }, 4000)
+  }, 9000)
 }
 
 onMounted(() => {
@@ -33,7 +35,7 @@ onMounted(() => {
 
 <template>
    <section 
-   class="cart-page"
+   :class="['cart-page', {'cart-page_empty': cartStore.totalItems === 0}]"
    aria-labelledby="cart-page"
    >
    <h1
@@ -41,38 +43,65 @@ onMounted(() => {
    id="cart-page"
    >{{ cartTranslations[currentLocale].visuallyHidden }}</h1>
 
-   <Transition name="fade">
-       <div v-if="showOrderSuccess"
-         class="success-message"
-       >
-         <Icon name="material-symbols:check-circle" class="success-icon" />
-         {{ successMessage }}
-       </div>
-     </Transition>
-
-     <div 
-       v-if="cartStore.totalItems === 0"
-       class="cart-page__no-product-items"
-     >
-       <NuxtImg
-         class="cart-page__image" 
-         src="image/cart-empty-img.png"
-         alt="image"
-         format="webp"
-         width="274"
-       />
-       <span class="cart-page__text">
-       </span>
-     </div>
-
-     <div class="cart-page__body">
-     <UButton
+   <UButton
       @click="goBack"
       icon="material-symbols:arrow-back"
       aria-label="go back"
       name-class="go-forward-back"
       class="cart-page__go-back"
      />
+     <div 
+       v-if="cartStore.totalItems === 0"
+       class="cart-page__cart-empty cart-empty"
+     >
+     <div class="cart-empty__body" >
+      <ul class="cart-empty__list">
+         <li class="cart-empty__item">
+         <NuxtImg
+         src="image/valberg_new-removebg-preview.png"
+         alt="image"
+         format="webp"
+         width="122"
+       />
+         </li>
+         <li class="cart-empty__item">
+         <NuxtImg
+         src="image/aiko_new_1-removebg-preview.png"
+         alt="image"
+         format="webp"
+         width="122"
+       />
+         </li>
+         <li class="cart-empty__item">
+         <NuxtImg
+         src="image/praktik_profi_rgb-removebg-preview.png"
+         alt="image"
+         format="webp"
+         width="122"
+       />
+         </li>
+         <li class="cart-empty__item">
+         <NuxtImg
+         src="image/praktik-home_rgb-removebg-preview.png"
+         alt="image"
+         format="webp"
+         width="122"
+       />
+         </li>
+      </ul>
+     </div>
+     <div class="cart-empty__image">
+       <NuxtImg 
+         src="image/cart-empty-img.png"
+         alt="image"
+         format="webp"
+         width="286"
+       />
+       <span class="cart-empty__text">{{ cartTranslations[currentLocale].cartEmpty }}</span>
+      </div>
+     </div>
+
+     <div class="cart-page__body">
      <div class="cart-page__cart-items">
       <h2 class="cart-page__title">
          {{ cartTranslations[currentLocale].title }}
@@ -88,6 +117,14 @@ onMounted(() => {
            <CartShopping
            class="cart-page__products"
            />
+           <div v-if="cartStore.totalItems === 0">
+            <NotificationOrder
+            v-if="showOrderSuccess"
+            :message="successMessage"
+            type="success"
+            @close="showOrderSuccess = false"
+            />
+            </div>
          </div>
          <OrderForm 
          class="cart-page__order-form"
@@ -98,53 +135,88 @@ onMounted(() => {
  </template>
 
 <style lang="scss" scoped>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity .5s ease;
-}
+.cart-empty {
+   display: grid;
+   grid-template-columns: 1fr auto;
+   align-items: center;
+   padding-block-start: toEm(58);
 
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
+   &__body {
+      min-height: 100%;
+      display: grid;
+      align-items: center;
+      padding-inline: toEm(18);
+      padding-block: toEm(12);
+      border-radius: toRem(6) toRem(6) 0 0;
+      background-color: var(--secondary-color);
+      box-shadow:
+      0px 4px 4px 5px rgba(30, 33, 44, 0.05),
+      0px 12px 10px -9px rgba(30, 33, 44, 0.08),
+      0px 26px 24px -120px rgba(30, 33, 44, 0.1),
+      0px 30px 0px -99px rgba(30, 33, 44, 0.16);
+   }
 
-.success {
-  &-message {
-   position: fixed;
-  top: toEm(16);
-  left: 50%;
-  translate: -50% 0;
-  padding: toEm(15) toEm(25);
-  background-color: var(--forest-green-color);
-  color: var(--light-color);
-  border-radius: toEm(6);
-  box-shadow: 0 toRem(4) toRem(12) var(--shadow);
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  gap: toEm(12);
-  }
+   &__list {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      justify-items: center;
+      align-items: center;
+      column-gap: toEm(18);
+      row-gap: toEm(12);
+      padding-inline: toEm(9);
+      padding-block: toEm(12);
+      border-radius: toRem(4);
+      background-color: var(--bg);
 
-  &-icon {
-   font-size: toRem(25);
-   color: var(--light-color);
-  }
+      @media (max-width:toEm(530)){
+         grid-template-columns: repeat(2, 1fr);
+      }
+   }
+
+   &__item {
+      padding-inline: toEm(4);
+      border-radius: toRem(4);
+      background-color: var(--light-color);
+
+         &:not(:first-child) {
+            padding-block: toEm(6);
+         }
+
+         @media (max-width:$mobile){
+            max-width: toRem(99); 
+         }
+   }
+
+   &__image {
+      display: grid;
+      justify-items: center;
+
+      @media (max-width:$tablet){
+         display: none;
+      }
+   }
+
+   &__text {
+      font-size: toEm(22);
+      font-weight: 600;
+      letter-spacing: toRem(1.2);
+      font-family: $font-family2;
+      color: var(--warning-hover);
+   }
 }
 
 .cart-page {
    position: relative;
 
-   &__no-product-items {
-      display: grid;
-      justify-items: end;
+   &_empty {
+      .cart-page__body {
+      padding-block-start: toEm(12);
+      }
+      .cart-page__cart-items {
+         border-radius: 0 0 toRem(6) toRem(6);
+      }
    }
 
-   &__text {
-      font-family: $font-family2;
-      font-size: toEm(24);
-      color: var(--forest-green-color);
-   }
-//----------------------------------------------------------------------------------------------------------------------------------------------
 &__go-back {
    position: absolute;
    top: toRem(12);
@@ -168,13 +240,13 @@ onMounted(() => {
 &__cart-items {
    padding-inline: toEm(16);
    padding-block: toEm(16);
-   border-radius: toEm(8);
+   border-radius: toEm(6);
    background-color: var(--secondary-color);
    box-shadow:
       0px 4px 4px -4px rgba(30, 33, 44, 0.05),
       0px 12px 10px -6px rgba(30, 33, 44, 0.08),
       0px 26px 24px -10px rgba(30, 33, 44, 0.1),
-      0px 30px 120px -50px rgba(30, 33, 44, 0.16);
+      0px 30px 120px -90px rgba(30, 33, 44, 0.16);
 }
 
 &__title {
@@ -195,6 +267,7 @@ onMounted(() => {
 
 &__order-form {
    justify-self: end;
+
    @media (max-width:$mobileSmall){
       justify-self: center;
    }

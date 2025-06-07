@@ -3,6 +3,7 @@ import { orderFormTranslations } from '~/locales/orderForm'
 const { currentLocale } = useLocale()
 const cartStore = useCartStore()
 const orderStore = useOrderStore()
+import { formatPrice } from '~/utils/formatPrice'
 
 const emit = defineEmits(['order-success'])
 
@@ -18,14 +19,14 @@ const submitOrder = async () => {
 
    isSubmitting.value = true
    try {
-      await orderStore.createOrder(form.email, form.phone)
-
-      const message = orderFormTranslations[currentLocale.value].showSuccessMessage
-      emit('order-success', message)
+      const order = await orderStore.createOrder(form.email, form.phone)
+      emit('order-success', order.data.items[0]?.product.id)
 
       form.email = ''
       form.phone = ''
       form.agree = false
+
+      console.debug('order', order.data.id)
 
    } catch (error) {
       alert('Ошибка:' + error)
@@ -38,7 +39,8 @@ const submitOrder = async () => {
 <template>
    <div 
    :class="['order-form', {'order-form_disabled': isSubmitting || cartStore.totalItems === 0}]">
-     <h3 class="order-form__title">{{ orderFormTranslations[currentLocale].title }}</h3>
+     <h3 
+     class="order-form__title">{{ orderFormTranslations[currentLocale].title }}</h3>
      <form
       @submit.prevent="submitOrder"
       class="order-form__form"
@@ -99,7 +101,7 @@ const submitOrder = async () => {
                aria-atomic="true"
              >
                <Icon name="my-icon:icon-by-regular" />
-               {{ cartStore.totalPrice }}</strong>
+               {{ formatPrice(cartStore.totalPrice) }}</strong>
       </div>
    </div>
  </template>
@@ -110,6 +112,7 @@ const submitOrder = async () => {
 
    &_disabled {
       max-width: toRem(264);
+      filter: blur(2px);
       opacity: .7;
 
       .order-form__form {
@@ -118,6 +121,7 @@ const submitOrder = async () => {
       }
       .order-form__title {
          background-color: transparent;
+         opacity: .6;
          box-shadow: none
       }
       .order-form__total {
@@ -167,7 +171,7 @@ const submitOrder = async () => {
     padding-block: toEm(12);
     border-radius: toEm(4);
     border: 1px solid var(--border-color);
-    background-color: var(--secondary-color);
+    background-color: var(--bg);
     transition: background-color var(--transition-duration);
     @include adaptiveValue("margin-block-end", 20, 14);
 

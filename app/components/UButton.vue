@@ -161,7 +161,7 @@ body:has(dialog[open]) {
    transition: color var(--transition-duration), scale var(--transition-duration);
 
    svg {
-      font-size: toEm(20, 24);
+      font-size: toEm(22, 24);
       color: var(--warning-color);
 
       @include hover {
