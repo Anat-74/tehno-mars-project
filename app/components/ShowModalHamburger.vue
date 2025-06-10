@@ -1,5 +1,8 @@
 <script setup lang="ts">
-const dialogElement = useTemplateRef<HTMLDialogElement>('dialog-contacts')
+import { buttonTranslations } from '~/locales/button'
+const { currentLocale } = useLocale()
+
+const dialogElement = useTemplateRef<HTMLDialogElement>('dialog-hamburger')
 
 const openDialog = () => {
    dialogElement.value?.showModal()
@@ -21,20 +24,20 @@ onMounted(() => {
    <UButton 
    @click="openDialog" 
    name-class="hamburger"
-   aria-label="Открыть модальное окно" 
+   :aira-label="buttonTranslations[currentLocale].ariaLabelDialogOpen"
    >
    </UButton>
    <dialog 
-   class="dialog-contacts"
-   ref="dialog-contacts"
-   id="dialogContacts" 
+   class="dialog-hamburger"
+   ref="dialog-hamburger"
+   id="dialogHamburger" 
    aria-label="Контакты" 
    >
-     <div class="dialog-contacts__items">
+     <div class="dialog-hamburger__items">
          <UButton 
          @click="closeDialog"
          name-class="hamburger"
-         aria-label="Закрыть модальное окно"
+         :aira-label="buttonTranslations[currentLocale].ariaLabelDialogClosed"
           />
      </div>
    </dialog>
@@ -42,7 +45,7 @@ onMounted(() => {
  </template>
 
 <style lang="scss" scoped>
-.dialog-contacts {
+.dialog-hamburger {
   min-height: 100dvh;
   display: block;
   position: fixed;
@@ -50,7 +53,7 @@ onMounted(() => {
   margin-inline-end: 0;
   background-color: var(--slate-gray);
   translate: 100%;
-//   transition: translate .2s linear;
+  transition: translate .2s linear;
   @include adaptiveValue('width', 855, 285);
 
   &[open] {
@@ -74,7 +77,7 @@ onMounted(() => {
       opacity: 0;
    }
    100% {
-      opacity: .4;
+      opacity: .8;
    }
 }
 </style>

@@ -32,7 +32,7 @@ const { data: subcategory, pending: subcategoryPending, error } = useAsyncData(
         category: { slug: { $eq: categorySlug } },
         locale: currentLocale.value
       },
-      fields: ['id', 'name'] // Только необходимые поля
+      fields: ['id', 'name']
     })
 
     if (!response.data || response.data.length === 0) {

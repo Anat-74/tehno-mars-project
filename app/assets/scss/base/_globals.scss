@@ -14,11 +14,16 @@ body {
 
 body:has(dialog[open]) {
    overflow: hidden;
-   filter: blur(12px);
+   .header {
+      opacity: .4;
+   }
+   .footer {
+      display: none;
+   }
  }
 
- body:has(dialog:not([open])) {
-   transition: all .4s;
+ main:has(.dialog-menu[open]) {
+   filter: blur(7px)
  }
 
 h2 {
@@ -51,10 +56,6 @@ input {
       outline-offset: toRem(4);
       transition-duration: 0s !important;
    }
-
-   // &:active {
-   //    background-color: var(--danger-color);
-   // }
 }
 
 .iconify--my-icon {

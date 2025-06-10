@@ -40,7 +40,7 @@ const clickOnButton = () => {
 </template>
 
 <style lang="scss" scoped>
-body:has(dialog[open]) {
+body:has(.dialog-hamburger[open]) {
    .btn_hamburger {
       span {
          width: 0;
@@ -145,6 +145,16 @@ body:has(dialog[open]) {
          }
       }
       }
+  }
+
+  &_menu {
+   position: fixed;
+   right: toRem(12);
+   top: 50%;
+   translate: 0 -50%;
+   padding: toEm(4);
+   border-radius: 50%;
+   background-color: var(--blue-color);
   }
 
   &_lang-switcher {

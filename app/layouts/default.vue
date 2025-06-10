@@ -108,6 +108,7 @@ watch(currentLocale, () => {
       <div class="main__container">
       <slot />
    </div>
+   <ShowModalMenu />
    </main>
 
    <Footer class="footer"

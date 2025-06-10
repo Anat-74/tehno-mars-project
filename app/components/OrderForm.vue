@@ -26,8 +26,6 @@ const submitOrder = async () => {
       form.phone = ''
       form.agree = false
 
-      console.debug('order', order.data.id)
-
    } catch (error) {
       alert('Ошибка:' + error)
    } finally {

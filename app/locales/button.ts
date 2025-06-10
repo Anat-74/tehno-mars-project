@@ -9,6 +9,8 @@ export const buttonTranslations: Record<LocaleCode, {
    ariaLabelPagination: string
    ariaLabelScrollToTop: string
    ariaLabelClosedSuccess: string
+   ariaLabelDialogOpen: string
+   ariaLabelDialogClosed: string
 
  }> = {
    ru: {
@@ -19,6 +21,8 @@ export const buttonTranslations: Record<LocaleCode, {
        ariaLabelGoForward: "Идти вперед",
        ariaLabelPagination: "Перейти на следующую страницу",
        ariaLabelClosedSuccess: "Закрыть сообщение",
+       ariaLabelDialogOpen: "Открытое модное окно",
+       ariaLabelDialogClosed: "Закрыть модальное окно",
        ariaLabelScrollToTop: "Прокрутить наверх"
    },
    en: {
@@ -29,6 +33,8 @@ export const buttonTranslations: Record<LocaleCode, {
       ariaLabelGoForward: "Go forward",
       ariaLabelPagination: "Go to the next page",
       ariaLabelClosedSuccess: "Close message",
+      ariaLabelDialogOpen: "Open modal window",
+      ariaLabelDialogClosed: "Close modal window",
       ariaLabelScrollToTop: "Scroll to top"
    },
    be: {
@@ -39,6 +45,8 @@ export const buttonTranslations: Record<LocaleCode, {
       ariaLabelGoForward: "Ідзі наперад",
       ariaLabelPagination: "Перайсці на наступную старонку",
       ariaLabelClosedSuccess: "Закрыць паведамленне",
+      ariaLabelDialogOpen: "Адкрыць мадальнае акно",
+      ariaLabelDialogClosed: "Зачыніць мадальнае акно",
       ariaLabelScrollToTop: "Пракруціць уверх"
    }
  }
