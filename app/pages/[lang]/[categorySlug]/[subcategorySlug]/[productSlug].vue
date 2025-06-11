@@ -31,7 +31,7 @@ const { data: product, error, status } = useAsyncData(`product-${lang}-${product
         image: {
           fields: ["alternativeText", "url"]
         }
-      },
+      }
     })
 
     if (!response.data || response.data.length === 0) {

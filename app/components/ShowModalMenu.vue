@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Category, FooterData, SocialLink, Phone } from "../types/types"
+import type { Category, Product, FooterData, SocialLink, Phone } from "../types/types"
 import { visuallyHiddenTranslations } from '~/locales/visuallyHidden'
 
 const dialogElement = useTemplateRef<HTMLDialogElement>('dialog-menu')
@@ -40,11 +40,11 @@ const { data: category, status, error } = useAsyncData(
       populate: {
         subcategories: {
             fields: ['id', 'name', 'slug'],
-            populate: {
-               products: {
-               fields: ['id', 'name', 'slug']
-            }
-         }
+         //    populate: {
+         //       products: {
+         //       fields: ['id', 'name', 'slug','isDiscount'],
+         //    }
+         // }
         }
        }
     })
@@ -62,6 +62,43 @@ const { data: category, status, error } = useAsyncData(
 
 console.debug('CategoryModal', category.value)
 
+
+const { data: product } = useAsyncData(
+  `product-dialog-${currentLocale.value}`,
+  async () => {
+     const response = await find<Product>('products', {
+       filters: {
+         locale: currentLocale.value,
+         isDiscount: true,
+       },
+       fields: ['id', 'name', 'isDiscount', 'slug'],
+       pagination: {
+        pageSize: 100
+      },
+         populate: {
+         subcategory: {
+         fields: ['id', 'name', 'slug'],
+         populate: {
+            category: {
+               fields: ['id', 'name', 'slug'],
+            }
+         }
+            }
+         }
+    })
+
+
+    if (!response.data || response.data.length === 0) {
+      throw createError({
+        statusCode: 404,
+        statusMessage: 'Product - Not Found'
+      })
+     }
+    return response.data
+   }
+)
+
+console.debug('ProductModal', product.value)
 </script>
 
 <template>
@@ -123,6 +160,7 @@ console.debug('CategoryModal', category.value)
 
          <div class="accordion__content">
          <div 
+
          class="accordion__subcategories">
          <NuxtLink
          v-for="sub in cat.subcategories"
@@ -131,11 +169,23 @@ console.debug('CategoryModal', category.value)
           class="accordion__link"
          >{{ sub.name }}
       </NuxtLink>
-
                   </div>
                </div>
             </li>
       </ul>
+
+      <div v-if="product?.length">
+      >
+      <NuxtLink
+         v-for="prod in product"
+         :key="prod.id"
+         :to="`/${currentLocale}/${prod.subcategory.category.slug}/${prod.subcategory.slug}/${prod.slug}`"
+          class="accordion__link"
+         >{{ prod.name }}
+         {{prod.subcategory.name}}
+         {{prod.subcategory.category.name}}
+      </NuxtLink>
+      </div>
 
       <div
       class="dialog-menu__phones"
@@ -209,11 +259,10 @@ console.debug('CategoryModal', category.value)
    display: flex;
    flex-direction: column;
    row-gap: toEm(18);
-   padding-block: toEm(25, 16);
-   border-left: toEm(6) solid var(--secondary-color);
-   padding-inline-start: toEm(6);
-   @include adaptiveValue('padding-inline-end', 32, 9);
-   @include adaptiveValue('margin-inline-start', 28, 12);
+   padding-block: toEm(16);
+   padding-inline: toEm(7);
+   background:linear-gradient(-135deg, transparent toRem(45), var(--secondary-color) 0);
+   @include adaptiveValue('margin-inline', 32, 7);
   }
 
   &__top {

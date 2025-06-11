@@ -130,10 +130,17 @@ const clickOnButton = () => {
   &_dialog-menu {
    position: fixed;
    right: toRem(12);
-   top: 85%;
+   top: 82%;
    padding: toEm(4);
    border-radius: 50%;
-   background-color: var(--blue-color);
+   outline: toEm(2) solid var(--warning-color);
+   outline-offset: toRem(2);
+   background-color: var(--warning-hover);
+
+   svg {
+      font-size: toEm(25, 24);
+      color: var(--light-color);
+   }
   }
 
   &_lang-switcher {
@@ -349,7 +356,7 @@ const clickOnButton = () => {
   &_close {
    position: absolute;
     z-index: 10;
-    top: toEm(16);
+    top: toEm(9);
     right: toEm(12);
     padding-inline: toEm(14);
     padding-block: toEm(14);
