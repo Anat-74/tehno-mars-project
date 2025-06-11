@@ -1,9 +1,19 @@
 <script setup lang="ts">
-import { buttonTranslations } from '~/locales/button'
-import type { Category } from "../types/types"
-const { currentLocale } = useLocale()
+import type { Category, FooterData, SocialLink, Phone } from "../types/types"
+import { visuallyHiddenTranslations } from '~/locales/visuallyHidden'
 
 const dialogElement = useTemplateRef<HTMLDialogElement>('dialog-menu')
+
+defineProps<{
+   footer: FooterData
+   socials: SocialLink[]
+   phones: Phone[]
+}>()
+
+const config = useRuntimeConfig()
+const { currentLocale } = useLocale()
+const { formatPhone } = useFormatPhone()
+const { find } = useStrapi()
 
 const openDialog = () => {
    dialogElement.value?.showModal()
@@ -20,16 +30,11 @@ onMounted(() => {
 })
 
 
-const { find } = useStrapi()
-const route = useRoute()
-const { categorySlug } = route.params
-
 const { data: category, status, error } = useAsyncData(
-  `category-dialog-${categorySlug}-${currentLocale.value}`,
+  `category-dialog-${currentLocale.value}`,
   async () => {
      const response = await find<Category>('categories', {
        filters: {
-         slug: { $eq: categorySlug },
          locale: currentLocale.value
        },
       populate: {
@@ -44,7 +49,7 @@ const { data: category, status, error } = useAsyncData(
        }
     })
 
-    // Проверяем наличие данных
+
     if (!response.data || response.data.length === 0) {
       throw createError({
         statusCode: 404,
@@ -57,79 +62,68 @@ const { data: category, status, error } = useAsyncData(
 
 console.debug('CategoryModal', category.value)
 
-//=====================
-
-// const { data: subcategory } = useAsyncData(
-//   `subcategory-dialog-${subcategorySlug}-${currentLocale.value}`,
-//   async () => {
-//    const response = await find<Subcategory>('subcategories', {
-//        filters: {
-//           slug: { $eq: subcategorySlug },
-//           category: { slug: { $eq: categorySlug } },
-//           locale: currentLocale.value
-//        },
-//        populate: {
-//         products: {
-//          fields: ['id', 'name', 'slug']
-//         }
-//       }
-//     })
-
-//     // Проверяем наличие данных
-//     if (!response.data || response.data.length === 0) {
-//       throw createError({
-//         statusCode: 404,
-//         statusMessage: 'Category - Not Found'
-//       })
-//      }
-//     return response.data
-//    }
-// )
-
-// console.debug('SubcategoryModal', category.value)
 </script>
 
 <template>
    <Loader v-if="status === 'pending'" />
-   <div class="menu">
    <UButton 
    @click="openDialog"
    icon="line-md:arrow-open-left"
    name-class="menu"
-   :aira-label="buttonTranslations[currentLocale].ariaLabelDialogOpen"
-   >
-   </UButton>
+   aria-label="open"
+   />
    <dialog 
    class="dialog-menu"
    ref="dialog-menu"
    id="dialogMenu" 
-   aria-label="Контакты" 
+   aria-label="Menu" 
    >
+   <h1
+         class="visually-hidden"
+         >{{ visuallyHiddenTranslations[currentLocale].showModalMenuTitle }}</h1>
      <div class="dialog-menu__items">
          <UButton 
          @click="closeDialog"
          name-class="close"
-         :aira-label="buttonTranslations[currentLocale].ariaLabelDialogClosed"
+         aria-label="closed"
           />
-
-         <ul class="dialog-menu__accordion accordion">
+         <div class="dialog-menu__top">
+      <NuxtLink class="dialog-menu__logo"
+      :to="`/${currentLocale}`">
+      <NuxtImg
+         v-if="footer.logo?.length"
+         :src="`${config.public.strapi.url}${footer.logo[0]?.url}`"
+         :alt="footer.companyName"
+         format="webp"
+         width="57"
+         loading="lazy"
+         class="base-footer__logo"
+         aria-label="Go home"
+    />
+   </NuxtLink>
+   <AnimateTitle />
+</div>
+         <ul
+         v-if="category?.length"
+         class="dialog-menu__accordion accordion">
          <li 
-            v-for="cat in category"
-           :key="cat.id"
-         class="accordion">
+          v-for="cat in category"
+         :key="cat.id"
+         class="accordion__item">
          <details 
             name="faq" 
             class="accordion__details"
          >
            <summary 
-           class="accordion__summary"> 
+           class="accordion__summary">
+           <Icon name="mdi:chevron-left" />
            {{ cat.name }}
          </summary> 
          </details>
 
          <div class="accordion__content">
          <div 
-         class="accordion__content-items">
+         class="accordion__subcategories">
          <NuxtLink
          v-for="sub in cat.subcategories"
          :key="sub.id"
@@ -142,9 +136,49 @@ console.debug('CategoryModal', category.value)
                </div>
             </li>
       </ul>
+
+      <div
+      class="dialog-menu__phones"
+      v-for="item in phones" 
+      :key="item.id"
+      >
+         <Icon
+          v-if="item.isMobile"
+         name="et:phone"
+         />
+
+         <Icon
+          v-if="!item.isMobile"
+         name="carbon:phone-ip"
+         />
+    <a
+    :href="`tel:${item.phoneNumber.replace(/[^0-9+]/g, '')}`"
+    class="company__link-phones"
+    v-html="formatPhone(item.phoneNumber)"
+    >
+    </a>
+   </div>
+
+      <div class="dialog-menu__socials"
+    v-if="socials"
+   >
+   <a
+   v-for="link in socials" 
+   :key="link.id"
+    :href="link.href" 
+    target="_blank"
+    >
+      <NuxtImg 
+         v-if="link.icon"
+        :src="`${config.public.strapi.url}${link.icon[0]?.url}`"
+        :alt="link.label"
+        width="26"
+        height="26"
+      />
+    </a>
+   </div>
      </div>
    </dialog>
-</div>
 <div v-if="error" class="error">
       {{ error.message }}
     </div>
@@ -157,10 +191,9 @@ console.debug('CategoryModal', category.value)
   position: fixed;
   inset: 0;
   margin-inline-end: 0;
-  background-color: var(--slate-gray);
-  translate: 100%;
+  translate: 100% 0;
+  background-color: var(--bg);
   transition: translate .2s linear;
-  @include adaptiveValue('width', 855, 285);
 
   &[open] {
    translate: 0;
@@ -173,14 +206,79 @@ console.debug('CategoryModal', category.value)
 
   &__items {
    min-height: 100dvh;
+   display: flex;
+   flex-direction: column;
+   row-gap: toEm(18);
    padding-block: toEm(25, 16);
-   @include adaptiveValue('padding-inline', 22, 12);
+   border-left: toEm(6) solid var(--secondary-color);
+   padding-inline-start: toEm(6);
+   @include adaptiveValue('padding-inline-end', 32, 9);
+   @include adaptiveValue('margin-inline-start', 28, 12);
+  }
+
+  &__top {
+   position: relative;
+   display: flex;
+  }
+
+  &__logo {
+   border-radius: 50%;
+   padding-inline: toEm(4);
+   padding-block: toEm(6);
+   outline: 1px solid var(--light-color);
+   outline-offset: toRem(2);
+   background-color: var(--light-color);
+  }
+
+  &__accordion {
+   flex: 1 1 auto;
+  }
+
+  &__phones {
+   align-self: center;
+   display: flex;
+   align-items: center;
+   column-gap: toRem(4);
+   color: var(--border-color);
+   font-weight: 600;
+   transition: all var(--transition-duration);
+
+   svg {
+      font-size: toEm(22);
+      color: var(--warning-color);
+   }
+
+   @include hover {
+      color: var(--warning-color);
+      svg {
+      color: var(--border-color);
+   }
+   }
+}
+
+  &__socials {
+   align-self: end;
+   display: flex;
+   column-gap: toEm(12);
+
+      img {
+         transition: scale var(--transition-duration);
+
+         @include hover {
+            scale: 1.1;
+         }
+      }
   }
 }
 
 .accordion {
+   color: var(--gray-color);
+
       &__details {
-         font-size: toRem(22);
+         margin-block-end: toEm(2);
+         svg {
+            font-size: toEm(22);
+         }
       }
 
       &__details[open] +
@@ -191,39 +289,57 @@ console.debug('CategoryModal', category.value)
       &__details[open] {
          .accordion__summary {
             color: var(--danger-color);
+
+            svg {
+               transform: rotate(-90deg);
+               transition: transform .3s;
+            }
          }
       }
 
       &__summary {
-         @include adaptiveValue("font-size", 24, 18);
-         display: flex;
+         display: grid;
+         grid-template-columns: auto 1fr;
          align-items: center;
-         justify-content: space-between;
+         justify-items: center;
          padding-block: toEm(6, 22);
-         font-weight: 500;
+         font-weight: 600;
+         font-size: toEm(20);
          cursor: pointer;
+         transition: color var(--transition-duration);
+
+            @include hover {
+               color: var(--warning-color);
+            }
       }
 
       &__content {
-         transition: all .3s;
          display: grid;
          grid-template-rows: 0fr;
+         transition: all .3s;
       }
 
-      &__content-items {
+      &__subcategories {
          overflow: hidden;
          display: grid;
          align-items: center;
+         row-gap: toEm(9);
+         justify-content: center;
+         color: var(--color);
       }
 
       &__link {
-         @include adaptiveValue("font-size", 20, 16);
-         padding-inline: toEm(4, 20);
+         padding-inline: toEm(4, 18);
+         font-size: toEm(18);
+         transition: color var(--transition-duration);
+
+         @include hover {
+            color: var(--warning-color);
+         }
       }
 
       .router-link-active {
       color: var(--danger-hover);
-      font-weight: 500;
    }
    }
 
@@ -232,7 +348,7 @@ console.debug('CategoryModal', category.value)
       opacity: 0;
    }
    100% {
-      opacity: .2;
+      opacity: .3;
    }
 }
 </style>

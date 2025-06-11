@@ -122,12 +122,6 @@ const handleAddToCart = (product: Product) => {
     subcategorySlug
   )
 }
-
-watch(() => products.value, (newSubcategories) => {
-  if (newSubcategories) {
-    console.debug('Products data:', newSubcategories)
-  }
-})
 </script>
 
 <template>

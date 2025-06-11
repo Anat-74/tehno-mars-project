@@ -108,9 +108,13 @@ watch(currentLocale, () => {
       <div class="main__container">
       <slot />
    </div>
-   <ShowModalMenu />
+   <ShowModalMenu 
+   v-if="global"
+      :phones="global.phones"
+      :footer="global.footer"
+      :socials="global.socials"
+   />
    </main>
-
    <Footer class="footer"
      v-if="global"
       :phones="global.phones"
@@ -130,7 +134,7 @@ watch(currentLocale, () => {
       display: grid;
       grid-template-columns: auto 1fr auto;
       align-items: center;
-      @include adaptiveValue("padding-block", 25, 16);
+      @include adaptiveValue("padding-block", 25, 18);
 
       @media (min-width:$tablet){
          @include adaptiveValue("column-gap", 32, 0, 0, $containerWidth, 1023.98);
@@ -189,10 +193,10 @@ watch(currentLocale, () => {
    }
 
    @media (max-width:$mobileSmall){
-      width: toEm(57);
+      width: toEm(64);
       border-radius: 50%;
       position: absolute;
-      top: toEm(7);
+      top: toEm(4);
    }
 }
 

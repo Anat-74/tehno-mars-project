@@ -14,6 +14,7 @@ body {
 
 body:has(dialog[open]) {
    overflow: hidden;
+
    .header {
       opacity: .4;
    }
@@ -23,7 +24,8 @@ body:has(dialog[open]) {
  }
 
  main:has(.dialog-menu[open]) {
-   filter: blur(7px)
+   transition: all .1s linear forwards;
+   filter: blur(7px);
  }
 
 h2 {

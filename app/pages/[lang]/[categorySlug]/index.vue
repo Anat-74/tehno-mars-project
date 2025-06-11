@@ -93,22 +93,6 @@ watch(category, (newCategory) => {
     })
   }
 })
-watchEffect(() => {
-  console.debug('RouteName',route)
-})
-
-watch(() => category.value, (newCategory) => {
-  if (newCategory) {
-    console.debug('Category data:', newCategory)
-  }
-})
-
-// Для подкатегорий
-watch(() => subcategories.value, (newSubcategories) => {
-  if (newSubcategories) {
-    console.debug('Subcategories data:', newSubcategories)
-  }
-})
 </script>
 
 <template>

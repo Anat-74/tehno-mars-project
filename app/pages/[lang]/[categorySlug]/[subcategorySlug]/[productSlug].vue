@@ -27,7 +27,11 @@ const { data: product, error, status } = useAsyncData(`product-${lang}-${product
           slug: { $eq: productSlug },
           locale: currentLocale.value
        },
-      populate: '*'
+       populate: {
+        image: {
+          fields: ["alternativeText", "url"]
+        }
+      },
     })
 
     if (!response.data || response.data.length === 0) {
@@ -62,11 +66,11 @@ const isActive = (imgUrl: string) =>
   description: product.value?.description
 })
 
-watch(product, (newCategory) => {
-  if (newCategory) {
+watch(product, (newProduct) => {
+  if (newProduct) {
     useSeoMeta({
-      title: newCategory.name,
-      description: newCategory.description
+      title: newProduct.name,
+      description: newProduct.description
     })
   }
 })

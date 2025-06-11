@@ -113,7 +113,7 @@ body:has(.dialog-hamburger[open]) {
       right: toRem(15);
       width: toRem(26);
       height: toRem(18);
-      @include adaptiveValue("top", 32, 18);
+      @include adaptiveValue("top", 32, 23);
 
          span,
       &::before,
@@ -150,8 +150,7 @@ body:has(.dialog-hamburger[open]) {
   &_menu {
    position: fixed;
    right: toRem(12);
-   top: 50%;
-   translate: 0 -50%;
+   top: 85%;
    padding: toEm(4);
    border-radius: 50%;
    background-color: var(--blue-color);
@@ -370,19 +369,19 @@ body:has(.dialog-hamburger[open]) {
   &_close {
    position: absolute;
     z-index: 10;
-    top: toRem(15);
-    right: toRem(12);
-    padding-inline: toRem(14);
-    padding-block: toRem(14);
+    top: toEm(16);
+    right: toEm(12);
+    padding-inline: toEm(14);
+    padding-block: toEm(14);
 
        &::before,
       &::after{
          content: '';
          position: absolute;
 			right: toRem(5);
-			width: toRem(22);
+			width: toRem(20);
 			height: toRem(2);
-         background-color: var(--secondary-color);
+         background-color: var(--border-color);
       }
       &::before {
          top: calc(50% - toRem(1));

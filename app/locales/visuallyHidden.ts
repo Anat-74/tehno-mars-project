@@ -9,6 +9,7 @@ export const visuallyHiddenTranslations: Record<LocaleCode, {
    sectionAboutUsTitle: string
    sectionOurServicesTitle: string
    sectionContactsTitle: string
+   showModalMenuTitle: string
 
 }> = {
    ru: {
@@ -19,6 +20,7 @@ export const visuallyHiddenTranslations: Record<LocaleCode, {
       sectionLangTitle: "Секция с категориями товаров или главная страница",
       sectionAboutUsTitle: "Секция - О нас",
       sectionOurServicesTitle: "Секция - наши услуги",
+      showModalMenuTitle: "Список товаров категории и подкатегории",
       sectionContactsTitle: "Секция с контактами компании"
    },
    en: {
@@ -29,6 +31,7 @@ export const visuallyHiddenTranslations: Record<LocaleCode, {
       sectionLangTitle: "Product categories section or main page",
       sectionAboutUsTitle: "Section - About Us",
       sectionOurServicesTitle: "Section - our services",
+      showModalMenuTitle: "List of products by category and subcategory",
       sectionContactsTitle: "Company contacts section"
    },
    be: {
@@ -39,6 +42,7 @@ export const visuallyHiddenTranslations: Record<LocaleCode, {
       sectionLangTitle: "Секцыя з катэгорыямі тавараў або галоўная старонка",
       sectionAboutUsTitle: "Секцыя - Пра нас",
       sectionOurServicesTitle: "Секцыя - нашы паслугі",
+      showModalMenuTitle: "Спіс тавараў катэгорыі і падкатэгорыі",
       sectionContactsTitle: "Секцыя з кантактамі кампаніі"
    }
  }

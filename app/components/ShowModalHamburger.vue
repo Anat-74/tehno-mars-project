@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { buttonTranslations } from '~/locales/button'
-const { currentLocale } = useLocale()
-
 const dialogElement = useTemplateRef<HTMLDialogElement>('dialog-hamburger')
 
 const openDialog = () => {
@@ -24,9 +21,8 @@ onMounted(() => {
    <UButton 
    @click="openDialog" 
    name-class="hamburger"
-   :aira-label="buttonTranslations[currentLocale].ariaLabelDialogOpen"
-   >
-   </UButton>
+   aria-label="open"
+   />
    <dialog 
    class="dialog-hamburger"
    ref="dialog-hamburger"
@@ -37,7 +33,7 @@ onMounted(() => {
          <UButton 
          @click="closeDialog"
          name-class="hamburger"
-         :aira-label="buttonTranslations[currentLocale].ariaLabelDialogClosed"
+         aria-label="closed"
           />
      </div>
    </dialog>
