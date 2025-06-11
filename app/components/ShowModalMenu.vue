@@ -69,7 +69,7 @@ console.debug('CategoryModal', category.value)
    <UButton 
    @click="openDialog"
    icon="line-md:arrow-open-left"
-   name-class="menu"
+   name-class="dialog-menu"
    aria-label="open"
    />
    <dialog 
@@ -95,7 +95,7 @@ console.debug('CategoryModal', category.value)
          :src="`${config.public.strapi.url}${footer.logo[0]?.url}`"
          :alt="footer.companyName"
          format="webp"
-         width="57"
+         width="55"
          loading="lazy"
          class="base-footer__logo"
          aria-label="Go home"
@@ -331,10 +331,11 @@ console.debug('CategoryModal', category.value)
       &__link {
          padding-inline: toEm(4, 18);
          font-size: toEm(18);
-         transition: color var(--transition-duration);
+         transition: all var(--transition-duration);
 
          @include hover {
-            color: var(--warning-color);
+            color: var(--dark-color);
+            text-decoration: underline;
          }
       }
 

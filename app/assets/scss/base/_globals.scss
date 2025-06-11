@@ -23,9 +23,33 @@ body:has(dialog[open]) {
    }
  }
 
+ body:has(.dialog-hamburger[open]) {
+   .btn_hamburger {
+      span {
+         width: 0;
+      }
+      &::before,
+      &::after {
+         background-color: var( --dark-color);
+      }
+      &::before {
+         top: calc(50% - toRem(1));
+         transform: rotate(-45deg);
+      }
+      &::after {
+         bottom: calc(50% - toRem(1));
+         transform: rotate(45deg);
+      }
+   }
+ }
+
  main:has(.dialog-menu[open]) {
    transition: all .1s linear forwards;
    filter: blur(7px);
+
+   .btn_dialog-menu {
+      
+   }
  }
 
 h2 {

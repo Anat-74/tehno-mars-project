@@ -11,12 +11,12 @@
 		.animate-items {
          &__title {
 			position: absolute;
-			left: toRem(94);
+			left: toRem(107);
 			top: 50%;
          translate: 0 -50%;
+         letter-spacing: 1.2px;
          font-family: Rubik Doodle;
          font-weight: 600;
-         @include adaptiveValue("font-size", 28, 22);
 
          &:nth-child(1) {
          color: transparent;

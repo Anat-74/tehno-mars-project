@@ -40,26 +40,6 @@ const clickOnButton = () => {
 </template>
 
 <style lang="scss" scoped>
-body:has(.dialog-hamburger[open]) {
-   .btn_hamburger {
-      span {
-         width: 0;
-      }
-      &::before,
-      &::after {
-         background-color: var( --dark-color);
-      }
-      &::before {
-         top: calc(50% - toRem(1));
-         transform: rotate(-45deg);
-      }
-      &::after {
-         bottom: calc(50% - toRem(1));
-         transform: rotate(45deg);
-      }
-   }
- }
-
 .btn {
    padding-inline: toRem(12);
    padding-block: toRem(8);
@@ -147,7 +127,7 @@ body:has(.dialog-hamburger[open]) {
       }
   }
 
-  &_menu {
+  &_dialog-menu {
    position: fixed;
    right: toRem(12);
    top: 85%;
