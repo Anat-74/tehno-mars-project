@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Category, Product, FooterData, SocialLink, Phone } from "../types/types"
+import type { Category, Product, PaginationMeta, FooterData, SocialLink, Phone } from "../types/types"
 import { visuallyHiddenTranslations } from '~/locales/visuallyHidden'
 
 const dialogElement = useTemplateRef<HTMLDialogElement>('dialog-menu')
@@ -39,12 +39,7 @@ const { data: category, status, error } = useAsyncData(
        },
       populate: {
         subcategories: {
-            fields: ['id', 'name', 'slug'],
-         //    populate: {
-         //       products: {
-         //       fields: ['id', 'name', 'slug','isDiscount'],
-         //    }
-         // }
+            fields: ['id', 'name', 'slug']
         }
        }
     })
@@ -74,17 +69,17 @@ const { data: product } = useAsyncData(
        fields: ['id', 'name', 'isDiscount', 'slug'],
        pagination: {
         pageSize: 100
-      },
+      } as PaginationMeta,
          populate: {
          subcategory: {
          fields: ['id', 'name', 'slug'],
          populate: {
             category: {
                fields: ['id', 'name', 'slug'],
+               }
             }
          }
-            }
-         }
+      }
     })
 
 
@@ -175,15 +170,12 @@ console.debug('ProductModal', product.value)
       </ul>
 
       <div v-if="product?.length">
-      >
       <NuxtLink
          v-for="prod in product"
          :key="prod.id"
-         :to="`/${currentLocale}/${prod.subcategory.category.slug}/${prod.subcategory.slug}/${prod.slug}`"
+         :to="`/${currentLocale}/${prod?.subcategory?.category?.slug}/${prod?.subcategory?.slug}/${prod.slug}`"
           class="accordion__link"
          >{{ prod.name }}
-         {{prod.subcategory.name}}
-         {{prod.subcategory.category.name}}
       </NuxtLink>
       </div>
 
