@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Category, Product, PaginationMeta, FooterData, SocialLink, Phone } from "../types/types"
 import { visuallyHiddenTranslations } from '~/locales/visuallyHidden'
+import { discountProductTranslations } from '~/locales/discountProduct'
 
 const dialogElement = useTemplateRef<HTMLDialogElement>('dialog-menu')
 
@@ -55,8 +56,6 @@ const { data: category, status, error } = useAsyncData(
    }
 )
 
-console.debug('CategoryModal', category.value)
-
 
 const { data: product } = useAsyncData(
   `product-dialog-${currentLocale.value}`,
@@ -92,8 +91,6 @@ const { data: product } = useAsyncData(
     return response.data
    }
 )
-
-console.debug('ProductModal', product.value)
 </script>
 
 <template>
@@ -181,7 +178,7 @@ console.debug('ProductModal', product.value)
            <Icon name="mdi:chevron-left" />
            <Icon class="accordion__discount-icon"
            name="mdi:discount-outline" />
-           Акция
+           {{ discountProductTranslations[currentLocale].discount }}
          </summary> 
          </details>
 

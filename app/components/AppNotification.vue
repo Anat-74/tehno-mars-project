@@ -45,11 +45,11 @@ const close = () => {
   translate: -50% 0;
   padding: toEm(22);
   border-radius: toEm(8);
-   display: grid;
-   grid-template-columns: auto 1fr auto;
-   grid-auto-flow: column;
-   align-items: center;
-   column-gap: toEm(16);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-auto-flow: column;
+  align-items: center;
+  column-gap: toEm(16);
   z-index: 1000;
   box-shadow: 0px 0px 22px 24px rgba(0, 0, 0, 0.12);
 
@@ -84,7 +84,7 @@ const close = () => {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.5s;
+  transition: opacity .5s;
 }
 
 .fade-enter-from,

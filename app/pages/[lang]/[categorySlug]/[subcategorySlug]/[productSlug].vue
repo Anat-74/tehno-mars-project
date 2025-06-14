@@ -106,13 +106,16 @@ const handleAddToCart = (product: Product) => {
       :aria-label="buttonTranslations[currentLocale].ariaLabelGoBack"
       name-class="go-forward-back"
      />
+     <Icon 
+      v-if="product.isDiscount"
+      class="wrapper-left__discount-icon"
+      name="mdi:discount" />
      <ProductStatus 
       :product="product"
       class="wrapper-left__in-stock"
      />
      <ShareButton class="wrapper-left__share" />
    </div>
-
       <NuxtImg 
         v-if="currentImage"
         :src="currentImage"
@@ -154,8 +157,12 @@ const handleAddToCart = (product: Product) => {
       :specs="characteristics" 
        class="wrapper-right__characteristics"
       />
-     <span class="wrapper-right__price">
-      <Icon name="my-icon:icon-by-regular" />
+     <span
+      :class="['wrapper-right__price', {'wrapper-right__price_discount' :product.isDiscount}]"
+     >
+      <Icon 
+      :class="{ 'wrapper-right__discount-icon' :product.isDiscount}"
+      name="my-icon:icon-by-regular" />
       {{ formatPrice(product.price) }}
      </span>
      <UButton
@@ -204,12 +211,18 @@ const handleAddToCart = (product: Product) => {
    grid-template-columns: 1fr repeat(2, auto);
    align-items: center;
    column-gap: toEm(16);
+   grid-auto-flow: column;
    margin-block-end: toEm(7);
    }
 
    &__go-back {
    justify-self: start;
    }
+
+   &__discount-icon {
+   color: var(--lime-color);
+   font-size: toEm(32);
+}
 
    &__in-stock {
    padding-inline: toEm(8);
@@ -299,6 +312,10 @@ const handleAddToCart = (product: Product) => {
    grid-area: charact;
 }
 
+&__discount-icon {
+   color: var(--green-color);
+}
+
 &__price {
    grid-area: price;
    font-weight: 600;
@@ -309,6 +326,10 @@ const handleAddToCart = (product: Product) => {
    color: var(--dark-golden-color);
    background-color: var(--bg);
    box-shadow: 0px 1px toRem(5) var(--shadow);
+
+   &_discount {
+      color: var(--green-color);
+   }
 }
 
 &__btn {

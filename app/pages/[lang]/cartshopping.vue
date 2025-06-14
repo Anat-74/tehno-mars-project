@@ -1,10 +1,13 @@
 <script setup lang="ts">
+import type { Product, PaginationMeta } from "../../types/types"
 import type { LocaleCode } from '../../types/types'
 import { cartTranslations } from '~/locales/cart'
 
 const { currentLocale } = useLocale()
 const cartStore = useCartStore()
 const { goBack } = useGoToForwardOrBack()
+const { find } = useStrapi()
+const config = useRuntimeConfig()
 
 useSeoMeta({
   title: cartTranslations[currentLocale.value as LocaleCode].title,
@@ -12,6 +15,46 @@ useSeoMeta({
   description: cartTranslations[currentLocale.value as LocaleCode].description,
   ogDescription: cartTranslations[currentLocale.value as LocaleCode].description
 })
+
+const { data: product } = useAsyncData(
+  `product-discount-${currentLocale.value}`,
+  async () => {
+     const response = await find<Product>('products', {
+       filters: {
+         locale: currentLocale.value,
+         isDiscount: true,
+       },
+       fields: ['id', 'name', 'isDiscount', 'slug'],
+       pagination: {
+        pageSize: 100
+      } as PaginationMeta,
+        populate: {
+         image: {
+          fields: ["alternativeText", "url"]
+        },
+         subcategory: {
+         fields: ['id', 'name', 'slug'],
+         populate: {
+            category: {
+               fields: ['id', 'name', 'slug'],
+               }
+            }
+         }
+      }
+    })
+
+
+    if (!response.data || response.data.length === 0) {
+      throw createError({
+        statusCode: 404,
+        statusMessage: 'Product - Not Found'
+      })
+     }
+    return response.data
+   }
+)
+
+console.debug('ProductModal', product.value)
 
 // Добавляем состояние для сообщения об успехе
 const showOrderSuccess = ref(false)
@@ -35,7 +78,7 @@ onMounted(() => {
 
 <template>
    <section 
-   :class="['cart-page', {'cart-page_empty': cartStore.totalItems === 0}]"
+   :class="['cart-page', {'cart-page_empty' :cartStore.totalItems === 0}]"
    aria-labelledby="cart-page"
    >
    <h1
@@ -117,14 +160,40 @@ onMounted(() => {
            <CartShopping
            class="cart-page__products"
            />
-           <div v-if="cartStore.totalItems === 0">
-            <NotificationOrder
+           <!-- <div v-if="cartStore.totalItems === 0">
+            <AppNotification
             v-if="showOrderSuccess"
             :message="successMessage"
             type="success"
             @close="showOrderSuccess = false"
             />
-            </div>
+            </div> -->
+
+            <div v-if="cartStore.totalItems === 0">
+               <NuxtLink
+                  v-for="prod in product"
+                  :key="prod.id"
+                  :to="`/${currentLocale}/${prod?.subcategory?.category?.slug}/${prod?.subcategory?.slug}/${prod.slug}`"
+
+                  >{{ prod.name }}
+                  <NuxtImg 
+            v-if="prod.image?.length"
+            :src="`${config.public.strapi.url}${prod.image[0]?.url}`"
+            :alt="prod.name"
+            loading="lazy"
+            decoding="async"
+            width="240"
+            height="180"
+          />
+            </NuxtLink>
+
+            <AppNotification
+            v-if="showOrderSuccess"
+            :message="successMessage"
+            type="success"
+            @close="showOrderSuccess = false"
+            />
+         </div>
          </div>
          <OrderForm 
          class="cart-page__order-form"
@@ -212,6 +281,7 @@ onMounted(() => {
       .cart-page__body {
       padding-block-start: toEm(12);
       }
+
       .cart-page__cart-items {
          border-radius: 0 0 toRem(6) toRem(6);
       }

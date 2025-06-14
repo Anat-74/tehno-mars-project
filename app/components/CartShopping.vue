@@ -23,6 +23,10 @@ onMounted(() => {
       :key="item.product.id"
       class="cart-item__item"
       >
+      <Icon 
+      v-if="item.product.isDiscount"
+      class="cart-item__discount-icon"
+      name="mdi:discount" />
         <h3 class="cart-item__title" >{{ item.product.name }}</h3>
         <NuxtLink
         :to="getProductLink(item.product)"
@@ -77,6 +81,7 @@ onMounted(() => {
  <style lang="scss" scoped>
 .cart-item {
 &__item {
+   position: relative;
    display: grid;
    grid-template-columns: auto repeat(3, 1fr) auto;
    justify-items: center;
@@ -102,6 +107,14 @@ onMounted(() => {
       'remove controls'
       ;
    }
+}
+
+&__discount-icon {
+   position: absolute;
+   top: toEm(2);
+   left: toEm(2);
+   color: var(--lime-color);
+   font-size: toEm(20);
 }
 
 &__title {

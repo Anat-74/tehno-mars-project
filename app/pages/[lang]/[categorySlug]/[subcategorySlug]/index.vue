@@ -122,6 +122,11 @@ const handleAddToCart = (product: Product) => {
     subcategorySlug
   )
 }
+
+console.debug('discount', products.value)
+watch(products, ()=> {
+   console.debug('discount', products.value)
+})
 </script>
 
 <template>
@@ -200,6 +205,14 @@ const handleAddToCart = (product: Product) => {
         :key="product.id"
         class="subcategory-products__item"
       >
+      <Icon 
+      v-if="product.isDiscount"
+      class="subcategory-products__discount-icon"
+      name="mdi:discount" />
+      <ProductStatus 
+      :product="product"
+      class="subcategory-products__in-stock"
+     />
         <NuxtLink 
           class="subcategory-products__link"
           :to="`/${currentLocale}/${categorySlug}/${subcategorySlug}/${product.slug}`"
@@ -221,7 +234,9 @@ const handleAddToCart = (product: Product) => {
             {{ product.name }}
           </h3>
           
-          <span class="subcategory-products__price">
+          <span
+          :class="['subcategory-products__price', {'subcategory-products__price_discount': product.isDiscount}]"
+          >
             {{ formatPrice(product.price) }}
           </span>
 
@@ -291,6 +306,7 @@ const handleAddToCart = (product: Product) => {
 }
 
 &__item {
+   position: relative;
    justify-self: center;
    display: grid;
    min-height: 100%;
@@ -298,6 +314,19 @@ const handleAddToCart = (product: Product) => {
    padding-block-end: toEm(18);
    box-shadow: 0px 1px 2px 0px var(--shadow);
    border-radius: toEm(4);
+}
+
+&__discount-icon {
+   position: absolute;
+   top: toEm(2);
+   left: toEm(2);
+   color: var(--lime-color);
+   font-size: toEm(27);
+}
+
+&__in-stock {
+   justify-self: end;
+   padding: toEm(4);
 }
 
 &__link {
@@ -312,7 +341,6 @@ const handleAddToCart = (product: Product) => {
 }
 
 &__image {
-
    @media (max-width: toEm(628)){
       width: toRem(322);
 }
@@ -323,6 +351,7 @@ const handleAddToCart = (product: Product) => {
    flex-direction: column;
    position: relative;
    padding-inline: toEm(16);
+   @include adaptiveValue("padding-inline", 16, 2);
 }
 
 &__title {
@@ -337,12 +366,18 @@ const handleAddToCart = (product: Product) => {
    color: var(--warning-color);
    background-color: var(--secondary-color);
    border-radius: toRem(14);
+
+   &_discount {
+      font-weight: 600;
+      color: var(--lime-color);
+   }
 }
 
 &__add-to-cart {
    position: absolute;
    right: toRem(17);
    bottom: toRem(3);
+   @include adaptiveValue("right", 17, 4);
    }
 
    &__pagination {

@@ -66,7 +66,8 @@ export type Image = {
    price: number;
    description: string;
    characteristics: string;
-   isAvailable: boolean;
+    isAvailable: boolean;
+    isDiscount: boolean;
    image: Image[];
    category: {
    slug: string;
