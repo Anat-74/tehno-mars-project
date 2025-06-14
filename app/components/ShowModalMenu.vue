@@ -124,12 +124,11 @@ console.debug('ProductModal', product.value)
       :to="`/${currentLocale}`">
       <NuxtImg
          v-if="footer.logo?.length"
+         class="base-footer__logo"
          :src="`${config.public.strapi.url}${footer.logo[0]?.url}`"
          :alt="footer.companyName"
          format="webp"
          width="55"
-         loading="lazy"
-         class="base-footer__logo"
          aria-label="Go home"
     />
    </NuxtLink>
@@ -156,8 +155,9 @@ console.debug('ProductModal', product.value)
          <div class="accordion__content">
          <div 
 
-         class="accordion__subcategories">
+         class="accordion__product">
          <NuxtLink
+         @click="closeDialog"
          v-for="sub in cat.subcategories"
          :key="sub.id"
          :to="`/${currentLocale}/${cat.slug}/${sub.slug}`"
@@ -169,14 +169,34 @@ console.debug('ProductModal', product.value)
             </li>
       </ul>
 
-      <div v-if="product?.length">
-      <NuxtLink
+      <div v-if="product?.length"
+      class="accordion"
+      >
+         <details 
+            name="faq" 
+            class="accordion__details"
+         >
+           <summary 
+           class="accordion__summary">
+           <Icon name="mdi:chevron-left" />
+           <Icon class="accordion__discount-icon"
+           name="mdi:discount-outline" />
+           Акция
+         </summary> 
+         </details>
+
+         <div class="accordion__content">
+         <div class="accordion__product">
+         <NuxtLink
+         @click="closeDialog"
          v-for="prod in product"
          :key="prod.id"
          :to="`/${currentLocale}/${prod?.subcategory?.category?.slug}/${prod?.subcategory?.slug}/${prod.slug}`"
           class="accordion__link"
          >{{ prod.name }}
       </NuxtLink>
+               </div>
+            </div>
       </div>
 
       <div
@@ -280,7 +300,7 @@ console.debug('ProductModal', product.value)
    display: flex;
    align-items: center;
    column-gap: toRem(4);
-   color: var(--border-color);
+   color: var(--warning-color);
    font-weight: 600;
    transition: all var(--transition-duration);
 
@@ -290,9 +310,9 @@ console.debug('ProductModal', product.value)
    }
 
    @include hover {
-      color: var(--warning-color);
+      text-decoration: underline;
       svg {
-      color: var(--border-color);
+      color: var(--danger-color);
    }
    }
 }
@@ -313,8 +333,6 @@ console.debug('ProductModal', product.value)
 }
 
 .accordion {
-   color: var(--gray-color);
-
       &__details {
          margin-block-end: toEm(2);
          svg {
@@ -339,19 +357,35 @@ console.debug('ProductModal', product.value)
       }
 
       &__summary {
+         position: relative;
          display: grid;
          grid-template-columns: auto 1fr;
          align-items: center;
          justify-items: center;
+         grid-auto-flow: column;
+         translate: toRem(-11) 0;
+         cursor: pointer;
          padding-block: toEm(6, 22);
          font-weight: 600;
          font-size: toEm(20);
-         cursor: pointer;
+         color: var(--gray-color);
          transition: color var(--transition-duration);
 
             @include hover {
                color: var(--warning-color);
             }
+      }
+
+      &__discount-icon {
+         position: absolute;
+         top: 50%;
+         left: 38%;
+         translate: 0 -50%;
+         color: var(--green-color);
+
+         @media (max-width:toEm(416)){
+            left: 34%;
+         }
       }
 
       &__content {
@@ -360,7 +394,7 @@ console.debug('ProductModal', product.value)
          transition: all .3s;
       }
 
-      &__subcategories {
+      &__product {
          overflow: hidden;
          display: grid;
          align-items: center;

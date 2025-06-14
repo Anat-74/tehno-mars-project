@@ -24,7 +24,7 @@ const { product } = defineProps<{
 <style lang="scss" scoped>
 .in-stock {
    font-weight: 600;
-   color: var(--forest-green-color);
+   color: var(--green-color);
 }
 
 .to-order {

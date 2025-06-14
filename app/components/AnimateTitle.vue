@@ -11,9 +11,9 @@
 		.animate-items {
          &__title {
 			position: absolute;
-			left: toRem(107);
+			left:50%;
 			top: 50%;
-         translate: 0 -50%;
+         translate: -50% -50%;
          letter-spacing: 1.2px;
          font-family: Rubik Doodle;
          font-weight: 600;

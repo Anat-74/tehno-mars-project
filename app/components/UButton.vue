@@ -70,7 +70,7 @@ const clickOnButton = () => {
       }
       svg {
          font-size: toRem(18);
-         color: var(--forest-green-color);
+         color: var(--green-color);
       }
    }
    &_preferred {

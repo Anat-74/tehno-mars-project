@@ -61,7 +61,7 @@ const close = () => {
   }
 
   &_success {
-   background-color: var(--forest-green-color);
+   background-color: var(--green-color);
    color: var(--light-color);
   }
 
