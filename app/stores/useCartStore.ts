@@ -4,14 +4,16 @@ export type CartProduct = Omit<Product, 'image'> & {
    image: string
    categorySlug: string
    subcategorySlug: string
+   originalLocale: string
  }
  
  export type CartItem = {
    product: CartProduct
    quantity: number
  }
- 
+
 export const useCartStore = defineStore('cart', () => {
+   const { currentLocale } = useLocale()
    const items = ref<CartItem[]>([])
 
    const totalItems = computed(() => 
@@ -46,7 +48,8 @@ export const useCartStore = defineStore('cart', () => {
             ...product,
             image: normalizedImage,
             categorySlug,
-            subcategorySlug
+            subcategorySlug,
+            originalLocale: currentLocale.value // Сохраняем язык добавления
           },
           quantity: 1
         })

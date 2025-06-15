@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { formatPrice } from '~/utils/formatPrice'
+import type { LocaleCode } from "../types/types"
+import { cartTranslations } from '~/locales/cart'
 
 const cartStore = useCartStore()
 const config = useRuntimeConfig()
@@ -7,6 +9,11 @@ const { currentLocale } = useLocale()
 
 const getProductLink = (product: CartItem['product']) => {
   return `/${currentLocale.value}/${product.categorySlug}/${product.subcategorySlug}/${product.slug}`
+}
+
+const switchToLocale = (locale: string) => {
+  const { switchLocale } = useLocale()
+  switchLocale(locale as LocaleCode)
 }
 
 onMounted(() => {
@@ -23,6 +30,18 @@ onMounted(() => {
       :key="item.product.id"
       class="cart-item__item"
       >
+      <div v-if="item.product.originalLocale !== currentLocale" 
+      class="cart-item__locale-warning"
+      >
+        <Icon name="mdi:alert" />
+        <span>{{ cartTranslations[currentLocale].warningLocale }}</span>
+        <UButton
+         :label="item.product.originalLocale"
+         name-class="switch-locale-cart"
+         @click="switchToLocale(item.product.originalLocale)"
+         />
+      </div>
+
       <Icon 
       v-if="item.product.isDiscount"
       class="cart-item__discount-icon"
@@ -30,9 +49,10 @@ onMounted(() => {
         <h3 class="cart-item__title" >{{ item.product.name }}</h3>
         <NuxtLink
         :to="getProductLink(item.product)"
-         class="cart-item__link"
+        :class="['cart-item__link', {'cart-item__link_disabled': item.product.originalLocale !== currentLocale}]"
           >
         <NuxtImg
+         class="cart-item__image"
          :src="`${config.public.strapi.url}${item.product.image}`"
          :alt="item.product.name"
           format="webp"
@@ -109,6 +129,24 @@ onMounted(() => {
    }
 }
 
+&__locale-warning {
+   position: absolute;
+   top: toRem(-2);
+   left: 0;
+  padding: toEm(4);
+  border-radius: toEm(4);
+  display: flex;
+  align-items: center;
+  gap: toEm(8);
+  font-weight: 600;
+  background-color: var(--locale-warning-color);
+  color: var(--danger-color);
+
+  svg {
+   font-size: toEm(18);
+  }
+}
+
 &__discount-icon {
    position: absolute;
    top: toEm(2);
@@ -127,6 +165,17 @@ onMounted(() => {
 
 &__link {
    grid-area: link;
+
+   &_disabled {
+      pointer-events: none;
+      opacity: .6;
+   }
+}
+
+&__image {
+   @media (max-width:$mobileSmall){
+      width: toRem(122); 
+   }
 }
 
 &__price {

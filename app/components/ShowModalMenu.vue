@@ -382,15 +382,15 @@ watch(currentLocale, () => {
       }
 
       &__discount-icon {
-         position: absolute;
-         top: 50%;
-         left: 38%;
-         translate: 0 -50%;
-         color: var(--green-color);
+         // position: absolute;
+         // top: 50%;
+         // left: 33%;
+         // translate: 0 -50%;
+         // color: var(--green-color);
 
-         @media (max-width:toEm(416)){
-            left: 34%;
-         }
+         // @media (max-width:toEm(416)){
+         //    left: 28%;
+         // }
       }
 
       &__content {

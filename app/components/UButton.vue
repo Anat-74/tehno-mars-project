@@ -182,6 +182,12 @@ const clickOnButton = () => {
       }
    }
 
+   &_switch-locale-cart {
+      padding-inline: toEm(6);
+      padding-block: toEm(2);
+      background-color: var(--warning-color);
+   }
+
   &_add-to-cart {
    font-weight: 600;
    border-radius: toRem(6);
