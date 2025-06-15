@@ -122,11 +122,6 @@ const handleAddToCart = (product: Product) => {
     subcategorySlug
   )
 }
-
-console.debug('discount', products.value)
-watch(products, ()=> {
-   console.debug('discount', products.value)
-})
 </script>
 
 <template>

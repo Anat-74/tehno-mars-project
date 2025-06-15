@@ -31,7 +31,7 @@ onMounted(() => {
 })
 
 
-const { data: category, status, error } = useAsyncData(
+const { data: category, pending: pendingCategories, error, refresh: refreshCategory } = useAsyncData(
   `category-dialog-${currentLocale.value}`,
   async () => {
      const response = await find<Category>('categories', {
@@ -57,7 +57,7 @@ const { data: category, status, error } = useAsyncData(
 )
 
 
-const { data: product } = useAsyncData(
+const { data: product, pending: pendingProducts, refresh: refreshProduct } = useAsyncData(
   `product-dialog-${currentLocale.value}`,
   async () => {
      const response = await find<Product>('products', {
@@ -91,10 +91,18 @@ const { data: product } = useAsyncData(
     return response.data
    }
 )
+
+const pending = computed(() => pendingCategories.value || pendingProducts.value)
+
+// Реакция на смену языка
+watch(currentLocale, () => {
+  refreshCategory()
+  refreshProduct()
+})
 </script>
 
 <template>
-   <Loader v-if="status === 'pending'" />
+   <Loader v-if="pending" />
    <UButton 
    @click="openDialog"
    icon="line-md:arrow-open-left"
@@ -116,6 +124,7 @@ const { data: product } = useAsyncData(
          name-class="close"
          aria-label="closed"
           />
+          <LangSwitcher/>
          <div class="dialog-menu__top">
       <NuxtLink class="dialog-menu__logo"
       :to="`/${currentLocale}`">

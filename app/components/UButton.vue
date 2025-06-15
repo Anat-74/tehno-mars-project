@@ -330,7 +330,7 @@ const clickOnButton = () => {
    right: toRem(12);
    bottom: toRem(14);
    padding: toRem(4);
-   border: toRem(2) solid var(--dark-golden-color);
+   border: toRem(1) solid var(--dark-golden-color);
    transition: color var(--transition-duration);
    @include adaptiveValue("width", 36, 28);
    @include adaptiveValue("height", 36, 30);
