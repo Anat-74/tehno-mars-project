@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { FooterData, LegalInfo, SocialLink, Email, Phone } from "../types/types"
+import { baseFooterTranslations } from '~/locales/baseFooter'
 
 const config = useRuntimeConfig()
 const { currentLocale } = useLocale()
@@ -53,7 +54,7 @@ defineProps<{
    </div>
     <div class="base-footer__company company"
     >
-      <h2 class="company__title">Компания</h2>
+      <h2 class="company__title">{{ baseFooterTranslations[currentLocale].titleCompany }}</h2>
       <strong class="company__name">{{ footer.companyName }}</strong>
       <span class="company__tax-id">{{footer.taxId}}</span>
       <span class="company__woring-hours">
@@ -108,7 +109,7 @@ defineProps<{
 
    <NavigationFooter class="base-footer__navigation"/>
    <div class="base-footer__legal legal">
-      <h2 class="legal__title">Банковские реквизиты</h2>
+      <h2 class="legal__title">{{ baseFooterTranslations[currentLocale].titleLegal }}</h2>
    <strong class="legal__name">{{ legal.bankName }}</strong>
   <p class="legal__address">
    <Icon
