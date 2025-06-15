@@ -124,7 +124,6 @@ watch(currentLocale, () => {
          name-class="close"
          aria-label="closed"
           />
-          <LangSwitcher/>
          <div class="dialog-menu__top">
       <NuxtLink class="dialog-menu__logo"
       :to="`/${currentLocale}`">
