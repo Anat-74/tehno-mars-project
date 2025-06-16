@@ -69,7 +69,10 @@ const { data: product, pending: pendingProducts, refresh: refreshProduct } = use
        pagination: {
         pageSize: 100
       } as PaginationMeta,
-         populate: {
+        populate: {
+         image: {
+          fields: ["alternativeText", "url"]
+        },
          subcategory: {
          fields: ['id', 'name', 'slug'],
          populate: {
@@ -198,9 +201,21 @@ watch(currentLocale, () => {
          @click="closeDialog"
          v-for="prod in product"
          :key="prod.id"
+
          :to="`/${currentLocale}/${prod?.subcategory?.category?.slug}/${prod?.subcategory?.slug}/${prod.slug}`"
           class="accordion__link"
          >{{ prod.name }}
+         <!-- <NuxtImg
+              v-if="prod.image?.length"
+              :src="`${config.public.strapi.url}${prod.image[0]?.url}`"
+              :alt="prod.name"
+              class="sub-category__image"
+              format="webp"
+              loading="lazy"
+              decoding="async"
+              width="240"
+              height="180"
+            /> -->
       </NuxtLink>
                </div>
             </div>

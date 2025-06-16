@@ -64,7 +64,6 @@ const getQueryParams = () => {
  
    return {
       populate: {
-         image: true,
          subcategory: {
             populate: ['category'] // Добавляем категорию через подкатегорию
           },
@@ -73,7 +72,7 @@ const getQueryParams = () => {
      sort: [filters.sort],
      pagination: {
        page: currentPage.value,
-       pageSize: 16
+       pageSize: 32
      }
    }
  }

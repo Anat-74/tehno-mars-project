@@ -94,7 +94,7 @@ watch(currentLocale, () => {
           name-class="pagination"
           :label="page"
           @click="searchStore.changePage(page)"
-          :class="{ active: currentPage === page }"
+          :class="{ 'pagination-active': currentPage === page }"
         />
       </div>
       </div>
@@ -211,28 +211,38 @@ watch(currentLocale, () => {
 
    &__product-card {
       position: absolute;
-      z-index: 999;
-      top: 19%;
+      z-index: 1999;
+      right: toEm(7);
+      top: toEm(160);
       display: grid;
       grid-template-columns: 1fr;
-      gap: toRem(12);
-      justify-items: center;
+      row-gap: toRem(12);
       padding: toEm(12);
       border-radius: toRem(4);
-      border: toRem(2) solid var(--primary-color);
+      border: toRem(1) solid var(--primary-color);
       background-color: var(--secondary-color);
-      @include adaptiveValue("top", 175, 122);
-      @include adaptiveValue("right", 235, 0);
+
+      @media (max-width:$mobile){
+         margin-inline: toEm(14);
+         right: 0;
+         top: toEm(150);
+      }
    }
 
    &__pagination-product {
       align-self: end;
       justify-self: end;
+      display: flex;
+      column-gap: toEm(9);
    }
 
    &__cart {
       translate: 0 toRem(5);
       margin-inline-end: toRem(9);
+   }
+
+   .pagination-active {
+      background-color: var(--active-color);
    }
 }
 </style>

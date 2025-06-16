@@ -354,7 +354,9 @@ const clickOnButton = () => {
 }
 
 &_pagination {
-   background-color: var(--warning-color);
+   padding-inline: toEm(12);
+   padding-block: toEm(7);
+   background-color: var(--blue-color);
 }
 
 
