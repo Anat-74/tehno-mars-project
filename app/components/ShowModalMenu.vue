@@ -184,9 +184,11 @@ watch(currentLocale, () => {
            <summary 
            class="accordion__summary">
            <Icon name="mdi:chevron-left" />
+           <span>
            <Icon class="accordion__discount-icon"
            name="mdi:discount-outline" />
            {{ discountProductTranslations[currentLocale].discount }}
+         </span>
          </summary> 
          </details>
 
@@ -382,15 +384,7 @@ watch(currentLocale, () => {
       }
 
       &__discount-icon {
-         // position: absolute;
-         // top: 50%;
-         // left: 33%;
-         // translate: 0 -50%;
-         // color: var(--green-color);
-
-         // @media (max-width:toEm(416)){
-         //    left: 28%;
-         // }
+         translate: 0 toRem(7);
       }
 
       &__content {

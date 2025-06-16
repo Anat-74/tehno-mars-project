@@ -2,6 +2,8 @@
 import type { Product, PaginationMeta } from "../../types/types"
 import type { LocaleCode } from '../../types/types'
 import { cartTranslations } from '~/locales/cart'
+import { discountProductTranslations } from '~/locales/discountProduct'
+import { formatPrice } from '~/utils/formatPrice'
 
 const { currentLocale } = useLocale()
 const cartStore = useCartStore()
@@ -24,7 +26,6 @@ const { data: product } = useAsyncData(
          locale: currentLocale.value,
          isDiscount: true,
        },
-       fields: ['id', 'name', 'isDiscount', 'slug'],
        pagination: {
         pageSize: 100
       } as PaginationMeta,
@@ -54,7 +55,7 @@ const { data: product } = useAsyncData(
    }
 )
 
-console.debug('ProductModal', product.value)
+console.debug('Product', product.value)
 
 // Добавляем состояние для сообщения об успехе
 const showOrderSuccess = ref(false)
@@ -157,43 +158,52 @@ onMounted(() => {
          {{ cartTranslations[currentLocale].total }}
             <b>{{ cartStore.totalItems }}</b>
          </span>
+
            <CartShopping
            class="cart-page__products"
            />
-           <!-- <div v-if="cartStore.totalItems === 0">
-            <AppNotification
-            v-if="showOrderSuccess"
-            :message="successMessage"
-            type="success"
-            @close="showOrderSuccess = false"
-            />
-            </div> -->
 
-            <div v-if="cartStore.totalItems === 0">
+            <ul v-if="cartStore.totalItems === 0"
+            class="cart-page__discount-card discount-card"
+            >
+            <li class="discount-card__item"
+               v-for="prod in product"
+               :key="prod.id"
+               >
+               <span class="discount-card__promotional">
+           <Icon
+           name="mdi:discount-outline" />
+           {{ discountProductTranslations[currentLocale].discount }}
+         </span>
+               <ProductStatus 
+                :product="prod"
+                class="discount-card__in-stock"
+               />
                <NuxtLink
-                  v-for="prod in product"
-                  :key="prod.id"
+               class="discount-card__link"
                   :to="`/${currentLocale}/${prod?.subcategory?.category?.slug}/${prod?.subcategory?.slug}/${prod.slug}`"
-
-                  >{{ prod.name }}
-                  <NuxtImg 
-            v-if="prod.image?.length"
-            :src="`${config.public.strapi.url}${prod.image[0]?.url}`"
-            :alt="prod.name"
-            loading="lazy"
-            decoding="async"
-            width="240"
-            height="180"
-          />
+                  >
+                  <NuxtImg
+                  class="discount-card__image"
+                     v-if="prod.image?.length"
+                     :src="`${config.public.strapi.url}${prod.image[0]?.url}`"
+                     :alt="prod.name"
+                     loading="lazy"
+                     decoding="async"
+                     width="240"
+                     height="180"
+                   />
             </NuxtLink>
-
+            <h3 class="discount-card__title">{{ prod.name }}</h3>
+            <span class="discount-card__price">{{ formatPrice(prod.price) }}</span>
+         </li>
             <AppNotification
             v-if="showOrderSuccess"
             :message="successMessage"
             type="success"
             @close="showOrderSuccess = false"
             />
-         </div>
+         </ul>
          </div>
          <OrderForm 
          class="cart-page__order-form"
@@ -342,5 +352,67 @@ onMounted(() => {
       justify-self: center;
    }
 }
+}
+
+.discount-card {
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(toRem(262), 1fr));
+   justify-items: center;
+   gap: toEm(22);
+
+   &__item {
+   position: relative;
+   justify-self: center;
+   display: grid;
+   row-gap: toEm(4);
+   min-height: 100%;
+   width: 100%;
+   padding-inline: toEm(12);
+   padding-block: toEm(18);
+   box-shadow: 0px 1px 2px 0px var(--shadow);
+   border-radius: toEm(4);
+   background-color: var(--bg);
+   }
+
+   &__promotional {
+      display: flex;
+      align-items: center;
+      column-gap: toEm(2);
+      font-weight: 600;
+      color: var(--warning-color);
+   }
+
+   &__in-stock {
+      position: absolute;
+      top: toEm(18);
+      right: toEm(9);
+   }
+
+   &__link {
+      display: flex;
+      justify-content: center;
+      transition: scale var(--transition-duration);
+
+      @include hover {
+         scale: 1.1;
+      }
+   }
+
+   &__title {
+      text-align: center;
+      margin-block-end: toRem(9);
+      color: var(--primary-color);
+   }
+
+   &__price {
+      justify-self: end;
+      align-self: center;
+      padding-inline: toEm(2);
+      font-weight: 600;
+      border-radius: toRem(2);
+      outline: toRem(2) solid var(--secondary-color);
+      outline-offset: toEm(3);
+      color: var(--warning-color);
+   }
 }
 </style>
