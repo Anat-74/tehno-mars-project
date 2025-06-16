@@ -3,7 +3,6 @@ import { buttonTranslations } from '~/locales/button'
 const { currentLocale } = useLocale()
 
 defineProps({
-  message: String,
   type: {
     type: String,
     default: 'success'
@@ -19,13 +18,13 @@ const close = () => {
 
 <template>
   <Transition name="fade">
-    <div 
-      v-if="message"
+    <div
+      v-if="$slots.default"
        :class="['notification', `notification_${type}`]"
     >
          <Icon  class="notification__icon"
          name="material-symbols:check-circle"/>
-        <slot>{{ message }}</slot>
+        <slot></slot>
       <UButton
        class="notification__close"
       @click="close"
@@ -40,24 +39,26 @@ const close = () => {
 .notification {
   width: 50%;
   position: fixed;
+  z-index: 1000;
   top: toEm(12);
   left: 50%;
   translate: -50% 0;
+  text-align: center;
   padding: toEm(22);
   border-radius: toEm(8);
   display: grid;
   grid-template-columns: auto 1fr auto;
-  grid-auto-flow: column;
+  justify-items: center;
   align-items: center;
   column-gap: toEm(16);
-  z-index: 1000;
   box-shadow: 0px 0px 22px 24px rgba(0, 0, 0, 0.12);
 
   @media (max-width:$mobile){
-    width: 80%; 
+    width: 80%;
   }
   @media (max-width:$mobileSmall){
-    width: 95%; 
+    width: 95%;
+    column-gap: toEm(9);
   }
 
   &_success {

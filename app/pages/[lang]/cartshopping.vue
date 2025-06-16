@@ -2,6 +2,7 @@
 import type { Product, PaginationMeta } from "../../types/types"
 import type { LocaleCode } from '../../types/types'
 import { cartTranslations } from '~/locales/cart'
+import { orderSuccessTranslations } from '~/locales/orderSuccess'
 import { discountProductTranslations } from '~/locales/discountProduct'
 import { formatPrice } from '~/utils/formatPrice'
 
@@ -59,13 +60,21 @@ console.debug('Product', product.value)
 
 // Добавляем состояние для сообщения об успехе
 const showOrderSuccess = ref(false)
-const successMessage = ref('')
+// const successMessage = ref('')
 
-const handleOrderSuccess = ( orderId: number ) => {
-   successMessage.value = `Заказ #${orderId} успешно сформирован! 
-  В ближайшее время с вами свяжутся. 
-  Благодарим за заказ!`
-   showOrderSuccess.value = true
+const successTitle = ref('')
+const successNotice = ref('')
+const successThanks = ref('')
+
+const handleOrderSuccess = (orderId: number) => {
+  const translations = orderSuccessTranslations[currentLocale.value]
+  
+  // Безопасное заполнение данных
+  successTitle.value = translations.title.replace('{orderId}', orderId.toString())
+  successNotice.value = translations.notice
+  successThanks.value = translations.thanks
+  
+  showOrderSuccess.value = true
 
   setTimeout(() => {
     showOrderSuccess.value = false
@@ -199,10 +208,15 @@ onMounted(() => {
          </li>
             <AppNotification
             v-if="showOrderSuccess"
-            :message="successMessage"
             type="success"
             @close="showOrderSuccess = false"
-            />
+            >
+            <div>
+            <p class="order-title">{{ successTitle }}</p>
+            <p class="order-notice">{{ successNotice }}</p>
+            <p class="order-thanks">{{ successThanks }}</p>
+         </div>
+         </AppNotification>
          </ul>
          </div>
          <OrderForm 
