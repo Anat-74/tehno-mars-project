@@ -43,12 +43,6 @@ const subcategorySlug = computed(() => {
 
 <style lang="scss" scoped>
 .product-card {
-&__item {
-
-}
-&__link {
-}
-
 &__title {
    font-size: toEm(16);
 }

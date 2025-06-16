@@ -44,6 +44,7 @@ const close = () => {
   left: 50%;
   translate: -50% 0;
   text-align: center;
+  font-weight: 600;
   padding: toEm(22);
   border-radius: toEm(8);
   display: grid;

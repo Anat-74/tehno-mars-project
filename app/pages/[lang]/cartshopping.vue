@@ -56,11 +56,8 @@ const { data: product } = useAsyncData(
    }
 )
 
-console.debug('Product', product.value)
-
 // Добавляем состояние для сообщения об успехе
 const showOrderSuccess = ref(false)
-// const successMessage = ref('')
 
 const successTitle = ref('')
 const successNotice = ref('')
@@ -68,8 +65,6 @@ const successThanks = ref('')
 
 const handleOrderSuccess = (orderId: number) => {
   const translations = orderSuccessTranslations[currentLocale.value]
-  
-  // Безопасное заполнение данных
   successTitle.value = translations.title.replace('{orderId}', orderId.toString())
   successNotice.value = translations.notice
   successThanks.value = translations.thanks
@@ -212,9 +207,9 @@ onMounted(() => {
             @close="showOrderSuccess = false"
             >
             <div>
-            <p class="order-title">{{ successTitle }}</p>
-            <p class="order-notice">{{ successNotice }}</p>
-            <p class="order-thanks">{{ successThanks }}</p>
+            <p>{{ successTitle }}</p>
+            <p>{{ successNotice }}</p>
+            <p>{{ successThanks }}</p>
          </div>
          </AppNotification>
          </ul>
