@@ -1,32 +1,10 @@
 <script setup lang="ts">
-import type { Category, LocaleCode } from "../../types/types"
+import type { Category } from "../../types/types"
 import { visuallyHiddenTranslations } from '~/locales/visuallyHidden'
 
 const { find } = useStrapi()
 const { currentLocale } = useLocale()
 const config = useRuntimeConfig()
-
-const pageMeta = {
-  ru: {
-    title: 'Главная',
-    description: 'Главная страница сайта'
-  },
-  en: {
-    title: 'Home',
-    description: 'Home page of the site'
-  },
-  be: {
-    title: 'Галоўная',
-    description: 'Галоўная старонка сайта'
-  }
-}
-
-useSeoMeta({
-  title: pageMeta[currentLocale.value as LocaleCode].title,
-  ogTitle: pageMeta[currentLocale.value as LocaleCode].title,
-  description: pageMeta[currentLocale.value as LocaleCode].description,
-  ogDescription: pageMeta[currentLocale.value as LocaleCode].description
-})
 
 const { data: categories, status, error } = useAsyncData(
    `category-${currentLocale.value}`,

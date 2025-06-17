@@ -114,7 +114,8 @@ const handleAddToCart = (product: Product) => {
       :product="product"
       class="wrapper-left__in-stock"
      />
-     <ShareButton class="wrapper-left__share" />
+     <ShareButton 
+     class="wrapper-left__share" />
    </div>
       <NuxtImg 
         v-if="currentImage"

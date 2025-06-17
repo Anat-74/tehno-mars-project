@@ -1,4 +1,3 @@
-// locales/orderSuccess.ts
 import type { LocaleCode } from "../types/types"
 
 export const orderSuccessTranslations: Record<LocaleCode, {
