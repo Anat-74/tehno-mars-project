@@ -84,8 +84,7 @@ defineProps<{
     <a
     :href="`tel:${item.phoneNumber.replace(/[^0-9+]/g, '')}`"
     class="company__link-phones"
-    v-html="formatPhone(item.phoneNumber)"
-    >
+    >{{ formatPhone(item.phoneNumber) }}
     </a>
    </div>
    <div 
