@@ -8,7 +8,19 @@ const { products, status, hasSearched } = storeToRefs(searchStore)
 // Полная синхронизация с хранилищем
 const searchName = computed({
   get: () => searchStore.filters.name,
-  set: value => searchStore.filters.name = value
+   set: value => {
+    searchStore.rawSearchQuery = value;
+
+    // Одновременно обновляем отображаемое значение
+    if (value.length > 0) {
+      searchStore.filters.name = value
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+    } else {
+      searchStore.filters.name = value;
+    }
+  }
 })
 
 const sortBy = computed({

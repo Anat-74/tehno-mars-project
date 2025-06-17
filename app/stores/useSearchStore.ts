@@ -13,7 +13,9 @@ export const useSearchStore = defineStore('search', () => {
   const currentPage = ref(1)
   const totalPages = ref(1)
   const status = ref<'idle' | 'pending' | 'success'>('idle')
-  const hasSearched = ref(false)
+   const hasSearched = ref(false)
+   
+   const rawSearchQuery = ref('')
 
    const executeSearch = async () => {
    if (!filters.name.trim()) {
@@ -54,8 +56,18 @@ const getQueryParams = () => {
    // Убираем фильтр по productSlug если он есть в URL
    const baseFilters: any = {
      locale: route.params.lang,
-     name: { $containsi: filters.name }
+   //   name: { $containsi: filters.name }
    }
+
+  // Используем ОРИГИНАЛЬНЫЙ ввод пользователя для поиска
+  if (rawSearchQuery.value.trim()) {
+   // Ищем по двум вариантам: как ввел пользователь и с заглавной буквой
+   baseFilters.$or = [
+     { name: { $containsi: rawSearchQuery.value.trim() } },
+     { name: { $containsi: rawSearchQuery.value.trim().charAt(0).toUpperCase() + rawSearchQuery.value.trim().slice(1) } }
+   ]
+ }
+
  
    // Добавляем фильтр по slug только если мы НЕ на странице товара
    if (!route.params.productSlug) {
@@ -91,7 +103,8 @@ const getQueryParams = () => {
     currentPage,
     totalPages,
     status,
-    hasSearched,
+     hasSearched,
+     rawSearchQuery,
     executeSearch,
     updateFilters,
      changePage,
