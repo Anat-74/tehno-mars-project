@@ -55,14 +55,22 @@ defineProps<{
     <div class="base-footer__company company"
     >
       <h2 class="company__title">{{ baseFooterTranslations[currentLocale].titleCompany }}</h2>
-      <strong class="company__name">{{ footer.companyName }}</strong>
-      <span class="company__tax-id">{{footer.taxId}}</span>
-      <span class="company__woring-hours">
+      <strong 
+      v-if="footer.companyName"
+      class="company__name">{{ footer.companyName }}</strong>
+      <span 
+      v-if="footer.taxId"
+      class="company__tax-id">{{footer.taxId}}</span>
+      <span 
+      v-if="footer.workingHours"
+      class="company__woring-hours">
          <Icon
          name="mingcute:calendar-time-add-line" height="22"
          />
          {{ footer.workingHours }}</span>
-      <p class="company__legal-adress">
+      <p 
+      v-if="footer.legalAdress"
+      class="company__legal-adress">
          <Icon name="entypo:address"
          />
          {{ footer.legalAdress }}</p>
@@ -109,16 +117,26 @@ defineProps<{
    <NavigationFooter class="base-footer__navigation"/>
    <div class="base-footer__legal legal">
       <h2 class="legal__title">{{ baseFooterTranslations[currentLocale].titleLegal }}</h2>
-   <strong class="legal__name">{{ legal.bankName }}</strong>
-  <p class="legal__address">
+   <strong 
+   v-if="legal.bankName"
+   class="legal__name">{{ legal.bankName }}</strong>
+  <p 
+  v-if="legal.bankAddress"
+  class="legal__address">
    <Icon
-         name="mdi:address-marker-outline"
-         />
+      name="mdi:address-marker-outline"
+      />
    {{ legal.bankAddress }}</p>
-  <span class="legal__account">{{ legal.accountNumber }}</span>
-  <span class="legal__swift">{{legal.swiftCode}}</span>
+  <span 
+  v-if="legal.accountNumber"
+  class="legal__account">{{ legal.accountNumber }}</span>
+  <span 
+  v-if="legal.swiftCode"
+  class="legal__swift">{{legal.swiftCode}}</span>
 </div>
-<span class="base-footer__copyright">{{footer.copyright}}</span>
+<span 
+v-if="footer.copyright"
+class="base-footer__copyright">{{footer.copyright}}</span>
 </div>
 <ScrollToTop />
    </div>

@@ -61,7 +61,7 @@ export default defineNuxtConfig({
    },
    image: {
       provider: 'ipx',
-      domains: ['127.0.0.1:1337'], // Домен с портом!
+      domains: ['127.0.0.1:1337'], // Домен с портом
   
       ipx: {
          modifiers: {

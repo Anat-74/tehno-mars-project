@@ -73,7 +73,7 @@ const handleOrderSuccess = (orderId: number) => {
 
   setTimeout(() => {
     showOrderSuccess.value = false
-  }, 9000)
+  }, 7000)
 }
 
 onMounted(() => {
