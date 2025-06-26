@@ -272,13 +272,13 @@ const handleAddToCart = (product: Product) => {
 
 <style lang="scss" scoped>
 .subcategory-products {
-   padding-block: toEm(32);
+   padding-block: toEm(12);
 
 &__row-top {
    display: grid;
    grid-template-columns: repeat(2,auto) 1fr;
    align-items: center;
-   column-gap: toEm(12);
+   column-gap: toRem(7);
    margin-block-end: toEm(22);
 }
 

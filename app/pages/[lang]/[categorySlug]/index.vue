@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { Category, SubcategoriesResponse } from "../../../types/types"
-import { visuallyHiddenTranslations } from '~/locales/visuallyHidden'
 import { buttonTranslations } from '~/locales/button'
 
 const { find } = useStrapi()
@@ -49,7 +48,7 @@ const { data: subcategories, pending: subcategoriesPending, refresh: refreshSubc
       populate: {
         image: {
           fields: ["alternativeText", "url"]
-        }
+         }
       },
       pagination: {
         page: page.value,
@@ -62,7 +61,7 @@ const { data: subcategories, pending: subcategoriesPending, refresh: refreshSubc
   {
      watch: [page, category] // Перезагрузка при смене страницы или категории
   }
-)
+   )
 
 //Единый флаг загрузки
 const isLoading = computed(() => 
@@ -105,10 +104,6 @@ watch(category, (newCategory) => {
      class="sub-category"
      aria-labelledby="sub-category"
    >
-     <h1 id="sub-category" class="visually-hidden">
-       {{ visuallyHiddenTranslations[currentLocale].sectionCategorySlugTitle }}
-     </h1>
-     
      <div class="sub-category__buttons">
        <UButton
          @click="goBack"
@@ -123,7 +118,9 @@ watch(category, (newCategory) => {
          name-class="go-forward-back"
        />
      </div>
-     
+     <h1 class="sub-category__category-title">
+         {{ category?.name }}
+      </h1>
      <ul 
        v-if="subcategories?.data?.length"
        class="sub-category__list"
@@ -133,12 +130,12 @@ watch(category, (newCategory) => {
          :key="subcategory.id"
          class="sub-category__item"
        >
-         <h2 class="sub-category__title">
-           {{ subcategory.name }}
-         </h2>
          <NuxtLink class="sub-category__link"
             :to="`/${currentLocale}/${categorySlug}/${subcategory.slug}`"
           >
+          <h2 class="sub-category__title">
+           {{ subcategory.name }}
+         </h2>
             <NuxtImg
               v-if="subcategory.image?.length"
               :src="`${config.public.strapi.url}${subcategory.image[0]?.url}`"
@@ -169,13 +166,18 @@ watch(category, (newCategory) => {
 
 <style lang="scss" scoped>
 .sub-category {
-   padding-block-start: toEm(12);
-   padding-block-end: toEm(22);
+   padding-block: toEm(12);
 
 &__buttons {
    display: inline-flex;
-   column-gap: toEm(12);
-   margin-block-end: toEm(27);
+   align-items: center;
+   column-gap: toRem(7);
+   margin-block-end: toEm(12);
+}
+
+&__category-title {
+   color: var(--dark-golden-color);
+   @include adaptiveValue("margin-block-end", 66, 32);
 }
 
 &__list {
@@ -187,6 +189,7 @@ watch(category, (newCategory) => {
 }
 
 &__item {
+   width: 100%;
    display: grid;
    justify-items: center;
    padding-inline: toEm(12);
@@ -195,20 +198,26 @@ watch(category, (newCategory) => {
    border-radius: toEm(4);
 }
 
-&__title {
-   text-align: center;
-   margin-block-end: toEm(12);
-}
-
 &__link {
+   min-height: 100%;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   row-gap: toEm(4);
    transition: scale var(--transition-duration);
    @include hover {
       scale: 1.1;
+
+      .sub-category__title {
+         color: var(--warning-hover);
+      }
    }
 }
 
-&__image {
-   height: 100%;
+&__title {
+   flex: 1 1 auto;
+   text-align: center;
+   transition: color var(--transition-duration);
 }
 
 &__pagination {

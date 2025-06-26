@@ -48,8 +48,12 @@ body:has(dialog[open]) {
    filter: blur(7px);
  }
 
+ h1 {
+   @include m.adaptiveValue("font-size", 22, 20);
+}
+
 h2 {
-   @include m.adaptiveValue("font-size", 22, 18);
+   @include m.adaptiveValue("font-size", 20, 18);
 }
 
 h3 {

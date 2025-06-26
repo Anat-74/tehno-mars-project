@@ -161,18 +161,20 @@ watch(currentLocale, () => {
          </details>
 
          <div class="accordion__content">
-         <div 
-
-         class="accordion__product">
-         <NuxtLink
-         @click="closeDialog"
+         <ul class="accordion__product-list">
+         <li 
          v-for="sub in cat.subcategories"
          :key="sub.id"
+         class="accordion__product-item"
+         >
+         <NuxtLink
+         class="accordion__product-link"
+         @click="closeDialog"
          :to="`/${currentLocale}/${cat.slug}/${sub.slug}`"
-          class="accordion__link"
          >{{ sub.name }}
       </NuxtLink>
-                  </div>
+   </li>
+                  </ul>
                </div>
             </li>
       </ul>
@@ -196,28 +198,30 @@ watch(currentLocale, () => {
          </details>
 
          <div class="accordion__content">
-         <div class="accordion__product">
+         <ul class="accordion__product-list">
+            <li class="accordion__product-item"
+            v-for="prod in product"
+            :key="prod.id">
          <NuxtLink
+         class="accordion__product-link accordion__product-link_is-discount"
          @click="closeDialog"
-         v-for="prod in product"
-         :key="prod.id"
-
          :to="`/${currentLocale}/${prod?.subcategory?.category?.slug}/${prod?.subcategory?.slug}/${prod.slug}`"
-          class="accordion__link"
-         >{{ prod.name }}
-         <!-- <NuxtImg
+         >
+         <NuxtImg
               v-if="prod.image?.length"
               :src="`${config.public.strapi.url}${prod.image[0]?.url}`"
               :alt="prod.name"
-              class="sub-category__image"
+              class="accordion__product-image"
               format="webp"
               loading="lazy"
               decoding="async"
-              width="240"
-              height="180"
-            /> -->
+              width="88"
+              height="66"
+            />
+         {{ prod.name }}
       </NuxtLink>
-               </div>
+                  </li>
+               </ul>
             </div>
       </div>
 
@@ -262,9 +266,9 @@ watch(currentLocale, () => {
    </div>
      </div>
    </dialog>
-<div v-if="error" class="error">
+<span v-if="error" class="error">
       {{ error.message }}
-    </div>
+    </span>
  </template>
 
 <style lang="scss" scoped>
@@ -384,6 +388,7 @@ watch(currentLocale, () => {
          align-items: center;
          justify-items: center;
          grid-auto-flow: column;
+         text-align: center;
          translate: toRem(-11) 0;
          cursor: pointer;
          padding-block: toEm(6, 22);
@@ -407,24 +412,40 @@ watch(currentLocale, () => {
          transition: all .3s;
       }
 
-      &__product {
+      &__product-list {
          overflow: hidden;
          display: grid;
-         justify-items: center;
          align-items: center;
-         row-gap: toEm(9);
+         row-gap: toRem(9);
          justify-content: center;
          color: var(--color);
       }
 
-      &__link {
+      &__product-link {
+         display: flex;
+         justify-content: center;
+         align-items: center;
          padding-inline: toEm(4, 18);
          font-size: toEm(18);
          transition: all var(--transition-duration);
 
+         &_is-discount {
+         justify-content: start;
+         column-gap: toEm(4);
+         color: var(--green-color);
+      }
+
          @include hover {
             color: var(--dark-color);
             text-decoration: underline;
+         }
+      }
+
+      &__product-image {
+         margin-inline-start: toRem(-12);
+
+         @media (max-width:$mobile){
+             width: toRem(77); 
          }
       }
 

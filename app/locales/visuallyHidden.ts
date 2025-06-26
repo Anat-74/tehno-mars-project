@@ -4,7 +4,6 @@ export const visuallyHiddenTranslations: Record<LocaleCode, {
    sectionProductSlugTitle: string
    sectionSubcategorySlugTitle: string
    sectionSubcategorySlugList: string
-   sectionCategorySlugTitle: string
    sectionLangTitle: string
    sectionAboutUsTitle: string
    sectionOurServicesTitle: string
@@ -15,7 +14,6 @@ export const visuallyHiddenTranslations: Record<LocaleCode, {
    ru: {
       sectionProductSlugTitle: "Секция с описанием товара",
       sectionSubcategorySlugTitle: "Секция товаров подкатегории",
-      sectionCategorySlugTitle: "Секция с подкатегориями товаров",
       sectionSubcategorySlugList: "Список товаров подкатегории",
       sectionLangTitle: "Секция с категориями товаров или главная страница",
       sectionAboutUsTitle: "Секция - О нас",
@@ -27,7 +25,6 @@ export const visuallyHiddenTranslations: Record<LocaleCode, {
       sectionProductSlugTitle: "Product description section",
       sectionSubcategorySlugTitle: "Subcategory Products Section",
       sectionSubcategorySlugList: "List of products in subcategory",
-      sectionCategorySlugTitle: "Section with product subcategories",
       sectionLangTitle: "Product categories section or main page",
       sectionAboutUsTitle: "Section - About Us",
       sectionOurServicesTitle: "Section - our services",
@@ -38,11 +35,10 @@ export const visuallyHiddenTranslations: Record<LocaleCode, {
       sectionProductSlugTitle: "Секцыя з апісаннем тавару",
       sectionSubcategorySlugTitle: "Секцыя тавараў падкатэгорыі",
       sectionSubcategorySlugList: "Спіс тавараў падкатэгорыі",
-      sectionCategorySlugTitle: "Секцыя з падкатэгорыямі тавараў",
       sectionLangTitle: "Секцыя з катэгорыямі тавараў або галоўная старонка",
       sectionAboutUsTitle: "Секцыя - Пра нас",
       sectionOurServicesTitle: "Секцыя - нашы паслугі",
-      showModalMenuTitle: "Спіс тавараў катэгорыі і падкатэгорыі",
+      showModalMenuTitle: "Спіс тавараў катэгорыі, а так-жа падкатэгорыі",
       sectionContactsTitle: "Секцыя з кантактамі кампаніі"
    }
  }

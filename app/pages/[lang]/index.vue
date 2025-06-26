@@ -57,8 +57,8 @@ const { data: categories, status, error } = useAsyncData(
          width="180"
          height="190"
         />
+        <h2 class="category__title">{{ category.name }}</h2>
          </NuxtLink>
-         <h2 class="category__title">{{ category.name }}</h2>
       </li>
       </ul>
    </section>
@@ -76,35 +76,48 @@ const { data: categories, status, error } = useAsyncData(
    grid-template-columns: repeat(auto-fit, minmax(toRem(262), 1fr));
    justify-items: center;
    row-gap: toEm(27);
+   padding-block: toEm(16);
    @include adaptiveValue("column-gap", 64, 7);
 }
 
 &__item {
+   width: 100%;
    display: grid;
    justify-items: center;
-   align-items: center;
    padding-inline: toEm(16);
-   padding-block-end: toEm(7);
+   padding-block-start: toEm(7);
+   padding-block-end: toEm(16);
    box-shadow: 0px 1px 2px 0px var(--shadow);
    border-radius: toEm(4);
 }
 
 &__link {
+   min-height: 100%;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   row-gap: toEm(18);
    margin-block-end: toEm(12);
+
+   @include hover {
+      .category__image {
+
+      }
+
+      .category__title {
+         color: var(--danger-hover);
+      }
+   }
 }
 
 &__image {
+   flex: 1 1 auto;
    transition: border-radius var(--transition-duration);
-
-   @include hover {
-      border-radius: toRem(22);
-      outline: toEm(3) solid var(--secondary-color);
-      outline-offset: toRem(6);
-   }
 }
 
 &__title {
    text-align: center;
+   transition: color var(--transition-duration);
 }
 }
 

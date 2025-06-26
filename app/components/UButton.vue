@@ -151,6 +151,7 @@ const clickOnButton = () => {
   }
 
   &_go-forward-back {
+   align-self: start;
    padding: toRem(4);
    border-radius: toRem(6);
    border: 2px solid var(--secondary-color);

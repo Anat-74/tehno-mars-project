@@ -251,10 +251,6 @@ onUnmounted(() => {
           color: var(--danger-color);
           background-color: currentColor;
       }
-
-      @include hover {
-         background-color: var(--placeholder-hover);
-      }
    }
    &-option {
       background-color: var(--border-color);
