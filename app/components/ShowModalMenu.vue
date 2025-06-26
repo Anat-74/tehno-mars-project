@@ -410,6 +410,7 @@ watch(currentLocale, () => {
       &__product {
          overflow: hidden;
          display: grid;
+         justify-items: center;
          align-items: center;
          row-gap: toEm(9);
          justify-content: center;

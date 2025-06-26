@@ -187,7 +187,6 @@ watch(category, (newCategory) => {
 }
 
 &__item {
-   width: 100%;
    display: grid;
    justify-items: center;
    padding-inline: toEm(12);

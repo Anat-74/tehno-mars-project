@@ -55,6 +55,7 @@ const { data: categories, status, error } = useAsyncData(
          decoding="async"
          format="webp"
          width="180"
+         height="190"
         />
          </NuxtLink>
          <h2 class="category__title">{{ category.name }}</h2>
@@ -74,14 +75,14 @@ const { data: categories, status, error } = useAsyncData(
    display: grid;
    grid-template-columns: repeat(auto-fit, minmax(toRem(262), 1fr));
    justify-items: center;
-   row-gap: toEm(12);
+   row-gap: toEm(27);
    @include adaptiveValue("column-gap", 64, 7);
 }
 
 &__item {
-   width: 100%;
    display: grid;
    justify-items: center;
+   align-items: center;
    padding-inline: toEm(16);
    padding-block-end: toEm(7);
    box-shadow: 0px 1px 2px 0px var(--shadow);
@@ -96,10 +97,14 @@ const { data: categories, status, error } = useAsyncData(
    transition: border-radius var(--transition-duration);
 
    @include hover {
-         border-radius: toRem(22);
-         outline: toEm(3) solid var(--secondary-color);
-         outline-offset: toRem(6);
+      border-radius: toRem(22);
+      outline: toEm(3) solid var(--secondary-color);
+      outline-offset: toRem(6);
    }
+}
+
+&__title {
+   text-align: center;
 }
 }
 
