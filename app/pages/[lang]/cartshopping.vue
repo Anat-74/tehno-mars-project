@@ -77,7 +77,7 @@ const handleOrderSuccess = (orderId: number) => {
 }
 
 onMounted(() => {
-  cartStore.loadCart();
+  cartStore.loadCart()
 })
 </script>
 
@@ -201,6 +201,7 @@ onMounted(() => {
             <h3 class="discount-card__title">{{ prod.name }}</h3>
             <span class="discount-card__price">{{ formatPrice(prod.price) }}</span>
          </li>
+      </ul>
             <AppNotification
             v-if="showOrderSuccess"
             type="success"
@@ -212,7 +213,6 @@ onMounted(() => {
             <p>{{ successThanks }}</p>
          </div>
          </AppNotification>
-         </ul>
          </div>
          <OrderForm 
          class="cart-page__order-form"

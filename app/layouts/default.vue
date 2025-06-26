@@ -82,11 +82,13 @@ watch(currentLocale, () => {
    <div 
       v-if="searchStore.products.length" 
       class="header__product-card">
+      <ul class="header__product-card-list">
         <ProductCard
           v-for="product in products"
           :key="product.id"
           :product="product"
         />
+      </ul>
         <div class="header__pagination-product">
         <UButton 
           v-for="page in totalPages" 

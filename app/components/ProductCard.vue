@@ -29,8 +29,7 @@ const subcategorySlug = computed(() => {
 </script>
 
 <template>
-   <ul class="product-card">
-      <li class="product-card__item">
+      <li class="product-card">
   <NuxtLink
     :to="`/${currentLocale}/${categorySlug}/${subcategorySlug}/${product.slug}`"
     class="product-card__link"
@@ -38,7 +37,6 @@ const subcategorySlug = computed(() => {
   <h2 class="product-card__title">{{ product.name }}</h2>
   </NuxtLink>
    </li>
-</ul>
 </template>
 
 <style lang="scss" scoped>

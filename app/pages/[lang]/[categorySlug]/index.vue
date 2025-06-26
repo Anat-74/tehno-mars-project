@@ -14,7 +14,7 @@ const page = ref(route.query.page ? +route.query.page : 1)
 const pageSize = 12
 
 const { data: category, pending: categoryPending, error } = useAsyncData(
-  `category-${categorySlug}-${currentLocale.value}`,
+  `category-${currentLocale.value}-${categorySlug}`,
   async () => {
      const response = await find('categories', {
        filters: {

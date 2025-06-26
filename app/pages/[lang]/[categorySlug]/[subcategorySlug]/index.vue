@@ -24,7 +24,7 @@ const { categorySlug, subcategorySlug } = route.params as {
 
 // Получаем ID подкатегории (без товаров)
 const { data: subcategory, pending: subcategoryPending, error } = useAsyncData(
-  `subcategory-${subcategorySlug}-${currentLocale.value}`,
+  `subcategory-${currentLocale.value}-${subcategorySlug}`,
   async () => {
     const response = await find('subcategories', {
       filters: {

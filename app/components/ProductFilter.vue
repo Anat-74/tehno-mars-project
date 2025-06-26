@@ -8,17 +8,12 @@ const { products, status, hasSearched } = storeToRefs(searchStore)
 // Полная синхронизация с хранилищем
 const searchName = computed({
   get: () => searchStore.filters.name,
-   set: value => {
-    searchStore.rawSearchQuery = value;
-
-    // Одновременно обновляем отображаемое значение
+  set: value => {
+    // Автоматически делаем первую букву заглавной
     if (value.length > 0) {
-      searchStore.filters.name = value
-        .split(' ')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ');
+      searchStore.filters.name = value.charAt(0).toUpperCase() + value.slice(1)
     } else {
-      searchStore.filters.name = value;
+      searchStore.filters.name = value
     }
   }
 })
@@ -55,7 +50,7 @@ const applyFilters = () => {
 }
 
 // Создаем debounce-версию с задержкой 300 мс
-const debouncedApplyFilters = debounce(applyFilters, 300)
+const debouncedApplyFilters = debounce(applyFilters, 400)
 
 watch([searchName, sortBy], debouncedApplyFilters)
 

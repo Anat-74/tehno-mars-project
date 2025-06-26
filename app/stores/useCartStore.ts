@@ -20,11 +20,9 @@ export const useCartStore = defineStore('cart', () => {
       items.value.reduce((total, item) => total + item.quantity, 0)
    )
 
-   const totalPrice = computed(() => {
-      const total = items.value.reduce(
-        (sum, item) => sum + item.product.price * item.quantity, 0)
-      return total
-    })
+   const totalPrice = computed(() => 
+      items.value.reduce((sum, item) => sum + item.product.price * item.quantity, 0)
+    )
 
    const addToCart = (
       product: Product,
@@ -83,13 +81,13 @@ export const useCartStore = defineStore('cart', () => {
 
    const loadCart = () => {
       if (typeof window === 'undefined') return; // Для SSR
-      const savedCart = localStorage.getItem('cart');
+      const savedCart = localStorage.getItem('cart')
       if (savedCart) {
         try {
           items.value = JSON.parse(savedCart);
         } catch (e) {
-          console.error("Ошибка загрузки:", e);
-          localStorage.removeItem('cart');
+          console.error("Ошибка загрузки:", e)
+          localStorage.removeItem('cart')
         }
       }
     }

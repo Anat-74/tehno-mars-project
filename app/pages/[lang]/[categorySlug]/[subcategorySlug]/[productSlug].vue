@@ -7,7 +7,6 @@ import { buttonTranslations } from '~/locales/button'
 const { find } = useStrapi()
 const route = useRoute()
 const cartStore = useCartStore()
-const lang = route.params.lang
 const { isInCart } = useIsInCart()
 const { categorySlug, subcategorySlug, productSlug } = route.params as {
   categorySlug: string
@@ -20,7 +19,7 @@ const { goBack } = useGoToForwardOrBack()
 
 const currentImage = useState<string | null>('currentImage', () => null)
 
-const { data: product, error, status } = useAsyncData(`product-${lang}-${productSlug}`,
+const { data: product, error, status } = useAsyncData(`product-${currentLocale.value}-${productSlug}`,
    async () => {
     const response = await find<Product>('products', {
        filters: {
@@ -29,7 +28,7 @@ const { data: product, error, status } = useAsyncData(`product-${lang}-${product
        },
        populate: {
         image: {
-          fields: ["alternativeText", "url"]
+          fields: ["id", "alternativeText", "url"]
         }
       }
     })

@@ -33,7 +33,7 @@ function iconName(theme: string) {
 
    &__item {
       display: flex;
-      border: 2px solid var(--border-color);
+      border: toRem(2) solid var(--border-color);
       border-radius: toRem(6);
    }
  }
