@@ -5,13 +5,35 @@ const route = useRoute()
 const searchStore = useSearchStore()
 const { products, status, hasSearched } = storeToRefs(searchStore)
 
+// Функция для форматирования каждого слова с заглавной буквы
+const capitalizeEachWord = (str: string) => {
+  if (!str) return ''
+  
+  return str
+    .split(/\s+/) // Разбиваем по любому количеству пробелов
+    .map(word => {
+      if (!word) return ''
+      
+      // Обработка составных слов через дефис
+      if (word.includes('-')) {
+        return word.split('-')
+          .map(part => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
+          .join('-')
+      }
+      
+      // Обычные слова
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+    })
+    .join(' ')
+}
+
 // Полная синхронизация с хранилищем
 const searchName = computed({
   get: () => searchStore.filters.name,
   set: value => {
     // Автоматически делаем первую букву заглавной
     if (value.length > 0) {
-      searchStore.filters.name = value.charAt(0).toUpperCase() + value.slice(1)
+      searchStore.filters.name = capitalizeEachWord(value)
     } else {
       searchStore.filters.name = value
     }
@@ -49,10 +71,13 @@ const applyFilters = () => {
   searchStore.executeSearch()
 }
 
-// Создаем debounce-версию с задержкой 300 мс
+// Создаем debounce-версию с задержкой 400 мс
 const debouncedApplyFilters = debounce(applyFilters, 400)
 
-watch([searchName, sortBy], debouncedApplyFilters)
+// watch([searchName, sortBy], debouncedApplyFilters)
+watch([searchName, sortBy], () => {
+  debouncedApplyFilters()
+})
 
 onUnmounted(() => {
   debouncedApplyFilters.cancel()

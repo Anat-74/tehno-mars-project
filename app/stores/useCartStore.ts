@@ -55,12 +55,12 @@ export const useCartStore = defineStore('cart', () => {
       saveCart()
     }
 
-   const removeFromCart = (productId: string | number) => {
+   const removeFromCart = (productId: number) => {
       items.value = items.value.filter(item => item.product.id !== productId)
       saveCart()
    }
 
-   const updateQuantity = (productId: string | number, quantity: number) => {
+   const updateQuantity = (productId: number, quantity: number) => {
       const item = items.value.find(item => item.product.id === productId)
       if (item) {
         const newQuantity = Math.max(1, quantity)
@@ -74,23 +74,34 @@ export const useCartStore = defineStore('cart', () => {
       saveCart()
    }
 
-
    const saveCart = () => {
       localStorage.setItem('cart', JSON.stringify(items.value))
    }
+
+   // Функция-предикат для проверки структуры данных
+const isCartItem = (item: any): item is CartItem => {
+   return item && 
+          typeof item.quantity === 'number' &&
+          item.product &&
+          typeof item.product.id === 'number'
+ }
 
    const loadCart = () => {
       if (typeof window === 'undefined') return; // Для SSR
       const savedCart = localStorage.getItem('cart')
       if (savedCart) {
-        try {
-          items.value = JSON.parse(savedCart);
+         try {
+          const parsed = JSON.parse(savedCart)
+            if (Array.isArray(parsed)) {
+               items.value = parsed.filter(isCartItem);
+          }
         } catch (e) {
           console.error("Ошибка загрузки:", e)
           localStorage.removeItem('cart')
         }
       }
-    }
+   }
+
    return {
       items,
       totalItems,
