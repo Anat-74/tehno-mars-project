@@ -2,7 +2,6 @@ import type { LocaleCode } from "../types/types"
 
 export const visuallyHiddenTranslations: Record<LocaleCode, {
    sectionProductSlugTitle: string
-   sectionSubcategorySlugTitle: string
    sectionSubcategorySlugList: string
    sectionLangTitle: string
    sectionAboutUsTitle: string
@@ -13,7 +12,6 @@ export const visuallyHiddenTranslations: Record<LocaleCode, {
 }> = {
    ru: {
       sectionProductSlugTitle: "Секция с описанием товара",
-      sectionSubcategorySlugTitle: "Секция товаров подкатегории",
       sectionSubcategorySlugList: "Список товаров подкатегории",
       sectionLangTitle: "Секция с категориями товаров или главная страница",
       sectionAboutUsTitle: "Секция - О нас",
@@ -23,7 +21,6 @@ export const visuallyHiddenTranslations: Record<LocaleCode, {
    },
    en: {
       sectionProductSlugTitle: "Product description section",
-      sectionSubcategorySlugTitle: "Subcategory Products Section",
       sectionSubcategorySlugList: "List of products in subcategory",
       sectionLangTitle: "Product categories section or main page",
       sectionAboutUsTitle: "Section - About Us",
@@ -33,7 +30,6 @@ export const visuallyHiddenTranslations: Record<LocaleCode, {
    },
    be: {
       sectionProductSlugTitle: "Секцыя з апісаннем тавару",
-      sectionSubcategorySlugTitle: "Секцыя тавараў падкатэгорыі",
       sectionSubcategorySlugList: "Спіс тавараў падкатэгорыі",
       sectionLangTitle: "Секцыя з катэгорыямі тавараў або галоўная старонка",
       sectionAboutUsTitle: "Секцыя - Пра нас",

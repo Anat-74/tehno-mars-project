@@ -389,7 +389,7 @@ watch(currentLocale, () => {
          justify-items: center;
          grid-auto-flow: column;
          text-align: center;
-         translate: toRem(-11) 0;
+         translate: toRem(-14) 0;
          cursor: pointer;
          padding-block: toEm(6, 22);
          font-weight: 600;

@@ -133,10 +133,6 @@ const handleAddToCart = (product: Product) => {
     class="subcategory-products"
     aria-labelledby="subcategory-products"
   >
-    <h1 id="subcategory-products" class="visually-hidden">
-      {{ visuallyHiddenTranslations[currentLocale].sectionSubcategorySlugTitle }}
-    </h1>
-    
     <div class="subcategory-products__row-top">
       <UButton
         @click="goBack"
@@ -150,7 +146,6 @@ const handleAddToCart = (product: Product) => {
         :aria-label="buttonTranslations[currentLocale].ariaLabelGoForward"
         name-class="go-forward-back"
       />
-      
       <div class="subcategory-products__select-wrapper select-wrapper">
         <label 
           class="visually-hidden"
@@ -190,6 +185,9 @@ const handleAddToCart = (product: Product) => {
         </select>
       </div>
     </div>
+    <h1 class="subcategory-products__subcategory-title">
+         {{ subcategory?.name }}
+      </h1>
     <h2 class="visually-hidden">{{ visuallyHiddenTranslations[currentLocale].sectionSubcategorySlugList }}</h2>
     <ul
       v-if="products?.data.length" 
@@ -279,13 +277,18 @@ const handleAddToCart = (product: Product) => {
    grid-template-columns: repeat(2,auto) 1fr;
    align-items: center;
    column-gap: toRem(7);
-   margin-block-end: toEm(22);
+   margin-block-end: toEm(12);
 }
 
 &__select-wrapper {
    justify-self: end;
    display: flex;
    height: 100%;
+}
+
+&__subcategory-title {
+   color: var(--dark-golden-color);
+   @include adaptiveValue("margin-block-end", 66, 32);
 }
 
 &__list {
@@ -358,6 +361,7 @@ const handleAddToCart = (product: Product) => {
 &__price {
    padding-inline-start: toEm(12);
    padding-block: toRem(7);
+   font-weight: 600;
    color: var(--warning-color);
    background-color: var(--secondary-color);
    border-radius: toRem(14);
