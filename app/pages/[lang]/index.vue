@@ -101,7 +101,9 @@ const { data: categories, status, error } = useAsyncData(
 
    @include hover {
       .category__image {
-
+         outline: toRem(4) solid var(--secondary-color);
+         outline-offset: toEm(4);
+         border-radius: toRem(32);
       }
 
       .category__title {

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { shareButtonTranslations } from '~/locales/shareButton'
+import { buttonTranslations } from '~/locales/button'
 
 const { currentLocale } = useLocale()
 const { show, type, content, showNotification } = useNotification()
@@ -13,7 +14,6 @@ const copyLink = async () => {
 
   try {
      await navigator.clipboard.writeText(productLink)
-
      showNotification(translations.successMessage)
   } catch (err) {
      console.error('Ошибка копирования:', err)
@@ -28,7 +28,7 @@ const copyLink = async () => {
    @click="copyLink"
    icon="ph:link-simple-bold"
    name-class="share"
-   aria-label="Copy link to product"
+  :aria-label="buttonTranslations[currentLocale].ariaLabelCopyLink"
    />
 
    <Transition name="fade">

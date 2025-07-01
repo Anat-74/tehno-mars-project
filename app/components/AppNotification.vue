@@ -22,11 +22,10 @@ const close = () => {
       v-if="$slots.default"
        :class="['notification', `notification_${type}`]"
     >
-         <Icon  class="notification__icon"
+         <Icon class="notification__icon"
          name="material-symbols:check-circle"/>
         <slot></slot>
-      <UButton
-       class="notification__close"
+      <UButton class="notification__close"
       @click="close"
       icon="mdi:close"
       :aria-label="buttonTranslations[currentLocale].ariaLabelClosedSuccess"
@@ -86,7 +85,7 @@ const close = () => {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity .5s;
+  transition: opacity .4s;
 }
 
 .fade-enter-from,

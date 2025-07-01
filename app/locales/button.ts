@@ -7,10 +7,14 @@ export const buttonTranslations: Record<LocaleCode, {
    ariaLabelGoForward: string
    ariaLabelAdded: string
    ariaLabelPagination: string
-   ariaLabelScrollToTop: string
    ariaLabelClosedSuccess: string
    ariaLabelDialogOpen: string
    ariaLabelDialogClosed: string
+   ariaLabelCopyLink: string
+   ariaLabelReduceQuantity: string
+   ariaLabelIncreaseQuantity: string
+   ariaLabelRemoveItemFromCart: string
+   ariaLabelScrollToTop: string
 
  }> = {
    ru: {
@@ -23,6 +27,10 @@ export const buttonTranslations: Record<LocaleCode, {
        ariaLabelClosedSuccess: "Закрыть сообщение",
        ariaLabelDialogOpen: "Открытое модное окно",
        ariaLabelDialogClosed: "Закрыть модальное окно",
+       ariaLabelCopyLink: "Скопировать ссылку на продукт",
+       ariaLabelReduceQuantity: "Уменьшить количества",
+       ariaLabelIncreaseQuantity: "Увеличить количества",
+       ariaLabelRemoveItemFromCart: "Удалить товар из корзины",
        ariaLabelScrollToTop: "Прокрутить наверх"
    },
    en: {
@@ -35,6 +43,10 @@ export const buttonTranslations: Record<LocaleCode, {
       ariaLabelClosedSuccess: "Close message",
       ariaLabelDialogOpen: "Open modal window",
       ariaLabelDialogClosed: "Close modal window",
+      ariaLabelCopyLink: "Copy link to product",
+      ariaLabelReduceQuantity: "Reduce quantities",
+      ariaLabelIncreaseQuantity: "Increase quantities",
+      ariaLabelRemoveItemFromCart: "Remove item from cart",
       ariaLabelScrollToTop: "Scroll to top"
    },
    be: {
@@ -47,6 +59,10 @@ export const buttonTranslations: Record<LocaleCode, {
       ariaLabelClosedSuccess: "Закрыць паведамленне",
       ariaLabelDialogOpen: "Адкрыць мадальнае акно",
       ariaLabelDialogClosed: "Зачыніць мадальнае акно",
+      ariaLabelCopyLink: "Скапіяваць спасылку на прадукт",
+      ariaLabelReduceQuantity: "Зменшыць колькасці",
+      ariaLabelIncreaseQuantity: "Павялічыць колькасці",
+      ariaLabelRemoveItemFromCart: "Выдаліць тавар з кошыка",
       ariaLabelScrollToTop: "Пракруціць уверх"
    }
  }

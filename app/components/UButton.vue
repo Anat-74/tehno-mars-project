@@ -158,7 +158,7 @@ const clickOnButton = () => {
    transition: color var(--transition-duration), scale var(--transition-duration);
 
    svg {
-      font-size: toEm(22, 24);
+      font-size: toEm(18, 24);
       color: var(--warning-color);
 
       @include hover {

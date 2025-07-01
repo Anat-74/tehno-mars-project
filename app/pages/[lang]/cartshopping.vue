@@ -35,10 +35,10 @@ const { data: product } = useAsyncData(
           fields: ["alternativeText", "url"]
         },
          subcategory: {
-         fields: ['id', 'name', 'slug'],
+         fields: ['name', 'slug'],
          populate: {
             category: {
-               fields: ['id', 'name', 'slug'],
+               fields: ['name', 'slug'],
                }
             }
          }
@@ -83,7 +83,7 @@ onMounted(() => {
 
 <template>
    <section 
-   :class="['cart-page', {'cart-page_empty' :cartStore.totalItems === 0}]"
+   :class="['cart-page', {'cart-page_empty' : cartStore.totalItems === 0}]"
    aria-labelledby="cart-page"
    >
    <h1

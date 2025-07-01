@@ -99,7 +99,8 @@ const submitOrder = async () => {
                aria-atomic="true"
              >
                <Icon name="my-icon:icon-by-regular" />
-               {{ formatPrice(cartStore.totalPrice) }}</strong>
+               {{ formatPrice(cartStore.totalPrice) }}
+            </strong>
       </div>
    </div>
  </template>

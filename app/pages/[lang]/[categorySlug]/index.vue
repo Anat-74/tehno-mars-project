@@ -217,6 +217,7 @@ watch(category, (newCategory) => {
 &__title {
    flex: 1 1 auto;
    text-align: center;
+   margin-block-end: toEm(7);
    transition: color var(--transition-duration);
 }
 

@@ -2,6 +2,7 @@
 import { formatPrice } from '~/utils/formatPrice'
 import type { LocaleCode } from "../types/types"
 import { cartTranslations } from '~/locales/cart'
+import { buttonTranslations } from '~/locales/button'
 
 const cartStore = useCartStore()
 const config = useRuntimeConfig()
@@ -71,7 +72,7 @@ onMounted(() => {
          @click="cartStore.updateQuantity(item.product.id, item.quantity -1)"
          :disabled="item.quantity <= 1"
          name-class="remove-quantity-prod"
-         aria-label="reduce quantity"
+         :aria-label="buttonTranslations[currentLocale].ariaLabelReduceQuantity"
         />
          <span 
          class="quantity-value"
@@ -84,15 +85,15 @@ onMounted(() => {
         <UButton
          @click="cartStore.updateQuantity(item.product.id, item.quantity +1)"
          name-class="add-quantity-prod"
-         aria-label="increase quantity"
+         :aria-label="buttonTranslations[currentLocale].ariaLabelIncreaseQuantity"
         />
       </div>
         <UButton
         @click="cartStore.removeFromCart(item.product.id)"
         name-class="remove-cart-item"
         icon="material-symbols:delete-outline-rounded"
-        aria-label="remove item from cart"
         class="cart-item__remove-from-cart"
+        :aria-label="buttonTranslations[currentLocale].ariaLabelRemoveItemFromCart"
         />
       </li>
     </ul>
