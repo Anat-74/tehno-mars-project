@@ -37,10 +37,16 @@ export default defineNuxtConfig({
    },
    nitro: {
       prerender: {
-         routes: ['/en', '/ru', '/be'],
+         // routes: ['/en', '/ru', '/be'],
+         // failOnError: false,
          ignore: [
             /\/_ipx\//, // Игнорировать IPX пути
           ]
+      },
+      preset: "cloudflare_module",
+         cloudflare: {
+         deployConfig: true,
+         nodeCompat: true
       }
    },
    runtimeConfig: {
@@ -53,7 +59,7 @@ export default defineNuxtConfig({
          cookieName: 'strapi_jwt'
       },
       public: {
-         siteUrl: process.env.SITE_URL || 'http://localhost:3000',
+         siteUrl: process.env.SITE_URL || 'https://technomars.by',
          strapi: {
             url: process.env.NUXT_PUBLIC_STRAPI_URL
          }
@@ -61,11 +67,11 @@ export default defineNuxtConfig({
    },
    image: {
       provider: 'ipx',
-      domains: ['127.0.0.1:1337'], // Домен с портом
+      domains: ['technomars.by'], // Домен с портом
   
       ipx: {
          modifiers: {
-            quality: 85,
+            quality: 80,
             format: 'webp',
             densities: [1, 2]
          }
