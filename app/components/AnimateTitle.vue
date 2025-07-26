@@ -1,9 +1,9 @@
 
 <template>
  <div class="animate-items">
-		<h2 class="animate-items__title">TehnoMars</h2>
-		<h2 class="animate-items__title">TehnoMars</h2>
-		<h2 class="animate-items__title">TehnoMars</h2>
+		<h2 class="animate-items__title">TechnoMars</h2>
+		<h2 class="animate-items__title">TechnoMars</h2>
+		<h2 class="animate-items__title">TechnoMars</h2>
 		</div> 
 </template>
 
@@ -15,7 +15,6 @@
 			top: 50%;
          translate: -50% -50%;
          letter-spacing: 1.2px;
-         font-family: Rubik Doodle;
          font-weight: 600;
 
          &:nth-child(1) {
