@@ -43,11 +43,7 @@ export default defineNuxtConfig({
             /\/_ipx\//, // Игнорировать IPX пути
           ]
       },
-      preset: "cloudflare_pages",
-      cloudflare: {
-        deployConfig: true,
-        nodeCompat:true
-      }
+      preset: "cloudflare_pages"
    },
    runtimeConfig: {
       strapi: {
