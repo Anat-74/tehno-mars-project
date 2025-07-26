@@ -43,7 +43,7 @@ export default defineNuxtConfig({
             /\/_ipx\//, // Игнорировать IPX пути
           ]
       },
-      preset: "cloudflare_pages"
+         preset: "cloudflare_pages"
    },
    runtimeConfig: {
       strapi: {
@@ -63,7 +63,7 @@ export default defineNuxtConfig({
    },
    image: {
       provider: 'ipx',
-      domains: ['technomars.by'], // Домен с портом
+      domains: ['https://whimsical-beauty-1d8dda3475.strapiapp.com'], // Домен с портом
   
       ipx: {
          modifiers: {
