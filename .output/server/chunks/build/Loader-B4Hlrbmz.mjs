@@ -1,0 +1,2 @@
+import{_ as e,v as a}from"./server.mjs";import{D as s}from"../routes/renderer.mjs";const o={};const t=o.setup;o.setup=(e,s)=>{const o=a.useSSRContext();return(o.modules||(o.modules=new Set)).add("components/Loader.vue"),t?t(e,s):void 0};const n=Object.assign(e(o,[["ssrRender",function(e,o,t,n){o(`<div${s(a.mergeProps({class:"loader"},n))} data-v-4b3ef87a><span data-v-4b3ef87a></span><span data-v-4b3ef87a></span><span data-v-4b3ef87a></span></div>`)}],["__scopeId","data-v-4b3ef87a"]]),{__name:"Loader"});export{n as _};
+//# sourceMappingURL=Loader-B4Hlrbmz.mjs.map

@@ -1,0 +1,1 @@
+import{_ as s,c as a,o,b as n}from"./C6S7ryDZ.js";const _={},l={class:"loader"};function t(c,e){return o(),a("div",l,e[0]||(e[0]=[n("span",null,null,-1),n("span",null,null,-1),n("span",null,null,-1)]))}const d=Object.assign(s(_,[["render",t],["__scopeId","data-v-4b3ef87a"]]),{__name:"Loader"});export{d as _};
