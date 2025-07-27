@@ -1,1 +1,0 @@
-import{_ as r,c as l,o,b as n,Q as s,F as t}from"./C6S7ryDZ.js";const c={};function u(a,e){return o(),l(t,null,[e[0]||(e[0]=n("header",null,null,-1)),n("main",null,[s(a.$slots,"default")])],64)}const f=r(c,[["render",u]]);export{f as default};

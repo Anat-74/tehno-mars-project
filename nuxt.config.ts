@@ -43,14 +43,14 @@ export default defineNuxtConfig({
             /\/_ipx\//, // Игнорировать IPX пути
           ]
       },
-    preset: "cloudflare_module",
-    cloudflare: {
-      deployConfig: true,  // автоматически генерирует wrangler.json
-      nodeCompat: true,    // включает совместимость с Node.js API
-      wrangler: {
-        name: "technomars-frontend"
-      }
-    }
+   //  preset: "cloudflare_module",
+   //  cloudflare: {
+   //    deployConfig: true,  // автоматически генерирует wrangler.json
+   //    nodeCompat: true,    // включает совместимость с Node.js API
+   //    wrangler: {
+   //      name: "technomars-frontend"
+   //    }
+   //  }
    },
    runtimeConfig: {
       strapi: {
