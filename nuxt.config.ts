@@ -46,7 +46,7 @@ export default defineNuxtConfig({
     preset: "cloudflare_module",
     cloudflare: {
       deployConfig: true,  // автоматически генерирует wrangler.json
-      nodeCompat: true    // включает совместимость с Node.js API
+       nodeCompat: true    // включает совместимость с Node.js API
     }
    },
    runtimeConfig: {
