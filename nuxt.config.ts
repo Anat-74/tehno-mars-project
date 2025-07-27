@@ -48,7 +48,7 @@ export default defineNuxtConfig({
       deployConfig: true,  // автоматически генерирует wrangler.json
       nodeCompat: true,    // включает совместимость с Node.js API
       wrangler: {
-        name: "technomars-frontend" // только строчные буквы, цифры и дефисы
+        name: "technomars-frontend"
       }
     }
    },
