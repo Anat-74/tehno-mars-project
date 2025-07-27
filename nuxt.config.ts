@@ -63,7 +63,7 @@ export default defineNuxtConfig({
    },
    image: {
       provider: 'ipx',
-      domains: ['https://whimsical-beauty-1d8dda3475.strapiapp.com'], // Домен с портом
+      domains: ['http://127.0.0.1:1337'], // Домен с портом
   
       ipx: {
          modifiers: {
