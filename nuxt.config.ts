@@ -40,7 +40,7 @@ export default defineNuxtConfig({
          // routes: ['/en', '/ru', '/be'],
          // failOnError: false,
          ignore: [
-            /\/_ipx\//, // Игнорировать IPX пути
+            /\/_ipx\//, // Игнорировать IPX пути 
           ]
       },
     preset: "cloudflare_module",
