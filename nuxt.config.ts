@@ -1,33 +1,12 @@
 export default defineNuxtConfig({
    compatibilityDate: '2024-11-01',
    devtools: { enabled: false },
-   future: {
-      compatibilityVersion: 4,
-   },
-   experimental: {
-      sharedPrerenderData: false,
-      compileTemplate: true,
-      resetAsyncDataToUndefined: true,
-      templateUtils: true,
-      relativeWatchPaths: true,
-      defaults: {
-         useAsyncData: {
-            deep: true
-         }
-      }
-   },
-   unhead: {
-      renderSSRHeadOptions: {
-         omitLineBreaks: false
-      }
-   },
    modules: [
       '@nuxt/image',
       '@nuxt/icon',
       '@pinia/nuxt',
       'pinia-plugin-persistedstate/nuxt',
       '@nuxtjs/color-mode',
-      '@nuxtjs/html-validator',
       '@nuxtjs/strapi',
       '@nuxtjs/mdc'
    ],
