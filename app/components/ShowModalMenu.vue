@@ -388,7 +388,7 @@ watch(currentLocale, () => {
          justify-items: center;
          grid-auto-flow: column;
          text-align: center;
-         translate: toRem(-14) 0;
+         translate: toRem(-12) 0;
          cursor: pointer;
          padding-block: toEm(6, 22);
          font-weight: 600;
@@ -458,7 +458,7 @@ watch(currentLocale, () => {
       opacity: 0;
    }
    100% {
-      opacity: .3;
+      opacity: .6;
    }
 }
 </style>

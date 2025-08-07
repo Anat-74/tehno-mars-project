@@ -114,6 +114,8 @@ const handleAddToCart = (product: Product) => {
     subcategorySlug
   )
 }
+const config = useRuntimeConfig()
+
 </script>
 
 <template>
@@ -205,7 +207,7 @@ const handleAddToCart = (product: Product) => {
           <NuxtImg 
             class="subcategory-products__image"
             v-if="product.image?.length"
-            :src="product.image[0]?.url"
+            :src="`${config.public.strapi.url}${product.image[0]?.url}`"
             :alt="product.name"
             loading="lazy"
             decoding="async"

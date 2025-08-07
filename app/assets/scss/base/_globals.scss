@@ -16,7 +16,7 @@ body:has(dialog[open]) {
    overflow: hidden;
 
    .header {
-      opacity: .4;
+      opacity: .1;
    }
    .footer {
       display: none;
@@ -45,7 +45,7 @@ body:has(dialog[open]) {
 
  main:has(.dialog-menu[open]) {
    transition: all .1s linear forwards;
-   filter: blur(7px);
+   filter: blur(9px);
  }
 
  h1 {

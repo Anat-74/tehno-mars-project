@@ -69,8 +69,8 @@ const clickOnButton = () => {
          transform: scale(1.4) rotate(-25deg);
       }
       svg {
-         font-size: toRem(20);
          color: var(--green-color);
+         @include adaptiveValue("font-size", 18, 20);
       }
    }
    &_preferred {
@@ -130,7 +130,7 @@ const clickOnButton = () => {
   &_dialog-menu {
    position: fixed;
    right: toRem(12);
-   top: 88%;
+   top: 85%;
    padding: toEm(4);
    border-radius: 50%;
    outline: toEm(2) solid var(--warning-color);
@@ -151,7 +151,7 @@ const clickOnButton = () => {
 
    @media (max-width:$mobile){
    svg {
-      font-size: toRem(20);
+      font-size: toRem(22);
          }
       }
   }
@@ -164,8 +164,8 @@ const clickOnButton = () => {
    transition: color var(--transition-duration), scale var(--transition-duration);
 
    svg {
-      font-size: toEm(18, 24);
       color: var(--warning-color);
+      @include adaptiveValue("font-size", 18, 20);
 
       @include hover {
       color: var(--danger-color);

@@ -78,6 +78,10 @@ const handleOrderSuccess = (orderId: number) => {
 onMounted(() => {
   cartStore.loadCart()
 })
+
+const cleanUrl = (url: any) => {
+  return encodeURI(url.replace(/\s+/g, ''));
+}
 </script>
 
 <template>
@@ -105,7 +109,7 @@ onMounted(() => {
       <ul class="cart-empty__list">
          <li class="cart-empty__item">
          <NuxtImg
-         src="image/valberg_new-removebg-preview.png"
+         src="/image/valberg_new-removebg-preview.png"
          alt="image"
          format="webp"
          width="122"
@@ -113,7 +117,7 @@ onMounted(() => {
          </li>
          <li class="cart-empty__item">
          <NuxtImg
-         src="image/aiko_new_1-removebg-preview.png"
+         src="/image/aiko_new_1-removebg-preview.png"
          alt="image"
          format="webp"
          width="122"
@@ -122,7 +126,7 @@ onMounted(() => {
          </li>
          <li class="cart-empty__item">
          <NuxtImg
-         src="image/praktik_profi_rgb-removebg-preview.png"
+         src="/image/praktik_profi_rgb-removebg-preview.png"
          alt="image"
          format="webp"
          width="122"
@@ -130,7 +134,7 @@ onMounted(() => {
          </li>
          <li class="cart-empty__item">
          <NuxtImg
-         src="image/praktik-home_rgb-removebg-preview.png"
+         src="/image/praktik-home_rgb-removebg-preview.png"
          alt="image"
          format="webp"
          width="122"
@@ -140,7 +144,8 @@ onMounted(() => {
      </div>
      <div class="cart-empty__image">
        <NuxtImg 
-         src="image/cart-empty-img.png"
+        provider="ipx"
+         src="/image/cart-empty-img.png"
          alt="image"
          format="webp"
          width="286"

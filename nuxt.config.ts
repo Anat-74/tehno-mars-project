@@ -40,14 +40,10 @@ export default defineNuxtConfig({
       }
    },
    image: {
-      // provider: 'ipx',
-      //  domains: ['whimsical-beauty-1d8dda3475.media.strapiapp.com'],
-      provider: 'cloudinary',
-    cloudinary: {
-      baseURL: 'https://res.cloudinary.com/<your-cloud-id>/image/fetch'
-    },
+      domains: ['whimsical-beauty-1d8dda3475.media.strapiapp.com',
+      ],
+
     quality: 80,
-   format: ['webp'],
       screens: {
          xs: 320,
          sm: 640,
@@ -55,12 +51,7 @@ export default defineNuxtConfig({
          lg: 1024,
          xl: 1280,
          xxl: 1536
-      },
-      densities: [1, 2],
-      modifiers: {
-      quality: 80,
-      format: 'webp'
-      },
+      }
    },
    
    icon: {
