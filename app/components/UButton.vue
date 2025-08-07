@@ -69,7 +69,7 @@ const clickOnButton = () => {
          transform: scale(1.4) rotate(-25deg);
       }
       svg {
-         font-size: toRem(18);
+         font-size: toRem(20);
          color: var(--green-color);
       }
    }
@@ -130,7 +130,7 @@ const clickOnButton = () => {
   &_dialog-menu {
    position: fixed;
    right: toRem(12);
-   top: 82%;
+   top: 88%;
    padding: toEm(4);
    border-radius: 50%;
    outline: toEm(2) solid var(--warning-color);
@@ -148,6 +148,12 @@ const clickOnButton = () => {
    @include hover {
       scale: 1.2;
    }
+
+   @media (max-width:$mobile){
+   svg {
+      font-size: toRem(20);
+         }
+      }
   }
 
   &_go-forward-back {
@@ -339,7 +345,7 @@ const clickOnButton = () => {
    padding: toRem(4);
    border: toRem(1) solid var(--dark-golden-color);
    transition: color var(--transition-duration);
-   @include adaptiveValue("width", 36, 28);
+   @include adaptiveValue("width", 36, 30);
    @include adaptiveValue("height", 36, 30);
 
    svg {

@@ -7,88 +7,76 @@ const route = useRoute()
 const { categorySlug } = route.params
 const { currentLocale } = useLocale()
 const { goBack, goForward } = useGoToForwardOrBack()
-const config = useRuntimeConfig()
 
 const page = ref(route.query.page ? +route.query.page : 1)
 const pageSize = 12
 
-const { data: category, pending: categoryPending, error } = useAsyncData(
-  `category-${currentLocale.value}-${categorySlug}`,
+const { data, pending, error, refresh } = useAsyncData(
+  `category-data-${currentLocale.value}-${categorySlug}-${page.value}`,
   async () => {
-     const response = await find('categories', {
-       filters: {
+    // Параллельная загрузка категории и подкатегорий
+    const [categoryRes, subcategoriesRes] = await Promise.all([
+      find('categories', {
+        filters: {
           slug: { $eq: categorySlug },
           locale: currentLocale.value
         },
         fields: ['id', 'name']
-    })
+      }),
+      find('subcategories', {
+        filters: {
+          category: { slug: { $eq: categorySlug } }, // Фильтруем по slug категории!
+          locale: currentLocale.value
+        },
+        populate: {
+          image: {
+            fields: ["alternativeText", "url"]
+          }
+        },
+        pagination: {
+          page: page.value,
+          pageSize: pageSize
+        }
+      })
+    ])
 
-    if (!response.data || response.data.length === 0) {
+    // Обработка ошибок
+    if (!categoryRes.data || categoryRes.data.length === 0) {
       throw createError({
         statusCode: 404,
-        statusMessage: 'subcategory - Not Found'
+        statusMessage: 'Category Not Found'
       })
-     }
-    return response.data[0] as Category
-   }
-)
+    }
 
-
-const { data: subcategories, pending: subcategoriesPending, refresh: refreshSubcategories 
-} = useAsyncData(
-  `subcategories-${categorySlug}-${page.value}`,
-  async () => {
-    if (!category.value) return null
-    
-    const response = await find('subcategories', {
-      filters: {
-        category: category.value.id,
-        locale: currentLocale.value
-      },
-      populate: {
-        image: {
-          fields: ["alternativeText", "url"]
-         }
-      },
-      pagination: {
-        page: page.value,
-        pageSize: pageSize
-      }
-    })
-    
-    return response as SubcategoriesResponse
-  },
-  {
-     watch: [page, category] // Перезагрузка при смене страницы или категории
+    return {
+      category: categoryRes.data[0] as Category,
+      subcategories: subcategoriesRes as SubcategoriesResponse
+    }
   }
-   )
-
-//Единый флаг загрузки
-const isLoading = computed(() => 
-  categoryPending.value || subcategoriesPending.value
 )
 
-//Вычисляем количество страниц
+// 2. Разделяем данные
+const category = computed(() => data.value?.category);
+const subcategories = computed(() => data.value?.subcategories);
+
+// 3. Управление загрузкой и ошибками
+const isLoading = ref(pending);
 const pageCount = computed(() => {
-  return subcategories.value?.meta?.pagination?.pageCount || 1
+  return subcategories.value?.meta?.pagination?.pageCount || 1;
 })
 
-//Обновляем данные при изменении страницы
+// 4. Обновление данных при изменении страницы
 watch(() => route.query.page, (newPage) => {
-  page.value = newPage ? +newPage : 1
-  refreshSubcategories()
+  page.value = newPage ? +newPage : 1;
+  refresh();
 })
 
-useSeoMeta({
-  title: category.value?.name || '',
-  description: category.value?.name || ''
-})
-
-watch(category, (newCategory) => {
-  if (newCategory) {
+// 5. SEO оптимизация
+watchEffect(() => {
+  if (category.value) {
     useSeoMeta({
-      title: newCategory.name,
-      description: newCategory.name
+      title: category.value.name,
+      description: category.value.name
     })
   }
 })
@@ -138,14 +126,14 @@ watch(category, (newCategory) => {
          </h2>
             <NuxtImg
               v-if="subcategory.image?.length"
-              :src="`${config.public.strapi.url}${subcategory.image[0]?.url}`"
+              :src="subcategory.image[0]?.url"
               :alt="subcategory.name"
               class="sub-category__image"
-              format="webp"
               loading="lazy"
               decoding="async"
               width="240"
               height="180"
+             format="webp"
             />
          </NuxtLink>
        </li>

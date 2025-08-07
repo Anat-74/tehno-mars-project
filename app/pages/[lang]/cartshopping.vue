@@ -10,7 +10,6 @@ const { currentLocale } = useLocale()
 const cartStore = useCartStore()
 const { goBack } = useGoToForwardOrBack()
 const { find } = useStrapi()
-const config = useRuntimeConfig()
 
 useSeoMeta({
   title: cartTranslations[currentLocale.value as LocaleCode].title,
@@ -118,6 +117,7 @@ onMounted(() => {
          alt="image"
          format="webp"
          width="122"
+         height="88"
        />
          </li>
          <li class="cart-empty__item">
@@ -144,6 +144,7 @@ onMounted(() => {
          alt="image"
          format="webp"
          width="286"
+         height="144"
        />
        <span class="cart-empty__text">{{ cartTranslations[currentLocale].cartEmpty }}</span>
       </div>
@@ -190,7 +191,7 @@ onMounted(() => {
                   <NuxtImg
                   class="discount-card__image"
                      v-if="prod.image?.length"
-                     :src="`${config.public.strapi.url}${prod.image[0]?.url}`"
+                     :src="prod.image[0]?.url"
                      :alt="prod.name"
                      loading="lazy"
                      decoding="async"

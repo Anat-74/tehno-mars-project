@@ -57,7 +57,7 @@ const { currentLocale } = useLocale()
    font-family: $font-family2;
    color: var(--border-color);
    transition: color var(--transition-duration);
-   @include adaptiveValue("font-size", 18, 14);
+   @include adaptiveValue("font-size", 18, 15);
 
    @include hover {
       color: var(--warning-hover);

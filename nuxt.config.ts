@@ -14,23 +14,15 @@ export default defineNuxtConfig({
    routeRules: {
       '/': { redirect: '/ru' }
    },
-   nitro: {
-      prerender: {
-         // routes: ['/en', '/ru', '/be'],
-         // failOnError: false,
-         ignore: [
-            /\/_ipx\//, // Игнорировать IPX пути 
-          ]
-      },
-   //  preset: "cloudflare_module",
-   //  cloudflare: {
-   //    deployConfig: true,  // автоматически генерирует wrangler.json
-   //    nodeCompat: true,    // включает совместимость с Node.js API
-   //    wrangler: {
-   //      name: "technomars-frontend"
-   //    }
-   //  }
-   },
+   // nitro: {
+   //    prerender: {
+   //       // routes: ['/en', '/ru', '/be'],
+   //       // failOnError: false,
+   //       ignore: [
+   //          /\/_ipx\//, // Игнорировать IPX пути 
+   //        ]
+   //    },
+   // },
    runtimeConfig: {
       strapi: {
          url: process.env.NUXT_STRAPI_URL,
@@ -41,26 +33,21 @@ export default defineNuxtConfig({
          cookieName: 'strapi_jwt'
       },
       public: {
-         siteUrl: process.env.SITE_URL || 'https://technomars.by',
+         siteUrl: process.env.SITE_URL,
          strapi: {
             url: process.env.NUXT_PUBLIC_STRAPI_URL
          }
       }
    },
    image: {
-      provider: 'ipx',
-      domains: ['http://127.0.0.1:1337'], // Домен с портом
-  
-      ipx: {
-         modifiers: {
-            quality: 80,
-            format: 'webp',
-            densities: [1, 2]
-         }
-      },
-      strapi: {
-         baseURL: process.env.NUXT_PUBLIC_STRAPI_URL
-      },
+      // provider: 'ipx',
+      //  domains: ['whimsical-beauty-1d8dda3475.media.strapiapp.com'],
+      provider: 'cloudinary',
+    cloudinary: {
+      baseURL: 'https://res.cloudinary.com/<your-cloud-id>/image/fetch'
+    },
+    quality: 80,
+   format: ['webp'],
       screens: {
          xs: 320,
          sm: 640,
@@ -68,10 +55,14 @@ export default defineNuxtConfig({
          lg: 1024,
          xl: 1280,
          xxl: 1536
-       },
-      quality: 85,
-      densities: [1, 2]
+      },
+      densities: [1, 2],
+      modifiers: {
+      quality: 80,
+      format: 'webp'
+      },
    },
+   
    icon: {
       serverBundle: {
          collections: [

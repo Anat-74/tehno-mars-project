@@ -13,7 +13,6 @@ const { categorySlug, subcategorySlug, productSlug } = route.params as {
   subcategorySlug: string
   productSlug: string
 }
-const config = useRuntimeConfig()
 const { currentLocale } = useLocale()
 const { goBack } = useGoToForwardOrBack()
 
@@ -44,13 +43,13 @@ const { data: product, error, status } = useAsyncData(`product-${currentLocale.v
      const firstImage = productData?.image?.[0]?.url
 
      if (firstImage) {
-      currentImage.value = `${config.public.strapi.url}${firstImage}`
+      currentImage.value = firstImage
     }
       return productData
    })
 
 const isActive = (imgUrl: string) => 
-  computed(() => currentImage.value === `${config.public.strapi.url}${imgUrl}`)
+  computed(() => currentImage.value === imgUrl)
 
   const characteristics = computed(() => {
   try {
@@ -132,11 +131,11 @@ const handleAddToCart = (product: Product) => {
         v-for="(img, index) in product.image" 
         :key="img.id"
         :class="['wrapper-left__thumbnail', {'wrapper-left__thumbnail_active': isActive(img.url).value}]"
-        @mouseover="currentImage = `${config.public.strapi.url}${img.url}`"
-        @click="currentImage = `${config.public.strapi.url}${img.url}`"
+        @mouseover="currentImage = img.url"
+        @click="currentImage = img.url"
       >
         <NuxtImg 
-          :src="`${config.public.strapi.url}${img.url}`"
+          :src="img.url"
           :alt="`${product.name} - Image ${index + 1}`"
           width="133"
           height="100"

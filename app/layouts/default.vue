@@ -4,9 +4,8 @@ const searchStore = useSearchStore()
 const { products, totalPages, currentPage } = storeToRefs(searchStore)
 const { currentLocale } = useLocale()
 const { isContacts } = useVisibilityProvider()
-const config = useRuntimeConfig()
 
-const {data: global, status, error, refresh } = useAsyncData<any>(
+const {data: global, error, refresh } = useAsyncData<any>(
    `global-${currentLocale.value}`,
    async () => {
       const response = await find('global', {
@@ -46,9 +45,7 @@ watch(currentLocale, () => {
 </script>
 
 <template>
-      <Loader v-if="status === 'pending'"
-     class="loader"
-   />
+
 <header class="header">
    <div class="header__container-top">
 <ClientOnly ><ColorMode /></ClientOnly>
@@ -67,14 +64,13 @@ watch(currentLocale, () => {
    :to="`/${currentLocale}`"
    aria-label="Go home"
    >
-
     <NuxtImg 
-   v-if="global.footer?.logo?.length"
-   :src="`${config.public.strapi.url}${global.footer?.logo[0]?.url}`"
+   v-if="global?.footer?.logo?.length"
+   :src="global?.footer?.logo[0]?.url"
    alt="logo"
-   format="webp"
-   widht="80"
+   width="80"
    height="70"
+   format="webp"
    />
 </NuxtLink>
 <ProductFilter class="header__search"
@@ -125,7 +121,7 @@ watch(currentLocale, () => {
       :legal="global.legal"
       :socials="global.socials"
     />
-    <span v-else-if="error">
+    <span v-if="error">
       Error: {{ error.message }}
    </span>
 </template>
@@ -167,7 +163,7 @@ watch(currentLocale, () => {
    grid-template-columns: auto 1fr auto;
    align-items: center;
    padding-block: toEm(12);
-   @include adaptiveValue("column-gap", 44, 7);
+   @include adaptiveValue("column-gap", 44, 12);
 
    @media (max-width:$mobileSmall){
        grid-template-columns: 1fr auto;

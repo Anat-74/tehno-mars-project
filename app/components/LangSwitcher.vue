@@ -32,6 +32,7 @@ const { currentLocale, locales, switchLocale } = useLocale()
 
   @media (max-width:$mobile){
    margin-inline-start: toRem(12);
+   gap: toRem(16);
   }
   @media (max-width:$mobileSmall){
    margin-inline-start: toEm(0);

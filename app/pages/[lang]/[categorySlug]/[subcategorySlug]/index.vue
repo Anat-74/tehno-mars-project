@@ -10,7 +10,6 @@ const route = useRoute()
 const { currentLocale } = useLocale()
 const { goBack, goForward } = useGoToForwardOrBack()
 const { isInCart } = useIsInCart()
-const config = useRuntimeConfig()
 const cartStore = useCartStore()
 
 const sortOption = ref<string>('name:asc')
@@ -22,95 +21,88 @@ const { categorySlug, subcategorySlug } = route.params as {
   subcategorySlug: string
 }
 
-// Получаем ID подкатегории (без товаров)
-const { data: subcategory, pending: subcategoryPending, error } = useAsyncData(
-  `subcategory-${currentLocale.value}-${subcategorySlug}`,
+// Параллельная загрузка подкатегории и продуктов
+const { data, pending, error, refresh } = useAsyncData(
+  `subcategory-products-${currentLocale.value}-${categorySlug}-${subcategorySlug}-${page.value}-${sortOption.value}`,
   async () => {
-    const response = await find('subcategories', {
-      filters: {
-        slug: { $eq: subcategorySlug },
-        category: { slug: { $eq: categorySlug } },
-        locale: currentLocale.value
-      },
-      fields: ['id', 'name']
-    })
+    // Параллельная загрузка данных
+    const [subcategoryRes, productsRes] = await Promise.all([
+      // Запрос подкатегории
+      find('subcategories', {
+        filters: {
+          slug: { $eq: subcategorySlug },
+          category: { slug: { $eq: categorySlug } },
+          locale: currentLocale.value
+        },
+        fields: ['id', 'name']
+      }),
+      
+      // Запрос продуктов с фильтрацией по slug
+      find('products', {
+        filters: {
+          subcategory: {
+            slug: { $eq: subcategorySlug },
+            category: { slug: { $eq: categorySlug } }
+          },
+          locale: currentLocale.value
+        },
+        populate: {
+          image: {
+            fields: ["alternativeText", "url"]
+          }
+        },
+        sort: sortOption.value,
+        pagination: {
+          page: page.value,
+          pageSize: pageSize
+        }
+      })
+    ])
 
-    if (!response.data || response.data.length === 0) {
+    // Обработка ошибок подкатегории
+    if (!subcategoryRes.data || subcategoryRes.data.length === 0) {
       throw createError({
         statusCode: 404,
         statusMessage: 'Products subCategory Not Found'
       })
     }
-    return response.data[0] as Subcategory
+
+    return {
+      subcategory: subcategoryRes.data[0] as Subcategory,
+      products: productsRes as ProductsResponse
+    }
   }
 )
 
-// Получаем товары с пагинацией и сортировкой
-const { 
-  data: products, 
-  pending: productsPending,
-  refresh: refreshProducts
-} = useAsyncData(
-  `products-${subcategorySlug}-${page.value}-${sortOption.value}`,
-  async () => {
-    if (!subcategory.value) return null
-    
-    const response = await find('products', {
-      filters: {
-        subcategory: subcategory.value.id,
-        locale: currentLocale.value
-      },
-      populate: {
-        image: {
-          fields: ["alternativeText", "url"]
-        }
-      },
-      sort: sortOption.value,
-      pagination: {
-        page: page.value,
-        pageSize: pageSize
-      }
-    })
+// Разделение данных
+const subcategory = computed(() => data.value?.subcategory)
+const products = computed(() => data.value?.products)
 
-    return response as ProductsResponse
-  },
-  {
-    // Перезагружаем при изменении страницы, сортировки или подкатегории
-    watch: [page, sortOption, subcategory]
-  }
-   )
+// Флаг загрузки
+const isLoading = ref(pending)
 
-//  Единый флаг загрузки
-const isLoading = computed(() => 
-  subcategoryPending.value || productsPending.value
-)
-
-// Вычисляем общее количество страниц
+// Количество страниц
 const pageCount = computed(() => {
-  if (!products.value?.meta?.pagination) return 1
-  return products.value.meta.pagination.pageCount
+  return products.value?.meta?.pagination?.pageCount || 1;
 })
 
 // Обработчик изменения страницы
 watch(() => route.query.page, (newPage) => {
-  page.value = newPage ? +newPage : 1
+  page.value = newPage ? +newPage : 1;
+  refresh() // Перезагружаем данные
 })
 
-// Обновляем товары при изменении сортировки
+// Обработчик сортировки
 watch(sortOption, () => {
-  refreshProducts()
-})
+  refresh() // Перезагружаем данные
+});
 
-useSeoMeta({
-  title: subcategory.value?.name,
-  description: subcategory.value?.name
-})
-
-watch(subcategory, (newCategory) => {
-  if (newCategory) {
+// SEO
+watchEffect(() => {
+  if (subcategory.value) {
     useSeoMeta({
-      title: newCategory.name,
-      description: newCategory.name
+      title: subcategory.value.name,
+      description: subcategory.value.name
     })
   }
 })
@@ -213,12 +205,13 @@ const handleAddToCart = (product: Product) => {
           <NuxtImg 
             class="subcategory-products__image"
             v-if="product.image?.length"
-            :src="`${config.public.strapi.url}${product.image[0]?.url}`"
+            :src="product.image[0]?.url"
             :alt="product.name"
             loading="lazy"
             decoding="async"
             width="240"
             height="180"
+            format="webp"
           />
         </NuxtLink>
         

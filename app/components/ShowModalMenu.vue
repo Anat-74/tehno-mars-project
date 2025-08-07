@@ -11,7 +11,6 @@ defineProps<{
    phones: Phone[]
 }>()
 
-const config = useRuntimeConfig()
 const { currentLocale } = useLocale()
 const { formatPhone } = useFormatPhone()
 const { find } = useStrapi()
@@ -133,7 +132,7 @@ watch(currentLocale, () => {
       <NuxtImg
          v-if="footer.logo?.length"
          class="base-footer__logo"
-         :src="`${config.public.strapi.url}${footer.logo[0]?.url}`"
+         :src="footer.logo[0]?.url"
          :alt="footer.companyName"
          format="webp"
          width="55"
@@ -209,7 +208,7 @@ watch(currentLocale, () => {
          >
          <NuxtImg
               v-if="prod.image?.length"
-              :src="`${config.public.strapi.url}${prod.image[0]?.url}`"
+              :src="prod.image[0]?.url"
               :alt="prod.name"
               class="accordion__product-image"
               format="webp"
@@ -257,7 +256,7 @@ watch(currentLocale, () => {
     >
       <NuxtImg 
          v-if="link.icon"
-        :src="`${config.public.strapi.url}${link.icon[0]?.url}`"
+        :src="link.icon[0]?.url"
         :alt="link.label"
         width="26"
         height="26"

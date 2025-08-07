@@ -5,7 +5,6 @@ import { cartTranslations } from '~/locales/cart'
 import { buttonTranslations } from '~/locales/button'
 
 const cartStore = useCartStore()
-const config = useRuntimeConfig()
 const { currentLocale } = useLocale()
 
 const getProductLink = (product: CartItem['product']) => {
@@ -54,7 +53,7 @@ onMounted(() => {
           >
         <NuxtImg
          class="cart-item__image"
-         :src="`${config.public.strapi.url}${item.product.image}`"
+         :src="item.product.image"
          :alt="item.product.name"
           format="webp"
           loading="lazy"

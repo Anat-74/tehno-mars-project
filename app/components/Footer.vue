@@ -2,7 +2,6 @@
 import type { FooterData, LegalInfo, SocialLink, Email, Phone } from "../types/types"
 import { baseFooterTranslations } from '~/locales/baseFooter'
 
-const config = useRuntimeConfig()
 const { currentLocale } = useLocale()
 const { formatPhone } = useFormatPhone()
 
@@ -17,13 +16,13 @@ defineProps<{
 </script>
 
 <template>
-   <div class="base-footer">
+   <footer class="base-footer">
       <div class="base-footer__container">
          <NuxtLink class="base-footer__logo"
          :to="`/${currentLocale}`">
       <NuxtImg
          v-if="footer.logo?.length"
-         :src="`${config.public.strapi.url}${footer.logo[0]?.url}`"
+         :src="footer.logo[0]?.url"
          :alt="footer.companyName"
          format="webp"
          width="62"
@@ -45,7 +44,7 @@ defineProps<{
     >
       <NuxtImg 
          v-if="link.icon"
-        :src="`${config.public.strapi.url}${link.icon[0]?.url}`"
+        :src="link.icon[0]?.url"
         :alt="link.label"
         width="26"
         height="26"
@@ -139,7 +138,7 @@ v-if="footer.copyright"
 class="base-footer__copyright">{{footer.copyright}}</span>
 </div>
 <ScrollToTop />
-   </div>
+   </footer>
 </template>
 
 <style lang="scss" scoped>
