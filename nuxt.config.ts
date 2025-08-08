@@ -23,9 +23,6 @@ export default defineNuxtConfig({
    //        ]
    //    },
    // },
-     nitro: {
-    preset: 'vercel'
-  },
    runtimeConfig: {
       strapi: {
          url: process.env.NUXT_STRAPI_URL,
