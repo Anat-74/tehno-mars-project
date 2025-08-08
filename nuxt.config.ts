@@ -10,7 +10,7 @@ export default defineNuxtConfig({
       '@nuxtjs/strapi',
       '@nuxtjs/mdc'
    ],
-   ssr: true,
+   ssr: false,
    routeRules: {
       '/': { redirect: '/ru' }
    },
