@@ -66,6 +66,12 @@ updateHead()
 watch([currentLocale, () => route.path], () => {
   updateHead()
 })
+
+onErrorCaptured((err) => {
+  console.error('Global error:', err)
+  // Предотвращаем падение всего приложения
+  return false
+})
 </script>
 
 <template>
