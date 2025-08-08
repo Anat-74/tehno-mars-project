@@ -144,7 +144,6 @@ const cleanUrl = (url: any) => {
      </div>
      <div class="cart-empty__image">
        <NuxtImg 
-        provider="ipx"
          src="/image/cart-empty-img.png"
          alt="image"
          format="webp"
