@@ -3,32 +3,19 @@ import type { Category, Product, PaginationMeta, FooterData, SocialLink, Phone }
 import { visuallyHiddenTranslations } from '~/locales/visuallyHidden'
 import { discountProductTranslations } from '~/locales/discountProduct'
 
-const dialogElement = useTemplateRef<HTMLDialogElement>('dialog-menu')
-
 defineProps<{
    footer: FooterData
    socials: SocialLink[]
    phones: Phone[]
 }>()
 
+
+const dialogElement = useTemplateRef<HTMLDialogElement>('dialog-menu')
+const { isOpen, open, close } = useDialog(dialogElement)
+
 const { currentLocale } = useLocale()
 const { formatPhone } = useFormatPhone()
 const { find } = useStrapi()
-
-const openDialog = () => {
-   dialogElement.value?.showModal()
-   }
-
-const closeDialog = () => {
-   dialogElement.value?.close()
-}
-
-onMounted(() => {
-   if (dialogElement.value) {
-   useCloseDialogElement(dialogElement.value)
-  }
-})
-
 
 const { data: category, pending: pendingCategories, error, refresh: refreshCategory } = useAsyncData(
   `category-dialog-${currentLocale.value}`,
@@ -106,7 +93,7 @@ watch(currentLocale, () => {
 <template>
    <Loader v-if="pending" />
    <UButton 
-   @click="openDialog"
+   @click="open()"
    icon="line-md:arrow-open-left"
    name-class="dialog-menu"
    aria-label="open"
@@ -122,7 +109,7 @@ watch(currentLocale, () => {
          >{{ visuallyHiddenTranslations[currentLocale].showModalMenuTitle }}</h1>
      <div class="dialog-menu__items">
          <UButton 
-         @click="closeDialog"
+         @click="close()"
          name-class="close"
          aria-label="closed"
           />
@@ -168,7 +155,7 @@ watch(currentLocale, () => {
          >
          <NuxtLink
          class="accordion__product-link"
-         @click="closeDialog"
+         @click="close()"
          :to="`/${currentLocale}/${cat.slug}/${sub.slug}`"
          >{{ sub.name }}
       </NuxtLink>
@@ -203,7 +190,7 @@ watch(currentLocale, () => {
             :key="prod.id">
          <NuxtLink
          class="accordion__product-link accordion__product-link_is-discount"
-         @click="closeDialog"
+         @click="close()"
          :to="`/${currentLocale}/${prod?.subcategory?.category?.slug}/${prod?.subcategory?.slug}/${prod.slug}`"
          >
          <NuxtImg
@@ -298,7 +285,7 @@ watch(currentLocale, () => {
    padding-block: toEm(16);
    padding-inline: toEm(7);
    background:linear-gradient(-135deg, transparent toRem(45), var(--secondary-color) 0);
-   @include adaptiveValue('margin-inline', 32, 7);
+   @include adaptiveValue('padding-inline', 32, 12);
   }
 
   &__top {

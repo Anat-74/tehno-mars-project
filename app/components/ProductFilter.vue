@@ -141,12 +141,12 @@ onUnmounted(() => {
       <option 
       class="search-option option" 
       value="price:asc"
-      >{{ productFilterTranslations[currentLocale].optionPrice }}(🡹)
+      >{{ productFilterTranslations[currentLocale].optionPrice }}
    </option>
       <option 
       class="search-option option" 
       value="price:desc"
-      > {{ productFilterTranslations[currentLocale].optionPriceDesc }}(🡻)
+      > {{ productFilterTranslations[currentLocale].optionPriceDesc }}
    </option>
     </select>
     </div>

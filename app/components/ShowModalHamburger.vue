@@ -1,25 +1,13 @@
 <script setup lang="ts">
 const dialogElement = useTemplateRef<HTMLDialogElement>('dialog-hamburger')
 
-const openDialog = () => {
-   dialogElement.value?.showModal()
-   }
-
-const closeDialog = () => {
-   dialogElement.value?.close()
-}
-
-onMounted(() => {
-   if (dialogElement.value) {
-   useCloseDialogElement(dialogElement.value)
-  }
-})
+const { open, close } = useDialog(dialogElement)
 </script>
 
 <template>
    <div>
    <UButton 
-   @click="openDialog" 
+   @click="open()" 
    name-class="hamburger"
    aria-label="open"
    />
@@ -31,7 +19,7 @@ onMounted(() => {
    >
      <div class="dialog-hamburger__items">
          <UButton 
-         @click="closeDialog"
+         @click="close()"
          name-class="hamburger"
          aria-label="closed"
           />

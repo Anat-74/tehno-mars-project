@@ -366,8 +366,6 @@ const clickOnButton = () => {
    background-color: var(--blue-color);
 }
 
-
-
   &_close {
    position: absolute;
     z-index: 10;
@@ -380,7 +378,7 @@ const clickOnButton = () => {
       &::after{
          content: '';
          position: absolute;
-			right: toRem(5);
+			right: toRem(3);
 			width: toRem(20);
 			height: toRem(2);
          background-color: var(--border-color);

@@ -40,18 +40,7 @@ export default defineNuxtConfig({
       }
    },
    image: {
-   //  cloudimage: {
-   //    token: 'chfpmpeaqa',
-   //    baseURL: 'https://whimsical-beauty-1d8dda3475.media.strapiapp.com',
-   //     },
-      //  domains: ['whimsical-beauty-1d8dda3475.media.strapiapp.com'],
-      //  quality: 80,
-      
-
-   //  strapi: {
-   //    // Базовый URL вашего Strapi
-   //    baseURL: 'https://whimsical-beauty-1d8dda3475.strapiapp.com'
-   //  },
+      // domains: ['whimsical-beauty-1d8dda3475.media.strapiapp.com'],
       screens: {
          xs: 320,
          sm: 640,

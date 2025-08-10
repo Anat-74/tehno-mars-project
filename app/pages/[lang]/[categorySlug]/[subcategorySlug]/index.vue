@@ -114,7 +114,6 @@ const handleAddToCart = (product: Product) => {
     subcategorySlug
   )
 }
-import { getStrapiImagePath } from '../../../../utils/iamge';
 </script>
 
 <template>

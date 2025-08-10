@@ -41,6 +41,9 @@ const subcategorySlug = computed(() => {
 
 <style lang="scss" scoped>
 .product-card {
+   &:not(:last-child) {
+   margin-block-end: toRem(9);
+   }
 &__title {
    font-size: toEm(16);
 }
