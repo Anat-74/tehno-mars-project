@@ -48,9 +48,11 @@ export default defineNuxtConfig({
          lg: 1024,
          xl: 1280,
          xxl: 1536
-      }
+      },
+      quality: 80,
+      densities: [1, 2]
    },
-   
+
    icon: {
       serverBundle: {
          collections: [

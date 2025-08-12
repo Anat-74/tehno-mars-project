@@ -45,15 +45,28 @@
   --bg-footer-color: #2f4f4f;
   --bg-nav-footer: #091A28;
   --bg-nav-footer-outline: #778899;
+  .dialog-hamburger {
+  &[open]::backdrop {
+   --dark-color: #000000;
+  }
+}
+
+.btn {
+&_dialog-menu {
+   --warning-hover:#2f4f4f;
+      }
+   }
  }
  .sepia-mode {
-  --color: #ffffff;
+  --color: #504231;
   --gray-color: #ffffff;
-  --primary-color: #778899;
+  --primary-color: #ffffff;
   --secondary-color: #504231;
   --bg: #f1e7d0;
-  --border-color: #dfd0bf;
-  --bg-footer-color: #504231;
+   --warning-hover:#504231;
+  --border-color: #ffffff;
+  --bg-footer-color: #deb887;
+  --bg-nav-footer: #f1e7d0;
  }
 
 

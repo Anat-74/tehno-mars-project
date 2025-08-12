@@ -23,6 +23,7 @@ const { open, close } = useDialog(dialogElement)
          name-class="hamburger"
          aria-label="closed"
           />
+          <p>В процессе добавления контента</p>
      </div>
    </dialog>
 </div>
@@ -50,9 +51,15 @@ const { open, close } = useDialog(dialogElement)
   }
 
   &__items {
+   display: grid;
+   align-items: center;
+   justify-items: center;
    min-height: 100dvh;
    padding-block: toEm(25, 16);
    @include adaptiveValue('padding-inline', 22, 12);
+  }
+  p {
+   font-size: toRem(18);
   }
 }
 
@@ -61,7 +68,7 @@ const { open, close } = useDialog(dialogElement)
       opacity: 0;
    }
    100% {
-      opacity: .8;
+      opacity: .9;
    }
 }
 </style>

@@ -191,10 +191,10 @@ watch(currentLocale, () => {
    }
 
    @media (max-width:$mobileSmall){
-      width: toEm(64);
+      width: toEm(62);
       border-radius: 50%;
       position: absolute;
-      top: toEm(4);
+      top: toEm(6);
    }
 }
 

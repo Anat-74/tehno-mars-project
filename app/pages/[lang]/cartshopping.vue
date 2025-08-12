@@ -78,10 +78,6 @@ const handleOrderSuccess = (orderId: number) => {
 onMounted(() => {
   cartStore.loadCart()
 })
-
-const cleanUrl = (url: any) => {
-  return encodeURI(url.replace(/\s+/g, ''));
-}
 </script>
 
 <template>
@@ -121,7 +117,6 @@ const cleanUrl = (url: any) => {
          alt="image"
          format="webp"
          width="122"
-         height="88"
        />
          </li>
          <li class="cart-empty__item">

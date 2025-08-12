@@ -130,10 +130,10 @@ const clickOnButton = () => {
   &_dialog-menu {
    position: fixed;
    right: toRem(12);
-   top: 85%;
+   top: 83%;
    padding: toEm(4);
    border-radius: 50%;
-   outline: toEm(2) solid var(--warning-color);
+   outline: toEm(2) solid var(--warning-hover);
    outline-offset: toRem(2);
    background-color: var(--warning-hover);
 
@@ -369,8 +369,8 @@ const clickOnButton = () => {
   &_close {
    position: absolute;
     z-index: 10;
-    top: toEm(9);
-    right: toEm(12);
+    top: toEm(11);
+    right: toEm(7);
     padding-inline: toEm(14);
     padding-block: toEm(14);
 

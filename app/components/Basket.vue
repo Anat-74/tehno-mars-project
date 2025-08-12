@@ -31,8 +31,9 @@ class="cart-link"
       position: relative;
 
       svg {
+         color: var(--primary-color);
          transition: color var(--transition-duration), transform var(--transition-duration);
-         
+
          @include hover {
             transform: scale(1.1);
             color: var(--danger-color);

@@ -267,6 +267,7 @@ watch(currentLocale, () => {
   translate: 100% 0;
   background-color: var(--bg);
   transition: translate .2s linear;
+    @include adaptiveValue('width', 855, 295);
 
   &[open] {
    translate: 0;

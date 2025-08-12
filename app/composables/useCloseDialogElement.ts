@@ -40,13 +40,11 @@ export const useDialog = (dialogElement: Ref<HTMLDialogElement | null>) => {
   // Добавление обработчика событий
   onMounted(() => {
      if (!dialogElement.value) return
-     console.debug('monted')
     dialogElement.value.addEventListener('click', closeOnBackdropClick)
   })
 
   // Удаление обработчика при размонтировании
    onUnmounted(() => {
-       console.debug('onMonted')
     dialogElement.value?.removeEventListener('click', closeOnBackdropClick)
   })
 
