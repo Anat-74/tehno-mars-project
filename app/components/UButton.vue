@@ -64,7 +64,10 @@ const clickOnButton = () => {
 
    &_color-theme {
       padding: toRem(2);
+      border: toRem(2) solid var(--secondary-color);
+      border-radius: toRem(6);
       transition: transform var(--transition-duration);
+
       @include hover {
          transform: scale(1.4) rotate(-25deg);
       }
@@ -77,12 +80,12 @@ const clickOnButton = () => {
          svg  {
             color: var(--primary-color);
          }
-      }
-      &_selected {
+   }
+   &_selected {
          svg  {
          color: var(--active-color);
          }
-      }
+  }
 
    &_hamburger {
    display: none;
@@ -133,9 +136,14 @@ const clickOnButton = () => {
    top: 83%;
    padding: toEm(4);
    border-radius: 50%;
-   outline: toEm(2) solid var(--warning-hover);
+   outline: toEm(2) solid var(--warning-color);
    outline-offset: toRem(2);
    background-color: var(--warning-hover);
+   transition: scale var(--transition-duration);
+
+      @include hover {
+      scale: 1.1;
+   }
 
    svg {
       font-size: toEm(25, 24);
@@ -160,7 +168,7 @@ const clickOnButton = () => {
    align-self: start;
    padding: toRem(4);
    border-radius: toRem(6);
-   border: 2px solid var(--secondary-color);
+   border: 1px solid var(--secondary-color);
    transition: color var(--transition-duration), scale var(--transition-duration);
 
    svg {
@@ -198,10 +206,10 @@ const clickOnButton = () => {
   &_add-to-cart {
    font-weight: 600;
    border-radius: toRem(6);
-   border: 1px solid var(--danger-hover);
+   border: 1px solid var(--light-color);
    box-shadow: 0 toRem(4) toRem(0) rgba(0, 0, 0, 0.2);
-   color: var(--danger-color);
-   background-color: var(--light-color);
+   color: var(--danger-hover);
+   background-color: var(--secondary-color);
    transition: background-color var(--transition-duration), color var(--transition-duration);
 
    &:disabled {
@@ -252,6 +260,7 @@ const clickOnButton = () => {
   &_remove-cart-item {
    svg {
    color: var(--warning-color);
+   font-size: toRem(24);
    transition: color var(--transition-duration), scale var(--transition-duration);
 
    @include hover {
@@ -363,6 +372,8 @@ const clickOnButton = () => {
 &_pagination {
    padding-inline: toEm(12);
    padding-block: toEm(7);
+   font-weight: 600;
+   color: var(--color);
    background-color: var(--blue-color);
 }
 

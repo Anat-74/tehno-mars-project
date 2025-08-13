@@ -180,6 +180,7 @@ defineProps<{
       top: toRem(56);
       right: 0;
       border-radius: toRem(4);
+      color: var(--color);
       background-color: var(--secondary-color);
 
       &__phone-link {

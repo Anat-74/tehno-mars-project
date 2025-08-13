@@ -40,7 +40,7 @@ export default defineNuxtConfig({
       }
    },
    image: {
-      // domains: ['whimsical-beauty-1d8dda3475.media.strapiapp.com'],
+      domains: ['whimsical-beauty-1d8dda3475.media.strapiapp.com'],
       screens: {
          xs: 320,
          sm: 640,

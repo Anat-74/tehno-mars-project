@@ -161,7 +161,7 @@ const submitOrder = async () => {
 
 &__label {
    display: inline-block;
-    color: var(--table-color);
+    color: var(--color);
     @include adaptiveValue("margin-block-end", 8, 5);
 }
 
@@ -258,6 +258,7 @@ const submitOrder = async () => {
    padding-inline: toRem(16);
    padding-block: toEm(9);
    border-radius: toRem(2) toRem(2) toRem(8) toRem(8);
+   color: var(--color);
    background-color: var(--secondary-color);
    box-shadow:
       0px 4px 4px -4px rgba(30, 33, 44, 0.05),

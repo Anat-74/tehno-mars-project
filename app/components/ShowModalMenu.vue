@@ -275,7 +275,8 @@ watch(currentLocale, () => {
   }
   &[open]::backdrop {
    background-color: var(--dark-color);
-   animation: fade .2s linear forwards;
+   opacity: .1;
+   // animation: fade .2s linear forwards;
   }
 
   &__items {
@@ -419,7 +420,6 @@ watch(currentLocale, () => {
          &_is-discount {
          justify-content: start;
          column-gap: toEm(4);
-         color: var(--green-color);
       }
 
          @include hover {
@@ -441,12 +441,12 @@ watch(currentLocale, () => {
    }
    }
 
-@keyframes fade {
-   0% {
-      opacity: 0;
-   }
-   100% {
-      opacity: .6;
-   }
-}
+// @keyframes fade {
+//    0% {
+//       opacity: 0;
+//    }
+//    100% {
+//       opacity: .2;
+//    }
+// }
 </style>

@@ -236,6 +236,7 @@ const handleAddToCart = (product: Product) => {
    border-radius: toEm(8);
    box-shadow: 0 0 toRem(4) var(--shadow);
    margin-block-end: toEm(48);
+   background-color: var(--bg-product);
 
    @media (max-width:$tablet){
       margin-block-end: 0;
@@ -270,6 +271,7 @@ const handleAddToCart = (product: Product) => {
 
 &__thumbnail-image {
    border-radius: toRem(4);
+   background-color: var(--bg-product);
    transition: opacity var(--transition-duration);
 }
 }
@@ -293,7 +295,7 @@ const handleAddToCart = (product: Product) => {
    padding-block: toEm(4, 22);
    border-radius: toEm(4, 22);
    color: var(--dark-golden-color);
-   background-color: var(--bg);
+   background-color: var(--bg-product);
    box-shadow: 0px 1px toRem(5) var(--shadow);
 }
 
@@ -303,7 +305,7 @@ const handleAddToCart = (product: Product) => {
    padding-block-start: toEm(16);
    padding-block-end: toEm(2);
    border-radius: toRem(4);
-   background-color: var(--bg);
+   background-color: var(--bg-product);
    box-shadow: 0px 1px toRem(5) var(--shadow);
 }
 
@@ -323,7 +325,7 @@ const handleAddToCart = (product: Product) => {
    padding-block: toEm(4);
    border-radius: toRem(4);
    color: var(--dark-golden-color);
-   background-color: var(--bg);
+   background-color: var(--bg-product);
    box-shadow: 0px 1px toRem(5) var(--shadow);
 
    &_discount {

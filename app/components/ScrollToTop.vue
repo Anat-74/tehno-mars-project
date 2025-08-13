@@ -5,7 +5,7 @@ const { currentLocale } = useLocale()
 const isVisible = ref(false)
 
 const checkScroll = () => {
-  isVisible.value = window.scrollY > 180
+  isVisible.value = window.scrollY > 420
 }
 
 const scrollToTop = () => {

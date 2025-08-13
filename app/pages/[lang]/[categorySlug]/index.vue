@@ -182,6 +182,7 @@ watchEffect(() => {
    justify-items: center;
    padding-inline: toEm(12);
    padding-block-end: toEm(7);
+   background-color: var(--bg-product);
    box-shadow: 0px 1px 2px 0px var(--shadow);
    border-radius: toEm(4);
 }

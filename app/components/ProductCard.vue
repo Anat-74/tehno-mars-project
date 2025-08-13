@@ -45,6 +45,7 @@ const subcategorySlug = computed(() => {
    margin-block-end: toRem(12);
    }
 &__title {
+   color: var(--color);
    font-size: toEm(16);
 }
 }

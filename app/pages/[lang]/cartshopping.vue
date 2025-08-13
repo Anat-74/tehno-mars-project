@@ -419,8 +419,8 @@ onMounted(() => {
       padding-inline: toEm(2);
       font-weight: 600;
       border-radius: toRem(2);
-      outline: toRem(2) solid var(--secondary-color);
-      outline-offset: toEm(3);
+      outline: toRem(1) solid var(--secondary-color);
+      outline-offset: toEm(4);
       color: var(--warning-color);
    }
 }

@@ -48,7 +48,7 @@ defineProps({
    padding-block: toEm(4, 18);
    border-radius: toEm(4, 18);
    color: var(--dark-golden-color);
-   background-color: var(--bg);
+   background-color: var(--bg-product);
    box-shadow: 0px 1px toRem(5) var(--shadow);
 }
 
@@ -60,7 +60,8 @@ defineProps({
 
 &__row {
    border-bottom: 1px solid var(--shadow);
-   background-color: var(--bg);
+   background-color: var(--bg-product);
+
    &:last-child {
     border-bottom: none;
   }

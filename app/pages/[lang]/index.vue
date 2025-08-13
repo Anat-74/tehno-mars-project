@@ -83,6 +83,7 @@ const { data: categories, error } = useAsyncData(
    padding-inline: toEm(16);
    padding-block-start: toEm(7);
    padding-block-end: toEm(16);
+   background-color: var(--bg-product);
    box-shadow: 0px 1px 2px 0px var(--shadow);
    border-radius: toEm(4);
 }

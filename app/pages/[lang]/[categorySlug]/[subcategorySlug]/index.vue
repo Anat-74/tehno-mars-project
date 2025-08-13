@@ -166,13 +166,13 @@ const handleAddToCart = (product: Product) => {
             class="option"
             value="price:asc"
           >
-            {{ productFilterTranslations[currentLocale].optionPrice }}(🡹)
+            {{ productFilterTranslations[currentLocale].optionPrice }}
           </option>
           <option 
             class="option"
             value="price:desc"
           >
-            {{ productFilterTranslations[currentLocale].optionPriceDesc }}(🡻)
+            {{ productFilterTranslations[currentLocale].optionPriceDesc }}
           </option>
         </select>
       </div>
@@ -305,6 +305,7 @@ const handleAddToCart = (product: Product) => {
    padding-block-end: toEm(18);
    box-shadow: 0px 1px 2px 0px var(--shadow);
    border-radius: toEm(4);
+   background-color: var(--bg-product);
 }
 
 &__discount-icon {

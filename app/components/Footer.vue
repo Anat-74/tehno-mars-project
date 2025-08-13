@@ -233,6 +233,7 @@ class="base-footer__copyright">{{footer.copyright}}</span>
    display: flex;
    flex-direction: column;
    row-gap: toEm(8);
+   color: var(--color);
    padding-inline-end: toEm(22);
 
 &__title {
@@ -311,6 +312,7 @@ class="base-footer__copyright">{{footer.copyright}}</span>
    display: flex;
    flex-direction: column;
    row-gap: toEm(8);
+   color: var(--color);
    padding-inline-start: toEm(22);
 
    @media (max-width:$mobile){

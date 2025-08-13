@@ -157,6 +157,7 @@ onMounted(() => {
 
 &__title {
    grid-area: title;
+   color: var(--color);
 
    @media (max-width: toEm(639.98)){
       align-self: start;
@@ -189,10 +190,11 @@ onMounted(() => {
    display: flex;
    align-items: center;
    column-gap: toEm(12);
+   color: var(--color);
 
    @media (max-width:$tablet){
    overflow: hidden;
-   border: toEm(3) solid var(--bg);
+   border: toEm(2) solid var(--bg);
    border-radius: toRem(25);
    }
 

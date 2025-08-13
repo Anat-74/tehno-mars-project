@@ -68,8 +68,8 @@ watch(currentLocale, () => {
    v-if="global?.footer?.logo?.length"
    :src="global?.footer?.logo[0]?.url"
    alt="logo"
-   width="80"
-   height="70"
+   width="76"
+   height="67"
    format="webp"
    />
 </NuxtLink>
@@ -176,9 +176,9 @@ watch(currentLocale, () => {
    border-radius: 50%;
    padding-inline: toEm(6);
    padding-block: toEm(8);
-   outline: 1px solid var(--light-color);
+   outline: 1px solid var(--bg);
    outline-offset: toRem(2);
-   background-color: var(--light-color);
+   background-color: var(--bg);
    transition: outline var(--transition-duration);
 
    @include hover {
@@ -186,15 +186,15 @@ watch(currentLocale, () => {
    }
 
    @media (max-width:$mobile){
-      width: toRem(70);
+      width: toRem(68);
       margin-inline-start: toRem(0);
    }
 
    @media (max-width:$mobileSmall){
-      width: toEm(62);
+      width: toEm(55);
       border-radius: 50%;
       position: absolute;
-      top: toEm(6);
+      top: toEm(10);
    }
 }
 
@@ -211,20 +211,30 @@ watch(currentLocale, () => {
       position: absolute;
       z-index: 1999;
       right: toEm(7);
-      top: toEm(160);
+      top: toEm(187);
       display: grid;
       grid-template-columns: 1fr;
       row-gap: toRem(12);
-      padding: toEm(12);
+      padding-inline: toEm(12);
+      padding-block: toEm(18);
       border-radius: toRem(4);
-      border: toRem(1) solid var(--primary-color);
+      border: toRem(2) solid var(--primary-color);
       background-color: var(--secondary-color);
 
       @media (max-width:$mobile){
          margin-inline: toEm(14);
          right: 0;
-         top: toEm(150);
+         top: toEm(171);
       }
+
+      @media (max-width:$mobileSmall){
+         top: toEm(164);
+      }
+   }
+
+   &__product-card-list {
+      overflow-y: auto;
+      @include adaptiveValue("height", 720, 440);
    }
 
    &__pagination-product {
