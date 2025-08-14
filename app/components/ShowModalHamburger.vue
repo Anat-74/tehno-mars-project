@@ -23,7 +23,8 @@ const { open, close } = useDialog(dialogElement)
          name-class="hamburger"
          aria-label="closed"
           />
-          <p>В процессе добавления контента</p>
+         <p>В процессе наполнения контентом...</p>
+         <p>In the process of filling with content...</p>
      </div>
    </dialog>
 </div>
@@ -51,16 +52,20 @@ const { open, close } = useDialog(dialogElement)
   }
 
   &__items {
-   display: grid;
-   align-items: center;
-   justify-items: center;
    min-height: 100dvh;
    padding-block: toEm(25, 16);
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
    @include adaptiveValue('padding-inline', 22, 12);
   }
-  p {
-   font-size: toRem(18);
-  }
+   p {
+      font-weight: 600;
+      font-size: toEm(20);
+      margin-block-end: toRem(16);
+      color: #ffffff;
+   }
 }
 
 @keyframes fade {

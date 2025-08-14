@@ -33,26 +33,27 @@ useSeoMeta({
 <style lang="scss" scoped>
 </style>
 <template>
-      <section aria-labelledby="our-services">
+      <section 
+      class="services"
+      aria-labelledby="our-services">
          <h1
          class="visually-hidden"
          id="our-services"
          >{{ visuallyHiddenTranslations[currentLocale].sectionOurServicesTitle }}</h1>
-         <h2>Servicess</h2>
-         <!-- <NuxtPicture 
-         class="services__image"
-         src="/image/removebg-preview.png"
-         alt="image"
-         loading="lazy"
-         sizes="xs:100vw sm:100vw md:100vw lg:100vw"
-         /> -->
+         <p>В процессе наполнения контентом...</p>
+         <p>In the process of filling with content...</p>
       </section>
 </template>
 
 <style lang="scss" scoped>
 .services {
-display: flex;
+   height: 50dvh;
+   padding-block-start: toEm(32);
 
+   p {
+      font-size: toEm(22);
+      margin-block-end: toRem(16);
+   }
 }
 
 </style>

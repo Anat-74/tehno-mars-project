@@ -132,12 +132,13 @@ const clickOnButton = () => {
 
   &_dialog-menu {
    position: fixed;
-   right: toRem(12);
-   top: 83%;
+   right: toRem(18);
+   top: 50%;
+   translate: 0 -50%;
    padding: toEm(4);
    border-radius: 50%;
-   outline: toEm(2) solid var(--warning-color);
-   outline-offset: toRem(2);
+   outline: toEm(3) solid var(--warning-color);
+   outline-offset: toRem(6);
    background-color: var(--warning-hover);
    transition: scale var(--transition-duration);
 
@@ -148,6 +149,13 @@ const clickOnButton = () => {
    svg {
       font-size: toEm(25, 24);
       color: var(--light-color);
+   }
+
+   @media (max-width:$tablet){
+      right: toRem(12);
+      top: 83%;
+      outline: toEm(2) solid var(--warning-color);
+      outline-offset: toRem(2);
    }
   }
 

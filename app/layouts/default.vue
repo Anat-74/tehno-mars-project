@@ -176,9 +176,9 @@ watch(currentLocale, () => {
    border-radius: 50%;
    padding-inline: toEm(6);
    padding-block: toEm(8);
-   outline: 1px solid var(--bg);
+   outline: 1px solid var(--light-color);
    outline-offset: toRem(2);
-   background-color: var(--bg);
+   background-color: var(--light-color);
    transition: outline var(--transition-duration);
 
    @include hover {

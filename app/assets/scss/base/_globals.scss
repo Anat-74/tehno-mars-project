@@ -16,7 +16,7 @@ body:has(dialog[open]) {
    overflow: hidden;
 
    .header {
-      opacity: .1;
+      opacity: 0;
    }
    .footer {
       display: none;
@@ -117,7 +117,7 @@ input {
    }
  }
  .select {
-   width: toEm(102);
+   width: toEm(138);
    padding-inline: toEm(4);
    padding-block: toRem(1);
    border: toRem(2) solid var(--warning-color);

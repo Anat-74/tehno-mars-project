@@ -31,11 +31,27 @@ useSeoMeta({
 </script>
 
 <template>
-      <section aria-labelledby="contacts-page">
+      <section 
+      class="contacts"
+      aria-labelledby="contacts-page">
          <h1
          class="visually-hidden"
          id="contacts-page"
          >{{ visuallyHiddenTranslations[currentLocale].sectionAboutUsTitle }}</h1>
-         <h2>Contacts</h2>
+         <p>В процессе наполнения контентом...</p>
+         <p>In the process of filling with content...</p>
       </section>
 </template>
+
+<style lang="scss" scoped>
+.contacts {
+   height: 50dvh;
+   padding-block-start: toEm(32);
+
+   p {
+      font-size: toEm(22);
+      margin-block-end: toRem(16);
+   }
+}
+
+</style>

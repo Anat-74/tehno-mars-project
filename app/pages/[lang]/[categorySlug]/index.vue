@@ -170,7 +170,7 @@ watchEffect(() => {
 
 &__list {
    display: grid;
-   grid-template-columns: repeat(auto-fit, minmax(toRem(262), 1fr));
+   grid-template-columns: repeat(auto-fill, minmax(toRem(262), 1fr));
    justify-items: center;
    row-gap: toEm(32);
    @include adaptiveValue("column-gap", 64, 7);
