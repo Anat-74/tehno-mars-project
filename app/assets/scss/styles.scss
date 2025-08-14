@@ -55,6 +55,12 @@
   }
 }
 
+.order-form {
+&__title {
+   --danger-color: #f5f5f5;
+   }
+}
+
 .btn {
 &_dialog-menu {
    --warning-color:#a9A9a9;
@@ -108,6 +114,9 @@
 }
 
 .order-form {
+&__title {
+   --danger-color: #f5f5f5;
+}
 &__label {
     --color: #f5f5f5;
 }

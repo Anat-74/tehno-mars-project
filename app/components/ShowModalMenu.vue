@@ -91,7 +91,6 @@ watch(currentLocale, () => {
 </script>
 
 <template>
-   <Loader v-if="pending" />
    <UButton 
    @click="open()"
    icon="line-md:arrow-open-left"
@@ -104,6 +103,7 @@ watch(currentLocale, () => {
    id="dialogMenu" 
    aria-label="Menu" 
    >
+   <Loader v-if="pending" />
    <h1
          class="visually-hidden"
          >{{ visuallyHiddenTranslations[currentLocale].showModalMenuTitle }}</h1>
@@ -302,6 +302,10 @@ watch(currentLocale, () => {
    outline: 1px solid var(--light-color);
    outline-offset: toRem(2);
    background-color: var(--light-color);
+
+   @media (max-width:$mobile){
+       width: toEm(47); 
+   }
   }
 
   &__accordion {
