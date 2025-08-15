@@ -119,6 +119,7 @@ const handleAddToCart = (product: Product) => {
         v-if="currentImage"
         :src="currentImage"
         :alt="product.name"
+        format="webp"
         width="580"
         height="436"
         class="wrapper-left__image"
@@ -134,9 +135,10 @@ const handleAddToCart = (product: Product) => {
         @mouseover="currentImage = img.url"
         @click="currentImage = img.url"
       >
-        <NuxtImg 
+        <NuxtImg
           :src="img.url"
           :alt="`${product.name} - Image ${index + 1}`"
+         format="webp"
           width="133"
           height="100"
           class="wrapper-left__thumbnail-image"

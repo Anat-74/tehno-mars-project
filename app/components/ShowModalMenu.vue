@@ -247,6 +247,9 @@ watch(currentLocale, () => {
         :alt="link.label"
         width="26"
         height="26"
+         loading="lazy"
+         decoding="async"
+         format="webp"
       />
     </a>
    </div>

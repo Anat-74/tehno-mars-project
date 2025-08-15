@@ -48,6 +48,8 @@ defineProps<{
         :alt="link.label"
         width="26"
         height="26"
+        loading="lazy"
+        format="webp"
       />
     </a>
    </div>

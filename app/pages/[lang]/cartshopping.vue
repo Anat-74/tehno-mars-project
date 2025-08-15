@@ -107,7 +107,7 @@ onMounted(() => {
          <NuxtImg
          src="/image/valberg_new-removebg-preview.png"
          alt="image"
-         format="webp"
+         decoding="async"
          width="122"
        />
          </li>
@@ -196,6 +196,7 @@ onMounted(() => {
                      decoding="async"
                      width="240"
                      height="180"
+                     format="webp"
                    />
             </NuxtLink>
             <h3 class="discount-card__title">{{ prod.name }}</h3>

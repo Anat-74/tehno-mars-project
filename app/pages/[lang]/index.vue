@@ -53,6 +53,8 @@ const { data: categories, pending, error } = useAsyncData(
          :alt="category.name"
          width="180"
          height="190"
+         loading="lazy"
+         decoding="async"
         />
         <h2 class="category__title">{{ category.name }}</h2>
          </NuxtLink>
