@@ -170,6 +170,7 @@ onUnmounted(() => {
       border: toRem(2) solid var(--danger-color);
       border-right: none;
       font-size: toEm(18);
+      color: var(--color);
       background-color: var(--light-color);
 
       &::placeholder {
@@ -226,20 +227,18 @@ onUnmounted(() => {
       }
    }
    &::before {
-      right: toRem(16);
       transform: rotate(-125deg);
-      @include adaptiveValue("right", 16, 10);
+      @include adaptiveValue("right", 16, 14);
    }
    &::after {
-      right: toRem(12);
       transform: rotate(125deg);
-      @include adaptiveValue("right", 11, 5);
+      @include adaptiveValue("right", 11, 9);
    }
    }
 
    &-select {
       height: 100%;
-      width: toEm(116);
+      width: toEm(170);
       border: toRem(2) solid var(--danger-color);
       border-radius: 0 toEm(4) toEm(4) 0;
       padding-inline-start: toEm(6);

@@ -170,6 +170,8 @@ const submitOrder = async () => {
     padding-block: toEm(12);
     border-radius: toEm(4);
     border: 1px solid var(--border-color);
+    font-weight: 600;
+    color: var(--color);
     background-color: var(--bg);
     transition: background-color var(--transition-duration);
     @include adaptiveValue("margin-block-end", 20, 14);

@@ -15,8 +15,8 @@ export const productFilterTranslations: Record<LocaleCode, {
       noResults: "Товары не найдены",
       labelSelect: "Сортировка товаров",
       optionName: "А --> Я",
-      optionPrice: "Цена выше",
-      optionPriceDesc: "Цена ниже"
+      optionPrice: "Дешевле",
+      optionPriceDesc: "Дороже"
    },
    en: {
       labelInput: "Search for products",
@@ -24,8 +24,8 @@ export const productFilterTranslations: Record<LocaleCode, {
       noResults: "No products found",
       labelSelect: "Sorting products",
       optionName: "A --> Z",
-      optionPrice: "Price is higher",
-      optionPriceDesc: "Price is lower"
+      optionPrice: "Cheaper",
+      optionPriceDesc: "More expensive"
    },
    be: {
       labelInput: "Пошук тавараў",
@@ -33,7 +33,7 @@ export const productFilterTranslations: Record<LocaleCode, {
       noResults: "Тавары не знойдзены",
       labelSelect: "Сартаванне тавараў",
       optionName: "А --> Я",
-      optionPrice: "Кошт вышэй",
-      optionPriceDesc: "Кошт ніжэй"
+      optionPrice: "Танней",
+      optionPriceDesc: "Даражэй"
    }
  }

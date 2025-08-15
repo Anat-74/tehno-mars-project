@@ -25,7 +25,7 @@ export const cartTranslations: Record<LocaleCode, {
       ariaLabelBasket: 'Go to the goods market',
       cartEmpty: 'The basket is empty',
       warningLocale: 'To view the product description, switch the language to:',
-      total: 'Total items::'
+      total: 'Total items:'
    },
    be: {
      title: 'Кошык',
@@ -34,6 +34,6 @@ export const cartTranslations: Record<LocaleCode, {
      ariaLabelBasket: 'Перайсці ў казіну тавараў',
      cartEmpty: 'Кошык пусты',
      warningLocale: 'Для прагляду апісання тавару, пераключыце мову на:',
-     total: 'Усяго тавараў::'
+     total: 'Усяго тавараў:'
    }
  }

@@ -28,6 +28,7 @@ const { product } = defineProps<{
 }
 
 .to-order {
+   font-weight: 600;
    color: var( --danger-color);
 }
 </style>

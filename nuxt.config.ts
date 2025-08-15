@@ -12,17 +12,22 @@ export default defineNuxtConfig({
    ],
    ssr: true,
    routeRules: {
-      '/': { redirect: '/ru' }
+      '/': {
+         redirect: '/ru',
+         cache: { maxAge: 86400 }
+      },
+      '/ru': {
+         cache: {
+            maxAge: 600,
+             swr: true
+          }
+      },
    },
-   // nitro: {
-   //    prerender: {
-   //       // routes: ['/en', '/ru', '/be'],
-   //       // failOnError: false,
-   //       ignore: [
-   //          /\/_ipx\//, // Игнорировать IPX пути 
-   //        ]
-   //    },
-   // },
+   nitro: {
+      prerender: {
+         routes: ['/ru', '/en', '/be'],
+      }
+   },
    runtimeConfig: {
       strapi: {
          url: process.env.NUXT_STRAPI_URL,

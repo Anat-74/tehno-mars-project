@@ -18,7 +18,7 @@ const { goBack } = useGoToForwardOrBack()
 
 const currentImage = useState<string | null>('currentImage', () => null)
 
-const { data: product, error, status } = useAsyncData(`product-${currentLocale.value}-${productSlug}`,
+const { data: product, error, pending } = useAsyncData(`product-${currentLocale.value}-${productSlug}`,
    async () => {
     const response = await find<Product>('products', {
        filters: {
@@ -83,7 +83,7 @@ const handleAddToCart = (product: Product) => {
 </script> 
 
 <template>
-   <Loader v-if="status === 'pending'"
+   <Loader v-if="pending"
      class="loader"
    />
    <section 
@@ -260,6 +260,7 @@ const handleAddToCart = (product: Product) => {
   border-radius: toRem(4);
   box-shadow: 0px 1px toRem(5) var(--shadow);
   transition: all var(--transition-duration);
+
    &_active {
       border-color: var(--blue-color);
    }

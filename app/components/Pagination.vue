@@ -58,7 +58,7 @@ const getPageLink = (newPage: number) => {
 <style lang="scss" scoped>
 .pagination {
   display: flex;
-  gap: toEm(4);
+  gap: toEm(6);
   align-items: center;
   justify-content: center;
   padding-block-start: toEm(25);

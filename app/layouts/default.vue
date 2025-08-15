@@ -210,8 +210,8 @@ watch(currentLocale, () => {
    &__product-card {
       position: absolute;
       z-index: 1999;
-      right: toEm(7);
-      top: toEm(187);
+      right: toEm(8);
+      top: toEm(186);
       display: grid;
       grid-template-columns: 1fr;
       row-gap: toRem(12);
@@ -222,7 +222,8 @@ watch(currentLocale, () => {
       background-color: var(--secondary-color);
 
       @media (max-width:$mobile){
-         margin-inline: toEm(14);
+         max-width: 80%;
+         margin-inline: toEm(12);
          right: 0;
          top: toEm(171);
       }
@@ -234,7 +235,7 @@ watch(currentLocale, () => {
 
    &__product-card-list {
       overflow-y: auto;
-      @include adaptiveValue("height", 720, 440);
+      @include adaptiveValue("height", 720, 390);
    }
 
    &__pagination-product {

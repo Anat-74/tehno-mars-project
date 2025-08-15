@@ -5,7 +5,7 @@ import { visuallyHiddenTranslations } from '~/locales/visuallyHidden'
 const { find } = useStrapi()
 const { currentLocale } = useLocale()
 
-const { data: categories, error } = useAsyncData(
+const { data: categories, pending, error } = useAsyncData(
    `category-${currentLocale.value}`,
    async () => {
       const response = await find<Category>('categories', {
@@ -28,6 +28,7 @@ const { data: categories, error } = useAsyncData(
 </script>
 
 <template>
+   <Loader v-if=pending />
    <section class="category"
    aria-labelledby="category-page">
       <h1 

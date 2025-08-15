@@ -117,7 +117,7 @@ input {
    }
  }
  .select {
-   width: toEm(138);
+   width: toEm(154);
    padding-inline: toEm(4);
    padding-block: toRem(1);
    border: toRem(2) solid var(--warning-color);
@@ -126,6 +126,10 @@ input {
    appearance: none;
    cursor: pointer;
    background-color: var(--light-color);
+
+   @media (max-width:c.$mobile){
+      width: toEm(112);
+   }
 }
 .option {
    border-radius: toRem(6);

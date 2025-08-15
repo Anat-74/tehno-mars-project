@@ -29,6 +29,15 @@
    --bg-nav-footer-outline: #f3f5f4;
    --locale-warning-color: #fff3cd;
    --bg-product: #f3f5f4;
+
+   .header__logo {
+      @media (min-width:$mobileSmall){
+         --light-color: #f3f5f4;
+      }
+   }
+   .dialog-menu__logo {
+   --light-color: #f3f5f4;
+   }
  }
 
  .dark-mode {
@@ -41,13 +50,17 @@
   --light-color: #fdf9f3;
   --border-color: #c0c0c0;
   --gray-color: #fdf9f3;
-  --blue-color: #091A28;
+  --blue-color: #2f4f4f;
   --placeholder-hover: #091A28;
   --shadow: #2f4f4f;
   --bg-footer-color: #2f4f4f;
   --bg-nav-footer: #091A28;
   --bg-nav-footer-outline: #778899;
   --bg-product: #091A28;
+
+  .search-input {
+     --color: #091A28;
+  }
 
   .dialog-hamburger {
   &[open]::backdrop {
@@ -76,10 +89,14 @@
   --bg: #f1e7d0;
   --light-color:#f1e7d0;
   --border-color: #504231;
-  --blue-color: #f1e7d0;
+  --blue-color: #504231;
   --bg-footer-color: #504231;
   --bg-nav-footer: #f1e7d0;
   --bg-product: #f1e7d0;
+
+  .header__logo {
+     --light-color:#f5f5f5;
+  }
 
   .contacts {
    --color: #f5f5f5;

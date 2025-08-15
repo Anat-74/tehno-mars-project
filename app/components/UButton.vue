@@ -152,7 +152,7 @@ const clickOnButton = () => {
    }
 
    @media (max-width:$tablet){
-      right: toRem(12);
+      right: toRem(15);
       top: 83%;
       outline: toEm(2) solid var(--warning-color);
       outline-offset: toRem(2);
@@ -357,7 +357,7 @@ const clickOnButton = () => {
   &_go-to-top {
    position: fixed;
    z-index: 999;
-   right: toRem(12);
+   right: toRem(15);
    bottom: toRem(14);
    padding: toRem(4);
    border: toRem(1) solid var(--dark-golden-color);
@@ -381,8 +381,8 @@ const clickOnButton = () => {
    padding-inline: toEm(12);
    padding-block: toEm(7);
    font-weight: 600;
-   color: var(--color);
-   background-color: var(--blue-color);
+   color: var(--light-color);
+   background-color: var(--sky-blue-color);
 }
 
   &_close {
