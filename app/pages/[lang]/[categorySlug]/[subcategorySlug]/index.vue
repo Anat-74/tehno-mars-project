@@ -11,6 +11,7 @@ const { currentLocale } = useLocale()
 const { goBack, goForward } = useGoToForwardOrBack()
 const { isInCart } = useIsInCart()
 const cartStore = useCartStore()
+const config = useRuntimeConfig()
 
 const sortOption = ref<string>('name:asc')
 const page = ref(route.query.page ? +route.query.page : 1) // Текущая страница из query-параметра
@@ -110,8 +111,8 @@ watchEffect(() => {
 const handleAddToCart = (product: Product) => {
   cartStore.addToCart(
     product,
-    categorySlug,
-    subcategorySlug
+     subcategorySlug,
+     categorySlug
   )
 }
 </script>
@@ -205,7 +206,7 @@ const handleAddToCart = (product: Product) => {
           <NuxtImg 
             class="subcategory-products__image"
             v-if="product.image?.length"
-            :src="product.image[0]?.url"
+            :src="`${config.public.strapi.url}${product.image[0]?.url}`"
             :alt="product.name"
             loading="lazy"
             decoding="async"

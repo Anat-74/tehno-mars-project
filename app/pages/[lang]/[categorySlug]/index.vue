@@ -6,6 +6,7 @@ const { find } = useStrapi()
 const route = useRoute()
 const { categorySlug } = route.params
 const { currentLocale } = useLocale()
+const config = useRuntimeConfig()
 const { goBack, goForward } = useGoToForwardOrBack()
 
 const page = ref(route.query.page ? +route.query.page : 1)
@@ -126,7 +127,7 @@ watchEffect(() => {
          </h2>
             <NuxtImg
               v-if="subcategory.image?.length"
-              :src="subcategory.image[0]?.url"
+              :src="`${config.public.strapi.url}${subcategory.image[0]?.url}`"
               :alt="subcategory.name"
               class="sub-category__image"
               loading="lazy"

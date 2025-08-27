@@ -45,7 +45,8 @@ export default defineNuxtConfig({
       }
    },
    image: {
-      domains: ['whimsical-beauty-1d8dda3475.media.strapiapp.com'],
+      // domains: ['dazzling-garden-04cfdb34c9.media.strapiapp.com'],
+      domains: ['api.vh324.by3020.ihb.by'],
       screens: {
          xs: 320,
          sm: 640,

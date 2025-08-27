@@ -3,9 +3,10 @@ const { find } = useStrapi()
 const searchStore = useSearchStore()
 const { products, totalPages, currentPage } = storeToRefs(searchStore)
 const { currentLocale } = useLocale()
+const config = useRuntimeConfig()
 const { isContacts } = useVisibilityProvider()
 
-const {data: global, error, refresh } = useAsyncData<any>(
+const {data: global, error, refresh } = useAsyncData<any>(//сделать типизацию
    `global-${currentLocale.value}`,
    async () => {
       const response = await find('global', {
@@ -45,7 +46,6 @@ watch(currentLocale, () => {
 </script>
 
 <template>
-
 <header class="header">
    <div class="header__container-top">
 <ClientOnly ><ColorMode /></ClientOnly>
@@ -66,7 +66,7 @@ watch(currentLocale, () => {
    >
     <NuxtImg 
    v-if="global?.footer?.logo?.length"
-   :src="global?.footer?.logo[0]?.url"
+   :src="`${config.public.strapi.url}${global?.footer?.logo[0]?.url}`"
    alt="logo"
    width="76"
    height="67"
@@ -209,7 +209,7 @@ watch(currentLocale, () => {
 
    &__product-card {
       position: absolute;
-      z-index: 1999;
+      z-index: 9999;
       right: toEm(8);
       top: toEm(186);
       display: grid;

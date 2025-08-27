@@ -3,6 +3,7 @@ import type { FooterData, LegalInfo, SocialLink, Email, Phone } from "../types/t
 import { baseFooterTranslations } from '~/locales/baseFooter'
 
 const { currentLocale } = useLocale()
+const config = useRuntimeConfig()
 const { formatPhone } = useFormatPhone()
 
 defineProps<{
@@ -22,7 +23,7 @@ defineProps<{
          :to="`/${currentLocale}`">
       <NuxtImg
          v-if="footer.logo?.length"
-         :src="footer.logo[0]?.url"
+         :src="`${config.public.strapi.url}${footer.logo[0]?.url}`"
          :alt="footer.companyName"
          format="webp"
          width="62"
@@ -44,12 +45,10 @@ defineProps<{
     >
       <NuxtImg 
          v-if="link.icon"
-        :src="link.icon[0]?.url"
+        :src="`${config.public.strapi.url}${link.icon[0]?.url}`"
         :alt="link.label"
         width="26"
         height="26"
-        loading="lazy"
-        format="webp"
       />
     </a>
    </div>

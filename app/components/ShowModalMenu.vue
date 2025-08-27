@@ -15,6 +15,7 @@ const { isOpen, open, close } = useDialog(dialogElement)
 
 const { currentLocale } = useLocale()
 const { formatPhone } = useFormatPhone()
+const config = useRuntimeConfig()
 const { find } = useStrapi()
 
 const { data: category, pending: pendingCategories, error, refresh: refreshCategory } = useAsyncData(
@@ -119,7 +120,7 @@ watch(currentLocale, () => {
       <NuxtImg
          v-if="footer.logo?.length"
          class="base-footer__logo"
-         :src="footer.logo[0]?.url"
+         :src="`${config.public.strapi.url}${footer.logo[0]?.url}`"
          :alt="footer.companyName"
          format="webp"
          width="55"
@@ -195,7 +196,7 @@ watch(currentLocale, () => {
          >
          <NuxtImg
               v-if="prod.image?.length"
-              :src="prod.image[0]?.url"
+              :src="`${config.public.strapi.url}${prod.image[0]?.url}`"
               :alt="prod.name"
               class="accordion__product-image"
               format="webp"
@@ -243,13 +244,10 @@ watch(currentLocale, () => {
     >
       <NuxtImg 
          v-if="link.icon"
-        :src="link.icon[0]?.url"
+        :src="`${config.public.strapi.url}${link.icon[0]?.url}`"
         :alt="link.label"
         width="26"
         height="26"
-         loading="lazy"
-         decoding="async"
-         format="webp"
       />
     </a>
    </div>

@@ -4,7 +4,7 @@ import { stockStatusTranslations } from '~/locales/stockStatus';
 const { currentLocale } = useLocale()
 const { product } = defineProps<{
   product: {
-    isAvailable: boolean
+    isAvailable?: boolean
   }
 }>()
 

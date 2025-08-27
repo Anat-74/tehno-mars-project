@@ -4,6 +4,7 @@ import { visuallyHiddenTranslations } from '~/locales/visuallyHidden'
 
 const { find } = useStrapi()
 const { currentLocale } = useLocale()
+const config = useRuntimeConfig()
 
 const { data: categories, pending, error } = useAsyncData(
    `category-${currentLocale.value}`,
@@ -49,7 +50,7 @@ const { data: categories, pending, error } = useAsyncData(
          <NuxtImg
          class="category__image"
          format="webp"
-         :src="category.image[0]?.url"
+         :src="`${config.public.strapi.url}${category.image[0]?.url}`"
          :alt="category.name"
          width="180"
          height="190"
