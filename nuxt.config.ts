@@ -17,15 +17,44 @@ export default defineNuxtConfig({
          cache: { maxAge: 86400 }
       },
       '/ru': {
-         cache: {
-            maxAge: 600,
-             swr: true
-          }
+         cache: { maxAge: 2600, swr: true },
+         // prerender: true,
+         headers: {
+        // Этот заголовок будет понят nginx и установит TTL его кэша
+        'X-Accel-Expires': '2480' // 2480 для кэша nginx
       },
+      },
+      '/en': {
+         cache: { maxAge: 2600, swr: true },
+         // prerender: true
+      },
+      '/be': {
+         cache: { maxAge: 2600, swr: true },
+         // prerender: true
+      },
+
+   // Динамические страницы - пререндерим при первом посещении
+     '/ru/*': { 
+        cache: { maxAge: 86400, swr: true },
+      //   prerender: true,
+        headers: {
+        'X-Accel-Expires': '82800' // 23 часа для кэша nginx
+      },
+    },
+
+    // Подкатегории и товары
+    '/ru/*/*': { 
+       cache: { maxAge: 600, swr: true },
+    },
+    '/ru/*/*/*': { 
+       cache: { maxAge: 600, swr: true },
+    }
    },
    nitro: {
       prerender: {
-         routes: ['/ru', '/en', '/be'],
+         routes: ['/ru', '/en', '/be', '/ru/about', '/ru/services', '/ru/contacts'],
+         crawlLinks: true,
+         failOnError: false
       }
    },
    runtimeConfig: {

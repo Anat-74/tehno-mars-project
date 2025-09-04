@@ -187,7 +187,7 @@ const handleAddToCart = (product: Product) => {
       class="subcategory-products__list"
     >
       <li 
-        v-for="product in products.data" 
+        v-for="(product, index) in products.data" 
         :key="product.id"
         class="subcategory-products__item"
       >
@@ -208,7 +208,8 @@ const handleAddToCart = (product: Product) => {
             v-if="product.image?.length"
             :src="`${config.public.strapi.url}${product.image[0]?.url}`"
             :alt="product.name"
-            loading="lazy"
+            :loading="index === 0 ? 'eager' : 'lazy'"
+            :fetchpriority="index === 0 ? 'high' : 'auto'"
             decoding="async"
             width="240"
             height="180"
@@ -325,12 +326,16 @@ const handleAddToCart = (product: Product) => {
 &__link {
    display: flex;
    justify-content: center;
-   margin-block-end: toEm(4);
+   margin-block: toEm(4);
    transition: scale var(--transition-duration);
 
 @include hover {
-   scale: 1.1;
-}
+.subcategory-products__image {
+   outline: toRem(3) solid var(--secondary-color);
+   outline-offset: toRem(1);
+   border-radius: toRem(12);
+      }
+   }
 }
 
 &__image {

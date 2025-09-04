@@ -115,7 +115,7 @@ watchEffect(() => {
        class="sub-category__list"
      >
        <li 
-         v-for="subcategory in subcategories.data" 
+         v-for="(subcategory, index) in subcategories.data" 
          :key="subcategory.id"
          class="sub-category__item"
        >
@@ -129,8 +129,9 @@ watchEffect(() => {
               v-if="subcategory.image?.length"
               :src="`${config.public.strapi.url}${subcategory.image[0]?.url}`"
               :alt="subcategory.name"
+              :loading="index === 0 ? 'eager' : 'lazy'"
+              :fetchpriority="index === 0 ? 'high' : 'auto'"
               class="sub-category__image"
-              loading="lazy"
               decoding="async"
               width="240"
               height="180"

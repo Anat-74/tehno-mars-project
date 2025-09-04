@@ -30,11 +30,6 @@
    --locale-warning-color: #fff3cd;
    --bg-product: #f3f5f4;
 
-   .header__logo {
-      @media (min-width:$mobileSmall){
-         --light-color: #f3f5f4;
-      }
-   }
    .dialog-menu__logo {
    --light-color: #f3f5f4;
    }

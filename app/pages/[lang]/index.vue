@@ -40,7 +40,7 @@ const { data: categories, pending, error } = useAsyncData(
       v-if="categories"
       >
          <li class="category__item"
-         v-for="category in categories"
+         v-for="(category, index) in categories"
          :key="category.id"
          >
          <NuxtLink
@@ -52,9 +52,10 @@ const { data: categories, pending, error } = useAsyncData(
          format="webp"
          :src="`${config.public.strapi.url}${category.image[0]?.url}`"
          :alt="category.name"
+         :loading="index === 0 ? 'eager' : 'lazy'"
+         :fetchpriority="index === 0 ? 'high' : 'auto'"
          width="180"
          height="190"
-         loading="lazy"
          decoding="async"
         />
         <h2 class="category__title">{{ category.name }}</h2>
