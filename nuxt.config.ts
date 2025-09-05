@@ -11,45 +11,64 @@ export default defineNuxtConfig({
       '@nuxtjs/mdc'
    ],
    ssr: true,
-   routeRules: {
-      '/': {
-         redirect: '/ru',
-         cache: { maxAge: 86400 }
+  routeRules: {
+    // Редирект с корня
+    '/': {
+      redirect: '/ru',
+      cache: { 
+        maxAge: 86400, // 24 часа 
+        swr: true
       },
-      '/ru': {
-         cache: { maxAge: 2600, swr: true },
-         // prerender: true,
-         headers: {
-        // Этот заголовок будет понят nginx и установит TTL его кэша
-        'X-Accel-Expires': '2480' // 2480 для кэша nginx
-      },
-      },
-      '/en': {
-         cache: { maxAge: 2600, swr: true },
-         // prerender: true
-      },
-      '/be': {
-         cache: { maxAge: 2600, swr: true },
-         // prerender: true
-      },
-
-   // Динамические страницы - пререндерим при первом посещении
-     '/ru/*': { 
-        cache: { maxAge: 86400, swr: true },
-      //   prerender: true,
-        headers: {
-        'X-Accel-Expires': '82800' // 23 часа для кэша nginx
-      },
+      headers: {
+        'X-Accel-Expires': '86340' // 23ч 59м
+      }
     },
 
-    // Подкатегории и товары
-    '/ru/*/*': { 
-       cache: { maxAge: 600, swr: true },
+    // Главная страница
+    '/ru': {
+      cache: {
+        maxAge: 43200, // 12 часов
+        swr: true
+      },
+      headers: {
+        'X-Accel-Expires': '43140' // 11ч 59м
+      }
     },
-    '/ru/*/*/*': { 
-       cache: { maxAge: 600, swr: true },
+
+   //  Категории 1 уровня
+    '/ru/*': {
+      cache: {
+        maxAge: 21600, // 21600 = 6 часов
+        swr: true
+      },
+      headers: {
+        'X-Accel-Expires': '21540' // 5ч 59м
+      }
+    },
+
+    // Подкатегории 2 уровня
+    '/ru/*/*': {
+      cache: {
+        maxAge: 10800, // 3 часа
+        swr: true
+      },
+      headers: {
+        'X-Accel-Expires': '10740' // 2ч 59м
+      }
+    },
+
+    // Страницы товаров
+    '/ru/*/*/*/index': {
+      cache: {
+        maxAge: 3600, // 1 час
+        swr: true,
+        staleMaxAge: 7200 // 2 часа резерва
+      },
+      headers: {
+        'X-Accel-Expires': '3540' // 59 минут
+      }
     }
-   },
+  },
    nitro: {
       prerender: {
          routes: ['/ru', '/en', '/be', '/ru/about', '/ru/services', '/ru/contacts'],

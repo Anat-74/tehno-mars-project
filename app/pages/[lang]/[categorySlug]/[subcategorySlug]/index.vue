@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Product, ProductsResponse, Subcategory } from "../../../../types/types"
+import type { Product, ProductsResponse, Subcategory } from "@/types/types"
 import { productFilterTranslations } from '~/locales/productFilter'
 import { visuallyHiddenTranslations } from '~/locales/visuallyHidden'
 import { buttonTranslations } from '~/locales/button'

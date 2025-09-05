@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Product } from "../../../../types/types"
+import type { Product } from "@/types/types"
 import { visuallyHiddenTranslations } from '~/locales/visuallyHidden'
 import { formatPrice } from '~/utils/formatPrice'
 import { buttonTranslations } from '~/locales/button'
@@ -17,7 +17,9 @@ const { categorySlug, subcategorySlug, productSlug } = route.params as {
 const { currentLocale } = useLocale()
 const { goBack } = useGoToForwardOrBack()
 
-const currentImage = useState<string | null>('currentImage', () => null)
+
+     const currentImage = ref('')
+// const currentImage = useState<string | null>('currentImage', () => null)
 
 const { data: product, error, pending } = useAsyncData(`product-${currentLocale.value}-${productSlug}`,
    async () => {
@@ -49,6 +51,7 @@ const { data: product, error, pending } = useAsyncData(`product-${currentLocale.
       return productData
    })
 
+
 const isActive = (imgUrl: string) => 
   computed(() => currentImage.value === `${config.public.strapi.url}${imgUrl}`)
 
@@ -60,19 +63,44 @@ const isActive = (imgUrl: string) =>
   }
   })
 
+//   watchEffect(() => {
+//   if (product.value?.image?.[0]?.url) {
+//     currentImage.value = `${config.public.strapi.url}${product.value.image[0].url}`
+//   }
+//   })
+
+// watch(() => route.params.productSlug, () => {
+//   currentImage.value = ''
+// })
+
   useSeoMeta({
   title: product.value?.name,
   description: product.value?.description
 })
 
-watch(product, (newProduct) => {
-  if (newProduct) {
+// watch(product, (newProduct) => {
+//   if (newProduct) {
+//     useSeoMeta({
+//       title: newProduct.name,
+//       description: newProduct.description
+//     })
+//   }
+// })
+watch(() => product.value, (newProduct) => {
+  if (newProduct?.image?.[0]?.url) {
+    currentImage.value = `${config.public.strapi.url}${newProduct.image[0].url}`
+    
+    // Обновляем SEO метаданные
     useSeoMeta({
       title: newProduct.name,
       description: newProduct.description
     })
   }
-})
+}, { immediate: true })
+
+const setCurrentImage = (imgUrl: string) => {
+  currentImage.value = `${config.public.strapi.url}${imgUrl}`
+}
 
 const handleAddToCart = (product: Product) => {
   cartStore.addToCart(
@@ -117,8 +145,9 @@ const handleAddToCart = (product: Product) => {
      class="wrapper-left__share" />
    </div>
       <NuxtImg 
-        v-if="currentImage"
+         v-if="currentImage"
         :src="currentImage"
+        :key="currentImage"
         :alt="product.name"
         format="webp"
         decoding="async"
@@ -134,8 +163,8 @@ const handleAddToCart = (product: Product) => {
         v-for="(img, index) in product.image" 
         :key="img.id"
         :class="['wrapper-left__thumbnail', {'wrapper-left__thumbnail_active': isActive(img.url).value}]"
-        @mouseover="currentImage = `${config.public.strapi.url}${img.url}`"
-        @click="currentImage = `${config.public.strapi.url}${img.url}`"
+      @mouseover="setCurrentImage(img.url)"
+      @click="setCurrentImage(img.url)"
       >
         <NuxtImg
          :src="`${config.public.strapi.url}${img.url}`"

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Category } from "../../types/types"
+import type { Category } from "@/types/types"
 import { visuallyHiddenTranslations } from '~/locales/visuallyHidden'
 
 const { find } = useStrapi()
@@ -26,6 +26,21 @@ const { data: categories, pending, error } = useAsyncData(
       return response.data
    }
 )
+
+// const visibleImagesCount = ref(4)
+
+// onMounted(() => {
+//   // Адаптивное количество изображений в зависимости от размера экрана
+//   if (window.innerWidth < 768) {
+//     visibleImagesCount.value = 2; // Мобильные устройства
+//   } else if (window.innerWidth < 1024) {
+//     visibleImagesCount.value = 3; // Планшеты
+//   } else {
+//     visibleImagesCount.value = 4; // Десктоп
+//   }
+// })
+
+
 </script>
 
 <template>
@@ -52,8 +67,8 @@ const { data: categories, pending, error } = useAsyncData(
          format="webp"
          :src="`${config.public.strapi.url}${category.image[0]?.url}`"
          :alt="category.name"
-         :loading="index === 0 ? 'eager' : 'lazy'"
-         :fetchpriority="index === 0 ? 'high' : 'auto'"
+         :loading="index < 2 ? 'eager' : 'lazy'"
+         :fetchpriority="index < 2 ? 'high' : 'auto'"
          width="180"
          height="190"
          decoding="async"

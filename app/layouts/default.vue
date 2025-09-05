@@ -48,7 +48,7 @@ watch(currentLocale, () => {
 <template>
 <header class="header">
    <div class="header__container-top">
-<ClientOnly ><ColorMode /></ClientOnly>
+<ClientOnly><ColorMode /></ClientOnly>
 <BaseNavigation class="header__navigation hidden-tablet"
    v-if="global"
    :phones="global.phones"

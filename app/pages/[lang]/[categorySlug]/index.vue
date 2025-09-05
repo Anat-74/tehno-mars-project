@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Category, SubcategoriesResponse } from "../../../types/types"
+import type { Category, SubcategoriesResponse } from "@/types/types"
 import { buttonTranslations } from '~/locales/button'
 
 const { find } = useStrapi()
