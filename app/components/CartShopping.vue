@@ -18,7 +18,7 @@ const switchToLocale = (locale: string) => {
 }
 
 onMounted(() => {
-  cartStore.loadCart();
+  cartStore.loadCart()
 })
 </script>
 

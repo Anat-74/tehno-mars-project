@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { FooterData, LegalInfo, SocialLink, Email, Phone } from "../types/types"
+import type { FooterData, LegalInfo, SocialLink, Email, Phone } from "@/types/types"
 import { baseFooterTranslations } from '~/locales/baseFooter'
 
 const { currentLocale } = useLocale()

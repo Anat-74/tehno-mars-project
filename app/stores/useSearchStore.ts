@@ -1,94 +1,121 @@
-import type { Product } from '~/types/types'
+// Импорт типа Product для типизации товаров
+import type { Product } from "~/types/types";
 
-export const useSearchStore = defineStore('search', () => {
-  const { find } = useStrapi()
-  const route = useRoute()
-  
+// Store для управления поиском продуктов
+export const useSearchStore = defineStore("search", () => {
+  // Использование Strapi API для поиска
+  const { find } = useStrapi();
+  // Текущий маршрут для получения параметров локализации
+  const route = useRoute();
+
+  // Реактивный объект фильтров: имя и сортировка
   const filters = reactive({
-    name: '',
-    sort: ''
-  })
-  
-  const products = ref<Product[]>([])
-  const currentPage = ref(1)
-  const totalPages = ref(1)
-  const status = ref<'idle' | 'pending' | 'success'>('idle')
-  const hasSearched = ref(false)
+    name: "",
+    sort: "",
+  });
 
-   const executeSearch = async () => {
-   if (!filters.name.trim()) {
-      products.value = []
-      hasSearched.value = false // Сбрасываем флаг поиска
-      return
+  // Массив найденных продуктов
+  const products = ref<Product[]>([]);
+  // Текущая страница пагинации
+  const currentPage = ref(1);
+  // Общее количество страниц
+  const totalPages = ref(1);
+  // Статус выполнения поиска: idle, pending, success
+  const status = ref<"idle" | "pending" | "success">("idle");
+  // Флаг, указывающий, был ли выполнен поиск
+  const hasSearched = ref(false);
+
+  // Функция выполнения поиска
+  const executeSearch = async () => {
+    // Если имя поиска пустое, очищаем результаты и сбрасываем флаг
+    if (!filters.name.trim()) {
+      products.value = [];
+      hasSearched.value = false; // Сбрасываем флаг поиска
+      return;
     }
-    
-    status.value = 'pending'
+
+    // Устанавливаем статус в pending
+    status.value = "pending";
     try {
-      const result = await find<Product>('products', getQueryParams())
-      products.value = result.data
-      totalPages.value = (result.meta.pagination as { pageCount: number }).pageCount
-      hasSearched.value = true
+      // Выполняем запрос к Strapi
+      const result = await find<Product>("products", getQueryParams());
+      // Сохраняем результаты
+      products.value = result.data;
+      // Сохраняем общее число страниц
+      totalPages.value = (
+        result.meta.pagination as { pageCount: number }
+      ).pageCount;
+      // Устанавливаем флаг выполненного поиска
+      hasSearched.value = true;
     } finally {
-      status.value = 'success'
+      // Устанавливаем статус в success
+      status.value = "success";
     }
-  }
+  };
 
-   const updateFilters = (newFilters: { name: string; sort: string }) => {
-      const wasSearching = !!filters.name.trim()
+  // Функция обновления фильтров
+  const updateFilters = (newFilters: { name: string; sort: string }) => {
+    // Проверяем, был ли поиск активен до обновления
+    const wasSearching = !!filters.name.trim();
 
-    filters.name = newFilters.name
-    filters.sort = newFilters.sort
-    currentPage.value = 1
-    
+    // Обновляем фильтры
+    filters.name = newFilters.name;
+    filters.sort = newFilters.sort;
+    // Сбрасываем страницу на первую
+    currentPage.value = 1;
+
+    // Выполняем поиск, если есть имя или был активен поиск
     if (filters.name.trim() || wasSearching) {
-      executeSearch()
+      executeSearch();
     }
-  }
+  };
 
+  // Функция смены страницы
   const changePage = (page: number) => {
-    currentPage.value = page
-    executeSearch()
-  }
+    currentPage.value = page;
+    executeSearch();
+  };
 
-const getQueryParams = () => {
-   // Убираем фильтр по productSlug если он есть в URL
-   const baseFilters: any = {
-     locale: route.params.lang
-   }
+  // Функция формирования параметров запроса
+  const getQueryParams = () => {
+    // Убираем фильтр по productSlug если он есть в URL
+    const baseFilters: any = {
+      locale: route.params.lang,
+    };
 
     // Используем отформатированный запрос
     if (filters.name.trim()) {
-      baseFilters.name = { $containsi: filters.name.trim() }
+      baseFilters.name = { $containsi: filters.name.trim() };
     }
 
- 
-   // Добавляем фильтр по slug только если мы НЕ на странице товара
-   if (!route.params.productSlug) {
-     baseFilters.slug = { $eq: route.params.productSlug }
-   }
- 
-   return {
-      populate: {
-         subcategory: {
-            populate: ['category'] // Добавляем категорию через подкатегорию
-          },
-       },
-     filters: baseFilters,
-     sort: [filters.sort],
-     pagination: {
-       page: currentPage.value,
-       pageSize: 32
-     }
-   }
- }
-   
-   const resetFilters = () => {
-      filters.name = ''
-      filters.sort = ''
-      products.value = []
-      hasSearched.value = false
-      currentPage.value = 1
+    // Добавляем фильтр по slug только если мы НЕ на странице товара
+    if (!route.params.productSlug) {
+      baseFilters.slug = { $eq: route.params.productSlug };
     }
+
+    return {
+      populate: {
+        subcategory: {
+          populate: ["category"], // Добавляем категорию через подкатегорию
+        },
+      },
+      filters: baseFilters,
+      sort: [filters.sort],
+      pagination: {
+        page: currentPage.value,
+        pageSize: 32,
+      },
+    };
+  };
+
+  // Функция сброса фильтров
+  const resetFilters = () => {
+    filters.name = "";
+    filters.sort = "";
+    products.value = [];
+    hasSearched.value = false;
+    currentPage.value = 1;
+  };
 
   return {
     filters,
@@ -96,10 +123,10 @@ const getQueryParams = () => {
     currentPage,
     totalPages,
     status,
-     hasSearched,
+    hasSearched,
     executeSearch,
     updateFilters,
-     changePage,
-     resetFilters
-  }
-})
+    changePage,
+    resetFilters,
+  };
+});

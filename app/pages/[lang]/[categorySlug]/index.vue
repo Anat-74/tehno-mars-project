@@ -7,6 +7,7 @@ const route = useRoute()
 const { categorySlug } = route.params
 const { currentLocale } = useLocale()
 const config = useRuntimeConfig()
+const { width } = useViewport()
 const { goBack, goForward } = useGoToForwardOrBack()
 
 const page = ref(route.query.page ? +route.query.page : 1)
@@ -56,23 +57,30 @@ const { data, pending, error, refresh } = useAsyncData(
   }
 )
 
-// 2. Разделяем данные
+const visibleImagesCount = computed(() => {
+   if (width.value < 565.98) return 3
+  if (width.value < 878.98) return 4
+  if (width.value < 1215.98) return 6
+  return 10
+})
+
+// Разделяем данные
 const category = computed(() => data.value?.category);
 const subcategories = computed(() => data.value?.subcategories);
 
-// 3. Управление загрузкой и ошибками
+//Управление загрузкой и ошибками
 const isLoading = ref(pending);
 const pageCount = computed(() => {
   return subcategories.value?.meta?.pagination?.pageCount || 1;
 })
 
-// 4. Обновление данных при изменении страницы
+//Обновление данных при изменении страницы
 watch(() => route.query.page, (newPage) => {
   page.value = newPage ? +newPage : 1;
   refresh();
 })
 
-// 5. SEO оптимизация
+//SEO оптимизация
 watchEffect(() => {
   if (category.value) {
     useSeoMeta({
@@ -129,12 +137,12 @@ watchEffect(() => {
               v-if="subcategory.image?.length"
               :src="`${config.public.strapi.url}${subcategory.image[0]?.url}`"
               :alt="subcategory.name"
-              :loading="index === 0 ? 'eager' : 'lazy'"
-              :fetchpriority="index === 0 ? 'high' : 'auto'"
+              :loading="index < visibleImagesCount ? 'eager' : 'lazy'"
+              :fetchpriority="index < visibleImagesCount ? 'high' : 'auto'"
               class="sub-category__image"
               decoding="async"
-              width="240"
-              height="180"
+            width="258"
+            height="194"
              format="webp"
             />
          </NuxtLink>

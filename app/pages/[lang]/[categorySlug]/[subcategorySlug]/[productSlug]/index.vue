@@ -18,10 +18,10 @@ const { currentLocale } = useLocale()
 const { goBack } = useGoToForwardOrBack()
 
 
-     const currentImage = ref('')
-// const currentImage = useState<string | null>('currentImage', () => null)
+const currentImage = ref('')
 
-const { data: product, error, pending } = useAsyncData(`product-${currentLocale.value}-${productSlug}`,
+const { data: product, error, pending } = useAsyncData
+   (`product-${currentLocale.value}-${productSlug}`,
    async () => {
     const response = await find<Product>('products', {
        filters: {
@@ -53,7 +53,7 @@ const { data: product, error, pending } = useAsyncData(`product-${currentLocale.
 
 
 const isActive = (imgUrl: string) => 
-  computed(() => currentImage.value === `${config.public.strapi.url}${imgUrl}`)
+  currentImage.value === `${config.public.strapi.url}${imgUrl}`
 
   const characteristics = computed(() => {
   try {
@@ -63,29 +63,12 @@ const isActive = (imgUrl: string) =>
   }
   })
 
-//   watchEffect(() => {
-//   if (product.value?.image?.[0]?.url) {
-//     currentImage.value = `${config.public.strapi.url}${product.value.image[0].url}`
-//   }
-//   })
-
-// watch(() => route.params.productSlug, () => {
-//   currentImage.value = ''
-// })
-
   useSeoMeta({
   title: product.value?.name,
   description: product.value?.description
 })
 
-// watch(product, (newProduct) => {
-//   if (newProduct) {
-//     useSeoMeta({
-//       title: newProduct.name,
-//       description: newProduct.description
-//     })
-//   }
-// })
+
 watch(() => product.value, (newProduct) => {
   if (newProduct?.image?.[0]?.url) {
     currentImage.value = `${config.public.strapi.url}${newProduct.image[0].url}`
@@ -144,17 +127,16 @@ const handleAddToCart = (product: Product) => {
      <ShareButton 
      class="wrapper-left__share" />
    </div>
-      <NuxtImg 
-         v-if="currentImage"
-        :src="currentImage"
-        :key="currentImage"
-        :alt="product.name"
-        format="webp"
-        decoding="async"
-        width="580"
-        height="436"
-        class="wrapper-left__image"
-      />
+        <NuxtImg 
+          v-if="currentImage"
+          :src="currentImage"
+          :alt="product.name"
+          format="webp"
+          decoding="async"
+          width="580"
+          height="436"
+          class="wrapper-left__image"
+        />
      <ul
       v-if="product.image?.length"
      class="wrapper-left__thumbnails"
@@ -162,7 +144,7 @@ const handleAddToCart = (product: Product) => {
      <li
         v-for="(img, index) in product.image" 
         :key="img.id"
-        :class="['wrapper-left__thumbnail', {'wrapper-left__thumbnail_active': isActive(img.url).value}]"
+        :class="['wrapper-left__thumbnail', {'wrapper-left__thumbnail_active': isActive(img.url)}]"
       @mouseover="setCurrentImage(img.url)"
       @click="setCurrentImage(img.url)"
       >
@@ -269,8 +251,13 @@ const handleAddToCart = (product: Product) => {
    align-self: center;
    border-radius: toEm(8);
    box-shadow: 0 0 toRem(4) var(--shadow);
-   margin-block-end: toEm(48);
+   margin-block-end: toEm(18);
    background-color: var(--bg-product);
+//    transition: opacity .2s ease-in-out;
+  
+//   &:not([src]) {
+//     opacity: 0;
+//   }
 
    @media (max-width:$tablet){
       margin-block-end: 0;

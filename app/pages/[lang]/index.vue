@@ -1,10 +1,19 @@
 <script setup lang="ts">
 import type { Category } from "@/types/types"
+import { useViewport } from "~/composables/useViewports"
 import { visuallyHiddenTranslations } from '~/locales/visuallyHidden'
 
 const { find } = useStrapi()
 const { currentLocale } = useLocale()
+const { width } = useViewport()
 const config = useRuntimeConfig()
+
+const visibleImagesCount = computed(() => {
+  if (width.value < 565.98) return 3
+  if (width.value < 878.98) return 4
+  if (width.value < 1215.98) return 6
+  return 10
+})
 
 const { data: categories, pending, error } = useAsyncData(
    `category-${currentLocale.value}`,
@@ -26,21 +35,6 @@ const { data: categories, pending, error } = useAsyncData(
       return response.data
    }
 )
-
-// const visibleImagesCount = ref(4)
-
-// onMounted(() => {
-//   // Адаптивное количество изображений в зависимости от размера экрана
-//   if (window.innerWidth < 768) {
-//     visibleImagesCount.value = 2; // Мобильные устройства
-//   } else if (window.innerWidth < 1024) {
-//     visibleImagesCount.value = 3; // Планшеты
-//   } else {
-//     visibleImagesCount.value = 4; // Десктоп
-//   }
-// })
-
-
 </script>
 
 <template>
@@ -64,14 +58,14 @@ const { data: categories, pending, error } = useAsyncData(
          >
          <NuxtImg
          class="category__image"
-         format="webp"
          :src="`${config.public.strapi.url}${category.image[0]?.url}`"
          :alt="category.name"
-         :loading="index < 2 ? 'eager' : 'lazy'"
-         :fetchpriority="index < 2 ? 'high' : 'auto'"
-         width="180"
-         height="190"
+         :loading="index < visibleImagesCount ? 'eager' : 'lazy'"
+         :fetchpriority="index < visibleImagesCount ? 'high' : 'auto'"
          decoding="async"
+         format="webp"
+         width="254"
+         height="268"
         />
         <h2 class="category__title">{{ category.name }}</h2>
          </NuxtLink>
@@ -110,9 +104,9 @@ const { data: categories, pending, error } = useAsyncData(
 
 &__link {
    min-height: 100%;
-   display: flex;
-   flex-direction: column;
+   display: grid;
    align-items: center;
+   justify-items: center;
    row-gap: toEm(18);
    margin-block-end: toEm(12);
 
@@ -130,11 +124,11 @@ const { data: categories, pending, error } = useAsyncData(
 }
 
 &__image {
-   flex: 1 1 auto;
    transition: border-radius var(--transition-duration);
 }
 
 &__title {
+   align-self: end;
    text-align: center;
    transition: color var(--transition-duration);
 }

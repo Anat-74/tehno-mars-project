@@ -15,67 +15,59 @@ export default defineNuxtConfig({
     // Редирект с корня
     '/': {
       redirect: '/ru',
-      cache: { 
-        maxAge: 86400, // 24 часа 
-        swr: true
-      },
-      headers: {
-        'X-Accel-Expires': '86340' // 23ч 59м
-      }
+      // cache: { 
+      //   maxAge: 86400, // 24 часа 
+      //   swr: true
+      // },
+      // headers: {
+      //   'X-Accel-Expires': '86340' // 23ч 59м
+      // }
     },
 
-    // Главная страница
+    // Главная страница и категирии
     '/ru': {
-      cache: {
-        maxAge: 43200, // 12 часов
-        swr: true
-      },
-      headers: {
-        'X-Accel-Expires': '43140' // 11ч 59м
-      }
+      // cache: {
+      //   maxAge: 43200, // 12 часов
+      //   swr: true
+      // },
+      // headers: {
+      //   'X-Accel-Expires': '43140' // 11ч 59м
+      // }
     },
 
-   //  Категории 1 уровня
+   //  Подкатегории
     '/ru/*': {
-      cache: {
-        maxAge: 21600, // 21600 = 6 часов
-        swr: true
-      },
-      headers: {
-        'X-Accel-Expires': '21540' // 5ч 59м
-      }
+      // cache: {
+      //   maxAge: 21600, // 6 часов
+      //   swr: true
+      // }
     },
 
-    // Подкатегории 2 уровня
+    // Товары
     '/ru/*/*': {
       cache: {
-        maxAge: 10800, // 3 часа
-        swr: true
-      },
-      headers: {
-        'X-Accel-Expires': '10740' // 2ч 59м
+        maxAge: 600,
+        swr: true,
+        staleMaxAge: 3600
       }
     },
 
-    // Страницы товаров
-    '/ru/*/*/*/index': {
+    // Описание товара
+    '/ru/*/*/*': {
       cache: {
-        maxAge: 3600, // 1 час
+        maxAge: 600,
         swr: true,
-        staleMaxAge: 7200 // 2 часа резерва
-      },
-      headers: {
-        'X-Accel-Expires': '3540' // 59 минут
+        staleMaxAge: 3600
       }
     }
   },
-   nitro: {
-      prerender: {
-         routes: ['/ru', '/en', '/be', '/ru/about', '/ru/services', '/ru/contacts'],
-         crawlLinks: true,
-         failOnError: false
-      }
-   },
+   // nitro: {
+   //    prerender: {
+   //       routes: ['/ru', '/en', '/be', '/ru/about', '/ru/services', '/ru/contacts'],
+   //       crawlLinks: true,
+   //       failOnError: false
+   //    }
+   // },
    runtimeConfig: {
       strapi: {
          url: process.env.NUXT_STRAPI_URL,
@@ -93,7 +85,6 @@ export default defineNuxtConfig({
       }
    },
    image: {
-      // domains: ['dazzling-garden-04cfdb34c9.media.strapiapp.com'],
       domains: ['api.vh324.by3020.ihb.by'],
       screens: {
          xs: 320,
@@ -103,33 +94,15 @@ export default defineNuxtConfig({
          xl: 1280,
          xxl: 1536
       },
-      quality: 80,
+      quality: 85,
       densities: [1, 2]
    },
 
    icon: {
-      serverBundle: {
-         collections: [
-            // 'material-symbols',
-            // 'eos-icons',
-            // 'ph',
-            // 'cil',
-            // 'fa-brands',
-            // 'emojione',
-            // 'emojione-v1',
-            // 'carbon',
-            // 'et',
-            // 'mingcute',
-            // 'entypo',
-            // 'mdi',
-            // 'qlementine-icons',
-            // 'pixelarticons'
-         ]
-      },
       // Автоматически добавлять иконки из компонентов в клиентский бандл
     clientBundle: {
       scan: true,
-      sizeLimitKb: 200
+      sizeLimitKb: 100
       },
       customCollections: [
         {
@@ -138,6 +111,24 @@ export default defineNuxtConfig({
             normalizeIconName: false,
         },
       ],
+      // serverBundle: {
+      //    collections: [
+      //       'material-symbols',
+      //       'eos-icons',
+      //       'ph',
+      //       'cil',
+      //       'fa-brands',
+      //       'emojione',
+      //       'emojione-v1',
+      //       'carbon',
+      //       'et',
+      //       'mingcute',
+      //       'entypo',
+      //       'mdi',
+      //       'qlementine-icons',
+      //       'pixelarticons'
+      //    ]
+      // }
    },
    colorMode: {
       preference: 'system',

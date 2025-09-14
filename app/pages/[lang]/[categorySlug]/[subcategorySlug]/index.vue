@@ -12,6 +12,7 @@ const { goBack, goForward } = useGoToForwardOrBack()
 const { isInCart } = useIsInCart()
 const cartStore = useCartStore()
 const config = useRuntimeConfig()
+const { width } = useViewport()
 
 const sortOption = ref<string>('name:asc')
 const page = ref(route.query.page ? +route.query.page : 1) // Текущая страница из query-параметра
@@ -74,6 +75,12 @@ const { data, pending, error, refresh } = useAsyncData(
     }
   }
 )
+
+const visibleImagesCount = computed(() => {
+  if (width.value < 878.98) return 4
+  if (width.value < 1215.98) return 6
+  return 10
+})
 
 // Разделение данных
 const subcategory = computed(() => data.value?.subcategory)
@@ -208,11 +215,11 @@ const handleAddToCart = (product: Product) => {
             v-if="product.image?.length"
             :src="`${config.public.strapi.url}${product.image[0]?.url}`"
             :alt="product.name"
-            :loading="index === 0 ? 'eager' : 'lazy'"
-            :fetchpriority="index === 0 ? 'high' : 'auto'"
+            :loading="index < visibleImagesCount ? 'eager' : 'lazy'"
+            :fetchpriority="index < visibleImagesCount ? 'high' : 'auto'"
             decoding="async"
-            width="240"
-            height="180"
+            width="258"
+            height="194"
             format="webp"
           />
         </NuxtLink>
