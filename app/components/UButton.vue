@@ -153,7 +153,6 @@ const clickOnButton = () => {
 
    @media (max-width:$tablet){
       right: toRem(15);
-      top: 83%;
       outline: toEm(2) solid var(--warning-color);
       outline-offset: toRem(2);
    }

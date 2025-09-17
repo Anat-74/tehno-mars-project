@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import type { Product } from "../types/types"
+import type { Product } from "@/types/types"
+
+const route = useRoute()
+const { currentLocale } = useLocale()
 
 const props = defineProps<{
    product: Product & {
@@ -11,9 +14,6 @@ const props = defineProps<{
     }
   }
 }>()
-
-const route = useRoute()
-const { currentLocale } = useLocale()
 
 const categorySlug = computed(() => {
   return (route.params.categorySlug as string) 

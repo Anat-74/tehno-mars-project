@@ -1,16 +1,13 @@
 <script setup lang="ts">
-const { find } = useStrapi();
-const searchStore = useSearchStore();
-const { products, totalPages, currentPage } = storeToRefs(searchStore);
-const { currentLocale } = useLocale();
-const config = useRuntimeConfig();
-const { isContacts } = useVisibilityProvider();
+const { find } = useStrapi()
+const searchStore = useSearchStore()
+const { products, totalPages, currentPage } = storeToRefs(searchStore)
+const { currentLocale } = useLocale()
+const config = useRuntimeConfig()
+const { isContacts } = useVisibilityProvider()
 
-const {
-  data: global,
-  error,
-  refresh,
-} = useAsyncData<any>(`global-${currentLocale.value}`, async () => {
+const { data: global, error, refresh, } = useAsyncData
+   <any>(`global-${currentLocale.value}`, async () => {
   const response = await find("global", {
     filters: { locale: currentLocale.value },
     populate: {
@@ -32,18 +29,18 @@ const {
       phones: true,
       email: true,
     },
-  });
+  })
 
   if (!response.data) {
     throw createError({ statusCode: 404, message: "Global not found" });
   }
 
-  return response.data;
-});
+  return response.data
+})
 
 watch(currentLocale, () => {
-  refresh();
-});
+  refresh()
+})
 </script>
 
 <template>
@@ -145,7 +142,7 @@ watch(currentLocale, () => {
 
   &__color-mode {
     opacity: 0;
-    animation: fadeIn 0.3s ease-in-out 0.1s forwards;
+    animation: fadeIn .3s ease-in-out .1s forwards;
   }
 
   &__navigation {
@@ -154,7 +151,7 @@ watch(currentLocale, () => {
 
   &__bg {
     background-color: var(--secondary-color);
-    transition: visibility 0s, opacity 0.7s;
+    transition: visibility 0s, opacity .7s;
 
     &_hidden {
       visibility: hidden;
@@ -246,7 +243,7 @@ watch(currentLocale, () => {
     align-self: end;
     justify-self: end;
     display: flex;
-    column-gap: toEm(9);
+    column-gap: toEm(12);
   }
 
   &__cart {
