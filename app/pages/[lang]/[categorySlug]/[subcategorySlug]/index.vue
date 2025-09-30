@@ -77,6 +77,7 @@ const { data, pending, error, refresh } = useAsyncData(
 )
 
 const visibleImagesCount = computed(() => {
+  if (width.value < 565.98) return 2
   if (width.value < 878.98) return 4
   if (width.value < 1215.98) return 6
   return 10
@@ -185,7 +186,9 @@ const handleAddToCart = (product: Product) => {
         </select>
       </div>
     </div>
-    <h1 class="subcategory-products__subcategory-title">
+    <h1 class="subcategory-products__subcategory-title"
+     id="subcategory-products"
+    >
          {{ subcategory?.name }}
       </h1>
     <h2 class="visually-hidden">{{ visuallyHiddenTranslations[currentLocale].sectionSubcategorySlugList }}</h2>

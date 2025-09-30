@@ -18,9 +18,6 @@ export default defineNuxtConfig({
       // cache: { 
       //   maxAge: 86400, // 24 часа 
       //   swr: true
-      // },
-      // headers: {
-      //   'X-Accel-Expires': '86340' // 23ч 59м
       // }
     },
 
@@ -29,9 +26,6 @@ export default defineNuxtConfig({
       // cache: {
       //   maxAge: 43200, // 12 часов
       //   swr: true
-      // },
-      // headers: {
-      //   'X-Accel-Expires': '43140' // 11ч 59м
       // }
     },
 

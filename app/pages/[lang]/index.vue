@@ -9,7 +9,7 @@ const { width } = useViewport()
 const config = useRuntimeConfig()
 
 const visibleImagesCount = computed(() => {
-  if (width.value < 565.98) return 3
+  if (width.value < 565.98) return 2
   if (width.value < 878.98) return 4
   if (width.value < 1215.98) return 6
   return 10
