@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { Category } from "@/types/types"
-import { useViewport } from "~/composables/useViewports"
 import { visuallyHiddenTranslations } from '~/locales/visuallyHidden'
 
 const { find } = useStrapi()

@@ -1,139 +1,152 @@
 export default defineNuxtConfig({
-   compatibilityDate: '2024-11-01',
-   devtools: { enabled: false },
-   modules: [
-      '@nuxt/image',
-      '@nuxt/icon',
-      '@pinia/nuxt',
-      'pinia-plugin-persistedstate/nuxt',
-      '@nuxtjs/color-mode',
-      '@nuxtjs/strapi',
-      '@nuxtjs/mdc'
-   ],
-   ssr: true,
+  compatibilityDate: "2024-11-01",
+  devtools: { enabled: false },
+  modules: [
+    "@nuxt/image",
+    "@nuxt/icon",
+    "@pinia/nuxt",
+    "pinia-plugin-persistedstate/nuxt",
+    "@nuxtjs/color-mode",
+    "@nuxtjs/strapi",
+    "@nuxtjs/mdc",
+    "@nuxtjs/seo",
+  ],
+   site: {
+     url: process.env.SITE_URL,
+     name: 'Awesome Site',
+     description: 'Welcome to my awesome site!'
+   },
+   sitemap: {
+     sources: ['/api/__sitemap__/urls']
+   },
+   robots: {
+     blockAiBots: true,
+     disallow: ['/admin'],
+     groups: [
+       {
+         userAgent: ['Yandex'],
+         cleanParam: ['sort', 'filter', 'page', 'search']
+       }
+     ]
+   },
+  ssr: true,
   routeRules: {
     // Редирект с корня
-    '/': {
-      redirect: '/ru',
-      // cache: { 
-      //   maxAge: 86400, // 24 часа 
-      //   swr: true
-      // }
-    },
-
-    // Главная страница и категирии
-    '/ru': {
+    "/": {
+      redirect: "/ru",
       // cache: {
-      //   maxAge: 43200, // 12 часов
+      //   maxAge: 86400, // 24 часа
       //   swr: true
       // }
     },
 
-   //  Подкатегории
-    '/ru/*': {
-      // cache: {
-      //   maxAge: 21600, // 6 часов
-      //   swr: true
-      // }
-    },
+    // Главная страница - ISR с кэшем 30 мин на CDN
+    "/ru": { isr: 1800 },
 
-    // Товары
-    '/ru/*/*': {
+    // Статические страницы
+    "/ru/about": { prerender: true },
+    "/ru/services": { prerender: true },
+    "/ru/contacts": { prerender: true },
+
+    // Категории - ISR для баланса скорости и свежести
+    "/ru/**": { isr: 3600 },
+
+    // Товары - SWR для обновления в фоне при изменениях
+    "/ru/*/*": {
       cache: {
         maxAge: 600,
         swr: true,
-        staleMaxAge: 3600
-      }
+        staleMaxAge: 3600,
+      },
     },
 
-    // Описание товара
-    '/ru/*/*/*': {
+    // Описание товара - как товары
+    "/ru/*/*/*": {
       cache: {
         maxAge: 600,
         swr: true,
-        staleMaxAge: 3600
-      }
-    }
+        staleMaxAge: 3600,
+      },
+    },
   },
-   // nitro: {
-   //    prerender: {
-   //       routes: ['/ru', '/en', '/be', '/ru/about', '/ru/services', '/ru/contacts'],
-   //       crawlLinks: true,
-   //       failOnError: false
-   //    }
-   // },
-   runtimeConfig: {
+  // nitro: {
+  //   prerender: {
+  //     routes: ['/sitemap.xml'],
+  //     crawlLinks: false,
+  //   },
+  // },
+  runtimeConfig: {
+    strapi: {
+      url: process.env.NUXT_STRAPI_URL,
+      token: process.env.NUXT_STRAPI_TOKEN,
+      prefix: "/api",
+      admin: "/admin",
+      version: "v5",
+      cookieName: "strapi_jwt",
+    },
+    public: {
+      siteUrl: process.env.SITE_URL,
       strapi: {
-         url: process.env.NUXT_STRAPI_URL,
-         token: process.env.NUXT_STRAPI_TOKEN,
-         prefix: '/api',
-         admin: '/admin',
-         version: 'v5',
-         cookieName: 'strapi_jwt'
+        url: process.env.NUXT_PUBLIC_STRAPI_URL,
       },
-      public: {
-         siteUrl: process.env.SITE_URL,
-         strapi: {
-            url: process.env.NUXT_PUBLIC_STRAPI_URL
-         }
-      }
-   },
-   image: {
-      domains: ['api.vh324.by3020.ihb.by'],
-      screens: {
-         xs: 320,
-         sm: 640,
-         md: 768,
-         lg: 1024,
-         xl: 1280,
-         xxl: 1536
-      },
-      quality: 85,
-      densities: [1, 2]
-   },
+    },
+  },
+  image: {
+    domains: ["api.vh324.by3020.ihb.by"],
+    screens: {
+      xs: 320,
+      sm: 640,
+      md: 768,
+      lg: 1024,
+      xl: 1280,
+      xxl: 1536,
+    },
+    quality: 85,
+    densities: [1, 2],
+  },
 
-   icon: {
-      // Автоматически добавлять иконки из компонентов в клиентский бандл
+  icon: {
+    // Автоматически добавлять иконки из компонентов в клиентский бандл
     clientBundle: {
       scan: true,
-      sizeLimitKb: 100
+      sizeLimitKb: 100,
+    },
+    customCollections: [
+      {
+        prefix: "my-icon",
+        dir: "./public/my-icons",
+        normalizeIconName: false,
       },
-      customCollections: [
-        {
-          prefix: 'my-icon',
-            dir: './public/my-icons',
-            normalizeIconName: false,
-        },
-      ],
-      // serverBundle: {
-      //    collections: [
-      //       'material-symbols',
-      //       'eos-icons',
-      //       'ph',
-      //       'cil',
-      //       'fa-brands',
-      //       'emojione',
-      //       'emojione-v1',
-      //       'carbon',
-      //       'et',
-      //       'mingcute',
-      //       'entypo',
-      //       'mdi',
-      //       'qlementine-icons',
-      //       'pixelarticons'
-      //    ]
-      // }
-   },
-   colorMode: {
-      preference: 'system',
-      fallback: 'light',
-   },
-   css: ['~/assets/scss/styles.scss'],
-   vite: {
-      css: {
-         preprocessorOptions: {
-           scss: {
-               additionalData: `
+    ],
+    // serverBundle: {
+    //    collections: [
+    //       'material-symbols',
+    //       'eos-icons',
+    //       'ph',
+    //       'cil',
+    //       'fa-brands',
+    //       'emojione',
+    //       'emojione-v1',
+    //       'carbon',
+    //       'et',
+    //       'mingcute',
+    //       'entypo',
+    //       'mdi',
+    //       'qlementine-icons',
+    //       'pixelarticons'
+    //    ]
+    // }
+  },
+  colorMode: {
+    preference: "system",
+    fallback: "light",
+  },
+  css: ["~/assets/scss/styles.scss"],
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `
              @use "@/assets/scss/base/_container.scss" as *;
              @use "@/assets/scss/base/_fonts.scss" as *;
              @use "@/assets/scss/base/_functions.scss" as *;
@@ -141,18 +154,18 @@ export default defineNuxtConfig({
              @use "@/assets/scss/base/_mixins.scss" as *;
              @use "@/assets/scss/base/_normalize.scss" as *;
              `,
-            }
-         },
-         preprocessorMaxWorkers: true,
-         devSourcemap: true,
-       },
-      build: {
-         cssCodeSplit: true,
-         cssMinify: true
-       },
-       optimizeDeps: {
-         include: ['sass']
+        },
       },
-      assetsInclude: ['**/*.avif']
-   },
-})
+      preprocessorMaxWorkers: true,
+      devSourcemap: true,
+    },
+    build: {
+      cssCodeSplit: true,
+      cssMinify: true,
+    },
+    optimizeDeps: {
+      include: ["sass"],
+    },
+    assetsInclude: ["**/*.avif"],
+  },
+});
