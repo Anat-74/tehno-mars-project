@@ -11,6 +11,15 @@ export default defineNuxtConfig({
     "@nuxtjs/mdc",
     "@nuxtjs/seo",
   ],
+  nitro: {
+    storage: {
+      // Кэширование оптимизированных изображений
+      assets: {
+        driver: 'fs',
+        base: './node_modules/.cache/nuxt-image'
+      }
+    }
+ },
    // @ts-ignore
    site: {
      url: process.env.SITE_URL,
@@ -95,11 +104,10 @@ export default defineNuxtConfig({
     domains: ["api.vh324.by3020.ihb.by"],
     screens: {
       xs: 320,
-      sm: 640,
+      sm: 480,
       md: 768,
       lg: 1024,
-      xl: 1280,
-      xxl: 1536,
+      xl: 1630,
     },
     quality: 85,
     densities: [1, 2],

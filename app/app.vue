@@ -77,6 +77,11 @@ const updateHead = () => {
         type: 'font/woff2',
         crossorigin: 'anonymous'
       },
+      // Preconnect к домену Strapi для ускорения загрузки изображений
+      {
+        rel: 'preconnect',
+        href: config.public.strapi.url
+      },
       // Hreflang ссылки для мультиязычных версий
       ...hreflangLinks
     ],
