@@ -11,14 +11,17 @@ export default defineNuxtConfig({
     "@nuxtjs/mdc",
     "@nuxtjs/seo",
   ],
+   // @ts-ignore
    site: {
      url: process.env.SITE_URL,
      name: 'Awesome Site',
      description: 'Welcome to my awesome site!'
    },
+   // @ts-ignore
    sitemap: {
      sources: ['/api/__sitemap__/urls']
    },
+   // @ts-ignore
    robots: {
      blockAiBots: true,
      disallow: ['/admin'],
@@ -68,13 +71,10 @@ export default defineNuxtConfig({
         staleMaxAge: 3600,
       },
     },
+    
+    // Исключить sitemap.xml из prerender, чтобы он генерировался динамически
+    "/sitemap.xml": { prerender: false },
   },
-  // nitro: {
-  //   prerender: {
-  //     routes: ['/sitemap.xml'],
-  //     crawlLinks: false,
-  //   },
-  // },
   runtimeConfig: {
     strapi: {
       url: process.env.NUXT_STRAPI_URL,

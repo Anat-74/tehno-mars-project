@@ -19,6 +19,19 @@ const seoData = computed(() => {
 
 // Функция для обновления head
 const updateHead = () => {
+ // Определяем языки для hreflang
+  const locales = ['ru', 'en', 'be']
+  const hreflangLinks = locales.map(locale => {
+    // Убираем текущий язык из URL и добавляем новый
+    const pathWithoutCurrentLocale = route.path.replace(/^\/(ru|en|be)(\/|$)/, '/')
+    const newUrl = `/${locale}${pathWithoutCurrentLocale}`
+    return {
+      rel: 'alternate',
+      hreflang: locale,
+      href: `${config.public.siteUrl}${newUrl}`
+    }
+  })
+
   useHead({
     title: seoData.value.title,
     htmlAttrs: { lang: currentLocale.value },
@@ -27,7 +40,45 @@ const updateHead = () => {
       {
         rel: 'canonical',
         href: fullUrl.value
-      }
+      },
+      // Подключение шрифтов с preload
+      {
+        rel: 'preload',
+        href: '/fonts/Montserrat-Medium.woff2',
+        as: 'font',
+        type: 'font/woff2',
+        crossorigin: 'anonymous'
+      },
+      {
+        rel: 'preload',
+        href: '/fonts/Montserrat-MediumItalic.woff2',
+        as: 'font',
+        type: 'font/woff2',
+        crossorigin: 'anonymous'
+      },
+      {
+        rel: 'preload',
+        href: '/fonts/Montserrat-Regular.woff2',
+        as: 'font',
+        type: 'font/woff2',
+        crossorigin: 'anonymous'
+      },
+      {
+        rel: 'preload',
+        href: '/fonts/RubikBurned-Regular.woff2',
+        as: 'font',
+        type: 'font/woff2',
+        crossorigin: 'anonymous'
+      },
+      {
+        rel: 'preload',
+        href: '/fonts/Ubuntu-Regular.woff2',
+        as: 'font',
+        type: 'font/woff2',
+        crossorigin: 'anonymous'
+      },
+      // Hreflang ссылки для мультиязычных версий
+      ...hreflangLinks
     ],
     meta: [
       { name: 'description', content: seoData.value.description },
@@ -38,7 +89,9 @@ const updateHead = () => {
       { property: 'og:site_name', content: 'TechnoMars' },
       { property: 'og:image', content: `${config.public.siteUrl}/logo.png` },
        { property: 'og:locale', content: currentLocale.value },
-
+       // Альтернативные языковые версии
+       { property: 'og:locale:alternate', content: locales.filter(l => l !== currentLocale.value)[0] || 'en' },
+ 
       // Twitter
        { name: 'twitter:card', content: 'summary_large_image' },
        { name: 'twitter:title', content: seoData.value.ogTitle },

@@ -89,10 +89,18 @@ watchEffect(() => {
     })
   }
 })
+
+// useSeoMeta({
+//   ogTitle: category.value.seoTitle || category.value.name,
+//   ogDescription: category.value.seoDescription,
+//   ogImage: category.value.seoImage 
+//     ? `${config.public.strapi.url}${category.value.seoImage.url}` 
+//     : `${config.public.siteUrl}/default-category-image.jpg`,
+//   ogUrl: `${config.public.siteUrl}${route.path}`
+// })
 </script>
 
 <template>
-
     <Loader v-show="isLoading"
       class="loader"
     />
