@@ -27,6 +27,8 @@
     "vue-router": "latest"
   },
   "devDependencies": {
+    "@nuxtjs/dotenv": "^1.4.2",
+    "@types/node": "^24.9.1",
     "@types/sharp": "^0.31.1",
     "sass": "^1.84.0"
   }

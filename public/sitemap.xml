@@ -2,171 +2,171 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   
   <url>
-    <loc>http://localhost:3000/ru/about</loc>
+    <loc>https://vh324.by3020.ihb.by/ru/about</loc>
     <lastmod>2024-01-01</lastmod>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
     
- </url>
+  </url>
  
   <url>
-    <loc>http://localhost:3000/ru/services</loc>
+    <loc>https://vh324.by3020.ihb.by/ru/services</loc>
     <lastmod>2024-01-01</lastmod>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
     
- </url>
+  </url>
  
   <url>
-    <loc>http://localhost:3000/ru/contacts</loc>
+    <loc>https://vh324.by3020.ihb.by/ru/contacts</loc>
     <lastmod>2024-01-01</lastmod>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
     
- </url>
+  </url>
  
   <url>
-    <loc>http://localhost:3000/ru/cartshopping</loc>
-    <lastmod>2025-10-22T14:24:06.504Z</lastmod>
+    <loc>https://vh324.by3020.ihb.by/ru/cartshopping</loc>
+    <lastmod>2025-10-22T14:55:34.467Z</lastmod>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
     
- </url>
+  </url>
  
   <url>
-    <loc>http://localhost:3000/en/about</loc>
+    <loc>https://vh324.by3020.ihb.by/en/about</loc>
     <lastmod>2024-01-01</lastmod>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
     
- </url>
+  </url>
  
   <url>
-    <loc>http://localhost:3000/en/services</loc>
+    <loc>https://vh324.by3020.ihb.by/en/services</loc>
     <lastmod>2024-01-01</lastmod>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
     
- </url>
+  </url>
  
   <url>
-    <loc>http://localhost:3000/en/contacts</loc>
+    <loc>https://vh324.by3020.ihb.by/en/contacts</loc>
     <lastmod>2024-01-01</lastmod>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
     
- </url>
+  </url>
  
   <url>
-    <loc>http://localhost:3000/en/cartshopping</loc>
-    <lastmod>2025-10-22T14:24:06.505Z</lastmod>
+    <loc>https://vh324.by3020.ihb.by/en/cartshopping</loc>
+    <lastmod>2025-10-22T14:55:34.468Z</lastmod>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
     
- </url>
+  </url>
  
   <url>
-    <loc>http://localhost:3000/be/about</loc>
+    <loc>https://vh324.by3020.ihb.by/be/about</loc>
     <lastmod>2024-01-01</lastmod>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
     
- </url>
+  </url>
  
   <url>
-    <loc>http://localhost:3000/be/services</loc>
+    <loc>https://vh324.by3020.ihb.by/be/services</loc>
     <lastmod>2024-01-01</lastmod>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
     
- </url>
+  </url>
  
   <url>
-    <loc>http://localhost:3000/be/contacts</loc>
+    <loc>https://vh324.by3020.ihb.by/be/contacts</loc>
     <lastmod>2024-01-01</lastmod>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
     
- </url>
+  </url>
  
   <url>
-    <loc>http://localhost:3000/be/cartshopping</loc>
-    <lastmod>2025-10-22T14:24:06.505Z</lastmod>
+    <loc>https://vh324.by3020.ihb.by/be/cartshopping</loc>
+    <lastmod>2025-10-22T14:55:34.468Z</lastmod>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
     
- </url>
+  </url>
  
   <url>
-    <loc>http://localhost:3000/ru/drugaya-produkcziya</loc>
+    <loc>https://vh324.by3020.ihb.by/ru/drugaya-produkcziya</loc>
     <lastmod>2025-10-21T10:26:27.550Z</lastmod>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
     
- </url>
+  </url>
  
   <url>
-    <loc>http://localhost:3000/ru/drugaya-produkcziya/tumby-mobilnye</loc>
+    <loc>https://vh324.by3020.ihb.by/ru/drugaya-produkcziya/tumby-mobilnye</loc>
     <lastmod>2025-10-21T10:28:18.767Z</lastmod>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
     
- </url>
+  </url>
  
   <url>
-    <loc>http://localhost:3000/en/drugaya-produkcziya</loc>
+    <loc>https://vh324.by3020.ihb.by/en/drugaya-produkcziya</loc>
     <lastmod>2025-10-21T10:26:27.550Z</lastmod>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
     
- </url>
+  </url>
  
   <url>
-    <loc>http://localhost:3000/en/drugaya-produkcziya/tumby-mobilnye</loc>
+    <loc>https://vh324.by3020.ihb.by/en/drugaya-produkcziya/tumby-mobilnye</loc>
     <lastmod>2025-10-21T10:28:18.767Z</lastmod>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
     
- </url>
+  </url>
  
   <url>
-    <loc>http://localhost:3000/be/drugaya-produkcziya</loc>
+    <loc>https://vh324.by3020.ihb.by/be/drugaya-produkcziya</loc>
     <lastmod>2025-10-21T10:26:27.550Z</lastmod>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
     
- </url>
+  </url>
  
   <url>
-    <loc>http://localhost:3000/be/drugaya-produkcziya/tumby-mobilnye</loc>
+    <loc>https://vh324.by3020.ihb.by/be/drugaya-produkcziya/tumby-mobilnye</loc>
     <lastmod>2025-10-21T10:28:18.767Z</lastmod>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
     
- </url>
+  </url>
  
   <url>
-    <loc>http://localhost:3000/ru/drugaya-produkcziya/tumby-mobilnye/ofisnyj-sejf-aiko-tsn-37-el</loc>
+    <loc>https://vh324.by3020.ihb.by/ru/drugaya-produkcziya/tumby-mobilnye/ofisnyj-sejf-aiko-tsn-37-el</loc>
     <lastmod>2025-10-21T10:27:58.278Z</lastmod>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
     
- </url>
+  </url>
  
   <url>
-    <loc>http://localhost:3000/en/drugaya-produkcziya/tumby-mobilnye/ofisnyj-sejf-aiko-tsn-37-el</loc>
+    <loc>https://vh324.by3020.ihb.by/en/drugaya-produkcziya/tumby-mobilnye/ofisnyj-sejf-aiko-tsn-37-el</loc>
     <lastmod>2025-10-21T10:27:58.278Z</lastmod>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
     
- </url>
+  </url>
  
   <url>
-    <loc>http://localhost:3000/be/drugaya-produkcziya/tumby-mobilnye/ofisnyj-sejf-aiko-tsn-37-el</loc>
+    <loc>https://vh324.by3020.ihb.by/be/drugaya-produkcziya/tumby-mobilnye/ofisnyj-sejf-aiko-tsn-37-el</loc>
     <lastmod>2025-10-21T10:27:58.278Z</lastmod>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
     
- </url>
+  </url>
  
 </urlset>

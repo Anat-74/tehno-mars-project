@@ -2,6 +2,15 @@
 import { writeFileSync } from 'fs'
 import { $fetch } from 'ofetch'
 
+async function loadEnv() {
+  try {
+    const dotenv = await import('dotenv')
+    dotenv.config()
+  } catch (error) {
+    console.warn('dotenv not found, using default values')
+  }
+}
+
 interface SitemapUrl {
   loc: string
   lastmod?: string
@@ -11,23 +20,25 @@ interface SitemapUrl {
 }
 
 async function generateSitemap() {
- // Загружаем переменные окружения
-  const siteUrl = 'http://localhost:3000'
- // Явно использовать переменную окружения для API Base URL
- const strapiUrl = 'https://api.vh324.by3020.ihb.by'
-  const strapiToken = '7b2ca5371dbd307d41b14c90476b4b1aef6bd27b567aea96031ffe7466866249cd763f099b3b6f67494ba88cf62fe6a08faf65b0f772eaab73d0abd8e6e59a75e742d9d8d503d7e2c77d0250ff2b08819385ca0c7fc52d4670c582230a46435ac79cbf47556861be88a0178aed509fb9ba57b566d08f70feff536abf5607bb1a' // Установите токен вручную или через env
+  // Загружаем переменные окружения
+  await loadEnv()
+  
+  const siteUrl = process.env.SITE_URL || 'http://localhost:3000'
+  const strapiUrl = process.env.NUXT_PUBLIC_STRAPI_URL || 'http://127.0.0.1:1337'
+  const strapiToken = process.env.NUXT_STRAPI_TOKEN || '64acd09db50794111c1b62365941ac1a5a45a54fee8e5b4b882b838d9445de32a16f000532908f67c7fe211cd66e9cd88b691005c25dae4493fc897acce3ce6131b9bc1cd202ce01e2bae8ac6d53338f4a632b6193df492582e49bc41b4213eeaa1fe47a714ac3dc1c986ebcad539a0778e4c20c5d3d5974d57591e89d382350'
+  
   console.log('Strapi URL:', strapiUrl) // Отладочный вывод
 
   let urls: SitemapUrl[] = []
   
   try {
+    // Transform Strapi data to sitemap format
+    const langs = ['ru', 'en', 'be']
+    const mainLocale = 'ru'; // Основная локаль, где есть все данные
+    
     // Get data directly from Strapi API (more reliable than Nuxt API)
     
     try {
-      // Fetch data directly from Strapi with correct populate syntax
-      // Transform Strapi data to sitemap format
-      const langs = ['ru', 'en', 'be']
-      
       // Add static pages
       for (const lang of langs) {
         urls.push({ loc: `/${lang}/about`, lastmod: '2024-01-01' })
@@ -37,7 +48,6 @@ async function generateSitemap() {
       }
       
       // Fetch data only for the main locale where data exists
-      const mainLocale = 'ru';
       const [categoriesRes, subcategoriesRes, productsRes] = await Promise.all([
         $fetch(`${strapiUrl}/api/categories?locale=${mainLocale}`, {
           headers: { Authorization: `Bearer ${strapiToken}` }
@@ -53,9 +63,6 @@ async function generateSitemap() {
       console.log('Categories data for main locale', mainLocale, ':', categoriesRes.data?.length);
       console.log('Subcategories data for main locale', mainLocale, ':', subcategoriesRes.data?.length);
       console.log('Products data for main locale', mainLocale, ':', productsRes.data?.length);
-      console.log('Full category response:', JSON.stringify(categoriesRes.data?.[0], null, 2));
-      console.log('Full subcategory response:', JSON.stringify(subcategoriesRes.data?.[0], null, 2));
-      console.log('Full product response:', JSON.stringify(productsRes.data?.[0], null, 2));
       
       // Create a map of category ID to subcategories for easier lookup
       const categorySubcategoriesMap: Record<string, any[]> = {};
@@ -136,7 +143,7 @@ async function generateSitemap() {
     <image:image>
       <image:loc>${img.loc}</image:loc>
     </image:image>`).join('') : ''}
- </url>
+  </url>
  `).join('')}
 </urlset>`
 
@@ -148,7 +155,7 @@ async function generateSitemap() {
  } catch (error) {
     console.error('❌ Sitemap generation failed:', error)
     // process.exit(1) - закомментировано для избежания ошибок типизации
-  }
+ }
 }
 
 generateSitemap()

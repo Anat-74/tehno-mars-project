@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 export default defineNuxtConfig({
   compatibilityDate: "2024-11-01",
    devtools: {
@@ -12,6 +14,7 @@ export default defineNuxtConfig({
     "@nuxtjs/strapi",
     "@nuxtjs/mdc",
     "@nuxtjs/seo",
+    "@nuxtjs/dotenv",
   ],
   nitro: {
     storage: {
