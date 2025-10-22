@@ -70,13 +70,6 @@ const updateHead = () => {
         type: 'font/woff2',
         crossorigin: 'anonymous'
       },
-      {
-        rel: 'preload',
-        href: '/fonts/Ubuntu-Regular.woff2',
-        as: 'font',
-        type: 'font/woff2',
-        crossorigin: 'anonymous'
-      },
       // Preconnect к домену Strapi для ускорения загрузки изображений
       {
         rel: 'preconnect',

@@ -1,7 +1,9 @@
+// Добавляем главную страницу
+const urls = [{ loc: `/`, lastmod: new Date().toISOString() }]
+
 export default defineEventHandler(async () => {
   const strapiUrl = process.env.NUXT_PUBLIC_STRAPI_URL
   const langs = ['ru', 'en', 'be']
-  const urls = []
 
   for (const lang of langs) {
     try {
@@ -10,8 +12,8 @@ export default defineEventHandler(async () => {
         headers: { Authorization: `Bearer ${process.env.NUXT_STRAPI_TOKEN}` }
       }).catch(() => ({ data: [] })) as { data: any[] }
 
-      // Получаем продукты с категорией и изображениями для локали
-      const products = await $fetch(`${strapiUrl}/api/products?populate=category,images&locale=${lang}`, {
+      // Получаем продукты с подкатегорией для локали
+      const products = await $fetch(`${strapiUrl}/api/products?populate=subcategory.category`, {
         headers: { Authorization: `Bearer ${process.env.NUXT_STRAPI_TOKEN}` }
       }).catch(() => ({ data: [] })) as { data: any[] }
 
@@ -19,6 +21,7 @@ export default defineEventHandler(async () => {
       urls.push({ loc: `/${lang}/about`, lastmod: '2024-01-01' })
       urls.push({ loc: `/${lang}/services`, lastmod: '2024-01-01' })
       urls.push({ loc: `/${lang}/contacts`, lastmod: '2024-01-01' })
+      urls.push({ loc: `/${lang}/cartshopping`, lastmod: new Date().toISOString() })
 
       // Добавляем категории для локали
       if (categories.data) {
@@ -36,12 +39,10 @@ export default defineEventHandler(async () => {
       // Добавляем продукты для локали
       if (products.data) {
         for (const prod of products.data) {
-          if (prod.category?.data) {
-            const images = prod.images?.data ? prod.images.data.map((img: any) => ({ loc: img.url })) : []
+          if (prod.subcategory?.data && prod.subcategory.data.category) {
             urls.push({
-              loc: `/${lang}/${prod.category.data.slug}/${prod.slug}`,
-              lastmod: prod.updatedAt || prod.createdAt,
-              images
+              loc: `/${lang}/${prod.subcategory.data.category.slug}/${prod.subcategory.data.slug}/${prod.slug}`,
+               lastmod: prod.updatedAt || prod.createdAt,
             })
           }
         }

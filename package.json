@@ -4,10 +4,12 @@
   "type": "module",
   "scripts": {
     "build": "nuxt build",
+    "build:with-sitemap": "nuxt build && npm run generate-sitemap",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "generate-sitemap": "npx tsx scripts/generate-sitemap.ts"
   },
   "dependencies": {
     "@nuxt/icon": "^1.10.3",

@@ -1,8 +1,11 @@
-<IfModule mod_rewrite.c>
-  RewriteEngine On
+# <IfModule mod_rewrite.c>
+#   RewriteEngine On
   
-  # Передача всех остальных запросов на Nuxt приложение
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule ^(.*)$ / [QSA,L]
-</IfModule>
+#   # Исключаем sitemap.xml из любых других правил
+#   RewriteRule ^sitemap\.xml$ - [L]
+  
+#   # Остальные правила для Nuxt приложения
+#   RewriteCond %{REQUEST_FILENAME} !-f
+#   RewriteCond %{REQUEST_FILENAME} !-d
+#   RewriteRule ^(.*)$ / [QSA,L]
+# </IfModule>

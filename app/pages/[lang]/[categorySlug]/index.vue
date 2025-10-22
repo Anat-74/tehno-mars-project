@@ -76,8 +76,8 @@ const pageCount = computed(() => {
 
 //Обновление данных при изменении страницы
 watch(() => route.query.page, (newPage) => {
-  page.value = newPage ? +newPage : 1;
-  refresh();
+  page.value = newPage ? +newPage : 1
+  refresh()
 })
 
 //SEO оптимизация

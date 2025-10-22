@@ -109,6 +109,7 @@ watch(currentLocale, () => {
       :socials="global.socials"
     />
   </main>
+
   <Footer
     class="footer"
     v-if="global"
@@ -118,6 +119,7 @@ watch(currentLocale, () => {
     :legal="global.legal"
     :socials="global.socials"
   />
+
   <span v-if="error"> Error: {{ error.message }} </span>
 </template>
 

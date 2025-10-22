@@ -1,6 +1,8 @@
 export default defineNuxtConfig({
   compatibilityDate: "2024-11-01",
-  devtools: { enabled: false },
+   devtools: {
+      enabled: true,
+   },
   modules: [
     "@nuxt/image",
     "@nuxt/icon",
@@ -14,12 +16,15 @@ export default defineNuxtConfig({
   nitro: {
     storage: {
       // Кэширование оптимизированных изображений
-      assets: {
+      'cache:nuxt-image': {
         driver: 'fs',
         base: './node_modules/.cache/nuxt-image'
       }
+    },
+    prerender: {
+      ignore: ['/sitemap.xml']
     }
- },
+  },
    // @ts-ignore
    site: {
      url: process.env.SITE_URL,
@@ -81,8 +86,6 @@ export default defineNuxtConfig({
       },
     },
     
-    // Исключить sitemap.xml из prerender, чтобы он генерировался динамически
-    "/sitemap.xml": { prerender: false },
   },
   runtimeConfig: {
     strapi: {
@@ -101,7 +104,8 @@ export default defineNuxtConfig({
     },
   },
   image: {
-    domains: ["api.vh324.by3020.ihb.by"],
+      domains: ["api.vh324.by3020.ihb.by"],
+         // domains: ["127.0.0.1:1337"],
     screens: {
       xs: 320,
       sm: 480,
