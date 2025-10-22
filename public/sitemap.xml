@@ -27,7 +27,7 @@
  
   <url>
     <loc>https://vh324.by3020.ihb.by/ru/cartshopping</loc>
-    <lastmod>2025-10-22T14:55:34.467Z</lastmod>
+    <lastmod>2025-10-22T15:21:56.903Z</lastmod>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
     
@@ -59,7 +59,7 @@
  
   <url>
     <loc>https://vh324.by3020.ihb.by/en/cartshopping</loc>
-    <lastmod>2025-10-22T14:55:34.468Z</lastmod>
+    <lastmod>2025-10-22T15:21:56.904Z</lastmod>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
     
@@ -91,7 +91,7 @@
  
   <url>
     <loc>https://vh324.by3020.ihb.by/be/cartshopping</loc>
-    <lastmod>2025-10-22T14:55:34.468Z</lastmod>
+    <lastmod>2025-10-22T15:21:56.904Z</lastmod>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
     
@@ -103,6 +103,9 @@
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
     
+    <image:image>
+      <image:loc>https://api.vh324.by3020.ihb.by/uploads/1b7c42162fd50db539d7f9255b933dd5_6950b00c11.png</image:loc>
+    </image:image>
   </url>
  
   <url>
@@ -111,6 +114,9 @@
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
     
+    <image:image>
+      <image:loc>https://api.vh324.by3020.ihb.by/uploads/e117eee46c5d657291d5f267e2e747a2_removebg_preview_1dbe179070.png</image:loc>
+    </image:image>
   </url>
  
   <url>
@@ -119,6 +125,9 @@
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
     
+    <image:image>
+      <image:loc>https://api.vh324.by3020.ihb.by/uploads/1b7c42162fd50db539d7f9255b933dd5_6950b00c11.png</image:loc>
+    </image:image>
   </url>
  
   <url>
@@ -127,6 +136,9 @@
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
     
+    <image:image>
+      <image:loc>https://api.vh324.by3020.ihb.by/uploads/e117eee46c5d657291d5f267e2e747a2_removebg_preview_1dbe179070.png</image:loc>
+    </image:image>
   </url>
  
   <url>
@@ -135,6 +147,9 @@
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
     
+    <image:image>
+      <image:loc>https://api.vh324.by3020.ihb.by/uploads/1b7c42162fd50db539d7f9255b933dd5_6950b00c11.png</image:loc>
+    </image:image>
   </url>
  
   <url>
@@ -143,6 +158,9 @@
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
     
+    <image:image>
+      <image:loc>https://api.vh324.by3020.ihb.by/uploads/e117eee46c5d657291d5f267e2e747a2_removebg_preview_1dbe179070.png</image:loc>
+    </image:image>
   </url>
  
   <url>
@@ -151,6 +169,18 @@
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
     
+    <image:image>
+      <image:loc>https://api.vh324.by3020.ihb.by/uploads/additional_photo_0_removebg_preview_559e6d2695.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://api.vh324.by3020.ihb.by/uploads/detail_picture_removebg_preview_f697b14303.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://api.vh324.by3020.ihb.by/uploads/additional_photo_1_removebg_preview_86df0d3a6a.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://api.vh324.by3020.ihb.by/uploads/additional_photo_1_6cc0c4abba.jpg</image:loc>
+    </image:image>
   </url>
  
   <url>
@@ -159,6 +189,18 @@
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
     
+    <image:image>
+      <image:loc>https://api.vh324.by3020.ihb.by/uploads/additional_photo_0_removebg_preview_559e6d2695.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://api.vh324.by3020.ihb.by/uploads/detail_picture_removebg_preview_f697b14303.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://api.vh324.by3020.ihb.by/uploads/additional_photo_1_removebg_preview_86df0d3a6a.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://api.vh324.by3020.ihb.by/uploads/additional_photo_1_6cc0c4abba.jpg</image:loc>
+    </image:image>
   </url>
  
   <url>
@@ -167,6 +209,18 @@
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
     
+    <image:image>
+      <image:loc>https://api.vh324.by3020.ihb.by/uploads/additional_photo_0_removebg_preview_559e6d2695.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://api.vh324.by3020.ihb.by/uploads/detail_picture_removebg_preview_f697b14303.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://api.vh324.by3020.ihb.by/uploads/additional_photo_1_removebg_preview_86df0d3a6a.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://api.vh324.by3020.ihb.by/uploads/additional_photo_1_6cc0c4abba.jpg</image:loc>
+    </image:image>
   </url>
  
 </urlset>

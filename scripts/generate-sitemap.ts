@@ -15,7 +15,7 @@ interface SitemapUrl {
   loc: string
   lastmod?: string
   priority?: number
- changefreq?: string
+  changefreq?: string
   images?: Array<{ loc: string }>
 }
 
@@ -48,21 +48,19 @@ async function generateSitemap() {
       }
       
       // Fetch data only for the main locale where data exists
-      const [categoriesRes, subcategoriesRes, productsRes] = await Promise.all([
-        $fetch(`${strapiUrl}/api/categories?locale=${mainLocale}`, {
+      // Use the correct populate structure as per Strapi relationships
+      const [categoriesRes, subcategoriesRes] = await Promise.all([
+        $fetch(`${strapiUrl}/api/categories?populate=image&locale=${mainLocale}`, {
           headers: { Authorization: `Bearer ${strapiToken}` }
         }).catch(() => ({ data: [] })),
-        $fetch(`${strapiUrl}/api/subcategories?populate=category&locale=${mainLocale}`, {
-          headers: { Authorization: `Bearer ${strapiToken}` }
-        }).catch(() => ({ data: [] })),
-        $fetch(`${strapiUrl}/api/products?populate=subcategory.category`, {
+        $fetch(`${strapiUrl}/api/subcategories?populate=products&populate=category&populate=products.image&populate=image&locale=${mainLocale}`, {
           headers: { Authorization: `Bearer ${strapiToken}` }
         }).catch(() => ({ data: [] }))
       ])
       
       console.log('Categories data for main locale', mainLocale, ':', categoriesRes.data?.length);
       console.log('Subcategories data for main locale', mainLocale, ':', subcategoriesRes.data?.length);
-      console.log('Products data for main locale', mainLocale, ':', productsRes.data?.length);
+      console.log('Subcategories data with products:', JSON.stringify(subcategoriesRes.data?.[0], null, 2));
       
       // Create a map of category ID to subcategories for easier lookup
       const categorySubcategoriesMap: Record<string, any[]> = {};
@@ -82,31 +80,61 @@ async function generateSitemap() {
       if (categoriesRes.data) {
         for (const cat of categoriesRes.data) {
           for (const lang of langs) {
-            urls.push({ loc: `/${lang}/${cat.slug}`, lastmod: cat.updatedAt || cat.createdAt })
+            // Extract images from category data
+            // The image field is an array, so we need to map all images
+            const catImages = cat.image && Array.isArray(cat.image)
+              ? cat.image.map((img: any) => ({
+                  loc: `${strapiUrl}${img.url}`
+                }))
+              : []
+            urls.push({
+              loc: `/${lang}/${cat.slug}`,
+              lastmod: cat.updatedAt || cat.createdAt,
+              images: catImages
+            })
             
             // Add subcategories for this category
             const subcategoriesForCat = categorySubcategoriesMap[cat.id] || [];
             for (const sub of subcategoriesForCat) {
-              urls.push({ loc: `/${lang}/${cat.slug}/${sub.slug}`, lastmod: sub.updatedAt || sub.createdAt })
+              // Extract images from subcategory data
+              // The image field is an array, so we need to map all images
+              const subImages = sub.image && Array.isArray(sub.image)
+                ? sub.image.map((img: any) => ({
+                    loc: `${strapiUrl}${img.url}`
+                  }))
+                : []
+              urls.push({
+                loc: `/${lang}/${cat.slug}/${sub.slug}`,
+                lastmod: sub.updatedAt || sub.createdAt,
+                images: subImages
+              })
             }
           }
         }
       }
       
-      // Add products for all locales
-      if (productsRes.data) {
-        for (const prod of productsRes.data) {
-          if (prod.subcategory && prod.subcategory.category) {
-            for (const lang of langs) {
-              const images = prod.images?.data ? prod.images.data.map((img: any) => ({ loc: img.url })) : []
-              urls.push({
-                loc: `/${lang}/${prod.subcategory.category.slug}/${prod.subcategory.slug}/${prod.slug}`,
-                lastmod: prod.updatedAt || prod.createdAt,
-                images
-              })
+      // Add products for all locales using subcategory data
+      if (subcategoriesRes.data) {
+        for (const sub of subcategoriesRes.data) {
+          if (sub.products && Array.isArray(sub.products)) {
+            for (const prod of sub.products) {
+              if (sub.category) {
+                for (const lang of langs) {
+                  // Extract images from product data
+                  // The image field is an array, so we need to map all images
+                  const images = prod.image && Array.isArray(prod.image)
+                    ? prod.image.map((img: any) => ({
+                        loc: `${strapiUrl}${img.url}`
+                      }))
+                    : []
+                    urls.push({
+                    loc: `/${lang}/${sub.category.slug}/${sub.slug}/${prod.slug}`,
+                    lastmod: prod.updatedAt || prod.createdAt,
+                    images
+                  })
+                }
+              }
             }
-          } else {
-            console.log('Product missing subcategory or category in subcategory:', prod.id, prod.name, prod.subcategory);
           }
         }
       }
