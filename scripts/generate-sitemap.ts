@@ -176,7 +176,7 @@ async function generateSitemap() {
 </urlset>`
 
     // Write to file
-    const outputPath = './public/sitemap.xml'
+    const outputPath = './sitemap.xml'
     writeFileSync(outputPath, xml)
     console.log('✅ Sitemap generated successfully!')
     
